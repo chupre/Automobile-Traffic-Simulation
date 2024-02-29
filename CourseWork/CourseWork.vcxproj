@@ -133,7 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Downloads\glad.c" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="backup.c" />
   </ItemGroup>

@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
 int main()
 {
+    char b[] = "i_got_it";
+    int a = 0;
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
