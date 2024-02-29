@@ -8,7 +8,6 @@ void processInput(GLFWwindow* window);
 
 int main()
 {
-    char b[] = "i_got_it";
     int a = 0;
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
