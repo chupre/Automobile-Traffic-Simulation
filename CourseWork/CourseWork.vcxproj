@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>C:\Dependencies\glfw;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Dependencies;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Dependencies;C:\Users\denis\source\repos\CourseWork\CourseWork;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,6 +136,16 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="backup.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragment_shader.glsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="vertex_shader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="road.h" />
+    <ClInclude Include="shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
