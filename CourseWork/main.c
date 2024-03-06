@@ -35,7 +35,6 @@ int main()
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
     
-
     GLuint fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
@@ -49,24 +48,45 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
-    GLfloat roadVerticies[NUMBER_OF_ROADS * 4 * 3];
+    GLfloat roadVertices[NUMBER_OF_ROADS * 4 * 3];
     GLint roadIndices[NUMBER_OF_ROADS * 6];
 
     road roads[NUMBER_OF_ROADS];
-    setRoad(&roads[0], 0, roadVerticies, roadIndices, -0.2f, -1.0f, 2.0f, NORTH);
-    setRoad(&roads[1], 1, roadVerticies, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
+    setRoad(&roads[0], 0, roadVertices, roadIndices, -0.2f, -1.0f, 2.0f, NORTH);
+    setRoad(&roads[1], 1, roadVertices, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
 
-    GLuint RoadVertexArray, RoadVertexBuffer, RoadElementBuffer;
-    glGenVertexArrays(1, &RoadVertexArray);
-    glGenBuffers(1, &RoadVertexBuffer);
-    glGenBuffers(1, &RoadElementBuffer);
-    glBindVertexArray(RoadVertexArray);
+    GLuint roadVertexArray, roadVertexBuffer, roadElementBuffer;
+    glGenVertexArrays(1, &roadVertexArray);
+    glGenBuffers(1, &roadVertexBuffer);
+    glGenBuffers(1, &roadElementBuffer);
+    glBindVertexArray(roadVertexArray);
 
-    glBindBuffer(GL_ARRAY_BUFFER, RoadVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(roadVerticies), roadVerticies, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, roadVertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(roadVertices), roadVertices, GL_STATIC_DRAW);
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, RoadElementBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, roadElementBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(roadIndices), roadIndices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 3 * 2];
+
+    for (int i = 0; i < NUMBER_OF_ROADS; i++)
+    {
+        setLine(roads[i], i, roadVertices, lineVertices);
+    }
+
+    GLuint lineVertexArray, lineVertexBuffer;
+    glGenVertexArrays(1, &lineVertexArray);
+    glGenBuffers(1, &lineVertexBuffer);
+    glBindVertexArray(lineVertexArray);
+
+    glBindBuffer(GL_ARRAY_BUFFER, lineVertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(lineVertices), lineVertices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
@@ -82,16 +102,21 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
-        glBindVertexArray(RoadVertexArray);
-        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+        int vertexColorLocation = glGetUniformLocation(shaderProgram, "color");
+        glUniform4f(vertexColorLocation, 0.31f, 0.31f, 0.31f, 1.0f);
+        glBindVertexArray(roadVertexArray);
+        glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
+        glUniform4f(vertexColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+        glBindVertexArray(lineVertexArray);
+        glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(1, &RoadVertexArray);
-    glDeleteBuffers(1, &RoadVertexBuffer);
-    glDeleteBuffers(1, &RoadElementBuffer);
+    glDeleteVertexArrays(1, &roadVertexArray);
+    glDeleteBuffers(1, &roadVertexBuffer);
+    glDeleteBuffers(1, &roadElementBuffer);
     glDeleteProgram(shaderProgram);
 
     glfwTerminate();
