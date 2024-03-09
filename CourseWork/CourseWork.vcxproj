@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="backup.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment_shader.glsl">
@@ -144,6 +143,7 @@
     <None Include="vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cars.h" />
     <ClInclude Include="road.h" />
     <ClInclude Include="shader.h" />
   </ItemGroup>
