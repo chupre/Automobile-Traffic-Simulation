@@ -50,12 +50,14 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
-    GLfloat roadVertices[NUMBER_OF_ROADS * 4 * 3];
+    GLfloat roadVertices[NUMBER_OF_ROADS * 4 * 3 * 2];
     GLint roadIndices[NUMBER_OF_ROADS * 6];
     road roads[NUMBER_OF_ROADS];
 
     setRoad(&roads[0], 0, roadVertices, roadIndices, -0.2f, -1.0f, 2.0f, NORTH);
-    //setRoad(&roads[1], 1, roadVertices, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
+    setRoad(&roads[1], 1, roadVertices, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
+    //setRoad(&roads[0], 0, roadVertices, roadIndices, -1.0f, 0.2f, 2.0f, EAST);
+    //setRoad(&roads[1], 1, roadVertices, roadIndices, 1.0f, -0.2f, 2.0f, WEST);
 
     GLuint roadVertexArray, roadVertexBuffer, roadElementBuffer;
     glGenVertexArrays(1, &roadVertexArray);
@@ -69,13 +71,15 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, roadElementBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(roadIndices), roadIndices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 3 * 2];
+    GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 3 * 2 * 2];
 
     for (int i = 0; i < NUMBER_OF_ROADS; i++)
     {
@@ -90,13 +94,15 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, lineVertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(lineVertices), lineVertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    GLfloat carVertices[MAX_CARS * 4 * 3];
+    GLfloat carVertices[MAX_CARS * 4 * 3 * 2];
     GLint carIndices[MAX_CARS * 6];
     car cars[MAX_CARS];
     setCarsToDefault(cars);
@@ -114,12 +120,16 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(carIndices), carIndices, GL_DYNAMIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     
+    clock_t before = clock() / CLOCKS_PER_SEC;
+
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
@@ -128,43 +138,43 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
-        int vertexColorLocation = glGetUniformLocation(shaderProgram, "color");
-        glUniform4f(vertexColorLocation, 0.31f, 0.31f, 0.31f, 1.0f);
         glBindVertexArray(roadVertexArray);
         glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
-        glUniform4f(vertexColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
-        glBindVertexArray(lineVertexArray);
+        glBindVertexArray(lineVertexArray); 
         glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
 
         glBindVertexArray(carVertexArray);
-        //roads[0].lines[0].cells[0] = 3;
-        if (freeCars)
-        {
-            int counter = freeCars;
-            for (int i = 0; i < counter; i++)
-            {
-                GLint lineIndex, roadIndex;
-                GLint carIndex = getFreeCarIndex(cars);
-                bool freeSpot = getFreeSpotAddress(roads, &lineIndex, &roadIndex);
 
-                if (freeSpot)
+        int sec = (clock() - before) / CLOCKS_PER_SEC;
+
+        if (sec - before == STEP_TIME)
+        {
+            before = sec;
+            if (freeCars)
+            {
+                int counter = freeCars;
+                for (int i = 0; i < counter; i++)
                 {
-                    setCar(&roads[roadIndex], carID, &cars[carIndex], carIndex, lineIndex, carVertices, carIndices);
-                    glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
-                    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
-                    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
-                    freeCars--;
-                    carID++;
+                    GLint lineIndex, roadIndex;
+                    GLint carIndex = getFreeCarIndex(cars);
+                    bool freeSpot = getFreeSpotAddress(roads, &lineIndex, &roadIndex);
+
+                    if (freeSpot)
+                    {
+                        setCar(&roads[roadIndex], carID, &cars[carIndex], carIndex, lineIndex, carVertices, carIndices);
+                        glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
+                        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
+                        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
+                        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
+                        freeCars--;
+                        carID++;
+                    }
                 }
             }
+            step();
         }
 
-        //car functions
-        //step()
-        glUniform4f(vertexColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
         glDrawElements(GL_TRIANGLES, MAX_CARS * 6, GL_UNSIGNED_INT, 0);
-        //sleep (?) -> animation
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -178,6 +188,7 @@ int main()
     glfwTerminate();
     return 0;
 }
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {

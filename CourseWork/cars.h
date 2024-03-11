@@ -1,15 +1,15 @@
 #include <road.h>
-#include <stdlib.h>
-#include <stddef.h>
-#define MAX_CARS 2
+#include <time.h>
+#define MAX_CARS 4
 #define CAR_WIDTH ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f
 #define CAR_LENGHT CAR_WIDTH * 1.5f
+#define STEP_TIME 3
 
 typedef struct
 {
 	GLuint* position;
 	GLuint ID;
-	GLfloat velocity;
+	GLint velocity;
 	enum direction target;
 	bool isActive;
 } car;
@@ -17,6 +17,7 @@ typedef struct
 
 void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLfloat* carVertices, GLint* carIndices);
 void setCarsToDefault(car* cars);
+void step();
 bool getFreeSpotAddress(road* roads, GLint* lineIndex, GLint* roadIndex);
 GLint getFreeCarIndex(car* cars);
 
@@ -42,6 +43,7 @@ bool getFreeSpotAddress(road* roads, GLint* lineIndex, GLint* roadIndex)
 	return false;
 }
 
+
 void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLfloat* carVertices, GLint* carIndices)
 {
 	enum direction carDir = Road->dir;
@@ -51,34 +53,92 @@ void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLf
 
 	switch (carDir)
 	{
-		case NORTH:
-			y1 = -1.0f;
-			y2 = y1 + CAR_LENGHT;
-			break;
-		case SOUTH:
-			y1 = 1.0f;
-			y2 = y1 - CAR_LENGHT;
-			break;
-		case EAST:
-			y1 = x1;
-			y2 = x2;
-			x1 = -1.0f;
-			x2 = -1.0f + CAR_LENGHT;
-			break;
-		case WEST:
-			y1 = x1;
-			y2 = x2;
-			x1 = 1.0f;
-			x2 = 1.0f - CAR_LENGHT;
-			break;
+	case NORTH:
+		y1 = -1.0f;
+		y2 = y1 + CAR_LENGHT;
+		break;
+	case SOUTH:
+		y1 = 1.0f;
+		y2 = y1 - CAR_LENGHT;
+		break;
+	case EAST:
+		y1 = x1;
+		y2 = x2;
+		x1 = -1.0f;
+		x2 = -1.0f + CAR_LENGHT;
+		break;
+	case WEST:
+		y1 = x1;
+		y2 = x2;
+		x1 = 1.0f;
+		x2 = 1.0f - CAR_LENGHT;
+		break;
 	}
 
 	Road->lines[lineIndex].cells[0] = ID;
 	Car->target = rand() % 4;
-	Car->velocity = 1.0f;
+	Car->velocity = 1;
 	Car->ID = ID;
 	Car->position = &Road->lines[lineIndex].cells[0];
 	Car->isActive = true;
+
+	switch (Car->target)
+	{
+
+	case 0: 
+	{
+		GLfloat vertices[] =
+		{
+			x1, y1, 0.0f, 1.0f, 0.0f, 0.0f,
+			x2, y1, 0.0f, 1.0f, 0.0f, 0.0f,
+			x1, y2, 0.0f, 1.0f, 0.0f, 0.0f,
+			x2, y2 ,0.0f, 1.0f, 0.0f, 0.0f
+		};
+		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+		Car->target = NORTH;
+		break;
+	}
+	case 1:
+	{
+		GLfloat vertices[] =
+		{
+			x1, y1, 0.0f, 0.0f, 1.0f, 0.0f,
+			x2, y1, 0.0f, 0.0f, 1.0f, 0.0f,
+			x1, y2, 0.0f, 0.0f, 1.0f, 0.0f,
+			x2, y2 ,0.0f, 0.0f, 1.0f, 0.0f
+		};
+		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+		Car->target = SOUTH;
+		break;
+	}
+	case 2:
+	{
+		GLfloat vertices[] =
+		{
+			x1, y1, 0.0f, 0.0f, 0.0f, 1.0f,
+			x2, y1, 0.0f, 0.0f, 0.0f, 1.0f,
+			x1, y2, 0.0f, 0.0f, 0.0f, 1.0f,
+			x2, y2 ,0.0f, 0.0f, 0.0f, 1.0f
+		};
+		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+		Car->target = EAST;
+		break;
+	}
+	case 3:
+	{
+		GLfloat vertices[] =
+		{
+			x1, y1, 0.0f, 1.0f, 1.0f, 0.0f,
+			x2, y1, 0.0f, 1.0f, 1.0f, 0.0f,
+			x1, y2, 0.0f, 1.0f, 1.0f, 0.0f,
+			x2, y2 ,0.0f, 1.0f, 1.0f, 0.0f
+		};
+		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+		Car->target = WEST;
+		break;
+	}
+
+	}
 
 	GLint indeces[] =
 	{
@@ -87,17 +147,8 @@ void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLf
 	};
 
 	memcpy(&carIndices[carIndex * 6], indeces, sizeof(GLint) * 6);
-
-	GLfloat vertices[] =
-	{
-		x1, y1, 0.0f,
-		x2, y1, 0.0f,
-		x1, y2, 0.0f,
-		x2, y2 ,0.0f
-	};
-
-	memcpy(&carVertices[carIndex * 3 * 4], vertices, sizeof(GLfloat) * 4 * 3);
 }
+
 
 GLint getFreeCarIndex(car* cars)
 {
@@ -112,6 +163,7 @@ GLint getFreeCarIndex(car* cars)
 	return EMPTY;
 }
 
+
 void setCarsToDefault(car* cars)
 {
 	for (int i = 0; i < MAX_CARS; i++)
@@ -124,3 +176,8 @@ void setCarsToDefault(car* cars)
 	}
 }
 
+
+void step()
+{
+
+}
