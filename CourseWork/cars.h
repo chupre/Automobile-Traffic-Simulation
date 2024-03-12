@@ -1,6 +1,6 @@
 #include <road.h>
 #include <time.h>
-#define MAX_CARS 4
+#define MAX_CARS 64
 #define CAR_WIDTH ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f
 #define CAR_LENGHT CAR_WIDTH * 1.5f
 #define STEP_TIME 3
@@ -17,7 +17,9 @@ typedef struct
 
 void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLfloat* carVertices, GLint* carIndices);
 void setCarsToDefault(car* cars);
-void step();
+void getCarRealPos(GLfloat* realPos, GLint carIndex, GLfloat* carVertices);
+void moveCars(car* cars, GLfloat* carVertices);
+void step(car* cars);
 bool getFreeSpotAddress(road* roads, GLint* lineIndex, GLint* roadIndex);
 GLint getFreeCarIndex(car* cars);
 
@@ -177,7 +179,33 @@ void setCarsToDefault(car* cars)
 }
 
 
-void step()
+void getCarRealPos(GLfloat* realPos, GLint carIndex, GLfloat* carVertices)
 {
 
+}
+
+
+void moveCars(car* cars, GLfloat* carVertices)
+{
+	for (int i = 0; i < MAX_CARS; i++)
+	{
+		if (cars[i].isActive)
+		{
+			GLfloat* carRealPos[4 * 3];
+			getCarRealPos(&carRealPos, i, carVertices);
+		}
+	}
+}
+
+
+//Updates cars' positions in cells and their velocities.
+void step(car* cars)
+{
+	for (int i = 0; i < MAX_CARS; i++)
+	{
+		if (cars[i].isActive)
+		{
+			cars[i].position += cars[i].velocity;
+		}
+	}
 }

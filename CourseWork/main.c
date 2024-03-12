@@ -171,9 +171,11 @@ int main()
                     }
                 }
             }
-            step();
+
+            step(cars);
         }
 
+        moveCars(cars, carVertices);
         glDrawElements(GL_TRIANGLES, MAX_CARS * 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
