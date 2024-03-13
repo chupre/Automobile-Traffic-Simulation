@@ -9,12 +9,28 @@
 #include <string.h>
 
 
-
-enum direction { NORTH, SOUTH, EAST, WEST };
+enum direction { NORTH, SOUTH, EAST, WEST, NONE = EMPTY };
 
 typedef struct
 {
-    GLint cells[NUMBER_OF_CELLS];
+    GLint road;
+    GLint line;
+    GLint cell;
+} RLC;
+
+typedef struct
+{
+    RLC currCell;
+    RLC nextCell;
+    GLint velocity;
+    enum direction target;
+    enum direction overtake;
+    bool isActive;
+} car;
+
+typedef struct
+{
+    car* cells[NUMBER_OF_CELLS];
     GLfloat carSpawnCoord;
 } line;
 
@@ -25,8 +41,9 @@ typedef struct
     line lines[NUMBER_OF_LINES + 1];
 } road;
 
+
 void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, enum direction dir);
-void setLine(road* Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices);
+void setLines(road* Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices);
 
 
 void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, enum direction dir)
@@ -55,6 +72,10 @@ void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadInd
         {
             Road->isEdge = true;
         }
+        else
+        {
+            Road->isEdge = false;
+        }
 
         memcpy(&roadVerticies[roadIndex * 3 * 4 * 2], verticies, sizeof(GLfloat) * 4 * 3 * 2);
     }
@@ -72,6 +93,10 @@ void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadInd
         if (start_y - 1.0f < ERROR_LIMIT)
         {
             Road->isEdge = true;
+        }
+        else
+        {
+            Road->isEdge = false;
         }
 
         memcpy(&roadVerticies[roadIndex * 3 * 4 * 2], verticies, sizeof(GLfloat) * 4 * 3 * 2);
@@ -91,6 +116,10 @@ void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadInd
         {
             Road->isEdge = true;
         }
+        else
+        {
+            Road->isEdge = false;
+        }
 
         memcpy(&roadVerticies[roadIndex * 3 * 4 * 2], verticies, sizeof(GLfloat) * 4 * 3 * 2);
     }
@@ -109,15 +138,19 @@ void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadInd
         {
             Road->isEdge = true;
         }
+        else
+        {
+            Road->isEdge = false;
+        }
 
         memcpy(&roadVerticies[roadIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
     }
 }
 
 
-void setLine(road *Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices)
+void setLines(road *Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices)
 {
-    GLfloat stride = ROAD_WIDTH * 2 / ((GLfloat)NUMBER_OF_LINES + 1.0f);
+    GLfloat stride = ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f);
     int i;
 
     if (Road->dir == NORTH || Road->dir == SOUTH)
@@ -137,9 +170,9 @@ void setLine(road *Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVe
                 x, y2, 0.0f, 1.0f, 1.0f, 1.0f
             };
             
-            memcpy(&lineVertices[i * 3 * 2 * 2 + roadIndex * 6 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 3 * 2 * 2);
+            memcpy(&lineVertices[i * 6 * 2 + roadIndex * 6 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 6 * 2);
             memset(Road->lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
-            Road->lines[i].carSpawnCoord = x;
+            Road->lines[i].carSpawnCoord = x; // косвенное значение.Уточняется в setCar()
         }
         memset(Road->lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
         Road->lines[i].carSpawnCoord = x + stride; 
@@ -162,7 +195,7 @@ void setLine(road *Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVe
                 x2, y, 0.0f, 1.0f, 1.0f, 1.0f
             };
 
-            memcpy(&lineVertices[i * 3 * 2 * 2 + roadIndex * 6 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 3 * 2 * 2);
+            memcpy(&lineVertices[i * 6 * 2 + roadIndex * 6 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 6 * 2);
             memset(Road->lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
             Road->lines[i].carSpawnCoord = y;
         }

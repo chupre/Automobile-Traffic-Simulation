@@ -1,30 +1,21 @@
 #include <road.h>
 #include <time.h>
-#define MAX_CARS 64
-#define CAR_WIDTH ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f
-#define CAR_LENGHT CAR_WIDTH * 1.5f
+#define MAX_CARS 4
+#define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
+#define CAR_LENGHT (CAR_WIDTH * 1.5f)
 #define STEP_TIME 3
 
-typedef struct
-{
-	GLuint* position;
-	GLuint ID;
-	GLint velocity;
-	enum direction target;
-	bool isActive;
-} car;
 
-
-void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLfloat* carVertices, GLint* carIndices);
+void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVertices, GLint* carIndices);
 void setCarsToDefault(car* cars);
 void getCarRealPos(GLfloat* realPos, GLint carIndex, GLfloat* carVertices);
 void moveCars(car* cars, GLfloat* carVertices);
 void step(car* cars);
-bool getFreeSpotAddress(road* roads, GLint* lineIndex, GLint* roadIndex);
+void getFreeSpotAddress(road* roads, RLC* address);
 GLint getFreeCarIndex(car* cars);
 
 
-bool getFreeSpotAddress(road* roads, GLint* lineIndex, GLint* roadIndex)
+void getFreeSpotAddress(road* roads, RLC* address)
 {
 	for (int i = 0; i < NUMBER_OF_ROADS; i++)
 	{
@@ -34,22 +25,20 @@ bool getFreeSpotAddress(road* roads, GLint* lineIndex, GLint* roadIndex)
 			{
 				if (roads[i].lines[j].cells[0] == EMPTY)
 				{
-					*lineIndex = j;
-					*roadIndex = i;
-					return true;
+					address->road = i;
+					address->line = j;
+					address->cell = 0;
 				}
 			}
 		}
 	}
-
-	return false;
 }
 
 
-void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLfloat* carVertices, GLint* carIndices)
+void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVertices, GLint* carIndices)
 {
-	enum direction carDir = Road->dir;
-	GLfloat x1 = Road->lines[lineIndex].carSpawnCoord - CAR_WIDTH;
+	enum direction carDir = roads[address.road].dir;
+	GLfloat x1 = roads[address.road].lines[address.line].carSpawnCoord - CAR_WIDTH;
 	GLfloat x2 = x1 - CAR_WIDTH;
 	GLfloat y1, y2;
 
@@ -77,12 +66,12 @@ void setCar(road* Road, GLint ID, car* Car, GLint carIndex, GLint lineIndex, GLf
 		break;
 	}
 
-	Road->lines[lineIndex].cells[0] = ID;
+	roads[address.road].lines[address.line].cells[address.cell] = &Car;
 	Car->target = rand() % 4;
 	Car->velocity = 1;
-	Car->ID = ID;
-	Car->position = &Road->lines[lineIndex].cells[0];
 	Car->isActive = true;
+	memcpy(&Car->currCell, &address, sizeof(RLC));
+	memset(&Car->nextCell, EMPTY, sizeof(RLC));
 
 	switch (Car->target)
 	{
@@ -170,11 +159,16 @@ void setCarsToDefault(car* cars)
 {
 	for (int i = 0; i < MAX_CARS; i++)
 	{
-		cars[i].ID = EMPTY;
-		cars[i].position = EMPTY;
-		cars[i].target = EMPTY;
+		cars[i].currCell.road = EMPTY;
+		cars[i].currCell.line = EMPTY;
+		cars[i].currCell.cell = EMPTY;
+		cars[i].nextCell.road = EMPTY;
+		cars[i].nextCell.line = EMPTY;
+		cars[i].nextCell.cell = EMPTY;
+		cars[i].target = NONE;
 		cars[i].velocity = EMPTY;
 		cars[i].isActive = false;
+		cars[i].overtake = NONE;
 	}
 }
 
@@ -205,7 +199,7 @@ void step(car* cars)
 	{
 		if (cars[i].isActive)
 		{
-			cars[i].position += cars[i].velocity;
+			
 		}
 	}
 }

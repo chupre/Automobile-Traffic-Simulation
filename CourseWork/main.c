@@ -12,7 +12,6 @@ void processInput(GLFWwindow* window);
 GLuint WINDOW_WIDTH = 800;
 GLuint WINDOW_HEIGHT = 600;
 GLchar WINDOW_NAME[] = "Simulation of automobile traffic BETA";
-GLuint carID = 0;
 
 int main()
 {
@@ -83,7 +82,7 @@ int main()
 
     for (int i = 0; i < NUMBER_OF_ROADS; i++)
     {
-        setLine(&roads[i], i, roadVertices, lineVertices);
+        setLines(&roads[i], i, roadVertices, lineVertices);
     }
 
     GLuint lineVertexArray, lineVertexBuffer;
@@ -155,19 +154,18 @@ int main()
                 int counter = freeCars;
                 for (int i = 0; i < counter; i++)
                 {
-                    GLint lineIndex, roadIndex;
+                    RLC freeSpot;
+                    getFreeSpotAddress(roads, &freeSpot);
                     GLint carIndex = getFreeCarIndex(cars);
-                    bool freeSpot = getFreeSpotAddress(roads, &lineIndex, &roadIndex);
 
-                    if (freeSpot)
+                    if (freeSpot.road != EMPTY)
                     {
-                        setCar(&roads[roadIndex], carID, &cars[carIndex], carIndex, lineIndex, carVertices, carIndices);
+                        setCar(roads, &cars[carIndex], carIndex, freeSpot, carVertices, carIndices);
                         glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
                         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
                         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
                         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
                         freeCars--;
-                        carID++;
                     }
                 }
             }
