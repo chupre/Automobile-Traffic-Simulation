@@ -54,7 +54,7 @@ int main()
     road roads[NUMBER_OF_ROADS];
 
     setRoad(&roads[0], 0, roadVertices, roadIndices, -0.2f, -1.0f, 2.0f, NORTH);
-    setRoad(&roads[1], 1, roadVertices, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
+    //setRoad(&roads[1], 1, roadVertices, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
     //setRoad(&roads[0], 0, roadVertices, roadIndices, -1.0f, 0.2f, 2.0f, EAST);
     //setRoad(&roads[1], 1, roadVertices, roadIndices, 1.0f, -0.2f, 2.0f, WEST);
 
@@ -129,6 +129,11 @@ int main()
     
     clock_t before = clock() / CLOCKS_PER_SEC;
 
+    mat4 carTrans;
+    glm_mat4_identity(carTrans);
+    mat4 identityTrans;
+    glm_mat4_identity(identityTrans);
+
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
@@ -137,43 +142,52 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
+        
+        GLuint transformLoc = glGetUniformLocation(shaderProgram, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, identityTrans);
+
         glBindVertexArray(roadVertexArray);
         glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(lineVertexArray); 
         glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
-
         glBindVertexArray(carVertexArray);
+        
+        glm_translate_y(carTrans, 0.0001f);
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, carTrans);
+
+        if (freeCars)
+        {
+            int counter = freeCars;
+            for (int i = 0; i < counter; i++)
+            {
+                RLC freeSpot;
+                getFreeSpotAddress(roads, &freeSpot);
+                GLint carIndex = getFreeCarIndex(cars);
+
+                if (freeSpot.road != EMPTY)
+                {
+                    setCar(roads, &cars[carIndex], carIndex, freeSpot, carVertices, carIndices);
+                    glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
+                    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
+                    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
+                    freeCars--;
+                }
+            }
+        }
 
         int sec = (clock() - before) / CLOCKS_PER_SEC;
 
         if (sec - before == STEP_TIME)
         {
             before = sec;
-            if (freeCars)
-            {
-                int counter = freeCars;
-                for (int i = 0; i < counter; i++)
-                {
-                    RLC freeSpot;
-                    getFreeSpotAddress(roads, &freeSpot);
-                    GLint carIndex = getFreeCarIndex(cars);
-
-                    if (freeSpot.road != EMPTY)
-                    {
-                        setCar(roads, &cars[carIndex], carIndex, freeSpot, carVertices, carIndices);
-                        glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
-                        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
-                        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
-                        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
-                        freeCars--;
-                    }
-                }
-            }
-
             step(cars);
         }
 
-        moveCars(cars, carVertices);
+        //TO-DO: 
+        // 1. create transformation matrix array (set identity matrix by default)
+        // 2. car EBO should store indices only for one car. We render cars separately and for each car we BufferSubData it's indices to EBO, apply transformation matrix to uniform and draw the car.
+
         glDrawElements(GL_TRIANGLES, MAX_CARS * 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);

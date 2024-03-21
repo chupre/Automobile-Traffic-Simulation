@@ -8,7 +8,6 @@
 #define EMPTY -1
 #include <string.h>
 
-
 enum direction { NORTH, SOUTH, EAST, WEST, NONE = EMPTY };
 
 typedef struct
