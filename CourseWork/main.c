@@ -5,19 +5,14 @@
 #include <road.h>
 #include <shader.h>
 #include <cars.h>
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
+#include <gl.h>
 
 GLuint WINDOW_WIDTH = 800;
 GLuint WINDOW_HEIGHT = 600;
-GLchar WINDOW_NAME[] = "Simulation of automobile traffic BETA";
+GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
 
 int main()
 {
-    const GLchar* vertexShaderSource = getShaderContent("vertex_shader.glsl");
-    const GLchar* fragmentShaderSource = getShaderContent("fragment_shader.glsl");
-
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -27,27 +22,11 @@ int main()
     glfwMakeContextCurrent(window);
 
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    GLuint vertexShader;
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    
-    GLuint fragmentShader;
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
     GLuint shaderProgram;
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    genShader(&shaderProgram);
     
     GLfloat roadVertices[NUMBER_OF_ROADS * 4 * 3 * 2];
     GLint roadIndices[NUMBER_OF_ROADS * 6];
@@ -117,7 +96,7 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(carVertices), carVertices, GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(carIndices), carIndices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint) * 6, (GLvoid*)0, GL_DYNAMIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
@@ -129,10 +108,9 @@ int main()
     
     clock_t before = clock() / CLOCKS_PER_SEC;
 
-    mat4 carTrans;
-    glm_mat4_identity(carTrans);
-    mat4 identityTrans;
+    mat4 identityTrans, carTrans[MAX_CARS];
     glm_mat4_identity(identityTrans);
+    glm_mat4_identity_array(carTrans, MAX_CARS);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -151,9 +129,6 @@ int main()
         glBindVertexArray(lineVertexArray); 
         glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
         glBindVertexArray(carVertexArray);
-        
-        glm_translate_y(carTrans, 0.0001f);
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, carTrans);
 
         if (freeCars)
         {
@@ -176,6 +151,23 @@ int main()
             }
         }
 
+        //demo 
+        GLfloat velocities[] = { 0.0001f, 0.00015f };
+        for (int i = 0; i < MAX_CARS; i++)
+        {
+            if (cars[i].isActive)
+            {
+                // get normal matrix init
+                glm_translate_y(carTrans[i], velocities[i]);
+                GLint currCarIndices[6];
+                memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
+                glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(currCarIndices), currCarIndices);
+                glUniformMatrix4fv(transformLoc, 1, GL_FALSE, carTrans[i]);
+                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+            }
+        }
+
         int sec = (clock() - before) / CLOCKS_PER_SEC;
 
         if (sec - before == STEP_TIME)
@@ -183,12 +175,6 @@ int main()
             before = sec;
             step(cars);
         }
-
-        //TO-DO: 
-        // 1. create transformation matrix array (set identity matrix by default)
-        // 2. car EBO should store indices only for one car. We render cars separately and for each car we BufferSubData it's indices to EBO, apply transformation matrix to uniform and draw the car.
-
-        glDrawElements(GL_TRIANGLES, MAX_CARS * 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -203,16 +189,4 @@ int main()
     return 0;
 }
 
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-
-
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
 

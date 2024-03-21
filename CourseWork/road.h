@@ -45,6 +45,7 @@ void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadInd
 void setLines(road* Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices);
 
 
+
 void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, enum direction dir)
 {
     Road->dir = dir;
