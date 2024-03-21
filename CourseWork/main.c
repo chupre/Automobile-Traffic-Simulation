@@ -5,6 +5,7 @@
 #include <road.h>
 #include <shader.h>
 #include <cars.h>
+#include <map.h>
 #include <gl.h>
 
 GLuint WINDOW_WIDTH = 800;
@@ -29,13 +30,12 @@ int main()
     genShader(&shaderProgram);
     
     GLfloat roadVertices[NUMBER_OF_ROADS * 4 * 3 * 2];
+    GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 3 * 2 * 2];
     GLint roadIndices[NUMBER_OF_ROADS * 6];
+
     road roads[NUMBER_OF_ROADS];
 
-    setRoad(&roads[0], 0, roadVertices, roadIndices, -0.2f, -1.0f, 2.0f, NORTH);
-    //setRoad(&roads[1], 1, roadVertices, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
-    //setRoad(&roads[0], 0, roadVertices, roadIndices, -1.0f, 0.2f, 2.0f, EAST);
-    //setRoad(&roads[1], 1, roadVertices, roadIndices, 1.0f, -0.2f, 2.0f, WEST);
+    setMap(roads, roadVertices, roadIndices, lineVertices);
 
     GLuint roadVertexArray, roadVertexBuffer, roadElementBuffer;
     glGenVertexArrays(1, &roadVertexArray);
@@ -56,13 +56,6 @@ int main()
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-
-    GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 3 * 2 * 2];
-
-    for (int i = 0; i < NUMBER_OF_ROADS; i++)
-    {
-        setLines(&roads[i], i, roadVertices, lineVertices);
-    }
 
     GLuint lineVertexArray, lineVertexBuffer;
     glGenVertexArrays(1, &lineVertexArray);
@@ -151,13 +144,13 @@ int main()
             }
         }
 
-        //demo 
-        GLfloat velocities[] = { 0.0001f, 0.00015f };
+        //current velocities are just demo, car's velocities should be got from getCarRealVelocity()
+        GLfloat velocities[] = { 0.001f, 0.0015f };
         for (int i = 0; i < MAX_CARS; i++)
         {
             if (cars[i].isActive)
             {
-                // get normal matrix init
+                //glm_translate_y is just demo version, car transformations should be set by getCarTransformations()
                 glm_translate_y(carTrans[i], velocities[i]);
                 GLint currCarIndices[6];
                 memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);

@@ -1,5 +1,4 @@
 #pragma once
-#define NUMBER_OF_ROADS 2
 #define NUMBER_OF_LINES 1
 #define NUMBER_OF_CELLS 20
 #define CELL_LENGHT 0.1f
@@ -43,7 +42,6 @@ typedef struct
 
 void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, enum direction dir);
 void setLines(road* Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices);
-
 
 
 void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, enum direction dir)
@@ -172,7 +170,7 @@ void setLines(road *Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineV
             
             memcpy(&lineVertices[i * 6 * 2 + roadIndex * 6 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 6 * 2);
             memset(Road->lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
-            Road->lines[i].carSpawnCoord = x; // косвенное значение.Уточняется в setCar()
+            Road->lines[i].carSpawnCoord = x;
         }
         memset(Road->lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
         Road->lines[i].carSpawnCoord = x + stride; 

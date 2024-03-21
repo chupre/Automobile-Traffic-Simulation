@@ -1,4 +1,5 @@
 #include <road.h>
+#include <map.h>
 #include <time.h>
 #define MAX_CARS 4
 #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
@@ -8,10 +9,11 @@
 
 void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVertices, GLint* carIndices);
 void setCarsToDefault(car* cars);
-void getCarRealPos(GLfloat* realPos, GLint carIndex, GLfloat* carVertices);
-void moveCars(car* cars, GLfloat* carVertices);
-void step(car* cars);
 void getFreeSpotAddress(road* roads, RLC* address);
+void getCarRealPos();
+void getCarRealVelocity();
+void getCarTransformation();
+void step(car* cars);
 GLint getFreeCarIndex(car* cars);
 
 
@@ -173,22 +175,21 @@ void setCarsToDefault(car* cars)
 }
 
 
-void getCarRealPos(GLfloat* realPos, GLint carIndex, GLfloat* carVertices)
+void getCarRealPos()
 {
 
 }
 
 
-void moveCars(car* cars, GLfloat* carVertices)
+void getCarRealVelocity()
 {
-	for (int i = 0; i < MAX_CARS; i++)
-	{
-		if (cars[i].isActive)
-		{
-			GLfloat* carRealPos[4 * 3];
-			getCarRealPos(&carRealPos, i, carVertices);
-		}
-	}
+
+}
+
+
+void getCarTransformation()
+{
+
 }
 
 
