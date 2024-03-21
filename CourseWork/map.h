@@ -37,8 +37,8 @@ void setMap(road* roads, GLfloat* roadVertices, GLfloat* roadIndices, GLfloat* l
 		setRoad(&roads[1], 1, roadVertices, roadIndices, 0.2f, 1.0f, 2.0f, SOUTH);
 		break;
 	case TWO_ROADS_WE:
-		setRoad(&roads[1], 1, roadVertices, roadIndices, 1.0f, -0.2f, 2.0f, WEST);
-		setRoad(&roads[0], 0, roadVertices, roadIndices, -1.0f, 0.2f, 2.0f, EAST);
+		setRoad(&roads[0], 1, roadVertices, roadIndices, 1.0f, -0.2f, 2.0f, WEST);
+		setRoad(&roads[1], 0, roadVertices, roadIndices, -1.0f, 0.2f, 2.0f, EAST);
 		break;
 	}
 

@@ -166,6 +166,7 @@ int main()
         if (sec - before == STEP_TIME)
         {
             before = sec;
+            printf("Step: %d seconds\n", sec);
             step(cars);
         }
 

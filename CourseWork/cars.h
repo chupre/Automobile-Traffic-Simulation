@@ -3,7 +3,7 @@
 #include <time.h>
 #define MAX_CARS 4
 #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
-#define CAR_LENGHT (CAR_WIDTH * 1.5f)
+#define CAR_LENGHT (CAR_WIDTH * 1.7f)
 #define STEP_TIME 3
 
 
@@ -58,13 +58,13 @@ void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVert
 		y1 = x1;
 		y2 = x2;
 		x1 = -1.0f;
-		x2 = -1.0f + CAR_LENGHT;
+		x2 = -1.0f + CAR_WIDTH;
 		break;
 	case WEST:
 		y1 = x1;
 		y2 = x2;
 		x1 = 1.0f;
-		x2 = 1.0f - CAR_LENGHT;
+		x2 = 1.0f - CAR_WIDTH;
 		break;
 	}
 
