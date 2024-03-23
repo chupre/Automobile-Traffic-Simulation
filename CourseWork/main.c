@@ -145,7 +145,7 @@ int main()
         }
 
         //current velocities are just demo, car's velocities should be got from getCarRealVelocity()
-        GLfloat velocities[] = { 0.001f, 0.0015f };
+        GLfloat velocities[] = { -0.001f, -0.0015f };
         for (int i = 0; i < MAX_CARS; i++)
         {
             if (cars[i].isActive)

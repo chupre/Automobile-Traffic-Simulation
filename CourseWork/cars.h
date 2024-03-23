@@ -39,7 +39,7 @@ void getFreeSpotAddress(road* roads, RLC* address)
 
 void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVertices, GLint* carIndices)
 {
-	enum direction carDir = roads[address.road].dir;
+	DIRECTION carDir = roads[address.road].dir;
 	GLfloat x1 = roads[address.road].lines[address.line].carSpawnCoord - CAR_WIDTH;
 	GLfloat x2 = x1 - CAR_WIDTH;
 	GLfloat y1, y2;

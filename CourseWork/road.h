@@ -7,7 +7,10 @@
 #define EMPTY -1
 #include <string.h>
 
-enum direction { NORTH, SOUTH, EAST, WEST, NONE = EMPTY };
+typedef enum 
+{
+    NORTH, SOUTH, EAST, WEST, NONE = EMPTY 
+} DIRECTION;
 
 typedef struct
 {
@@ -21,8 +24,8 @@ typedef struct
     RLC currCell;
     RLC nextCell;
     GLint velocity;
-    enum direction target;
-    enum direction overtake;
+    DIRECTION target;
+    DIRECTION overtake;
     bool isActive;
 } car;
 
@@ -35,16 +38,16 @@ typedef struct
 typedef struct
 {
     bool isEdge;
-    enum direction dir;
+    DIRECTION dir;
     line lines[NUMBER_OF_LINES + 1];
 } road;
 
 
-void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, enum direction dir);
+void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir);
 void setLines(road* Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices);
 
 
-void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, enum direction dir)
+void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir)
 {
     Road->dir = dir;
 
