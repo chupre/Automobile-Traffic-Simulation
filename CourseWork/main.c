@@ -3,9 +3,9 @@
 #include <glfw/glfw3.h>
 #include <cglm/cglm.h>
 #include <road.h>
+#include <map.h>
 #include <shader.h>
 #include <cars.h>
-#include <map.h>
 #include <gl.h>
 
 GLuint WINDOW_WIDTH = 800;
@@ -145,13 +145,13 @@ int main()
         }
 
         //current velocities are just demo, car's velocities should be got from getCarRealVelocity()
-        GLfloat velocities[] = { -0.001f, -0.0015f };
+        GLfloat velocities[] = { 0.001f, 0.0015f };
         for (int i = 0; i < MAX_CARS; i++)
         {
             if (cars[i].isActive)
             {
                 //glm_translate_y is just demo version, car transformations should be set by getCarTransformations()
-                glm_translate_y(carTrans[i], velocities[i]);
+                glm_translate_x(carTrans[i], velocities[i]);
                 GLint currCarIndices[6];
                 memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);

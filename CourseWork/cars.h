@@ -1,5 +1,3 @@
-#include <road.h>
-#include <map.h>
 #include <time.h>
 #define MAX_CARS 4
 #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)

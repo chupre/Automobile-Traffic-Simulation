@@ -1,10 +1,4 @@
 #pragma once
-#include <glad/glad.h> 
-#include <glfw/glfw3.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 
 char* getShaderContent(const GLchar* fileName)
 {
