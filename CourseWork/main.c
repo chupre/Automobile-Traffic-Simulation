@@ -1,16 +1,31 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <glad/glad.h> 
 #include <glfw/glfw3.h>
 #include <cglm/cglm.h>
+
+#define MAX_VERTEX_BUFFER 512 * 1024
+#define MAX_ELEMENT_BUFFER 128 * 1024
+#define NK_INCLUDE_FIXED_TYPES
+#define NK_INCLUDE_STANDARD_IO
+#define NK_INCLUDE_STANDARD_VARARGS
+#define NK_INCLUDE_DEFAULT_ALLOCATOR
+#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
+#define NK_INCLUDE_FONT_BAKING
+#define NK_INCLUDE_DEFAULT_FONT
+#define NK_IMPLEMENTATION
+#define NK_GLFW_GL3_IMPLEMENTATION
+#include <nuklear\nuklear.h>
+#include <nuklear\nuklear_glfw_gl3.h>
+
 #include <road.h>
 #include <map.h>
 #include <shader.h>
 #include <cars.h>
 #include <gl.h>
+#include <gui.h>
+#include <algorithms.h>
 
-GLuint WINDOW_WIDTH = 800;
-GLuint WINDOW_HEIGHT = 600;
-GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
 
 int main()
 {
@@ -20,11 +35,13 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
+    struct nk_glfw glfw = { 0 };
     glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, keyCallback);
 
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
     GLuint shaderProgram;
     genShader(&shaderProgram);
@@ -38,40 +55,10 @@ int main()
     setMap(roads, roadVertices, roadIndices, lineVertices);
 
     GLuint roadVertexArray, roadVertexBuffer, roadElementBuffer;
-    glGenVertexArrays(1, &roadVertexArray);
-    glGenBuffers(1, &roadVertexBuffer);
-    glGenBuffers(1, &roadElementBuffer);
-    glBindVertexArray(roadVertexArray);
-
-    glBindBuffer(GL_ARRAY_BUFFER, roadVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(roadVertices), roadVertices, GL_STATIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, roadElementBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(roadIndices), roadIndices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    initRoads(&roadVertexArray, &roadVertexBuffer, &roadElementBuffer, roadIndices, roadVertices);
 
     GLuint lineVertexArray, lineVertexBuffer;
-    glGenVertexArrays(1, &lineVertexArray);
-    glGenBuffers(1, &lineVertexBuffer);
-    glBindVertexArray(lineVertexArray);
-
-    glBindBuffer(GL_ARRAY_BUFFER, lineVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(lineVertices), lineVertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    initLines(&lineVertexArray, &lineVertexBuffer, lineVertices);
 
     GLfloat carVertices[MAX_CARS * 4 * 3 * 2];
     GLint carIndices[MAX_CARS * 6];
@@ -80,96 +67,86 @@ int main()
     GLint freeCars = MAX_CARS;
 
     GLuint carVertexArray, carVertexBuffer, carElementBuffer;
-    glGenVertexArrays(1, &carVertexArray);
-    glGenBuffers(1, &carVertexBuffer);
-    glGenBuffers(1, &carElementBuffer);
-    glBindVertexArray(carVertexArray);
-
-    glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(carVertices), carVertices, GL_DYNAMIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint) * 6, (GLvoid*)0, GL_DYNAMIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    initCars(&carVertexArray, &carVertexBuffer, &carElementBuffer, carIndices, carVertices);
     
-    clock_t before = clock() / CLOCKS_PER_SEC;
+    clock_t previousTime = clock() / CLOCKS_PER_SEC;
 
     mat4 identityTrans, carTrans[MAX_CARS];
     glm_mat4_identity(identityTrans);
     glm_mat4_identity_array(carTrans, MAX_CARS);
 
+    struct nk_context* context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
+    initFont(&glfw, context);
+
     while (!glfwWindowShouldClose(window))
     {
-        processInput(window);
+        initGUI(&glfw, context);
 
-        glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glUseProgram(shaderProgram);
-        
-        GLuint transformLoc = glGetUniformLocation(shaderProgram, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, identityTrans);
-
-        glBindVertexArray(roadVertexArray);
-        glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(lineVertexArray); 
-        glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
-        glBindVertexArray(carVertexArray);
-
-        if (freeCars)
+        if (!paused)
         {
-            int counter = freeCars;
-            for (int i = 0; i < counter; i++)
-            {
-                RLC freeSpot;
-                getFreeSpotAddress(roads, &freeSpot);
-                GLint carIndex = getFreeCarIndex(cars);
+            glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
 
-                if (freeSpot.road != EMPTY)
+            glUseProgram(shaderProgram);
+
+            GLuint transformLoc = glGetUniformLocation(shaderProgram, "transform");
+            glUniformMatrix4fv(transformLoc, 1, GL_FALSE, identityTrans);
+
+            glBindVertexArray(roadVertexArray);
+            glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
+            glBindVertexArray(lineVertexArray);
+            glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
+            glBindVertexArray(carVertexArray);
+
+            if (freeCars)
+            {
+                int counter = freeCars;
+                for (int i = 0; i < counter; i++)
                 {
-                    setCar(roads, &cars[carIndex], carIndex, freeSpot, carVertices, carIndices);
-                    glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
-                    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
-                    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
-                    freeCars--;
+                    RLC freeSpot;
+                    getFreeSpotAddress(roads, &freeSpot);
+                    GLint carIndex = getFreeCarIndex(cars);
+
+                    if (freeSpot.road != EMPTY)
+                    {
+                        setCar(roads, &cars[carIndex], carIndex, freeSpot, carVertices, carIndices);
+                        glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
+                        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
+                        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
+                        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
+                        freeCars--;
+                    }
                 }
             }
-        }
 
-        //current velocities are just demo, car's velocities should be got from getCarRealVelocity()
-        GLfloat velocities[] = { 0.001f, 0.0015f };
-        for (int i = 0; i < MAX_CARS; i++)
-        {
-            if (cars[i].isActive)
+            //current velocities are just demo, car's transform vectors should be got from getCarTranslateVector()
+            GLfloat velocities[] = { -0.001f, -0.0015f };
+            for (int i = 0; i < MAX_CARS; i++)
             {
-                //glm_translate_y is just demo version, car transformations should be set by getCarTransformations()
-                glm_translate_x(carTrans[i], velocities[i]);
-                GLint currCarIndices[6];
-                memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
-                glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(currCarIndices), currCarIndices);
-                glUniformMatrix4fv(transformLoc, 1, GL_FALSE, carTrans[i]);
-                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+                if (cars[i].isActive)
+                {
+                    //glm_translate_y is just demo version, car transformations should be set by getCarTranslateVector()
+                    glm_translate_y(carTrans[i], velocities[i]);
+                    GLint currCarIndices[6];
+                    memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);
+                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
+                    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(currCarIndices), currCarIndices);
+                    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, carTrans[i]);
+                    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+                }
+            }
+
+            int currTime = (clock() - previousTime) / CLOCKS_PER_SEC;
+
+            if (currTime - previousTime == STEP_TIME)
+            {
+                previousTime = currTime;
+                printf("Step: %d seconds\n", currTime);
+                step(cars);
             }
         }
 
-        int sec = (clock() - before) / CLOCKS_PER_SEC;
-
-        if (sec - before == STEP_TIME)
-        {
-            before = sec;
-            printf("Step: %d seconds\n", sec);
-            step(cars);
-        }
-
+        nk_glfw3_new_frame(&glfw);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -179,6 +156,7 @@ int main()
     glDeleteBuffers(1, &roadElementBuffer);
     glDeleteProgram(shaderProgram);
 
+    nk_glfw3_shutdown(&glfw);
     glfwTerminate();
     return 0;
 }

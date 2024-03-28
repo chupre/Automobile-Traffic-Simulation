@@ -45,7 +45,36 @@ typedef struct
 
 void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir);
 void setLines(road* Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineVertices);
+DIRECTION getRoadDir(car* car, road* roads);
+DIRECTION getOvertakeDir(DIRECTION roadDir);
+line* getLinePtr(RLC rlc, road* roads);
+void initCurrCellWithNextCell(car* car);
 
+
+DIRECTION getRoadDir(car* car, road* roads)
+{
+    return ((roads + car->currCell.road)->dir);
+}
+
+DIRECTION getOvertakeDir(DIRECTION roadDir)
+{
+    if (roadDir == NORTH) return EAST;
+    else if (roadDir == SOUTH) return WEST;
+    else if (roadDir == WEST) return NORTH;
+    else if (roadDir == EAST) return SOUTH;
+}
+
+
+line* getLinePtr(RLC rlc, road* roads) {
+    return (((roads + rlc.road)->lines + rlc.line)->cells);
+}
+
+void initCurrCellWithNextCell(car* car)
+{
+    car->currCell.road = car->nextCell.road;
+    car->currCell.line = car->nextCell.line;
+    car->currCell.cell = car->nextCell.cell;
+}
 
 void setRoad(road* Road, GLint roadIndex, GLfloat* roadVerticies, GLint* roadIndices, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir)
 {
