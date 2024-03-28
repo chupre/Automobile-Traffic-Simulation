@@ -17,6 +17,7 @@
 #define NK_GLFW_GL3_IMPLEMENTATION
 #include <nuklear\nuklear.h>
 #include <nuklear\nuklear_glfw_gl3.h>
+#include <style.c>
 
 #include <road.h>
 #include <map.h>
@@ -120,7 +121,7 @@ int main()
             }
 
             //current velocities are just demo, car's transform vectors should be got from getCarTranslateVector()
-            GLfloat velocities[] = { -0.001f, -0.0015f };
+            GLfloat velocities[] = { -0.0001f, -0.00015f };
             for (int i = 0; i < MAX_CARS; i++)
             {
                 if (cars[i].isActive)

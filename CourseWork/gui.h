@@ -8,7 +8,7 @@ void initGUI(struct nk_glfw* glfw, struct nk_context* context)
     if (nk_begin(context, "PauseMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
         nk_layout_row_dynamic(context, 80, 1);
-        nk_label(context, "MENU", NK_TEXT_CENTERED);
+        nk_label(context, "Main Menu", NK_TEXT_CENTERED);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
@@ -39,6 +39,69 @@ void initGUI(struct nk_glfw* glfw, struct nk_context* context)
         }
 
         nk_layout_row_end(context);
+
+        nk_layout_row_dynamic(context, 15, 1);
+
+        nk_layout_row_dynamic(context, 30, 1);
+        nk_label(context, "Theme", NK_TEXT_CENTERED);
+
+        static int op = THEME_BLACK;
+
+        nk_layout_row_begin(context, NK_STATIC, 30, 2);
+        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_spacer(context);
+        nk_layout_row_push(context, 150);
+        if (nk_option_label(context, "Black", op == THEME_BLACK))
+        {
+            op = THEME_BLACK;
+            set_style(context, op);
+        }
+        nk_layout_row_end(context);
+
+        nk_layout_row_begin(context, NK_STATIC, 30, 2);
+        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_spacer(context);
+        nk_layout_row_push(context, 150);
+        if (nk_option_label(context, "Blue", op == THEME_BLUE))
+        {
+            op = THEME_BLUE;
+            set_style(context, op);
+        }
+        nk_layout_row_end(context);
+
+        nk_layout_row_begin(context, NK_STATIC, 30, 2);
+        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_spacer(context);
+        nk_layout_row_push(context, 150);
+        if (nk_option_label(context, "Dark", op == THEME_DARK))
+        {
+            op = THEME_DARK;
+            set_style(context, op);
+        }
+        nk_layout_row_end(context);
+
+        nk_layout_row_begin(context, NK_STATIC, 30, 2);
+        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_spacer(context);
+        nk_layout_row_push(context, 150);
+        if (nk_option_label(context, "Red", op == THEME_RED))
+        {
+            op = THEME_RED;
+            set_style(context, op);
+        }
+        nk_layout_row_end(context);
+
+        nk_layout_row_begin(context, NK_STATIC, 30, 2);
+        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_spacer(context);
+        nk_layout_row_push(context, 150);
+        if (nk_option_label(context, "White", op == THEME_WHITE))
+        {
+            op = THEME_WHITE;
+            set_style(context, op);
+        }
+        nk_layout_row_end(context);
+
     }
 
     nk_end(context);

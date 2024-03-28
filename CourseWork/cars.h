@@ -8,8 +8,6 @@
 void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVertices, GLint* carIndices);
 void setCarsToDefault(car* cars);
 void getFreeSpotAddress(road* roads, RLC* address);
-void getCarRealPos();
-void getCarRealVelocity();
 void getCarTransformation();
 void step(car* cars);
 void thoughtsOfOneCar(car* car, road* roads);
@@ -68,7 +66,7 @@ void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVert
 		break;
 	}
 
-	roads[address.road].lines[address.line].cells[address.cell] = &Car;
+	roads[address.road].lines[address.line].cells[address.cell] = Car;
 	Car->target = rand() % 4;
 	Car->velocity = 1;
 	Car->isActive = true;
