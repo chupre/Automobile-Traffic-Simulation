@@ -1,11 +1,6 @@
 #pragma once
 
-//это значение принимает overtake на 1 и 2 шагах обгона, NONE когда обгона нет
-typedef enum {
-	LEFT, RIGHT, STRAIGHT
-} TURN;
-
-//скорость от 40 до 90 км, представленная в cells
+//velocities from 40 to 90 in cells
 typedef enum {
 	NO_CAR = -1, _0_CELL, _1_CELL, _2_CELL, _3_CELL, _4_CELL, _5_CELL
 } VELOCITY;
@@ -18,9 +13,9 @@ GLint isSafetyForthAndBack(car* car, road* roads, RLC rlc);
 /*
 //есть ли возможность обгона
 GLint isAbleToOvertake(void);//при обгоне поле nextCell не будет задано
-//поворот за угол
+//turn on the corner
 GLint isReadyToTurnRight(void);
-//поворот через перекрёсток
+//turn through the cross
 GLint isReadyToTurnLeft(void);
 GLint isReadyToChangeLine(void);
 */

@@ -143,7 +143,7 @@ int main()
             {
                 previousTime = currTime;
                 printf("Step: %d seconds\n", currTime);
-                step(cars);
+                step(cars, roads);
             }
         }
 
