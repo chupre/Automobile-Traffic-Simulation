@@ -8,8 +8,10 @@
 void setCar(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVertices, GLint* carIndices);
 void setCarsToDefault(car* cars);
 void getFreeSpotAddress(road* roads, RLC* address);
+void getCarRealPos();
+void getCarRealVelocity();
 void getCarTransformation();
-void step(car* cars);
+void step(car* cars, road* roads);
 void thoughtsOfOneCar(car* car, road* roads);
 GLint getFreeCarIndex(car* cars);
 GLint getVelocityByRLC(RLC rlc, road* roads);
@@ -179,17 +181,7 @@ GLint getVelocityByRLC(RLC rlc, road* roads)
 	return ptrLine->cells[rlc.cell]->velocity;
 }
 
-
-//изиеняет velocity, rlc
-//если передо мной машины нет, то увеличу скорость
-//	увеличиваю скорости
-//иначе
-//	если она быстрее меня
-//		то еду следом
-//	если медленнее, то
-//		если сбоку свободно
-//			перестраиваюсь
-//		иначе сбавляю скорость
+//change cras' velocity & rlc
 void thoughtsOfOneCar(car* car, road* roads)
 {
 	RLC rlc;
@@ -203,7 +195,7 @@ void thoughtsOfOneCar(car* car, road* roads)
 	{
 		DIRECTION roadDir = getRoadDir(car, roads);
 		car->overtake = getOvertakeDir(roadDir);
-		//нужно как-то отрисовать на этом же шаге новый rlc, а лучше перед шагом.
+		
 		car->nextCell.road = rlc.road;
 		car->nextCell.line = rlc.line;
 		car->nextCell.cell = rlc.cell;
@@ -220,18 +212,22 @@ void thoughtsOfOneCar(car* car, road* roads)
 
 void getCarTranslateVector()
 {
-
+	int sasasas = 0;
 }
 
 
 //Updates cars' positions in cells and their velocities.
-void step(car* cars)
+void step(car* cars, road* roads)
 {
 	for (int i = 0; i < MAX_CARS; i++)
 	{
 		if (cars[i].isActive)
 		{
-			
+			unbindCarPtrFromCell(cars, roads);
+
+			reinitCurrCellWithNextCell(cars);
+
+			thoughtsOfOneCar(cars, roads);
 		}
 	}
 }

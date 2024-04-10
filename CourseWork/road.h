@@ -48,7 +48,8 @@ void setLines(road* Road, GLint roadIndex, GLfloat* roadVertices, GLfloat* lineV
 DIRECTION getRoadDir(car* car, road* roads);
 DIRECTION getOvertakeDir(DIRECTION roadDir);
 line* getLinePtr(RLC rlc, road* roads);
-void initCurrCellWithNextCell(car* car);
+void unbindCarPtrFromCell(car* car, road* roads);
+void reinitCurrCellWithNextCell(car* car);
 
 
 DIRECTION getRoadDir(car* car, road* roads)
@@ -69,7 +70,17 @@ line* getLinePtr(RLC rlc, road* roads) {
     return (((roads + rlc.road)->lines + rlc.line)->cells);
 }
 
-void initCurrCellWithNextCell(car* car)
+void unbindCarPtrFromCell(car* car, road* roads) {
+    line* ptrLine = getLinePtr(car->currCell, roads);
+    GLint start = car->currCell.cell;
+    ptrLine->cells[start] = NULL;
+
+    ptrLine = getLinePtr(car->nextCell, roads);
+    GLint newStart = car->nextCell.cell;
+    ptrLine->cells[newStart] = car;
+}
+
+void reinitCurrCellWithNextCell(car* car)
 {
     car->currCell.road = car->nextCell.road;
     car->currCell.line = car->nextCell.line;
