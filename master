@@ -1,0 +1,193 @@
+[33mcommit e65b8d90d7389adcd4153d31cda2ba3a1038e6b6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mnewBranch[m[33m)[m
+Author: goptahub <gopta.vldm@yandex.ru>
+Date:   Wed Apr 10 18:20:52 2024 +0300
+
+    whole
+
+[33mcommit 79d1cdaf31fdc1ca49e95d68931bd20962bba5cc[m
+Author: goptahub <gopta.vldm@yandex.ru>
+Date:   Wed Apr 10 18:17:39 2024 +0300
+
+    whole
+
+[33mcommit 696bbe55d8d3346600029ebbc3163c2487655e69[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Mar 28 10:54:26 2024 +0300
+
+    Added theme switch in menu.
+
+[33mcommit be11962968392a25cf10348c2e716162471ee921[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Mar 28 07:16:08 2024 +0300
+
+    Added alghoritms.h and Nuklear GUI.
+    -Added pause on ESC and quick exit on F6.
+    -Added pause menu with GUI based on Nuklear.
+    -OpenGL objects initializations are now being made with functions in gl.h.
+    -Some function placeholders for step-render connection are replaced with getCarTranslateVector().
+    
+    Changes for step() algorithms:
+    -Added getRoadDir(), getOverTakeDir(), getLinePtr(), initCurrCellWithNextCell(), getVelocityByRLC(), thoughtsOfOneCar() and more.
+
+[33mcommit 64da13a11dd27d0ab4217ea030033b57bd3f0658[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Wed Mar 27 01:09:56 2024 +0300
+
+    Cleaned includes in custom headers.
+
+[33mcommit 5c3f5cb84e78acb908538b86a2a327df6032188c[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Sun Mar 24 00:54:42 2024 +0300
+
+    Minor change to code style.
+    enum direction is defined with typedef and named DIRECTION now.
+
+[33mcommit 58887b7ba5240fa7b2d582782ddb0cb1a2d8da19[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Mar 21 19:12:30 2024 +0300
+
+    Fixed minor bug in car geometry.
+
+[33mcommit 1af11c0a716976c02e112bb63eaa25b4e0ee634e[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Mar 21 18:50:44 2024 +0300
+
+    Completed map.h and minor changes.
+    Added some comms in main.
+    moveCars() prototype is removed.
+    getCarRealVelocity() prototype is added.
+    getCarRealTransformation() prototype is added.
+    
+    map.h:
+    -There is no need to set roads and lines manually now thanks to setMap(). You only need to define map type in map.h.
+
+[33mcommit 6022fb64ff6b831cddd3b1b2f61ae14b7382030a[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Mar 21 11:35:49 2024 +0300
+
+    Cars are drawn separately now so it's possible to set diffetent matrix uniform for each car. Minor QOL changes in main: transported main functions to gl.h, transported shader initialization in shader.h, created map.h (need to be done) to define some map types and make it so user set map type and all roads are being placed automatically.
+
+[33mcommit f3e8491aba8d16111b5680fae853bcc5d8c86a21[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Mar 21 10:11:29 2024 +0300
+
+    Added transform uniform in vertex shader.
+
+[33mcommit 5a99d8f705b91342ccf0c9378806e7d1920b6105[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Mar 14 00:41:44 2024 +0300
+
+    Added RLC struct for storing cell adresses (R - road index, L - line index, C - cell index). Position in car struct is replaced by RLC CurrCell for storing current cell. Added overtake in car struct for step function to store car's need to overtake. Added RLC NextCell in car struct to store car's next position determined after step call.
+
+[33mcommit df6d8554bf3af6f49e23e47cad3a23aa6ee92a17[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Tue Mar 12 15:50:22 2024 +0300
+
+    -
+
+[33mcommit 8b0017678042125f3b2c2f455e4cb5161adc8ffa[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Mon Mar 11 20:36:24 2024 +0300
+
+    -Added color attributes to vertex data for each object.
+    -Cars now have color depending on their target.
+    -Added a step timer in render cycle and step() placeholder for future additions.
+
+[33mcommit 7e73e9df16cf50b74328b04235e521c42d82807f[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Sat Mar 9 22:13:32 2024 +0300
+
+    Added auto car spawn. Minor changes to car and line structs. Cars are not moveble and don't support different colors yet.
+
+[33mcommit 6f75c4100f19753cfe02f92715ceb2c450fac745[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Wed Mar 6 14:01:30 2024 +0300
+
+    Added lines.
+
+[33mcommit 8b15f20694ab1a0c2a11591a1fb7c226c69835dc[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Tue Mar 5 04:17:42 2024 +0300
+
+    Added road.h and created general structs.
+
+[33mcommit 2135e71847cc42cae5a03e754a3758f221037ac1[m
+Author: goptahub <gopta.vldm@yandex.ru>
+Date:   Thu Feb 29 18:30:40 2024 +0300
+
+    qwert
+
+[33mcommit 72e99b57282c26f838ffbce09d1ffd612feacea3[m
+Author: goptahub <gopta.vldm@yandex.ru>
+Date:   Thu Feb 29 18:30:08 2024 +0300
+
+    mkjjkk
+
+[33mcommit d188633faa498796d14775e8aaa11e05c061ebf4[m
+Merge: 48845d6 f516f92
+Author: goptahub <gopta.vldm@yandex.ru>
+Date:   Thu Feb 29 18:29:34 2024 +0300
+
+    Merge branch 'master' of https://github.com/chupre/CourseWork
+
+[33mcommit f516f9238fdab2e3e998e7bf1abd97c7debb8d5c[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Feb 29 18:28:28 2024 +0300
+
+    свыфв
+
+[33mcommit 48845d6cac54619d14bf5a3ff04bc3ba5a3988aa[m
+Merge: e563feb 57b33bb
+Author: goptahub <gopta.vldm@yandex.ru>
+Date:   Thu Feb 29 18:28:25 2024 +0300
+
+    g
+
+[33mcommit e563feb2163a01bdfd51dc8452b200fbb67876a6[m
+Author: goptahub <gopta.vldm@yandex.ru>
+Date:   Thu Feb 29 18:20:58 2024 +0300
+
+    mlmk
+
+[33mcommit 57b33bb836cd6bd2780367c7ac4921d2377983d9[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Feb 29 18:14:16 2024 +0300
+
+    das
+
+[33mcommit 2368adc00a0271a258ec9e70c8bc6700b04a2781[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Feb 29 18:13:06 2024 +0300
+
+    dasda
+
+[33mcommit 09f2271a4ed4fb24705f9ba5df25096138130ef3[m
+Merge: 9f488b6 d5b1cce
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Feb 29 18:07:04 2024 +0300
+
+    Merge branch 'master' of https://github.com/chupre/CourseWork
+
+[33mcommit d5b1ccebd3e97371be64bc66b332c774c61c918e[m
+Author: chupre <45946905+chupre@users.noreply.github.com>
+Date:   Thu Feb 29 18:06:36 2024 +0300
+
+    main.c
+
+[33mcommit 9f488b6f099f427fa6cbd56867e2ea919e71a663[m
+Author: chupre <denischupritsky@gmail.com>
+Date:   Thu Feb 29 18:04:42 2024 +0300
+
+    a
+
+[33mcommit 365ae46f5eeaf194bebab29602e25d44bfaeba21[m
+Author: Denis <Denis@DENIS>
+Date:   Thu Feb 29 17:32:41 2024 +0300
+
+    Add project files.
+
+[33mcommit d8914bf725bdb02b603ba017559945abb9f1a5b3[m
+Author: Denis <Denis@DENIS>
+Date:   Thu Feb 29 17:32:39 2024 +0300
+
+    Add .gitattributes, .gitignore, and README.md.
