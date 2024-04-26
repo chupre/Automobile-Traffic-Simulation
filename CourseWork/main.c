@@ -19,17 +19,24 @@
 #include <nuklear\nuklear_glfw_gl3.h>
 #include <style.c>
 
+#include <time.h>
+
+#include <serviceMacros.h> 
+
 #include <road.h>
 #include <map.h>
 #include <shader.h>
 #include <cars.h>
 #include <gl.h>
 #include <gui.h>
+
 #include <algorithms.h>
 
 
 int main()
 {
+    printf("clock at begin of main: %d\n", clock());
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -65,11 +72,11 @@ int main()
     GLint carIndices[MAX_CARS * 6];
     car cars[MAX_CARS];
     setCarsToDefault(cars);
-    GLint freeCars = MAX_CARS;
 
     GLuint carVertexArray, carVertexBuffer, carElementBuffer;
     initCars(&carVertexArray, &carVertexBuffer, &carElementBuffer, carIndices, carVertices);
     
+    printf("clock before defining previousTime: %d\n\n", clock());
     clock_t previousTime = clock() / CLOCKS_PER_SEC;
 
     mat4 identityTrans, carTrans[MAX_CARS];
@@ -78,12 +85,19 @@ int main()
 
     struct nk_context* context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
     initFont(&glfw, context);
+    
+    GLint k = 0;
+    GLint clockTime;
+
+    GLint restOfSubSteps = NUMBER_OF_SUB_STEPS;
+    GLint timeOfNewStep = 0;
+    GLint middleTimeOfSubStep = 0;
 
     while (!glfwWindowShouldClose(window))
     {
         initGUI(&glfw, context);
 
-        if (!paused)
+        if (!__paused__)
         {
             glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
@@ -99,51 +113,66 @@ int main()
             glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
             glBindVertexArray(carVertexArray);
 
-            if (freeCars)
+            if (__freeCars__)
             {
-                int counter = freeCars;
+                int counter = __freeCars__;
                 for (int i = 0; i < counter; i++)
                 {
-                    RLC freeSpot;
-                    getFreeSpotAddress(roads, &freeSpot);
+                    RLC freeSpotRLC = { EMPTY, EMPTY, EMPTY };
+                    getFreeSpotAddress(roads, &freeSpotRLC);
                     GLint carIndex = getFreeCarIndex(cars);
 
-                    if (freeSpot.road != EMPTY)
+                    if (freeSpotRLC.road != EMPTY)
                     {
-                        setCar(roads, &cars[carIndex], carIndex, freeSpot, carVertices, carIndices);
+                        setCar(roads, &cars[carIndex], carIndex, freeSpotRLC, carVertices, carIndices);
                         glBindBuffer(GL_ARRAY_BUFFER, carVertexBuffer);
                         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
                         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
                         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
-                        freeCars--;
+                        --__freeCars__;
+
+                        printf("settled  car on r %d, l %d, c %d, dirOnRoad %d\n", freeSpotRLC.road, freeSpotRLC.line, freeSpotRLC.cell, cars[carIndex].dirOnRoad);
                     }
                 }
             }
 
-            //current velocities are just demo, car's transform vectors should be got from getCarTranslateVector()
-            GLfloat velocities[] = { -0.0001f, -0.00015f };
-            for (int i = 0; i < MAX_CARS; i++)
+            if (clock() >= middleTimeOfSubStep)
             {
-                if (cars[i].isActive)
+                if (restOfSubSteps > 0)
                 {
-                    //glm_translate_y is just demo version, car transformations should be set by getCarTranslateVector()
-                    glm_translate_y(carTrans[i], velocities[i]);
-                    GLint currCarIndices[6];
-                    memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
-                    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(currCarIndices), currCarIndices);
-                    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, carTrans[i]);
-                    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+                    //printf("loop enter time: %d\t|", clock());
+
+                    for (int i = 0; i < MAX_CARS; i++)
+                    {
+                        if (cars[i].isActive)
+                        {
+                            //printf("\nk %d\n", ++k);
+                            glm_translate_y(carTrans[i], getAdaptedCarVelocity(&cars[i]));
+                            GLint currCarIndices[6];
+                            memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);
+                            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carElementBuffer);
+                            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(currCarIndices), currCarIndices);
+                            glUniformMatrix4fv(transformLoc, 1, GL_FALSE, carTrans[i]);
+                            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+                        }
+                    }
+
+                    //printf("new middleTime : %d\t|restOfSubSteps %d\n", middleTimeOfSubStep, restOfSubSteps);
+
+                    --restOfSubSteps;
+
+                    middleTimeOfSubStep = clock() + SUB_STEP_TIME;
                 }
-            }
+                else
+                {
+                    printf("_%d_STEPTIME__:  %d\n\n", ++k, clock());
 
-            int currTime = (clock() - previousTime) / CLOCKS_PER_SEC;
+                    step(cars, roads);
 
-            if (currTime - previousTime == STEP_TIME)
-            {
-                previousTime = currTime;
-                printf("Step: %d seconds\n", currTime);
-                step(cars, roads);
+                    restOfSubSteps = NUMBER_OF_SUB_STEPS;
+
+                    middleTimeOfSubStep = clock() + SUB_STEP_TIME;
+                }
             }
         }
 

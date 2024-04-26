@@ -150,6 +150,7 @@
     <ClInclude Include="gui.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="road.h" />
+    <ClInclude Include="serviceMacros.h" />
     <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>

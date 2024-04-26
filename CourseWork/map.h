@@ -13,9 +13,10 @@
 	#define NUMBER_OF_ROADS 2
 #endif	
 
-void setMap(road* roads, GLfloat* roadVertices, GLfloat* roadIndices, GLfloat* lineVertices);
+GLvoid setMap(road* roads, GLfloat* roadVertices, GLint* roadIndices, GLfloat* lineVertices);
 
-void setMap(road* roads, GLfloat* roadVertices, GLfloat* roadIndices, GLfloat* lineVertices)
+//a road gets a direction, an edge state
+GLvoid setMap(road* roads, GLfloat* roadVertices, GLint* roadIndices, GLfloat* lineVertices)
 {
 	switch (MAP_TYPE)
 	{

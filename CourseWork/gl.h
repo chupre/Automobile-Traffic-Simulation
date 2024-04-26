@@ -1,5 +1,5 @@
 #pragma once
-bool paused = false;
+bool __paused__ = false;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -22,7 +22,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     {
-        paused = !paused;
+        __paused__ = !__paused__;
     }
 
     if (key == GLFW_KEY_F6 && action == GLFW_PRESS)
