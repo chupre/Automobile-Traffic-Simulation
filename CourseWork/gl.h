@@ -2,14 +2,6 @@
 
 bool paused = false;
 
-void framebufferSizeCallback(int width, int height);
-void keyCallback(int key, int scancode, int action, int mods);
-void initRoads();
-void initCars();
-void initLines();
-void render();
-void update();
-
 GLuint WINDOW_WIDTH = 800;
 GLuint WINDOW_HEIGHT = 600;
 GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
@@ -141,8 +133,12 @@ void initCars()
     glBindVertexArray(0);
 }
 
+
 void render()
 {
+    glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     glUseProgram(shaderProgram);
 
     GLuint transformLoc = glGetUniformLocation(shaderProgram, "transform");
@@ -170,6 +166,7 @@ void render()
     }
 }
 
+
 void update()
 {
     if (freeCars)
@@ -196,6 +193,7 @@ void update()
     if (glfwGetTime() - timer > STEP_TIME)
     {
         timer += STEP_TIME;
+        printf("Step at time: %lf\n", glfwGetTime());
         step();
     }
 }

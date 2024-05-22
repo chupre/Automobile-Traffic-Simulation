@@ -31,7 +31,6 @@
 #include <algorithms.h>
 
 
-
 int main()
 {
     glfwInit();
@@ -62,10 +61,10 @@ int main()
     context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
     initFont();
 
-    double limitFPS = 1.0 / FPS;
+    GLdouble limitFPS = 1.0 / FPS;
 
-    double lastTime = glfwGetTime();
-    double deltaTime = 0, currTime = 0;
+    GLdouble lastTime = glfwGetTime();
+    GLdouble deltaTime = 0, currTime = 0;
 
     timer = lastTime;
 
@@ -79,9 +78,6 @@ int main()
 
         if (!paused)
         {
-            glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
             while (deltaTime >= 1.0)
             {
                 update();
