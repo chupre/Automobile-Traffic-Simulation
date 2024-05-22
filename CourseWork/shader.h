@@ -1,5 +1,8 @@
 #pragma once
 
+void genShader();
+char* getShaderContent(const GLchar* fileName);
+
 char* getShaderContent(const GLchar* fileName)
 {
     FILE* shaderFile;
@@ -18,7 +21,7 @@ char* getShaderContent(const GLchar* fileName)
     return shaderContent;
 }
 
-void genShader(GLint* shaderProgram)
+void genShader()
 {
     const GLchar* vertexShaderSource = getShaderContent("vertex_shader.glsl");
     const GLchar* fragmentShaderSource = getShaderContent("fragment_shader.glsl");
@@ -33,10 +36,10 @@ void genShader(GLint* shaderProgram)
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
 
-    *shaderProgram = glCreateProgram();
-    glAttachShader(*shaderProgram, vertexShader);
-    glAttachShader(*shaderProgram, fragmentShader);
-    glLinkProgram(*shaderProgram);
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);

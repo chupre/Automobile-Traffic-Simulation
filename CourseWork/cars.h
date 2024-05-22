@@ -1,22 +1,16 @@
 #pragma once
+
 #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
 #define CAR_LENGHT (CAR_WIDTH * 1.7f)
 
 //its definition is in algorithms.h
-GLvoid christenNewBornCar		(RLC rlc, car* Car, road* roads);
+GLvoid christenNewBornCar(RLC rlc, car* Car);
 
-GLvoid setCar					(road* roads, car* Car, GLint carIndex, RLC address, GLfloat* carVertices, GLint* carIndices);
-GLvoid setCarsToDefault			(car* cars);
-GLvoid getFreeSpotAddress		(road* roads, RLC* address);
-GLint getFreeCarIndex			(car* cars);
-
-//GLvoid getCarRealPos();
-//GLvoid getCarRealVelocity();
-//GLvoid getCarTransformation();
+GLvoid setCarsToDefault();
+GLint getFreeCarIndex();
 
 
-
-GLvoid getFreeSpotAddress(road* roads, RLC* address)
+GLvoid getFreeSpotAddress(RLC* address)
 {
 	for (int i = 0; i < NUMBER_OF_ROADS; i++)
 	{
@@ -37,9 +31,9 @@ GLvoid getFreeSpotAddress(road* roads, RLC* address)
 	}
 }
 
-GLvoid setCar(road* roads, car* Car, GLint carIndex, RLC rlc, GLfloat* carVertices, GLint* carIndices)
+GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 {
-	christenNewBornCar(rlc, Car, roads);
+	christenNewBornCar(rlc, Car);
 
 	DIRECTION carDir = roads[rlc.road].dir;
 	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - CAR_WIDTH;
@@ -137,7 +131,7 @@ GLvoid setCar(road* roads, car* Car, GLint carIndex, RLC rlc, GLfloat* carVertic
 	memcpy(&carIndices[carIndex * 6], indeces, sizeof(GLint) * 6);
 }
 
-GLint getFreeCarIndex(car* cars)
+GLint getFreeCarIndex()
 {
 	for (int i = 0; i < MAX_CARS; i++)
 	{
@@ -146,10 +140,11 @@ GLint getFreeCarIndex(car* cars)
 			return i;
 		}
 	}
-	return EMPTY;
+	return 
+		;
 }
 
-GLvoid setCarsToDefault(car* cars)
+GLvoid setCarsToDefault()
 {
 	for (int i = 0; i < MAX_CARS; i++)
 	{

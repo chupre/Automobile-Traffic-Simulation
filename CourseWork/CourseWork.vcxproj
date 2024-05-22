@@ -73,7 +73,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>C:\Dependencies\cimgui\Debug;C:\Dependencies\glfw;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Dependencies;C:\Users\denis\source\repos\CourseWork\CourseWork;$(IncludePath);C:\Users\gopta\source\repos\Automobile-Traffic-Simulation-master\CourseWork;</IncludePath>
+    <IncludePath>C:\Dependencies;C:\Users\bigboy\source\repos\Automobile-Traffic-Simulation\CourseWork;$(IncludePath);C:\Users\gopta\source\repos\Automobile-Traffic-Simulation-master\CourseWork</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

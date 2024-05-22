@@ -1,9 +1,9 @@
 #pragma once
 
-void initGUI(struct nk_glfw* glfw, struct nk_context* context);
-void initFont(struct nk_glfw* glfw, struct nk_context* context);
+void initGUI();
+void initFont();
 
-void initGUI(struct nk_glfw* glfw, struct nk_context* context)
+void initGUI()
 {
     if (nk_begin(context, "PauseMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
@@ -105,11 +105,11 @@ void initGUI(struct nk_glfw* glfw, struct nk_context* context)
     }
 
     nk_end(context);
-    nk_glfw3_render(glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+    nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
 }
 
 
-void initFont(struct nk_glfw* glfw, struct nk_context* context)
+void initFont()
 {
     struct nk_font_atlas* atlas;
     struct nk_font* droid;
@@ -117,9 +117,9 @@ void initFont(struct nk_glfw* glfw, struct nk_context* context)
 
     droidCfg = nk_font_config(0);
 
-    nk_glfw3_font_stash_begin(glfw, &atlas);
+    nk_glfw3_font_stash_begin(&glfw, &atlas);
     droid = nk_font_atlas_add_from_file(atlas, "DroidSans.ttf", 24, &droidCfg);
-    nk_glfw3_font_stash_end(glfw);
+    nk_glfw3_font_stash_end(&glfw);
 
     nk_style_load_all_cursors(context, atlas->cursors);
     nk_style_set_font(context, &droid->handle);

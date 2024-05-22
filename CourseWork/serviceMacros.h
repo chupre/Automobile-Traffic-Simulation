@@ -1,8 +1,6 @@
 #pragma once
 //..........................................................
-#define STEP_TIME 1000 //seconds
-#define NUMBER_OF_SUB_STEPS 1000 //milliseconds
-#define SUB_STEP_TIME (STEP_TIME / NUMBER_OF_SUB_STEPS) //250 milli seconds
+#define STEP_TIME 1.0f //seconds
 //..........................................................
 #define CELL_SIZE 0.05f
 //..........................................................
@@ -24,9 +22,28 @@
 //..........................................................
 #define NUMBER_OF_LINES 1
 
+#define ONE_ROAD_N 1
+#define ONE_ROAD_S 2
+#define ONE_ROAD_W 3
+#define ONE_ROAD_E 4
+#define TWO_ROADS_NS 5
+#define TWO_ROADS_WE 6
+#define MAP_TYPE TWO_ROADS_NS
+
+#if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == ONE_ROAD_W || MAP_TYPE == ONE_ROAD_E
+    #define NUMBER_OF_ROADS 1
+#elif MAP_TYPE == TWO_ROADS_NS || MAP_TYPE == TWO_ROADS_WE
+    #define NUMBER_OF_ROADS 2
+#endif	
+
+#define ERROR_LIMIT 0.0000001
+#define EMPTY -1
+
 #define NUMBER_OF_VISIBLE_CELLS 20
 #define NUMBER_OF_COVERED_CELLS (MAX_VELOCITY)
 #define NUMBER_OF_CELLS 40//(NUMBER_OF_VISIBLE_CELLS + NUMBER_OF_COVERED_CELLS)
+
+#define FPS 60.0f
 //..........................................................
 
 typedef enum {
@@ -62,7 +79,7 @@ typedef struct
     DIRECTION target;
     DIRECTION overtake;
     bool isActive;
-    GLint isAvaria;
+    bool isAvaria;
 } car;
 
 typedef struct
@@ -79,4 +96,4 @@ typedef struct
 } road;
 //..................................................................
 //global variable
-GLint __freeCars__ = MAX_CARS;
+GLint freeCars = MAX_CARS;

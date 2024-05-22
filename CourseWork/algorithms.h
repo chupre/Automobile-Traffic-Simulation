@@ -1,15 +1,13 @@
 #pragma once
 
-GLint getVelocityByRLC(RLC rlc, road* roads);
-GLvoid step(car* cars, road* roads);
-GLvoid excludeOutMappers(car* cars, road* roads);
-GLvoid thoughtsOfOneCar(car* car, road* roads);
-GLint distanceToForthCar(RLC rlc, road* roads);
-GLint distanceToBackCar(RLC rlc, road* roads);
-GLint isAbleToChangeLine(car* car, road* roads, RLC* posOnNewLine);
-GLint isSafetyForthAndBack(car* car, road* roads, RLC rlc);
-GLvoid countSubVelocity(car* car);
-float getAdaptedCarVelocity(car* Car);
+GLint getVelocityByRLC(RLC rlc);
+GLvoid excludeOutMappers(car* Car);
+GLvoid thoughtsOfOneCar(car* Car);
+GLint distanceToForthCar(RLC rlc);
+GLint distanceToBackCar(RLC rlc);
+GLint isAbleToChangeLine(car* Car, RLC* posOnNewLine);
+GLint isSafetyForthAndBack(car* Car, RLC rlc);
+GLvoid countSubVelocity(car* Car);
 
 /*
 //turn on the corner
@@ -19,14 +17,9 @@ GLint isReadyToTurnLeft(void);
 GLint isReadyToChangeLine(void);
 */
 
-float getAdaptedCarVelocity(car* Car)
+GLvoid christenNewBornCar(RLC rlc, car* Car)
 {
-	return (float)Car->velocity * Car->dirOnRoad * VELOCITY_MULTIPLIER / NUMBER_OF_SUB_STEPS;
-}
-
-GLvoid christenNewBornCar(RLC rlc, car* Car, road* Roads)
-{
-	car** ptrCell = getFirstCellPtr(rlc, Roads);
+	car** ptrCell = getFirstCellPtr(rlc);
 	ptrCell[rlc.cell] = Car;
 
 	Car->target = rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
@@ -35,46 +28,46 @@ GLvoid christenNewBornCar(RLC rlc, car* Car, road* Roads)
 	memcpy(&Car->currCell, &rlc, sizeof(RLC));
 	memcpy(&Car->nextCell, &rlc, sizeof(RLC));
 
-	Car->dirOnRoad = getCarDirOnRoad(&Roads[rlc.road]);
+	Car->dirOnRoad = getCarDirOnRoad(&roads[rlc.road]);
 
-	thoughtsOfOneCar(Car, Roads);
+	thoughtsOfOneCar(Car, roads);
  }
 
-//change cras' velocity & rlc
-GLvoid thoughtsOfOneCar(car* car, road* roads)
+//change cars' velocity & rlc
+GLvoid thoughtsOfOneCar(car* Car)
 {
 	RLC rlc;
-	GLint distance = distanceToForthCar(car->currCell, roads);
-	GLint forthCarVelocity = getVelocityByRLC(car->currCell, roads);
-	if (distance > car->velocity || distance == NO_CAR)
+	GLint distance = distanceToForthCar(Car->currCell, roads);
+	GLint forthCarVelocity = getVelocityByRLC(Car->currCell);
+	if (distance > Car->velocity || distance == NO_CAR)
 	{
-		if (car->velocity < MAX_VELOCITY)
+		if (Car->velocity < MAX_VELOCITY)
 		{
-			car->velocity += _1_CELL;
+			Car->velocity += _1_CELL;
 		}
 	}
-	else if ((forthCarVelocity < car->velocity) && isAbleToChangeLine(car, roads, &rlc))
+	else if ((forthCarVelocity < Car->velocity) && isAbleToChangeLine(Car, roads, &rlc))
 	{
-		DIRECTION roadDir = getRoadDir(car, roads);
-		car->overtake = getOvertakeDir(roadDir);
+		DIRECTION roadDir = getRoadDir(Car);
+		Car->overtake = getOvertakeDir(roadDir);
 
-		car->nextCell.road = rlc.road;
-		car->nextCell.line = rlc.line;
-		car->nextCell.cell = rlc.cell;
+		Car->nextCell.road = rlc.road;
+		Car->nextCell.line = rlc.line;
+		Car->nextCell.cell = rlc.cell;
 
 		printf("\n\nline changed\a\n");
 		return;
 	}
 	else
 	{
-		car->velocity = distance - 1;
+		Car->velocity = distance - 1;
 	}
-	car->nextCell.cell += car->velocity;
+	Car->nextCell.cell += Car->velocity;
 }
 
 
 
-GLvoid step(car* cars, road* roads)
+GLvoid step()
 {
 	for (int i = 0; i < MAX_CARS; i++)
 	{
@@ -82,47 +75,44 @@ GLvoid step(car* cars, road* roads)
 		{
 			if (cars[i].nextCell.cell >= NUMBER_OF_CELLS/*|| cars->nextCell.cell < 0*/)
 			{
-				printf("excluded car on r %d, l %d, c %d\n", cars[i].currCell.road, cars[i].currCell.line, cars[i].currCell.cell);
-				excludeOutMappers(&cars[i], roads);
+				excludeOutMappers(&cars[i]);
 				continue;
 			}
 
-			unbindCarPtrFromCell(&cars[i], roads);
-
+			unbindCarPtrFromCell(&cars[i]);
 			reinitCurrCellWithNextCell(&cars[i]);
-
-			thoughtsOfOneCar(&cars[i], roads);
+			thoughtsOfOneCar(&cars[i]);
 		}
 	}
 }
 
-GLvoid excludeOutMappers(car* cars, road* roads)
+GLvoid excludeOutMappers(car* Car)
 {
-	car** ptrCell = getFirstCellPtr(cars->currCell, roads);
-	GLint start = cars->currCell.cell;
-	GLint end = cars->nextCell.cell;
+	car** ptrCell = getFirstCellPtr(Car->currCell);
+	GLint start = Car->currCell.cell;
+	GLint end = Car->nextCell.cell;
 	ptrCell[start] = NULL;
 	ptrCell[end] = NULL;
 
-	cars->currCell.road = EMPTY;
-	cars->currCell.line = EMPTY;
-	cars->currCell.cell = EMPTY;
-	cars->nextCell.road = EMPTY;
-	cars->nextCell.line = EMPTY;
-	cars->nextCell.cell = EMPTY;
-	cars->target = NONE;
-	cars->velocity = EMPTY;
-	cars->isActive = false;
-	cars->overtake = NONE;
+	Car->currCell.road = EMPTY;
+	Car->currCell.line = EMPTY;
+	Car->currCell.cell = EMPTY;
+	Car->nextCell.road = EMPTY;
+	Car->nextCell.line = EMPTY;
+	Car->nextCell.cell = EMPTY;
+	Car->target = NONE;
+	Car->velocity = EMPTY;
+	Car->isActive = false;
+	Car->overtake = NONE;
 
-	cars->dirOnRoad = 0;
+	Car->dirOnRoad = 0;
 
-	cars->isAvaria = 0;//though there is no sense to zeroize it because cars in Avaria cannot go out the boards of map
+	Car->isAvaria = 0;//though there is no sense to zeroize it because cars in Avaria cannot go out the boards of map
 
-	++__freeCars__;
+	++freeCars;
 }
 
-GLint getVelocityByRLC(RLC rlc, road* roads)
+GLint getVelocityByRLC(RLC rlc)
 {
 	car** ptrCell = ((roads + rlc.road)->lines + rlc.line)->cells;
 	if (ptrCell[rlc.cell] == NULL)
@@ -135,9 +125,9 @@ GLint getVelocityByRLC(RLC rlc, road* roads)
 	}
 }
 
-GLint distanceToForthCar(RLC rlc, road* roads)
+GLint distanceToForthCar(RLC rlc)
 {
-	car** ptrCell = getFirstCellPtr(rlc, roads);
+	car** ptrCell = getFirstCellPtr(rlc);
 	for (int i = 1 + rlc.cell; i < NUMBER_OF_CELLS; ++i)
 	{
 		if (ptrCell[i] == NULL)
@@ -152,9 +142,9 @@ GLint distanceToForthCar(RLC rlc, road* roads)
 	return NO_CAR;
 }
 
-GLint distanceToBackCar(RLC rlc, road* roads)
+GLint distanceToBackCar(RLC rlc)
 {
-	car** ptrCell = getFirstCellPtr(rlc, roads);
+	car** ptrCell = getFirstCellPtr(rlc);
 	for (int i = -1 + rlc.cell; i >= 0; --i)
 	{
 		if (ptrCell[i] == NULL)
@@ -169,13 +159,13 @@ GLint distanceToBackCar(RLC rlc, road* roads)
 	return NO_CAR;
 }
 
-GLint isAbleToChangeLine(car* car, road* roads, RLC* posOnNewLine)
+GLint isAbleToChangeLine(car* Car, RLC* posOnNewLine)
 {
-	GLint newLine = car->currCell.line - 1;
+	GLint newLine = Car->currCell.line - 1;
 	if (newLine >= 0 && newLine <= NUMBER_OF_CELLS)
 	{
-		RLC rlc = { car->currCell.road, newLine, car->currCell.line };
-		if (isSafetyForthAndBack(car, roads, rlc))
+		RLC rlc = { Car->currCell.road, newLine, Car->currCell.line };
+		if (isSafetyForthAndBack(Car, rlc))
 		{
 			posOnNewLine->road = rlc.road;
 			posOnNewLine->line = rlc.line;
@@ -194,16 +184,16 @@ GLint isAbleToChangeLine(car* car, road* roads, RLC* posOnNewLine)
 }
 
 //you shouldn't fear wether the car chooses a position between CurrCell and NextCell
-GLint isSafetyForthAndBack(car* car, road* roads, RLC rlc)
+GLint isSafetyForthAndBack(car* Car, RLC rlc)
 {
-	GLint forthDistance = distanceToForthCar(rlc, roads);
-	GLint backDistance = distanceToBackCar(rlc, roads);
+	GLint forthDistance = distanceToForthCar(rlc);
+	GLint backDistance = distanceToBackCar(rlc);
 
-	return (forthDistance > _5_CELL && backDistance >= car->velocity);
+	return (forthDistance > _5_CELL && backDistance >= Car->velocity);
 }
 
-GLvoid countSubVelocity(car* car)
+GLvoid countSubVelocity(car* Car)
 {
-	GLint mainVelocity = car->velocity;
+	GLint mainVelocity = Car->velocity;
 
 }
