@@ -30,7 +30,15 @@ GLuint lineVAO, lineVBO;
 GLuint carVAO, carVBO, carEBO;
 
 mat4 identityTrans, carTrans[MAX_CARS];
-double timer;
+
+GLdouble limitFPS = 1.0 / FPS;
+
+GLdouble lastTime;
+GLdouble deltaTime = 0, currTime = 0;
+GLdouble timer;
+
+GLint frames = 0, updates = 0;
+GLint framesPerSec = 0, updatesPerSec = 0;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -40,9 +48,11 @@ void initCars();
 void render();
 void update();
 void quit();
+void showFPS();
 
 //Definiton is in algorithms.h
 GLvoid step();
+
 //Definition is in cars.h 
 GLvoid setCar(car* Car, GLint carIndex, RLC address);
 GLvoid getFreeSpotAddress(RLC* address);
@@ -155,6 +165,7 @@ void render()
         if (cars[i].isActive)
         {
             GLfloat screenVelocity = (GLfloat)cars[i].velocity * cars[i].dirOnRoad * VELOCITY_MULTIPLIER / 1000;
+            cars[i].realPos += screenVelocity;
             glm_translate_y(carTrans[i], screenVelocity);
             GLint currCarIndices[6];
             memcpy(currCarIndices, &carIndices[i * 6], sizeof(GLint) * 6);
@@ -164,6 +175,8 @@ void render()
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
     }
+
+    frames++;
 }
 
 
@@ -181,6 +194,13 @@ void update()
             if (freeSpotRLC.road != EMPTY)
             {
                 setCar(&cars[carIndex], carIndex, freeSpotRLC);
+                printf("car %d spawned:\n", carIndex);
+                printf("vertices: %f %f %f %f\n", carVertices[carIndex * 24], carVertices[carIndex * 24 + 6], carVertices[carIndex * 24 + 1], carVertices[carIndex * 24 + 7]);
+                printf("direction: %d\n", cars[carIndex].dirOnRoad);
+                printf("RLC: Road: %d, Line: %d, Cell: %d\n", cars[carIndex].currCell.road, cars[carIndex].currCell.line, cars[carIndex].currCell.cell);
+                printf("real position: %f\n", cars[carIndex].realPos);
+                printf("velocity: %d\n\n", cars[carIndex].velocity);
+                glm_mat4_print(carTrans[carIndex], stdout);
                 glBindBuffer(GL_ARRAY_BUFFER, carVBO);
                 glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
@@ -192,10 +212,19 @@ void update()
 
     if (glfwGetTime() - timer > STEP_TIME)
     {
+        printf("Step at time: %lf\n\n", glfwGetTime());
+
         timer += STEP_TIME;
-        printf("Step at time: %lf\n", glfwGetTime());
+
+        framesPerSec = frames;
+        updatesPerSec = updates;
+        frames = 0;
+        updates = 0;
+
         step();
     }
+
+    updates++;
 }
 
 
@@ -209,4 +238,10 @@ void quit()
     nk_glfw3_shutdown(&glfw);
     glfwTerminate();
     exit(0);
+}
+
+
+void showFPS()
+{
+    printf("FPS: %d      Updates: %d\r", framesPerSec, updatesPerSec);
 }

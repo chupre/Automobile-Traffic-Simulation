@@ -48,6 +48,8 @@ int main()
 
     genShader();
 
+    srand(time(NULL));
+
     setMap();
     setCarsToDefault();
 
@@ -61,11 +63,7 @@ int main()
     context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
     initFont();
 
-    GLdouble limitFPS = 1.0 / FPS;
-
-    GLdouble lastTime = glfwGetTime();
-    GLdouble deltaTime = 0, currTime = 0;
-
+    lastTime = glfwGetTime();
     timer = lastTime;
 
     while (!glfwWindowShouldClose(window))
@@ -85,6 +83,7 @@ int main()
             }
 
             render();
+            showFPS();
         }
 
         nk_glfw3_new_frame(&glfw);

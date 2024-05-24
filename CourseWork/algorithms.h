@@ -66,15 +66,16 @@ GLvoid thoughtsOfOneCar(car* Car)
 }
 
 
-
 GLvoid step()
 {
 	for (int i = 0; i < MAX_CARS; i++)
 	{
 		if (cars[i].isActive && !cars[i].isAvaria)
 		{
-			if (cars[i].nextCell.cell >= NUMBER_OF_CELLS/*|| cars->nextCell.cell < 0*/)
+			if (cars[i].realPos > 1.0f || cars[i].realPos < -1.0f)
 			{
+				printf("CAR %d AT: %f IS GONE.\n\n", cars[i].ID, cars[i].realPos);
+
 				excludeOutMappers(&cars[i]);
 				continue;
 			}
@@ -100,6 +101,8 @@ GLvoid excludeOutMappers(car* Car)
 	Car->nextCell.road = EMPTY;
 	Car->nextCell.line = EMPTY;
 	Car->nextCell.cell = EMPTY;
+	Car->realPos = EMPTY;
+	Car->ID = EMPTY;
 	Car->target = NONE;
 	Car->velocity = EMPTY;
 	Car->isActive = false;
@@ -108,7 +111,6 @@ GLvoid excludeOutMappers(car* Car)
 	Car->dirOnRoad = 0;
 
 	Car->isAvaria = 0;//though there is no sense to zeroize it because cars in Avaria cannot go out the boards of map
-
 	++freeCars;
 }
 

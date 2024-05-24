@@ -12,6 +12,10 @@ GLint getFreeCarIndex();
 
 GLvoid getFreeSpotAddress(RLC* address)
 {
+	RLC* freeSpots = malloc(freeCars * sizeof(RLC));
+	int freeSpotsCounter = 0;
+	int randFreeSpotIndex = 0;
+
 	for (int i = 0; i < NUMBER_OF_ROADS; i++)
 	{
 		if (roads[i].isEdge)
@@ -20,20 +24,29 @@ GLvoid getFreeSpotAddress(RLC* address)
 			{
 				if (roads[i].lines[j].cells[0] == NULL)
 				{
-					address->road = i;
-					address->line = j;
-					address->cell = 0;
-
-					return;
+					freeSpots[freeSpotsCounter].road = i;
+					freeSpots[freeSpotsCounter].line = j;
+					freeSpotsCounter++;
 				}
 			}
 		}
+	}
+
+	if (freeSpotsCounter)
+	{
+		randFreeSpotIndex = rand() % freeSpotsCounter;
+		
+		address->road = freeSpots[randFreeSpotIndex].road;
+		address->line = freeSpots[randFreeSpotIndex].line;
+		address->cell = 0;
 	}
 }
 
 GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 {
 	christenNewBornCar(rlc, Car);
+
+	Car->ID = carIndex;
 
 	DIRECTION carDir = roads[rlc.road].dir;
 	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - CAR_WIDTH;
@@ -42,84 +55,92 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 
 	switch (carDir)
 	{
-	case NORTH:
-		y1 = -1.0f;
-		y2 = y1 + CAR_LENGHT;
-		break;
-	case SOUTH:
-		y1 = 1.0f;
-		y2 = y1 - CAR_LENGHT;
-		break;
-	case EAST:
-		y1 = x1;
-		y2 = x2;
-		x1 = -1.0f;
-		x2 = -1.0f + CAR_WIDTH;
-		break;
-	case WEST:
-		y1 = x1;
-		y2 = x2;
-		x1 = 1.0f;
-		x2 = 1.0f - CAR_WIDTH;
-		break;
+		case NORTH:
+			y1 = -1.0f;
+			y2 = y1 + CAR_LENGHT;
+			Car->realPos = y1;
+			break;
+
+		case SOUTH:
+			y1 = 1.0f;
+			y2 = y1 - CAR_LENGHT;
+			Car->realPos = y1;
+			break;
+
+		case EAST:
+			y1 = x1;
+			y2 = x2;
+			x1 = -1.0f;
+			x2 = -1.0f + CAR_WIDTH;
+			Car->realPos = x1;
+			break;
+
+		case WEST:
+			y1 = x1;
+			y2 = x2;
+			x1 = 1.0f;
+			x2 = 1.0f - CAR_WIDTH;
+			Car->realPos = x1;
+			break;
 	}
 
 	switch (Car->target)
 	{
+		case 0: 
+		{
+			GLfloat vertices[] =
+			{
+				x1, y1, 0.0f, 1.0f, 0.0f, 0.0f,
+				x2, y1, 0.0f, 1.0f, 0.0f, 0.0f,
+				x1, y2, 0.0f, 1.0f, 0.0f, 0.0f,
+				x2, y2 ,0.0f, 1.0f, 0.0f, 0.0f
+			};
+			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+			Car->target = NORTH;
+			break;
+		}
 
-	case 0: 
-	{
-		GLfloat vertices[] =
+		case 1:
 		{
-			x1, y1, 0.0f, 1.0f, 0.0f, 0.0f,
-			x2, y1, 0.0f, 1.0f, 0.0f, 0.0f,
-			x1, y2, 0.0f, 1.0f, 0.0f, 0.0f,
-			x2, y2 ,0.0f, 1.0f, 0.0f, 0.0f
-		};
-		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-		Car->target = NORTH;
-		break;
-	}
-	case 1:
-	{
-		GLfloat vertices[] =
-		{
-			x1, y1, 0.0f, 0.0f, 1.0f, 0.0f,
-			x2, y1, 0.0f, 0.0f, 1.0f, 0.0f,
-			x1, y2, 0.0f, 0.0f, 1.0f, 0.0f,
-			x2, y2 ,0.0f, 0.0f, 1.0f, 0.0f
-		};
-		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-		Car->target = SOUTH;
-		break;
-	}
-	case 2:
-	{
-		GLfloat vertices[] =
-		{
-			x1, y1, 0.0f, 0.0f, 0.0f, 1.0f,
-			x2, y1, 0.0f, 0.0f, 0.0f, 1.0f,
-			x1, y2, 0.0f, 0.0f, 0.0f, 1.0f,
-			x2, y2 ,0.0f, 0.0f, 0.0f, 1.0f
-		};
-		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-		Car->target = EAST;
-		break;
-	}
-	case 3:
-	{
-		GLfloat vertices[] =
-		{
-			x1, y1, 0.0f, 1.0f, 1.0f, 0.0f,
-			x2, y1, 0.0f, 1.0f, 1.0f, 0.0f,
-			x1, y2, 0.0f, 1.0f, 1.0f, 0.0f,
-			x2, y2 ,0.0f, 1.0f, 1.0f, 0.0f
-		};
-		memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-		Car->target = WEST;
-		break;
-	}
+			GLfloat vertices[] =
+			{
+				x1, y1, 0.0f, 0.0f, 1.0f, 0.0f,
+				x2, y1, 0.0f, 0.0f, 1.0f, 0.0f,
+				x1, y2, 0.0f, 0.0f, 1.0f, 0.0f,
+				x2, y2 ,0.0f, 0.0f, 1.0f, 0.0f
+			};
+			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+			Car->target = SOUTH;
+			break;
+		}
 
+		case 2:
+		{
+			GLfloat vertices[] =
+			{
+				x1, y1, 0.0f, 0.0f, 0.0f, 1.0f,
+				x2, y1, 0.0f, 0.0f, 0.0f, 1.0f,
+				x1, y2, 0.0f, 0.0f, 0.0f, 1.0f,
+				x2, y2 ,0.0f, 0.0f, 0.0f, 1.0f
+			};
+			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+			Car->target = EAST;
+			break;
+		}
+
+		case 3:
+		{
+			GLfloat vertices[] =
+			{
+				x1, y1, 0.0f, 1.0f, 1.0f, 0.0f,
+				x2, y1, 0.0f, 1.0f, 1.0f, 0.0f,
+				x1, y2, 0.0f, 1.0f, 1.0f, 0.0f,
+				x2, y2 ,0.0f, 1.0f, 1.0f, 0.0f
+			};
+			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
+			Car->target = WEST;
+			break;
+		}
 	}
 
 	GLint indeces[] =
@@ -129,6 +150,7 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	};
 
 	memcpy(&carIndices[carIndex * 6], indeces, sizeof(GLint) * 6);
+	glm_mat4_identity(carTrans[Car->ID]);
 }
 
 GLint getFreeCarIndex()
@@ -154,6 +176,8 @@ GLvoid setCarsToDefault()
 		cars[i].nextCell.road = EMPTY;
 		cars[i].nextCell.line = EMPTY;
 		cars[i].nextCell.cell = EMPTY;
+		cars[i].ID = EMPTY;
+		cars[i].realPos = EMPTY;
 		cars[i].target = NONE;
 		cars[i].velocity = 0;
 		cars[i].isActive = false;

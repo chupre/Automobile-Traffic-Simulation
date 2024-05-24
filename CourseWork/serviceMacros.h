@@ -4,7 +4,7 @@
 //..........................................................
 #define CELL_SIZE 0.05f
 //..........................................................
-#define MAX_CARS 4
+#define MAX_CARS 16
 //..........................................................
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
@@ -20,7 +20,7 @@
 #define VELOCITY_MULTIPLIER (CELL_SIZE)
 
 //..........................................................
-#define NUMBER_OF_LINES 1
+#define NUMBER_OF_LINES 2
 
 #define ONE_ROAD_N 1
 #define ONE_ROAD_S 2
@@ -36,7 +36,7 @@
     #define NUMBER_OF_ROADS 2
 #endif	
 
-#define ERROR_LIMIT 0.0000001
+#define ERROR_LIMIT 0.0000001f
 #define EMPTY -1
 
 #define NUMBER_OF_VISIBLE_CELLS 20
@@ -76,8 +76,10 @@ typedef struct
     RLC nextCell;
     GLint velocity;
     GLint dirOnRoad;
+    GLint ID;
     DIRECTION target;
     DIRECTION overtake;
+    GLfloat realPos;
     bool isActive;
     bool isAvaria;
 } car;
