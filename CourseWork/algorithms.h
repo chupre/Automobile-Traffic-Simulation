@@ -68,6 +68,8 @@ GLvoid thoughtsOfOneCar(car* Car)
 
 GLvoid step()
 {
+	spawnCars();
+
 	for (int i = 0; i < MAX_CARS; i++)
 	{
 		if (cars[i].isActive && !cars[i].isAvaria)

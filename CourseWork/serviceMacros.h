@@ -4,7 +4,7 @@
 //..........................................................
 #define CELL_SIZE 0.05f
 //..........................................................
-#define MAX_CARS 16
+#define MAX_CARS 100
 //..........................................................
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
@@ -41,7 +41,12 @@
 
 #define NUMBER_OF_VISIBLE_CELLS 20
 #define NUMBER_OF_COVERED_CELLS (MAX_VELOCITY)
-#define NUMBER_OF_CELLS 40//(NUMBER_OF_VISIBLE_CELLS + NUMBER_OF_COVERED_CELLS)
+
+//for some reason when it's 40 program crashes on 1920x1080 resolution 
+//and cars spawn in the middle of the screen after window border is dragged
+//I have no fucking clue why but it is what it is
+
+#define NUMBER_OF_CELLS 60//(NUMBER_OF_VISIBLE_CELLS + NUMBER_OF_COVERED_CELLS)
 
 #define FPS 60.0f
 //..........................................................

@@ -189,23 +189,33 @@ GLvoid setCarsToDefault()
 	}
 }
 
-//void initRoadsToDefault(road* roads)
-//{
-//	for (int a = 0; a < NUMBER_OF_ROADS; a++)
-//	{
-//		for (int b = 0; b < NUMBER_OF_LINES + 1; b++)
-//		{
-//			line* l = ((roads + a)->lines + b);
-//			for (int c = 0; c < NUMBER_OF_CELLS; c++)
-//			{
-//				l->cells[c] = NULL;
-//			}
-//		}
-//	}
-//}
-
-GLvoid getCarTranslateVector()
+GLvoid spawnCars()
 {
-	int sasasas = 0;
+	if (freeCars)
+	{
+		int counter = freeCars;
+		for (int i = 0; i < counter; i++)
+		{
+			RLC freeSpotRLC = { EMPTY, EMPTY, EMPTY };
+			getFreeSpotAddress(&freeSpotRLC);
+			GLint carIndex = getFreeCarIndex();
+
+			if (freeSpotRLC.road != EMPTY)
+			{
+				setCar(&cars[carIndex], carIndex, freeSpotRLC);
+				printf("car %d spawned:\n", carIndex);
+				printf("vertices: %f %f %f %f\n", carVertices[carIndex * 24], carVertices[carIndex * 24 + 6], carVertices[carIndex * 24 + 1], carVertices[carIndex * 24 + 7]);
+				printf("direction: %d\n", cars[carIndex].dirOnRoad);
+				printf("RLC: Road: %d, Line: %d, Cell: %d\n", cars[carIndex].currCell.road, cars[carIndex].currCell.line, cars[carIndex].currCell.cell);
+				printf("real position: %f\n", cars[carIndex].realPos);
+				printf("velocity: %d\n\n", cars[carIndex].velocity);
+				glBindBuffer(GL_ARRAY_BUFFER, carVBO);
+				glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
+				glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
+				--freeCars;
+			}
+		}
+	}
 }
 
