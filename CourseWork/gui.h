@@ -2,9 +2,23 @@
 
 void initGUI();
 void initFont();
+void saveMenu();
+void loadMenu();
 
 void initGUI()
 {
+    if (isSaveMenuActive)
+    {
+        saveMenu();
+        return;
+    }
+
+    if (isLoadMenuActive)
+    {
+        loadMenu();
+        return;
+    }
+
     if (nk_begin(context, "PauseMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
         nk_layout_row_dynamic(context, 80, 1);
@@ -14,7 +28,13 @@ void initGUI()
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
-        nk_button_label(context, "Save Model");
+
+        if (nk_button_label(context, "Save Model"))
+        {
+            isSaveMenuActive = true;
+            return;
+        }
+
         nk_layout_row_end(context);
 
         nk_layout_row_dynamic(context, 10, 1);
@@ -23,7 +43,13 @@ void initGUI()
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
-        nk_button_label(context, "Load Model");
+
+        if (nk_button_label(context, "Load Model"))
+        {
+            isLoadMenuActive = true;
+            return;
+        }
+
         nk_layout_row_end(context);
 
         nk_layout_row_dynamic(context, 10, 1);
@@ -45,61 +71,71 @@ void initGUI()
         nk_layout_row_dynamic(context, 30, 1);
         nk_label(context, "Theme", NK_TEXT_CENTERED);
 
-        static int op = THEME_BLACK;
+        static int op = THEME_DARK;
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
+
         if (nk_option_label(context, "Black", op == THEME_BLACK))
         {
             op = THEME_BLACK;
             set_style(context, op);
         }
+
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
+
         if (nk_option_label(context, "Blue", op == THEME_BLUE))
         {
             op = THEME_BLUE;
             set_style(context, op);
         }
+
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
+        
         if (nk_option_label(context, "Dark", op == THEME_DARK))
         {
             op = THEME_DARK;
             set_style(context, op);
         }
+        
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
+        
         if (nk_option_label(context, "Red", op == THEME_RED))
         {
             op = THEME_RED;
             set_style(context, op);
         }
+        
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
+        
         if (nk_option_label(context, "White", op == THEME_WHITE))
         {
             op = THEME_WHITE;
             set_style(context, op);
         }
+        
         nk_layout_row_end(context);
 
     }
@@ -124,3 +160,30 @@ void initFont()
     nk_style_load_all_cursors(context, atlas->cursors);
     nk_style_set_font(context, &droid->handle);
 }
+
+
+void saveMenu()
+{
+    if (nk_begin(context, "SaveMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
+    {
+        nk_layout_row_dynamic(context, 80, 1);
+        nk_label(context, "Save", NK_TEXT_CENTERED);
+    }
+
+    nk_end(context);
+    nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+}
+
+
+void loadMenu()
+{
+    if (nk_begin(context, "LoadMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
+    {
+        nk_layout_row_dynamic(context, 80, 1);
+        nk_label(context, "Load", NK_TEXT_CENTERED);
+    }
+
+    nk_end(context);
+    nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+}
+

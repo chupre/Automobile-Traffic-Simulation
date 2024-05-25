@@ -40,6 +40,8 @@ GLvoid getFreeSpotAddress(RLC* address)
 		address->line = freeSpots[randFreeSpotIndex].line;
 		address->cell = 0;
 	}
+
+	free(freeSpots);
 }
 
 GLvoid setCar(car* Car, GLint carIndex, RLC rlc)

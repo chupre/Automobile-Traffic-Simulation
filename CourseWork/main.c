@@ -63,6 +63,7 @@ int main()
     context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
     initFont();
 
+    glfwSetTime(0.0f);
     lastTime = glfwGetTime();
     timer = lastTime;
 
@@ -70,12 +71,15 @@ int main()
     {
         initGUI();
 
-        currTime = glfwGetTime();
-        deltaTime += (currTime - lastTime) / limitFPS;
-        lastTime = currTime;
-
         if (!paused)
         {
+            glfwSetTime(glfwGetTime() - getPauseTime());
+
+            currTime = glfwGetTime();
+            deltaTime += (currTime - lastTime) / limitFPS;
+            lastTime = currTime;
+            endPauseTime = 0;
+
             while (deltaTime >= 1.0)
             {
                 update();
@@ -84,6 +88,10 @@ int main()
 
             render();
             showFPS();
+        }
+        else
+        {
+            endPauseTime = glfwGetTime();
         }
 
         nk_glfw3_new_frame(&glfw);

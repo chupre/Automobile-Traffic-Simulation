@@ -1,6 +1,8 @@
 #pragma once
 
 bool paused = false;
+bool isSaveMenuActive = false;
+bool isLoadMenuActive = false;
 
 GLuint WINDOW_WIDTH = 800;
 GLuint WINDOW_HEIGHT = 600;
@@ -34,21 +36,22 @@ mat4 identityTrans, carTrans[MAX_CARS];
 GLdouble limitFPS = 1.0 / FPS;
 
 GLdouble lastTime;
-GLdouble deltaTime = 0, currTime = 0;
+GLdouble deltaTime = 0, currTime = 0, endPauseTime = 0;
 GLdouble timer;
 
 GLint frames = 0, updates = 0;
 GLint framesPerSec = 0, updatesPerSec = 0;
 
-void framebufferSizeCallback(GLFWwindow* window, int width, int height);
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void initRoads();
-void initLines();
-void initCars();
-void render();
-void update();
-void quit();
-void showFPS();
+GLdouble getPauseTime();
+GLvoid framebufferSizeCallback(GLFWwindow* window, int width, int height);
+GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+GLvoid initRoads();
+GLvoid initLines();
+GLvoid initCars();
+GLvoid render();
+GLvoid update();
+GLvoid quit();
+GLvoid showFPS();
 
 //Definiton is in algorithms.h
 GLvoid step();
@@ -58,18 +61,29 @@ GLvoid getFreeSpotAddress(RLC* address);
 GLvoid spawnCars();
 
 
-void framebufferSizeCallback(GLFWwindow* window, int width, int height)
+GLvoid framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
     WINDOW_HEIGHT = height;
     WINDOW_WIDTH = width;
     glViewport(0, 0, width, height);
 }
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     {
-        paused = !paused;
+        if (isSaveMenuActive)
+        {
+            isSaveMenuActive = false;
+        }
+        else if (isLoadMenuActive)
+        {
+            isLoadMenuActive = false;
+        }
+        else
+        {
+            paused = !paused;
+        }
     }
 
     if (key == GLFW_KEY_F6 && action == GLFW_PRESS)
@@ -79,7 +93,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 }
 
 
-void initRoads()
+GLvoid initRoads()
 {
     glGenVertexArrays(1, &roadVAO);
     glGenBuffers(1, &roadVBO);
@@ -102,7 +116,7 @@ void initRoads()
 }
 
 
-void initLines()
+GLvoid initLines()
 {
     glGenVertexArrays(1, &lineVAO);
     glGenBuffers(1, &lineVBO);
@@ -121,7 +135,7 @@ void initLines()
 }
 
 
-void initCars()
+GLvoid initCars()
 {
     glGenVertexArrays(1, &carVAO);
     glGenBuffers(1, &carVBO);
@@ -144,7 +158,7 @@ void initCars()
 }
 
 
-void render()
+GLvoid render()
 {
     glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -180,7 +194,7 @@ void render()
 }
 
 
-void update()
+GLvoid update()
 {
     if (glfwGetTime() - timer > STEP_TIME)
     {
@@ -200,7 +214,7 @@ void update()
 }
 
 
-void quit()
+GLvoid quit()
 {
     glDeleteVertexArrays(1, &roadVAO);
     glDeleteBuffers(1, &roadVBO);
@@ -213,7 +227,22 @@ void quit()
 }
 
 
-void showFPS()
+GLvoid showFPS()
 {
     printf("FPS: %d      Updates: %d\r", framesPerSec, updatesPerSec);
+}
+
+
+GLdouble getPauseTime()
+{
+    GLdouble pauseTime = endPauseTime - lastTime;
+
+    if (pauseTime > 0)
+    {
+        return pauseTime;
+    }
+    else
+    {
+        return 0;
+    }
 }
