@@ -1,4 +1,4 @@
-//#pragma once
+#pragma once
 
 #define MAX_BUFFER_SIZE 256
 #define MAX_SAVES 64
@@ -30,7 +30,7 @@ void initGUI()
 
     if (nk_begin(context, "PauseMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
-        nk_layout_row_dynamic(context, 80, 1);
+        nk_layout_row_dynamic(context, 50, 1);
         nk_label(context, "Main Menu", NK_TEXT_CENTERED);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
@@ -174,15 +174,21 @@ void showSaveMenu()
 {
     if (nk_begin(context, "SaveMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
-        nk_layout_row_dynamic(context, 100, 1);
+        nk_layout_row_dynamic(context, 50, 1);
         nk_label(context, "Save Model", NK_TEXT_CENTERED);
         
         nk_layout_row_dynamic(context, 25, 1);
         nk_label(context, "Enter save name.", NK_TEXT_CENTERED);
 
+        nk_layout_row_dynamic(context, 10, 1);
+        nk_spacer(context);
+
         nk_layout_row_dynamic(context, 40, 3);
         nk_spacer(context);
         nk_flags event = nk_edit_string_zero_terminated(context, NK_EDIT_BOX | NK_EDIT_AUTO_SELECT, userSaveName, sizeof(userSaveName), nk_filter_ascii);
+        nk_spacer(context);
+
+        nk_layout_row_dynamic(context, 10, 1);
         nk_spacer(context);
 
         nk_layout_row_dynamic(context, 40, 5);
@@ -223,10 +229,10 @@ void showLoadMenu()
 
     if (nk_begin(context, "LoadMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
-        nk_layout_row_dynamic(context, 100, 1);
+        nk_layout_row_dynamic(context, 50, 1);
         nk_label(context, "Load Model", NK_TEXT_CENTERED);
 
-        nk_layout_row_dynamic(context, 350, 3);
+        nk_layout_row_dynamic(context, 300, 3);
         nk_spacer(context);
 
         if (nk_group_begin(context, "Save files", NK_WINDOW_BORDER)) 
@@ -264,6 +270,21 @@ void showLoadMenu()
         if (nk_button_label(context, "Load"))
         {
             load(saves[activeFileIndex]);
+        }
+
+        nk_layout_row_dynamic(context, 10, 1);
+        nk_spacer(context);
+
+        nk_layout_row_dynamic(context, 35, 5);
+        nk_spacer(context);
+        nk_spacer(context);
+
+        if (nk_button_label(context, "Delete"))
+        {
+            char fullname[MAX_BUFFER_SIZE + 10] = "saves/";
+            strcat(fullname, saves[activeFileIndex]);
+
+            remove(fullname);
         }
     }
 
@@ -323,12 +344,12 @@ void load(char* fileName)
     fread(carIndices, sizeof(carIndices), 1, saveFile);
     fread(&freeCars, sizeof(freeCars), 1, saveFile);
 
-    //spawnCars();
-
     glBindBuffer(GL_ARRAY_BUFFER, carVBO);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
 
     fclose(saveFile);
+
+    isLoadMenuActive = false;
 }
