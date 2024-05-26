@@ -12,7 +12,7 @@ GLint getFreeCarIndex();
 
 GLvoid getFreeSpotAddress(RLC* address)
 {
-	RLC* freeSpots = malloc(freeCars * sizeof(RLC));
+	RLC freeSpots[MAX_CARS * sizeof(RLC)];
 	int freeSpotsCounter = 0;
 	int randFreeSpotIndex = 0;
 
@@ -40,8 +40,6 @@ GLvoid getFreeSpotAddress(RLC* address)
 		address->line = freeSpots[randFreeSpotIndex].line;
 		address->cell = 0;
 	}
-
-	free(freeSpots);
 }
 
 GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
@@ -164,8 +162,8 @@ GLint getFreeCarIndex()
 			return i;
 		}
 	}
-	return 
-		;
+
+	return;
 }
 
 GLvoid setCarsToDefault()

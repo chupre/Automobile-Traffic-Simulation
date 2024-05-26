@@ -20,7 +20,7 @@
 #define VELOCITY_MULTIPLIER (CELL_SIZE)
 
 //..........................................................
-#define NUMBER_OF_LINES 2
+#define NUMBER_OF_LINES 3
 
 #define ONE_ROAD_N 1
 #define ONE_ROAD_S 2

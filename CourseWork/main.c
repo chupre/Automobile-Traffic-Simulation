@@ -20,6 +20,8 @@
 #include <style.c>
 
 #include <time.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 #include <serviceMacros.h>
 #include <gl.h>

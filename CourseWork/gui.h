@@ -1,21 +1,30 @@
-#pragma once
+//#pragma once
+
+#define MAX_BUFFER_SIZE 256
+#define MAX_SAVES 64
 
 void initGUI();
 void initFont();
-void saveMenu();
-void loadMenu();
+void showSaveMenu();
+void showLoadMenu();
+void save();
+void load(char* fileName);
+
+char userSaveName[MAX_BUFFER_SIZE];
+int activeFileIndex = 0;
+
 
 void initGUI()
 {
     if (isSaveMenuActive)
     {
-        saveMenu();
+        showSaveMenu();
         return;
     }
 
     if (isLoadMenuActive)
     {
-        loadMenu();
+        showLoadMenu();
         return;
     }
 
@@ -31,8 +40,8 @@ void initGUI()
 
         if (nk_button_label(context, "Save Model"))
         {
+            strcpy(userSaveName, "");
             isSaveMenuActive = true;
-            return;
         }
 
         nk_layout_row_end(context);
@@ -47,7 +56,6 @@ void initGUI()
         if (nk_button_label(context, "Load Model"))
         {
             isLoadMenuActive = true;
-            return;
         }
 
         nk_layout_row_end(context);
@@ -162,12 +170,29 @@ void initFont()
 }
 
 
-void saveMenu()
+void showSaveMenu()
 {
     if (nk_begin(context, "SaveMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
-        nk_layout_row_dynamic(context, 80, 1);
-        nk_label(context, "Save", NK_TEXT_CENTERED);
+        nk_layout_row_dynamic(context, 100, 1);
+        nk_label(context, "Save Model", NK_TEXT_CENTERED);
+        
+        nk_layout_row_dynamic(context, 25, 1);
+        nk_label(context, "Enter save name.", NK_TEXT_CENTERED);
+
+        nk_layout_row_dynamic(context, 40, 3);
+        nk_spacer(context);
+        nk_flags event = nk_edit_string_zero_terminated(context, NK_EDIT_BOX | NK_EDIT_AUTO_SELECT, userSaveName, sizeof(userSaveName), nk_filter_ascii);
+        nk_spacer(context);
+
+        nk_layout_row_dynamic(context, 40, 5);
+        nk_spacer(context);
+        nk_spacer(context);
+
+        if (nk_button_label(context, "Save"))
+        {
+            save();
+        }
     }
 
     nk_end(context);
@@ -175,15 +200,135 @@ void saveMenu()
 }
 
 
-void loadMenu()
+void showLoadMenu()
 {
+    DIR* directory;
+    struct dirent* entry;
+    directory = opendir("saves");
+    
+    char saves[MAX_SAVES][MAX_BUFFER_SIZE];
+    int save_counter = 0;
+
+    if (directory == NULL)
+    {
+        printf("Error opening directory\n");
+        return;
+    }
+
+    while ((entry = readdir(directory)) != NULL)
+    {
+        memcpy(saves[save_counter], entry->d_name, MAX_BUFFER_SIZE);
+        save_counter++;
+    }
+
     if (nk_begin(context, "LoadMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
-        nk_layout_row_dynamic(context, 80, 1);
-        nk_label(context, "Load", NK_TEXT_CENTERED);
+        nk_layout_row_dynamic(context, 100, 1);
+        nk_label(context, "Load Model", NK_TEXT_CENTERED);
+
+        nk_layout_row_dynamic(context, 350, 3);
+        nk_spacer(context);
+
+        if (nk_group_begin(context, "Save files", NK_WINDOW_BORDER)) 
+        {
+            if (save_counter == 2)
+            {
+                nk_layout_row_dynamic(context, 30, 1);
+                nk_label(context, "No saves found", NK_TEXT_CENTERED);
+            }
+            else
+            {
+                for (int i = 2; i < save_counter; i++)
+                {
+                    nk_layout_row_dynamic(context, 30, 1);
+
+                    if (nk_option_label(context, saves[i], i == activeFileIndex))
+                    {
+                        activeFileIndex = i;
+                    }
+                }
+            }
+
+            nk_group_end(context);
+        }
+
+        nk_spacer(context);
+
+        nk_layout_row_dynamic(context, 10, 1);
+        nk_spacer(context);
+
+        nk_layout_row_dynamic(context, 35, 5);
+        nk_spacer(context);
+        nk_spacer(context);
+
+        if (nk_button_label(context, "Load"))
+        {
+            load(saves[activeFileIndex]);
+        }
     }
 
     nk_end(context);
     nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
 }
 
+
+void save()
+{
+    char fullname[MAX_BUFFER_SIZE + 10] = "saves/";
+    strcat(fullname, userSaveName);
+    strcat(fullname, ".bin");
+
+    FILE* saveFile = fopen(fullname, "wb");
+
+    if (saveFile == NULL)
+    {
+        printf("Error: unable to save the model\n\n");
+        return;
+    }
+
+    fwrite(cars, sizeof(cars), 1, saveFile);
+    fwrite(carTrans, sizeof(carTrans), 1, saveFile);
+    fwrite(roads, sizeof(roads), 1, saveFile);
+    fwrite(carVertices, sizeof(carVertices), 1, saveFile);
+    fwrite(carIndices, sizeof(carIndices), 1, saveFile);
+    fwrite(&freeCars, sizeof(freeCars), 1, saveFile);
+
+    fclose(saveFile);
+
+    isSaveMenuActive = false;
+}
+
+
+void load(char* fileName)
+{
+    char fullname[MAX_BUFFER_SIZE + 10] = "saves/";
+    strcat(fullname, fileName);
+
+    FILE* saveFile = fopen(fullname, "rb");
+
+    if (saveFile == NULL)
+    {
+        printf("Error: failed to open save file while loading\n\n");
+        return;
+    }
+    
+    setCarsToDefault();
+    setRoadsToDefault();
+    glm_mat4_identity_array(carTrans, MAX_CARS);
+
+    fread(cars, sizeof(cars), 1, saveFile);
+    fread(carTrans, sizeof(carTrans), 1, saveFile);
+    fread(roads, sizeof(roads), 1, saveFile);
+    fread(carVertices, sizeof(carVertices), 1, saveFile);
+    fread(carIndices, sizeof(carIndices), 1, saveFile);
+    fread(&freeCars, sizeof(freeCars), 1, saveFile);
+
+    //spawnCars();
+
+    glBindBuffer(GL_ARRAY_BUFFER, carVBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
+
+    fclose(saveFile);
+}

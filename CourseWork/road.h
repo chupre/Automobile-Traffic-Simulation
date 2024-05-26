@@ -5,14 +5,15 @@
 
 #include <string.h>
 
-GLvoid setRoad                      (GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir);
-GLvoid setLines                     (GLint roadIndex);
-DIRECTION getRoadDir                (car* Сar);
-DIRECTION getOvertakeDir            (DIRECTION roadDir);
-car** getFirstCellPtr               (RLC rlc);
-GLint getCarDirOnRoad               (road* Road);
-GLvoid unbindCarPtrFromCell         (car* Сar);
-GLvoid reinitCurrCellWithNextCell   (car* Сar);
+GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir);
+GLvoid setLines(GLint roadIndex);
+DIRECTION getRoadDir(car* Сar);
+DIRECTION getOvertakeDir(DIRECTION roadDir);
+car** getFirstCellPtr(RLC rlc);
+GLint getCarDirOnRoad(road* Road);
+GLvoid unbindCarPtrFromCell(car* Сar);
+GLvoid reinitCurrCellWithNextCell(car* Сar);
+GLvoid setRoadsToDefault();
 
 
 DIRECTION getRoadDir(car* Car)
@@ -213,5 +214,17 @@ GLvoid setLines(GLint roadIndex)
         }
         memset(roads[roadIndex].lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
+    }
+}
+
+
+GLvoid setRoadsToDefault()
+{
+    for (int i = 0; i < NUMBER_OF_ROADS; i++)
+    {
+        for (int j = 0; j < NUMBER_OF_LINES; j++)
+        {
+            memset(roads[i].lines[j].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
+        }
     }
 }
