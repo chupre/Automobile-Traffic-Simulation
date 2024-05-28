@@ -65,6 +65,7 @@ GLvoid framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
     WINDOW_HEIGHT = height;
     WINDOW_WIDTH = width;
+
     glViewport(0, 0, width, height);
 }
 
@@ -198,7 +199,8 @@ GLvoid update()
 {
     if (glfwGetTime() - timer > STEP_TIME)
     {
-        printf("Step at time: %lf\n\n", glfwGetTime());
+        printf("\nStep at time: %lf\n\n", glfwGetTime());
+        printf("car 0 pos: %d\n", cars[0].currCell.cell);
 
         timer += STEP_TIME;
 

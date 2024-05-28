@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #define CELL_LENGHT CELL_SIZE
-#define ROAD_WIDTH CELL_SIZE
+#define ROAD_WIDTH CELL_SIZE * 2.5
 
 #include <string.h>
 

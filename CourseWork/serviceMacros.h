@@ -4,7 +4,7 @@
 //..........................................................
 #define CELL_SIZE 0.05f
 //..........................................................
-#define MAX_CARS 100
+#define MAX_CARS 500
 //..........................................................
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
@@ -20,7 +20,7 @@
 #define VELOCITY_MULTIPLIER (CELL_SIZE)
 
 //..........................................................
-#define NUMBER_OF_LINES 3
+#define NUMBER_OF_LINES 10
 
 #define ONE_ROAD_N 1
 #define ONE_ROAD_S 2

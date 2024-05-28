@@ -38,7 +38,17 @@ GLvoid thoughtsOfOneCar(car* Car)
 {
 	RLC rlc;
 	GLint distance = distanceToForthCar(Car->currCell, roads);
-	GLint forthCarVelocity = getVelocityByRLC(Car->currCell);
+	GLint forthCarVelocity;
+
+	if (Car->currCell.cell < NUMBER_OF_CELLS)
+	{
+		forthCarVelocity = getVelocityByRLC(Car->currCell);
+	}
+	else
+	{
+		forthCarVelocity = 0;
+	}
+
 	if (distance > Car->velocity || distance == NO_CAR)
 	{
 		if (Car->velocity < MAX_VELOCITY)
@@ -55,7 +65,6 @@ GLvoid thoughtsOfOneCar(car* Car)
 		Car->nextCell.line = rlc.line;
 		Car->nextCell.cell = rlc.cell;
 
-		printf("\n\nline changed\a\n");
 		return;
 	}
 	else
@@ -76,7 +85,7 @@ GLvoid step()
 		{
 			if (cars[i].realPos > 1.0f || cars[i].realPos < -1.0f)
 			{
-				printf("CAR %d AT: %f IS GONE.\n\n", cars[i].ID, cars[i].realPos);
+				/*printf("CAR %d AT: %f IS GONE.\n\n", cars[i].ID, cars[i].realPos);*/
 
 				excludeOutMappers(&cars[i]);
 				continue;
