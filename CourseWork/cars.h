@@ -1,8 +1,5 @@
 #pragma once
 
-#define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
-#define CAR_LENGHT (CAR_WIDTH * 1.7f)
-
 //its definition is in algorithms.h
 GLvoid christenNewBornCar(RLC rlc, car* Car);
 
@@ -53,104 +50,70 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	GLfloat x2 = x1 - CAR_WIDTH;
 	GLfloat y1 = 0, y2 = 0;
 
+	glm_mat3_identity(carTransformMatrixes[carIndex]);
+
 	switch (carDir)
 	{
 		case NORTH:
+		{
 			y1 = -1.0f;
 			y2 = y1 + CAR_LENGHT;
 			Car->realPos = y1;
+
+			GLfloat carTranslationCoords[3] = { x2, y1 };
+			vec3 carTranslationVector;
+			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+
 			break;
+		}
 
 		case SOUTH:
+		{
 			y1 = 1.0f;
 			y2 = y1 - CAR_LENGHT;
 			Car->realPos = y1;
+
+			GLfloat carTranslationCoords[3] = { x2, y1 };
+			vec3 carTranslationVector;
+			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+
 			break;
+		}
 
 		case EAST:
+		{
 			y1 = x1;
 			y2 = x2;
 			x1 = -1.0f;
 			x2 = -1.0f + CAR_WIDTH;
 			Car->realPos = x1;
+
+			GLfloat carTranslationCoords[3] = { x2, y1 };
+			vec3 carTranslationVector;
+			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+
 			break;
+		}
 
 		case WEST:
+		{
 			y1 = x1;
 			y2 = x2;
 			x1 = 1.0f;
 			x2 = 1.0f - CAR_WIDTH;
 			Car->realPos = x1;
-			break;
-	}
 
-	switch (Car->target)
-	{
-		case 0: 
-		{
-			GLfloat vertices[] =
-			{
-				x1, y1, 0.0f, 1.0f, 0.0f, 0.0f,
-				x2, y1, 0.0f, 1.0f, 0.0f, 0.0f,
-				x1, y2, 0.0f, 1.0f, 0.0f, 0.0f,
-				x2, y2 ,0.0f, 1.0f, 0.0f, 0.0f
-			};
-			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-			Car->target = NORTH;
-			break;
-		}
+			GLfloat carTranslationCoords[3] = { x2, y1 };
+			vec3 carTranslationVector;
+			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
-		case 1:
-		{
-			GLfloat vertices[] =
-			{
-				x1, y1, 0.0f, 0.0f, 1.0f, 0.0f,
-				x2, y1, 0.0f, 0.0f, 1.0f, 0.0f,
-				x1, y2, 0.0f, 0.0f, 1.0f, 0.0f,
-				x2, y2 ,0.0f, 0.0f, 1.0f, 0.0f
-			};
-			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-			Car->target = SOUTH;
-			break;
-		}
-
-		case 2:
-		{
-			GLfloat vertices[] =
-			{
-				x1, y1, 0.0f, 0.0f, 0.0f, 1.0f,
-				x2, y1, 0.0f, 0.0f, 0.0f, 1.0f,
-				x1, y2, 0.0f, 0.0f, 0.0f, 1.0f,
-				x2, y2 ,0.0f, 0.0f, 0.0f, 1.0f
-			};
-			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-			Car->target = EAST;
-			break;
-		}
-
-		case 3:
-		{
-			GLfloat vertices[] =
-			{
-				x1, y1, 0.0f, 1.0f, 1.0f, 0.0f,
-				x2, y1, 0.0f, 1.0f, 1.0f, 0.0f,
-				x1, y2, 0.0f, 1.0f, 1.0f, 0.0f,
-				x2, y2 ,0.0f, 1.0f, 1.0f, 0.0f
-			};
-			memcpy(&carVertices[carIndex * 3 * 4 * 2], vertices, sizeof(GLfloat) * 4 * 3 * 2);
-			Car->target = WEST;
 			break;
 		}
 	}
-
-	GLint indeces[] =
-	{
-		0 + (carIndex * 4), 2 + (carIndex * 4), 3 + (carIndex * 4),
-		0 + (carIndex * 4), 1 + (carIndex * 4), 3 + (carIndex * 4)
-	};
-
-	memcpy(&carIndices[carIndex * 6], indeces, sizeof(GLint) * 6);
-	glm_mat4_identity(carTrans[Car->ID]);
 }
 
 GLint getFreeCarIndex()
@@ -209,10 +172,6 @@ GLvoid spawnCars()
 				//printf("RLC: Road: %d, Line: %d, Cell: %d\n", cars[carIndex].currCell.road, cars[carIndex].currCell.line, cars[carIndex].currCell.cell);
 				//printf("real position: %f\n", cars[carIndex].realPos);
 				//printf("velocity: %d\n\n", cars[carIndex].velocity);
-				glBindBuffer(GL_ARRAY_BUFFER, carVBO);
-				glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
-				glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
 				--freeCars;
 			}
 		}

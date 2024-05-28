@@ -279,12 +279,15 @@ void showLoadMenu()
         nk_spacer(context);
         nk_spacer(context);
 
-        if (nk_button_label(context, "Delete"))
+        if (save_counter > 2)
         {
-            char fullname[MAX_BUFFER_SIZE + 10] = "saves/";
-            strcat(fullname, saves[activeFileIndex]);
+            if (nk_button_label(context, "Delete"))
+            {
+                char fullname[MAX_BUFFER_SIZE + 10] = "saves/";
+                strcat(fullname, saves[activeFileIndex]);
 
-            remove(fullname);
+                remove(fullname);
+            }
         }
     }
 
@@ -308,10 +311,8 @@ void save()
     }
 
     fwrite(cars, sizeof(cars), 1, saveFile);
-    fwrite(carTrans, sizeof(carTrans), 1, saveFile);
+    fwrite(carTransformMatrixes, sizeof(carTransformMatrixes), 1, saveFile);
     fwrite(roads, sizeof(roads), 1, saveFile);
-    fwrite(carVertices, sizeof(carVertices), 1, saveFile);
-    fwrite(carIndices, sizeof(carIndices), 1, saveFile);
     fwrite(&freeCars, sizeof(freeCars), 1, saveFile);
 
     fclose(saveFile);
@@ -335,19 +336,12 @@ void load(char* fileName)
     
     setCarsToDefault();
     setRoadsToDefault();
-    glm_mat4_identity_array(carTrans, MAX_CARS);
+    glm_mat3_identity_array(carTransformMatrixes, MAX_CARS);
 
     fread(cars, sizeof(cars), 1, saveFile);
-    fread(carTrans, sizeof(carTrans), 1, saveFile);
+    fread(carTransformMatrixes, sizeof(carTransformMatrixes), 1, saveFile);
     fread(roads, sizeof(roads), 1, saveFile);
-    fread(carVertices, sizeof(carVertices), 1, saveFile);
-    fread(carIndices, sizeof(carIndices), 1, saveFile);
     fread(&freeCars, sizeof(freeCars), 1, saveFile);
-
-    glBindBuffer(GL_ARRAY_BUFFER, carVBO);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carVertices), carVertices);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(carIndices), carIndices);
 
     fclose(saveFile);
 
