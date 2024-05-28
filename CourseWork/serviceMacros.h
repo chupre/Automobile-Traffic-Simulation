@@ -2,9 +2,12 @@
 //..........................................................
 #define STEP_TIME 1.0f //seconds
 //..........................................................
-#define CELL_SIZE 0.05f
+#define CELL_SIZE 0.1f
 //..........................................................
-#define MAX_CARS 500
+#define MAX_CARS 100
+
+#define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
+#define CAR_LENGHT (CAR_WIDTH * 1.7f)
 //..........................................................
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
@@ -17,10 +20,13 @@
 
 //#define DIMINISHER 0.01f //was 0.001f
 //#define VELOCITY_MULTIPLIER (DIMINISHER * (CELL_SIZE / _1_VELOCITY)) /*-0.0005f*/
-#define VELOCITY_MULTIPLIER (CELL_SIZE)
+#define VELOCITY_MULTIPLIER CELL_SIZE
 
 //..........................................................
-#define NUMBER_OF_LINES 10
+#define NUMBER_OF_LINES 5
+
+#define CELL_LENGHT CELL_SIZE
+#define ROAD_WIDTH CELL_SIZE 
 
 #define ONE_ROAD_N 1
 #define ONE_ROAD_S 2
@@ -39,14 +45,11 @@
 #define ERROR_LIMIT 0.0000001f
 #define EMPTY -1
 
-#define NUMBER_OF_VISIBLE_CELLS 20
-#define NUMBER_OF_COVERED_CELLS (MAX_VELOCITY)
-
 //for some reason when it's 40 program crashes on 1920x1080 resolution 
 //and cars spawn in the middle of the screen after window border is dragged
 //I have no fucking clue why but it is what it is
 
-#define NUMBER_OF_CELLS 60//(NUMBER_OF_VISIBLE_CELLS + NUMBER_OF_COVERED_CELLS)
+#define NUMBER_OF_CELLS 20//(NUMBER_OF_VISIBLE_CELLS + NUMBER_OF_COVERED_CELLS)
 
 #define FPS 60.0f
 //..........................................................
@@ -101,6 +104,5 @@ typedef struct
     DIRECTION dir;
     line lines[NUMBER_OF_LINES + 1];
 } road;
-//..................................................................
-//global variable
+
 GLint freeCars = MAX_CARS;

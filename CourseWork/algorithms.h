@@ -85,7 +85,7 @@ GLvoid step()
 		{
 			if (cars[i].realPos > 1.0f || cars[i].realPos < -1.0f)
 			{
-				/*printf("CAR %d AT: %f IS GONE.\n\n", cars[i].ID, cars[i].realPos);*/
+				//printf("CAR %d AT: %f IS GONE.\n\n", cars[i].ID, cars[i].realPos);
 
 				excludeOutMappers(&cars[i]);
 				continue;

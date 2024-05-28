@@ -4,6 +4,7 @@
 #include <glfw/glfw3.h>
 #include <cglm/cglm.h>
 
+#define NK_ASSERT(a)
 #define MAX_VERTEX_BUFFER 512 * 1024
 #define MAX_ELEMENT_BUFFER 128 * 1024
 #define NK_INCLUDE_FIXED_TYPES
@@ -35,22 +36,11 @@
 
 int main()
 {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    srand(time(NULL));
 
-    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
-    glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, keyCallback);
-
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    initOpenGL();
 
     genShader();
-
-    srand(time(NULL));
 
     setMap();
     setCarsToDefault();
@@ -58,9 +48,6 @@ int main()
     initRoads();
     initLines();
     initCars();
-
-    glm_mat4_identity(identityTrans);
-    glm_mat4_identity_array(carTrans, MAX_CARS);
 
     context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
     initFont();
