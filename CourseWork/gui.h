@@ -162,7 +162,7 @@ void initFont()
     droidCfg = nk_font_config(0);
 
     nk_glfw3_font_stash_begin(&glfw, &atlas);
-    droid = nk_font_atlas_add_from_file(atlas, "DroidSans.ttf", 24, &droidCfg);
+    droid = nk_font_atlas_add_from_file(atlas, "resources/fonts/DroidSans.ttf", 24, &droidCfg);
     nk_glfw3_font_stash_end(&glfw);
 
     nk_style_load_all_cursors(context, atlas->cursors);

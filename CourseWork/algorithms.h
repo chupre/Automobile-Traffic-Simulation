@@ -8,6 +8,7 @@ GLint distanceToBackCar(RLC rlc);
 GLint isAbleToChangeLine(car* Car, RLC* posOnNewLine);
 GLint isSafetyForthAndBack(car* Car, RLC rlc);
 GLvoid countSubVelocity(car* Car);
+GLvoid update();
 
 /*
 //turn on the corner
@@ -16,6 +17,26 @@ GLint isReadyToTurnRight(void);
 GLint isReadyToTurnLeft(void);
 GLint isReadyToChangeLine(void);
 */
+
+GLvoid update()
+{
+	if (glfwGetTime() - timer > STEP_TIME)
+	{
+		printf("Step at time: %lf\n\n", glfwGetTime());
+
+		timer += STEP_TIME;
+
+		framesPerSec = frames;
+		updatesPerSec = updates;
+		frames = 0;
+		updates = 0;
+
+		step();
+	}
+
+	updates++;
+}
+
 
 GLvoid christenNewBornCar(RLC rlc, car* Car)
 {
@@ -56,17 +77,17 @@ GLvoid thoughtsOfOneCar(car* Car)
 			Car->velocity += _1_CELL;
 		}
 	}
-	else if ((forthCarVelocity < Car->velocity) && isAbleToChangeLine(Car, roads, &rlc))
-	{
-		DIRECTION roadDir = getRoadDir(Car);
-		Car->overtake = getOvertakeDir(roadDir);
+	//else if ((forthCarVelocity < Car->velocity) && isAbleToChangeLine(Car, roads, &rlc))
+	//{
+	//	DIRECTION roadDir = getRoadDir(Car);
+	//	Car->overtake = getOvertakeDir(roadDir);
 
-		Car->nextCell.road = rlc.road;
-		Car->nextCell.line = rlc.line;
-		Car->nextCell.cell = rlc.cell;
+	//	Car->nextCell.road = rlc.road;
+	//	Car->nextCell.line = rlc.line;
+	//	Car->nextCell.cell = rlc.cell;
 
-		return;
-	}
+	//	return;
+	//}
 	else
 	{
 		Car->velocity = distance - 1;
@@ -83,6 +104,7 @@ GLvoid step()
 	{
 		if (cars[i].isActive && !cars[i].isAvaria)
 		{
+
 			if (cars[i].realPos > 1.0f || cars[i].realPos < -1.0f)
 			{
 				//printf("CAR %d AT: %f IS GONE.\n\n", cars[i].ID, cars[i].realPos);
@@ -96,6 +118,7 @@ GLvoid step()
 			thoughtsOfOneCar(&cars[i]);
 		}
 	}
+
 }
 
 GLvoid excludeOutMappers(car* Car)
@@ -103,8 +126,17 @@ GLvoid excludeOutMappers(car* Car)
 	car** ptrCell = getFirstCellPtr(Car->currCell);
 	GLint start = Car->currCell.cell;
 	GLint end = Car->nextCell.cell;
-	ptrCell[start] = NULL;
-	ptrCell[end] = NULL;
+	
+	if (start < NUMBER_OF_CELLS)
+	{
+		ptrCell[start] = NULL;
+
+	}
+
+	if (end < NUMBER_OF_CELLS)
+	{
+		ptrCell[end] = NULL;
+	}
 
 	Car->currCell.road = EMPTY;
 	Car->currCell.line = EMPTY;

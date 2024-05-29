@@ -35,7 +35,7 @@ DIRECTION getOvertakeDir(DIRECTION roadDir)
 }
 
 car** getFirstCellPtr(RLC rlc) {
-    return (((roads + rlc.road)->lines + rlc.line)->cells);
+    return roads[rlc.road].lines[rlc.line].cells;
 }
 
 GLvoid unbindCarPtrFromCell(car* Car)
@@ -181,10 +181,10 @@ GLvoid setLines(GLint roadIndex)
             };
 
             memcpy(&lineVertices[i * 5 * 2 + roadIndex * 5 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 5 * 2);
-            memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
+            memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
             roads[roadIndex].lines[i].carSpawnCoord = x;
         }
-        memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
+        memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
         roads[roadIndex].lines[i].carSpawnCoord = x + stride;
     }
     
@@ -206,10 +206,10 @@ GLvoid setLines(GLint roadIndex)
             };
 
             memcpy(&lineVertices[i * 5 * 2 + roadIndex * 5 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 5 * 2);
-            memset(roads[roadIndex].lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
+            memset(roads[roadIndex].lines[i].cells, EMPTY, sizeof(roads[roadIndex].lines[i].cells));
             roads[roadIndex].lines[i].carSpawnCoord = y;
         }
-        memset(roads[roadIndex].lines[i].cells, EMPTY, sizeof(GLint) * NUMBER_OF_CELLS);
+        memset(roads[roadIndex].lines[i].cells, EMPTY, sizeof(roads[roadIndex].lines[i].cells));
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
     }
 }

@@ -4,17 +4,13 @@ bool paused = false;
 bool isSaveMenuActive = false;
 bool isLoadMenuActive = false;
 
-GLuint WINDOW_WIDTH = 1920;
-GLuint WINDOW_HEIGHT = 1080;
-GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
-
 GLFWwindow* window;
 
 struct nk_glfw glfw = { 0 };
 struct nk_context* context;
 
 GLuint shaderProgram;
-GLuint isCarLoc;
+GLuint isCarLoc, projectionLoc, modelLoc;
 
 road roads[NUMBER_OF_ROADS];
 GLuint roadVAO, roadVBO, roadEBO;
@@ -59,7 +55,6 @@ GLvoid initRoads();
 GLvoid initLines();
 GLvoid initCars();
 GLvoid render();
-GLvoid update();
 GLvoid quit();
 GLvoid showFPS();
 GLvoid initOpenGL();
@@ -194,6 +189,14 @@ GLvoid render()
     isCarLoc = glGetUniformLocation(shaderProgram, "isCar");
     glUniform1i(isCarLoc, false);
 
+    mat4 projectionMatrix, modelMatrix;
+    getProjectionMatrix(projectionMatrix);
+    getModelMatrix(modelMatrix);
+    projectionLoc = glGetUniformLocation(shaderProgram, "projection");
+    modelLoc = glGetUniformLocation(shaderProgram, "model");
+    glUniformMatrix4fv(projectionLoc, 1, false, projectionMatrix);
+    glUniformMatrix4fv(modelLoc, 1, false, modelMatrix);
+
     glBindVertexArray(roadVAO);
     glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(lineVAO);
@@ -206,37 +209,19 @@ GLvoid render()
     {
         if (cars[i].isActive)
         {
-            GLfloat screenVelocity = (GLfloat)cars[i].velocity * cars[i].dirOnRoad * VELOCITY_MULTIPLIER / 1000;
+            //speed adaptation
+            GLfloat screenVelocity = (GLfloat)cars[i].velocity * cars[i].dirOnRoad * VELOCITY_MULTIPLIER / FPS;
             cars[i].realPos += screenVelocity;
             glm_translate2d_y(carTransformMatrixes[i], screenVelocity);
         }
     }
+
     glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carTransformMatrixes), carTransformMatrixes);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, MAX_CARS);
 
     frames++;
-}
-
-
-GLvoid update()
-{
-    if (glfwGetTime() - timer > STEP_TIME)
-    {
-        printf("Step at time: %lf\n\n", glfwGetTime());
-
-        timer += STEP_TIME;
-
-        framesPerSec = frames;
-        updatesPerSec = updates;
-        frames = 0;
-        updates = 0;
-
-        step();
-    }
-
-    updates++;
 }
 
 
@@ -291,4 +276,6 @@ GLvoid initOpenGL()
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+
+    context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
 }

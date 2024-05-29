@@ -23,8 +23,8 @@ char* getShaderContent(const GLchar* fileName)
 
 void genShader()
 {
-    const GLchar* vertexShaderSource = getShaderContent("vertex_shader.glsl");
-    const GLchar* fragmentShaderSource = getShaderContent("fragment_shader.glsl");
+    const GLchar* vertexShaderSource = getShaderContent("shaders/vertex_shader.glsl");
+    const GLchar* fragmentShaderSource = getShaderContent("shaders/fragment_shader.glsl");
 
     GLuint vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);

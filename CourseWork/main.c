@@ -25,6 +25,7 @@
 #include <dirent.h>
 
 #include <serviceMacros.h>
+#include <camera.h>
 #include <gl.h>
 #include <road.h>
 #include <map.h>
@@ -39,7 +40,6 @@ int main()
     srand(time(NULL));
 
     initOpenGL();
-
     genShader();
 
     setMap();
@@ -49,8 +49,9 @@ int main()
     initLines();
     initCars();
 
-    context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
     initFont();
+    initCam();
+    glfwSwapInterval(1);
 
     glfwSetTime(0.0f);
     lastTime = glfwGetTime();

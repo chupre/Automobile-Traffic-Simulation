@@ -4,7 +4,7 @@
 //..........................................................
 #define CELL_SIZE 0.1f
 //..........................................................
-#define MAX_CARS 100
+#define MAX_CARS 1000
 
 #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
 #define CAR_LENGHT (CAR_WIDTH * 1.7f)
@@ -23,10 +23,10 @@
 #define VELOCITY_MULTIPLIER CELL_SIZE
 
 //..........................................................
-#define NUMBER_OF_LINES 5
+#define NUMBER_OF_LINES 17
 
 #define CELL_LENGHT CELL_SIZE
-#define ROAD_WIDTH CELL_SIZE 
+#define ROAD_WIDTH CELL_SIZE * 1.5
 
 #define ONE_ROAD_N 1
 #define ONE_ROAD_S 2
@@ -53,6 +53,10 @@
 
 #define FPS 60.0f
 //..........................................................
+
+GLuint WINDOW_WIDTH = 1920;
+GLuint WINDOW_HEIGHT = 1080;
+GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
 
 typedef enum {
 	_0_CELL = 0,
