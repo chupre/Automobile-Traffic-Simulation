@@ -166,12 +166,6 @@ GLvoid spawnCars()
 			if (freeSpotRLC.road != EMPTY)
 			{
 				setCar(&cars[carIndex], carIndex, freeSpotRLC);
-				//printf("car %d spawned:\n", carIndex);
-				//printf("vertices: %f %f %f %f\n", carVertices[carIndex * 24], carVertices[carIndex * 24 + 6], carVertices[carIndex * 24 + 1], carVertices[carIndex * 24 + 7]);
-				//printf("direction: %d\n", cars[carIndex].dirOnRoad);
-				//printf("RLC: Road: %d, Line: %d, Cell: %d\n", cars[carIndex].currCell.road, cars[carIndex].currCell.line, cars[carIndex].currCell.cell);
-				//printf("real position: %f\n", cars[carIndex].realPos);
-				//printf("velocity: %d\n\n", cars[carIndex].velocity);
 				--freeCars;
 			}
 		}

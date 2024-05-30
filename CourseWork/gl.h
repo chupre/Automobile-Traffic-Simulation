@@ -9,7 +9,6 @@ GLFWwindow* window;
 struct nk_glfw glfw = { 0 };
 struct nk_context* context;
 
-GLuint shaderProgram;
 GLuint isCarLoc, projectionLoc, modelLoc;
 
 road roads[NUMBER_OF_ROADS];
@@ -49,6 +48,7 @@ GLint frames = 0, updates = 0;
 GLint framesPerSec = 0, updatesPerSec = 0;
 
 GLdouble getPauseTime();
+GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 GLvoid framebufferSizeCallback(GLFWwindow* window, int width, int height);
 GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 GLvoid initRoads();
@@ -59,12 +59,28 @@ GLvoid quit();
 GLvoid showFPS();
 GLvoid initOpenGL();
 
+
 //Definiton is in algorithms.h
 GLvoid step();
 //Definition is in cars.h 
 GLvoid setCar(car* Car, GLint carIndex, RLC address);
 GLvoid getFreeSpotAddress(RLC* address);
 GLvoid spawnCars();
+
+GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    cameraFOV -= (float)yoffset;
+
+    if (cameraFOV < 1.0f)
+    {
+        cameraFOV = 1.0f;
+    }
+
+    if (cameraFOV > DEFAULT_FOV)
+    {
+        cameraFOV = DEFAULT_FOV;
+    }
+}
 
 
 GLvoid framebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -96,6 +112,26 @@ GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mo
     if (key == GLFW_KEY_F6 && action == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(window, true);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        moveCamera(UP);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        moveCamera(DOWN);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        moveCamera(LEFT);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+        moveCamera(RIGHT);
     }
 }
 
@@ -182,20 +218,15 @@ GLvoid initCars()
 GLvoid render()
 {
     glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
 
     isCarLoc = glGetUniformLocation(shaderProgram, "isCar");
     glUniform1i(isCarLoc, false);
 
-    mat4 projectionMatrix, modelMatrix;
-    getProjectionMatrix(projectionMatrix);
-    getModelMatrix(modelMatrix);
-    projectionLoc = glGetUniformLocation(shaderProgram, "projection");
-    modelLoc = glGetUniformLocation(shaderProgram, "model");
-    glUniformMatrix4fv(projectionLoc, 1, false, projectionMatrix);
-    glUniformMatrix4fv(modelLoc, 1, false, modelMatrix);
+    setProjection();
+    setView();
 
     glBindVertexArray(roadVAO);
     glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
@@ -269,13 +300,19 @@ GLvoid initOpenGL()
     glfwWindowHint(GLFW_SCALE_TO_MONITOR, TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, glfwGetPrimaryMonitor(), NULL);
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
     glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, keyCallback);
 
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    glEnable(GL_DEPTH_TEST);
 
     context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
+
+    glfwSwapInterval(1);
+
+    glfwSetKeyCallback(window, keyCallback);
+    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    glfwSetScrollCallback(window, scrollCallback);
+
 }

@@ -1,48 +1,65 @@
 #pragma once
 
-vec2 cameraFocusPostion;
-GLfloat cameraZoom = 1.0f;
+#define DEFAULT_FOV 45.0f
 
-GLvoid getProjectionMatrix(mat4 dest);
-GLvoid getModelMatrix(mat4 dest);
-GLvoid initCam();
+vec3 cameraPos = { 0.0f, 0.0f, 3.0f };
+vec3 cameraFront = { 0.0f, 0.0f, -1.0f };
+vec3 cameraUp = { 0.0f, 1.0f, 0.0f };
 
-GLvoid getProjectionMatrix(mat4 dest)
-{	
-	GLfloat left = cameraFocusPostion[0] - WINDOW_WIDTH / 2.0f;
-	GLfloat right = cameraFocusPostion[0] + WINDOW_WIDTH / 2.0f;
-	GLfloat bottom = cameraFocusPostion[1] + WINDOW_HEIGHT / 2.0f;
-	GLfloat top = cameraFocusPostion[1] - WINDOW_HEIGHT / 2.0f;
+GLfloat cameraSpeedMultiplier;
+GLfloat cameraFOV = DEFAULT_FOV;
 
-	mat4 orthoMatrix;
-	
-	//glm_ortho(left, right, top, bottom, 0.01f, 100.0f, orthoMatrix);
-	glm_ortho(left, right, bottom, top, 0.01f, 100.0f, orthoMatrix);
-	//glm_mat4_scale(orthoMatrix, cameraZoom);
+typedef enum { UP, DOWN, RIGHT, LEFT} camDir;
 
-	glm_mat4_copy(orthoMatrix, dest);
+GLvoid setProjection();
+GLvoid setView();
+GLvoid moveCamera(camDir dir);
+
+
+GLvoid setProjection()
+{
+    mat4 projection;
+    GLuint projLoc = glGetUniformLocation(shaderProgram, "projection");
+    glm_perspective(glm_rad(cameraFOV), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.01f, 100.0f, projection);
+    glUniformMatrix4fv(projLoc, 1, GL_FALSE, projection);
 }
 
 
-GLvoid getModelMatrix(mat4 dest)
+GLvoid setView()
 {
-	vec3 position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0 };
-	vec3 scale = { 400, 200, 1 };
-
-	mat4 transMatrix, scaleMatrix;
-
-	glm_mat4_identity(transMatrix);
-	glm_mat4_identity(scaleMatrix);
-
-	glm_translate(transMatrix, position);
-	glm_translate(scaleMatrix, scale);
-
-	glm_mat4_mul(scaleMatrix, transMatrix, dest);
+    mat4 view;
+    vec3 temp;
+    glm_vec3_add(cameraPos, cameraFront, temp);
+    glm_lookat(cameraPos, temp, cameraUp, view);
+    GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view);
 }
 
 
-GLvoid initCam()
+GLvoid moveCamera(camDir dir)
 {
-	cameraFocusPostion[0] = WINDOW_WIDTH / 2.0f;
-	cameraFocusPostion[1] = WINDOW_HEIGHT / 2.0f;
+    float cameraSpeed = 2.5 * cameraSpeedMultiplier;
+
+    if (dir == UP)
+    {
+        cameraPos[1] += cameraSpeed;
+
+        
+    }
+
+    if (dir == DOWN)
+    {
+        cameraPos[1] -= cameraSpeed;
+    }
+
+    if (dir == RIGHT)
+    {
+        cameraPos[0] += cameraSpeed;
+
+    }
+
+    if (dir == LEFT)
+    {
+        cameraPos[0] -= cameraSpeed;
+    }
 }

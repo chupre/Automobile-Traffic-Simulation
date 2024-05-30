@@ -23,7 +23,7 @@
 #define VELOCITY_MULTIPLIER CELL_SIZE
 
 //..........................................................
-#define NUMBER_OF_LINES 17
+#define NUMBER_OF_LINES 15
 
 #define CELL_LENGHT CELL_SIZE
 #define ROAD_WIDTH CELL_SIZE * 1.5

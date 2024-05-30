@@ -25,11 +25,11 @@
 #include <dirent.h>
 
 #include <serviceMacros.h>
+#include <shader.h>
 #include <camera.h>
 #include <gl.h>
 #include <road.h>
 #include <map.h>
-#include <shader.h>
 #include <cars.h>
 #include <gui.h>
 #include <algorithms.h>
@@ -50,8 +50,6 @@ int main()
     initCars();
 
     initFont();
-    initCam();
-    glfwSwapInterval(1);
 
     glfwSetTime(0.0f);
     lastTime = glfwGetTime();
@@ -67,6 +65,7 @@ int main()
 
             currTime = glfwGetTime();
             deltaTime += (currTime - lastTime) / limitFPS;
+            cameraSpeedMultiplier = currTime - lastTime;
             lastTime = currTime;
             endPauseTime = 0;
 

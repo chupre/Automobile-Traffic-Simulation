@@ -1,5 +1,7 @@
 #pragma once
 
+GLuint shaderProgram;
+
 void genShader();
 char* getShaderContent(const GLchar* fileName);
 

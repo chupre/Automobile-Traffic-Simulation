@@ -6,6 +6,8 @@ layout (location = 2) in mat3 aTransform;
 out vec3 color;
 
 uniform bool isCar;
+uniform mat4 projection;
+uniform mat4 view;
 
 float random(float seed) 
 {
@@ -19,11 +21,12 @@ void main()
     if (isCar)
     {
         color = vec3(random(gl_InstanceID), random(cos(gl_InstanceID)), random(gl_InstanceID * sin(gl_InstanceID)));
-        gl_Position = vec4(aTransform * vec3(aPos, 1.0), 1.0);
+        gl_Position = projection * view * vec4(aTransform * vec3(aPos, 1.0), 1.0);
+
     }
     else
     {
-        gl_Position = vec4(aPos, 1.0, 1.0);
+        gl_Position =  projection * view * vec4(aPos, 1.0, 1.0);
     }
 
 }
