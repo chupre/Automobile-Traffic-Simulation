@@ -79,7 +79,6 @@ int main()
             }
 
             render();
-            showFPS();
         }
         else
         {

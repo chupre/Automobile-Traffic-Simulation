@@ -44,9 +44,6 @@ GLdouble lastTime;
 GLdouble deltaTime = 0, currTime = 0, endPauseTime = 0;
 GLdouble timer;
 
-GLint frames = 0, updates = 0;
-GLint framesPerSec = 0, updatesPerSec = 0;
-
 GLdouble getPauseTime();
 GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 GLvoid framebufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -56,7 +53,6 @@ GLvoid initLines();
 GLvoid initCars();
 GLvoid render();
 GLvoid quit();
-GLvoid showFPS();
 GLvoid initOpenGL();
 GLvoid moveCarOnScreen(GLint carIndex);
 
@@ -255,8 +251,6 @@ GLvoid render()
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carTransformMatrixes), carTransformMatrixes);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, MAX_CARS);
-
-    frames++;
 }
 
 
@@ -270,12 +264,6 @@ GLvoid quit()
     nk_glfw3_shutdown(&glfw);
     glfwTerminate();
     exit(0);
-}
-
-
-GLvoid showFPS()
-{
-    printf("FPS: %d      Updates: %d\r", framesPerSec, updatesPerSec);
 }
 
 

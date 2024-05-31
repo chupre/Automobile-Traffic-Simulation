@@ -26,15 +26,8 @@ GLvoid update()
 
 		timer += STEP_TIME;
 
-		framesPerSec = frames;
-		updatesPerSec = updates;
-		frames = 0;
-		updates = 0;
-
 		step();
 	}
-
-	updates++;
 }
 
 
