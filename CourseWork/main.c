@@ -20,9 +20,12 @@
 #include <nuklear\nuklear_glfw_gl3.h>
 #include <style.c>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 #include <time.h>
 #include <sys/types.h>
 #include <dirent.h>
+
 
 #include <serviceMacros.h>
 #include <shader.h>

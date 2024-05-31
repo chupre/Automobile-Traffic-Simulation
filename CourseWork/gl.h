@@ -309,6 +309,18 @@ GLvoid initOpenGL()
     window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
     glfwMakeContextCurrent(window);
 
+
+    int iconWidth, iconHeight;
+    int channels;
+    unsigned char* pixels = stbi_load("resources/icons/icon.png", &iconWidth, &iconHeight, &channels, 4);
+
+    GLFWimage images[1];
+    images[0].width = iconWidth;
+    images[0].height = iconHeight;
+    images[0].pixels = pixels;
+
+    glfwSetWindowIcon(window, 1, images);
+
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glEnable(GL_DEPTH_TEST);
