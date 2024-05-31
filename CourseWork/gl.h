@@ -58,6 +58,7 @@ GLvoid render();
 GLvoid quit();
 GLvoid showFPS();
 GLvoid initOpenGL();
+GLvoid moveCarOnScreen(GLint carIndex);
 
 
 //Definiton is in algorithms.h
@@ -246,10 +247,7 @@ GLvoid render()
     {
         if (cars[i].isActive)
         {
-            //speed adaptation
-            GLfloat screenVelocity = (GLfloat)cars[i].velocity * cars[i].dirOnRoad * VELOCITY_MULTIPLIER / FPS;
-            cars[i].realPos += screenVelocity;
-            glm_translate2d_y(carTransformMatrixes[i], screenVelocity);
+            moveCarOnScreen(i);
         }
     }
 
@@ -349,7 +347,7 @@ GLint isPossibleToMoveCam(camDir dir, GLfloat offset)
             vec4 testVertex = { 0.0, 0.0, 1.0, 1.0 };
             getTestVertex(i, dir, testVertex);
 
-            if (isVertexOnCamBorders(testVertex, dir, offset))
+            if (isVertexOnCamBorders(testVertex, dir, offset, roads[i].dir))
             {
                 roadsOnCamBorder++;
             }
@@ -425,6 +423,24 @@ GLvoid getTestVertex(GLint roadIndex, camDir dir, vec4 dest)
             dest[0] = roadVertices[0 + roadIndex * 4 * 5];
             dest[1] = roadVertices[1 + roadIndex * 4 * 5];
         }
+    }
+}
+
+
+GLvoid moveCarOnScreen(GLint carIndex)
+{
+    GLfloat screenVelocity = (GLfloat)cars[carIndex].velocity * cars[carIndex].dirOnRoad * VELOCITY_MULTIPLIER / FPS;
+    cars[carIndex].realPos += screenVelocity;
+
+    DIRECTION roadDir = roads[cars[carIndex].currCell.road].dir;
+
+    if (roadDir == NORTH || roadDir == SOUTH)
+    {
+        glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
+    }
+    else
+    {
+        glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
     }
 }
 

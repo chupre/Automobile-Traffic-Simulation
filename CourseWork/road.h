@@ -206,10 +206,10 @@ GLvoid setLines(GLint roadIndex)
             };
 
             memcpy(&lineVertices[i * 5 * 2 + roadIndex * 5 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 5 * 2);
-            memset(roads[roadIndex].lines[i].cells, EMPTY, sizeof(roads[roadIndex].lines[i].cells));
+            memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
             roads[roadIndex].lines[i].carSpawnCoord = y;
         }
-        memset(roads[roadIndex].lines[i].cells, EMPTY, sizeof(roads[roadIndex].lines[i].cells));
+        memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
     }
 }

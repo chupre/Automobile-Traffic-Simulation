@@ -1,6 +1,5 @@
 #pragma once
 
-#define DEFAULT_FOV 45.0f
 #define MAX_CAMERA_DISTANCE 1.0f
 
 vec3 cameraPos = { 0.0f, 0.0f, 3.0f };
@@ -17,7 +16,7 @@ GLvoid setView();
 GLvoid moveCamera(camDir dir);
 GLint isPossibleToMoveCam(camDir dir, GLfloat offset);
 GLvoid getTestVertex(GLint roadIndex, camDir dir, vec4 dest);
-GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset);
+GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset, DIRECTION roadDir);
 GLvoid setTestVertex(vec4 vertex, vec3 newCamPos);
 
 GLvoid setProjection()
@@ -67,15 +66,21 @@ GLvoid moveCamera(camDir dir)
 }
 
 
-GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset)
+GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset, DIRECTION roadDir)
 {
     vec3 newCameraPos;
     glm_vec3_copy(cameraPos, newCameraPos);
 
     if (dir == UP)
     {
+        if (roadDir == WEST || roadDir == EAST)
+        {
+            return 1;
+        }
+
         newCameraPos[1] += offset;
         setTestVertex(vertex, newCameraPos);
+        glm_vec4_print(vertex, stdout);
 
         if (vertex[1] >= 2.0)
         {
@@ -85,8 +90,14 @@ GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset)
 
     if (dir == DOWN)
     {
+        if (roadDir == WEST || roadDir == EAST)
+        {
+            return 1;
+        }
+
         newCameraPos[1] -= offset;
         setTestVertex(vertex, newCameraPos);
+        glm_vec4_print(vertex, stdout);
 
         if (vertex[1] <= -2.0)
         {
@@ -96,10 +107,16 @@ GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset)
 
     if (dir == RIGHT)
     {
+        if (roadDir == NORTH || roadDir == SOUTH)
+        {
+            return 1;
+        }
+
         newCameraPos[0] += offset;
         setTestVertex(vertex, newCameraPos);
+        glm_vec4_print(vertex, stdout);
 
-        if (vertex[0] <= 2.0)
+        if (vertex[0] >= 2.0)
         {
             return 1;
         }
@@ -107,10 +124,16 @@ GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset)
 
     if (dir == LEFT)
     {
+        if (roadDir == NORTH || roadDir == SOUTH)
+        {
+            return 1;
+        }
+
         newCameraPos[0] -= offset;
         setTestVertex(vertex, newCameraPos);
+        glm_vec4_print(vertex, stdout);
 
-        if (vertex[0] >= -2.0)
+        if (vertex[0] <= -2.0)
         {
             return 1;
         }

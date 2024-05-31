@@ -6,6 +6,7 @@ layout (location = 2) in mat3 aTransform;
 out vec3 color;
 
 uniform bool isCar;
+
 uniform mat4 projection;
 uniform mat4 view;
 

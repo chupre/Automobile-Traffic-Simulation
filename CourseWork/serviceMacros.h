@@ -40,7 +40,13 @@
     #define NUMBER_OF_ROADS 1
 #elif MAP_TYPE == TWO_ROADS_NS || MAP_TYPE == TWO_ROADS_WE
     #define NUMBER_OF_ROADS 2
-#endif	
+#endif
+
+#if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == TWO_ROADS_NS
+    #define DEFAULT_FOV 45.0f
+#else
+    #define DEFAULT_FOV 30.0f
+#endif
 
 #define ERROR_LIMIT 0.0000001f
 #define EMPTY -1

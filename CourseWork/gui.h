@@ -336,7 +336,7 @@ void load(char* fileName)
     
     setCarsToDefault();
     setRoadsToDefault();
-    glm_mat3_identity_array(carTransformMatrixes, MAX_CARS);
+    glm_mat4_identity_array(carTransformMatrixes, MAX_CARS);
 
     fread(cars, sizeof(cars), 1, saveFile);
     fread(carTransformMatrixes, sizeof(carTransformMatrixes), 1, saveFile);

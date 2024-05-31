@@ -60,9 +60,7 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 			y2 = y1 + CAR_LENGHT;
 			Car->realPos = y1;
 
-			GLfloat carTranslationCoords[3] = { x2, y1 };
-			vec3 carTranslationVector;
-			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			vec2 carTranslationVector = { x2, y1 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -74,9 +72,7 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 			y2 = y1 - CAR_LENGHT;
 			Car->realPos = y1;
 
-			GLfloat carTranslationCoords[3] = { x2, y1 };
-			vec3 carTranslationVector;
-			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			vec2 carTranslationVector = { x2, y1 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -87,13 +83,12 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 			y1 = x1;
 			y2 = x2;
 			x1 = -1.0f;
-			x2 = -1.0f + CAR_WIDTH;
+			x2 = -1.0f - CAR_WIDTH;
 			Car->realPos = x1;
 
-			GLfloat carTranslationCoords[3] = { x2, y1 };
-			vec3 carTranslationVector;
-			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			vec2 carTranslationVector = { x2, y2 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+			glm_scale2d(carTransformMatrixes[carIndex], (vec2){ 1.7, 0.7 });
 
 			break;
 		}
@@ -106,10 +101,9 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 			x2 = 1.0f - CAR_WIDTH;
 			Car->realPos = x1;
 
-			GLfloat carTranslationCoords[3] = { x2, y1 };
-			vec3 carTranslationVector;
-			glm_vec2_make(carTranslationCoords, carTranslationVector);
+			vec2 carTranslationVector = { x2, y2 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+			glm_scale2d(carTransformMatrixes[carIndex], (vec2) { 1.7, 0.7 });
 
 			break;
 		}
