@@ -1,6 +1,7 @@
 #pragma once
 
 #define DEFAULT_FOV 45.0f
+#define MAX_CAMERA_DISTANCE 1.0f
 
 vec3 cameraPos = { 0.0f, 0.0f, 3.0f };
 vec3 cameraFront = { 0.0f, 0.0f, -1.0f };
@@ -14,7 +15,10 @@ typedef enum { UP, DOWN, RIGHT, LEFT} camDir;
 GLvoid setProjection();
 GLvoid setView();
 GLvoid moveCamera(camDir dir);
-
+GLint isPossibleToMoveCam(camDir dir, GLfloat offset);
+GLvoid getTestVertex(GLint roadIndex, camDir dir, vec4 dest);
+GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset);
+GLvoid setTestVertex(vec4 vertex, vec3 newCamPos);
 
 GLvoid setProjection()
 {
@@ -40,26 +44,92 @@ GLvoid moveCamera(camDir dir)
 {
     float cameraSpeed = 2.5 * cameraSpeedMultiplier;
 
-    if (dir == UP)
+    if (dir == UP && isPossibleToMoveCam(dir, cameraSpeed))
     {
         cameraPos[1] += cameraSpeed;
-
-        
     }
 
-    if (dir == DOWN)
+    if (dir == DOWN && isPossibleToMoveCam(dir, cameraSpeed))
     {
         cameraPos[1] -= cameraSpeed;
     }
 
-    if (dir == RIGHT)
+    if (dir == RIGHT && isPossibleToMoveCam(dir, cameraSpeed))
     {
         cameraPos[0] += cameraSpeed;
 
     }
 
-    if (dir == LEFT)
+    if (dir == LEFT && isPossibleToMoveCam(dir, cameraSpeed))
     {
         cameraPos[0] -= cameraSpeed;
     }
+}
+
+
+GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset)
+{
+    vec3 newCameraPos;
+    glm_vec3_copy(cameraPos, newCameraPos);
+
+    if (dir == UP)
+    {
+        newCameraPos[1] += offset;
+        setTestVertex(vertex, newCameraPos);
+
+        if (vertex[1] >= 2.0)
+        {
+            return 1;
+        }
+    }
+
+    if (dir == DOWN)
+    {
+        newCameraPos[1] -= offset;
+        setTestVertex(vertex, newCameraPos);
+
+        if (vertex[1] <= -2.0)
+        {
+            return 1;
+        }
+    }
+
+    if (dir == RIGHT)
+    {
+        newCameraPos[0] += offset;
+        setTestVertex(vertex, newCameraPos);
+
+        if (vertex[0] <= 2.0)
+        {
+            return 1;
+        }
+    }
+
+    if (dir == LEFT)
+    {
+        newCameraPos[0] -= offset;
+        setTestVertex(vertex, newCameraPos);
+
+        if (vertex[0] >= -2.0)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+
+GLvoid setTestVertex(vec4 vertex, vec3 newCamPos)
+{
+    mat4 projection;
+    glm_perspective(glm_rad(cameraFOV), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.01f, 100.0f, projection);
+
+    mat4 newView;
+    vec3 temp;
+    glm_vec3_add(newCamPos, cameraFront, temp);
+    glm_lookat(newCamPos, temp, cameraUp, newView);
+
+    glm_mat4_mulv(newView, vertex, vertex);
+    glm_mat4_mulv(projection, vertex, vertex);
 }

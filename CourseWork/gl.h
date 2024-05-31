@@ -69,6 +69,12 @@ GLvoid spawnCars();
 
 GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
+    if (yoffset < 0.0)
+    {
+        cameraPos[0] = 0.0;
+        cameraPos[1] = 0.0;
+    }
+
     cameraFOV -= (float)yoffset;
 
     if (cameraFOV < 1.0f)
@@ -316,3 +322,97 @@ GLvoid initOpenGL()
     glfwSetScrollCallback(window, scrollCallback);
 
 }
+
+
+GLint isPossibleToMoveCam(camDir dir, GLfloat offset)
+{
+    int roadsOnEdge = 0, roadsOnCamBorder = 0;
+
+    for (int i = 0; i < NUMBER_OF_ROADS; i++)
+    {
+        if (roads[i].isEdge)
+        {
+            roadsOnEdge++;
+
+            vec4 testVertex = { 0.0, 0.0, 1.0, 1.0 };
+            getTestVertex(i, dir, testVertex);
+
+            if (isVertexOnCamBorders(testVertex, dir, offset))
+            {
+                roadsOnCamBorder++;
+            }
+        }
+    }
+
+    if (roadsOnCamBorder == roadsOnEdge)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+GLvoid getTestVertex(GLint roadIndex, camDir dir, vec4 dest)
+{
+    if (dir == UP)
+    {
+        if (roads[roadIndex].dir == NORTH)
+        {
+            dest[0] = roadVertices[10 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[11 + roadIndex * 4 * 5];
+        }
+
+        if (roads[roadIndex].dir == SOUTH)
+        {
+            dest[0] = roadVertices[0 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[1 + roadIndex * 4 * 5];
+        }
+    }
+
+    if (dir == DOWN)
+    {
+        if (roads[roadIndex].dir == NORTH)
+        {
+            dest[0] = roadVertices[0 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[1 + roadIndex * 4 * 5];
+        }
+
+        if (roads[roadIndex].dir == SOUTH)
+        {
+            dest[0] = roadVertices[10 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[11 + roadIndex * 4 * 5];
+        }
+    }
+
+    if (dir == RIGHT)
+    {
+        if (roads[roadIndex].dir == WEST)
+        {
+            dest[0] = roadVertices[0 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[1 + roadIndex * 4 * 5];
+        }
+
+        if (roads[roadIndex].dir == EAST)
+        {
+            dest[0] = roadVertices[10 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[11 + roadIndex * 4 * 5];
+        }
+    }
+
+    if (dir == LEFT)
+    {
+        if (roads[roadIndex].dir == WEST)
+        {
+            dest[0] = roadVertices[10 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[11 + roadIndex * 4 * 5];
+        }
+
+        if (roads[roadIndex].dir == EAST)
+        {
+            dest[0] = roadVertices[0 + roadIndex * 4 * 5];
+            dest[1] = roadVertices[1 + roadIndex * 4 * 5];
+        }
+    }
+}
+
