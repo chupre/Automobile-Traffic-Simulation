@@ -6,7 +6,6 @@ vec3 cameraPos = { 0.0f, 0.0f, 3.0f };
 vec3 cameraFront = { 0.0f, 0.0f, -1.0f };
 vec3 cameraUp = { 0.0f, 1.0f, 0.0f };
 
-GLfloat cameraSpeedMultiplier;
 GLfloat cameraFOV = DEFAULT_FOV;
 
 typedef enum { UP, DOWN, RIGHT, LEFT} camDir;
@@ -41,7 +40,7 @@ GLvoid setView()
 
 GLvoid moveCamera(camDir dir)
 {
-    float cameraSpeed = 2.5 * cameraSpeedMultiplier;
+    float cameraSpeed = 0.05;
 
     if (dir == UP && isPossibleToMoveCam(dir, cameraSpeed))
     {
@@ -80,7 +79,6 @@ GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset, DIRECTION ro
 
         newCameraPos[1] += offset;
         setTestVertex(vertex, newCameraPos);
-        glm_vec4_print(vertex, stdout);
 
         if (vertex[1] >= 2.0)
         {
@@ -97,7 +95,6 @@ GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset, DIRECTION ro
 
         newCameraPos[1] -= offset;
         setTestVertex(vertex, newCameraPos);
-        glm_vec4_print(vertex, stdout);
 
         if (vertex[1] <= -2.0)
         {
@@ -114,7 +111,6 @@ GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset, DIRECTION ro
 
         newCameraPos[0] += offset;
         setTestVertex(vertex, newCameraPos);
-        glm_vec4_print(vertex, stdout);
 
         if (vertex[0] >= 2.0)
         {
@@ -131,7 +127,6 @@ GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset, DIRECTION ro
 
         newCameraPos[0] -= offset;
         setTestVertex(vertex, newCameraPos);
-        glm_vec4_print(vertex, stdout);
 
         if (vertex[0] <= -2.0)
         {

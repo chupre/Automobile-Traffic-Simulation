@@ -68,7 +68,6 @@ int main()
 
             currTime = glfwGetTime();
             deltaTime += (currTime - lastTime) / limitFPS;
-            cameraSpeedMultiplier = currTime - lastTime;
             lastTime = currTime;
             endPauseTime = 0;
 

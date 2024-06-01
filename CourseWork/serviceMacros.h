@@ -34,11 +34,12 @@
 #define ONE_ROAD_E 4
 #define TWO_ROADS_NS 5
 #define TWO_ROADS_WE 6
-#define MAP_TYPE TWO_ROADS_NS
+#define CROSS 7
+#define MAP_TYPE CROSS
 
 #if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == ONE_ROAD_W || MAP_TYPE == ONE_ROAD_E
     #define NUMBER_OF_ROADS 1
-#elif MAP_TYPE == TWO_ROADS_NS || MAP_TYPE == TWO_ROADS_WE
+#elif MAP_TYPE == TWO_ROADS_NS || MAP_TYPE == TWO_ROADS_WE || MAP_TYPE == CROSS
     #define NUMBER_OF_ROADS 2
 #endif
 
@@ -51,11 +52,7 @@
 #define ERROR_LIMIT 0.0000001f
 #define EMPTY -1
 
-//for some reason when it's 40 program crashes on 1920x1080 resolution 
-//and cars spawn in the middle of the screen after window border is dragged
-//I have no fucking clue why but it is what it is
-
-#define NUMBER_OF_CELLS 20//(NUMBER_OF_VISIBLE_CELLS + NUMBER_OF_COVERED_CELLS)
+#define NUMBER_OF_CELLS 20
 
 #define FPS 60.0f
 //..........................................................
@@ -72,7 +69,7 @@ typedef enum {
 	_4_CELL = _4_VELOCITY,
 	_5_CELL = _5_VELOCITY,
     NO_CAR = 666,
-} VELOCITY;//macros NO_CAR can give an error while passing into "glm_translate_y" in main
+} VELOCITY;
 
 //...........................................................
 #define NUMBER_OF_DIRECTIONS 4
