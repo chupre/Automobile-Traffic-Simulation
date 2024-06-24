@@ -7,7 +7,7 @@
 🔴 Implement textures for cars.\
 🔴 Add main menu with map selection.\
 🔴 Add restart button.\
-🔴 Split roads in two parts to make them two-directional like IRL.\
+🔴 Split roads in two parts to make them two-directional like IRL.
 
   For V. 👤:\
 🔴 Develop algorithms for cross.\
