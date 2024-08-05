@@ -1,0 +1,1 @@
+/usr/bin/cc -g "CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o" "CMakeFiles/Automobile-Traffic-Simulation.dir/source/glad.c.o" -o Automobile-Traffic-Simulation  -lglfw -lm 

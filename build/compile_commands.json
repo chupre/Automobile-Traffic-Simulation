@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/main.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/main.c"
+},
+{
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/glad.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/glad.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/glad.c"
+}
+]
