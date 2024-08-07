@@ -452,7 +452,10 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o: /home/denis/dev/
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/shader.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/render.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h
+  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/cars.c \
   /usr/include/stdc-predef.h \

@@ -33,7 +33,7 @@ GLvoid setView()
 
 GLvoid moveCamera(camDir dir)
 {
-    float cameraSpeed = 0.05;
+    float cameraSpeed = 0.01;
 
     if (dir == UP && isPossibleToMoveCam(dir, cameraSpeed))
     {

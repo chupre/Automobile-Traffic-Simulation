@@ -98,7 +98,9 @@ GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mo
     {
         glfwSetWindowShouldClose(window, true);
     }
+}
 
+GLvoid processKeyboardInput() {
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
         moveCamera(UP);
@@ -209,6 +211,8 @@ GLvoid render()
 
     isCarLoc = glGetUniformLocation(shaderProgram, "isCar");
     glUniform1i(isCarLoc, false);
+
+    processKeyboardInput();
 
     setProjection();
     setView();

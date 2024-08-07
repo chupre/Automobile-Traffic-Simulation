@@ -43,3 +43,4 @@ GLvoid render();
 GLvoid quit();
 GLvoid initGL();
 GLvoid moveCarOnScreen(GLint carIndex);
+GLvoid processKeyboardInput();
