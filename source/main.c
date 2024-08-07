@@ -1,9 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 
+// External
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 #include <cglm/cglm.h>
-
 #define NK_ASSERT(a)
 #define MAX_VERTEX_BUFFER 512 * 1024
 #define MAX_ELEMENT_BUFFER 128 * 1024
@@ -18,29 +18,16 @@
 #define NK_GLFW_GL3_IMPLEMENTATION
 #include <nuklear/nuklear.h>
 #include <nuklear/nuklear_glfw_gl3.h>
-#include <style.c>
-
-#define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
-#include <time.h>
-#include <sys/types.h>
 
-#if defined(_WIN32) || defined(WIN32)
-    #include <dirent/dirent.h>
-#else
-    #include <dirent.h>
-#endif
-
-#include <service_macros.h>
+// Custom modules
 #include <shader.h>
-#include <camera.h>
-#include <gl.h>
+#include <render.h>
 #include <road.h>
 #include <map.h>
 #include <cars.h>
 #include <gui.h>
 #include <algorithms.h>
-
 
 int main()
 {

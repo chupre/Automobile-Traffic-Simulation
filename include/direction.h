@@ -1,0 +1,9 @@
+#pragma once
+
+#define NUMBER_OF_DIRECTIONS 4
+
+typedef enum DIRECTION DIRECTION;
+
+enum DIRECTION {
+    NORTH, SOUTH, EAST, WEST, NONE
+};

@@ -129,29 +129,149 @@ Automobile-Traffic-Simulation/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/build
 .PHONY : Automobile-Traffic-Simulation/fast
 
-source/glad.o: source/glad.c.o
-.PHONY : source/glad.o
+external/glad/glad.o: external/glad/glad.c.o
+.PHONY : external/glad/glad.o
 
 # target to build an object file
-source/glad.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/glad.c.o
-.PHONY : source/glad.c.o
+external/glad/glad.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/external/glad/glad.c.o
+.PHONY : external/glad/glad.c.o
 
-source/glad.i: source/glad.c.i
-.PHONY : source/glad.i
+external/glad/glad.i: external/glad/glad.c.i
+.PHONY : external/glad/glad.i
 
 # target to preprocess a source file
-source/glad.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/glad.c.i
-.PHONY : source/glad.c.i
+external/glad/glad.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/external/glad/glad.c.i
+.PHONY : external/glad/glad.c.i
 
-source/glad.s: source/glad.c.s
-.PHONY : source/glad.s
+external/glad/glad.s: external/glad/glad.c.s
+.PHONY : external/glad/glad.s
 
 # target to generate assembly for a file
-source/glad.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/glad.c.s
-.PHONY : source/glad.c.s
+external/glad/glad.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/external/glad/glad.c.s
+.PHONY : external/glad/glad.c.s
+
+external/stb/stb_image.o: external/stb/stb_image.c.o
+.PHONY : external/stb/stb_image.o
+
+# target to build an object file
+external/stb/stb_image.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.o
+.PHONY : external/stb/stb_image.c.o
+
+external/stb/stb_image.i: external/stb/stb_image.c.i
+.PHONY : external/stb/stb_image.i
+
+# target to preprocess a source file
+external/stb/stb_image.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.i
+.PHONY : external/stb/stb_image.c.i
+
+external/stb/stb_image.s: external/stb/stb_image.c.s
+.PHONY : external/stb/stb_image.s
+
+# target to generate assembly for a file
+external/stb/stb_image.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.s
+.PHONY : external/stb/stb_image.c.s
+
+source/algorithms.o: source/algorithms.c.o
+.PHONY : source/algorithms.o
+
+# target to build an object file
+source/algorithms.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o
+.PHONY : source/algorithms.c.o
+
+source/algorithms.i: source/algorithms.c.i
+.PHONY : source/algorithms.i
+
+# target to preprocess a source file
+source/algorithms.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.i
+.PHONY : source/algorithms.c.i
+
+source/algorithms.s: source/algorithms.c.s
+.PHONY : source/algorithms.s
+
+# target to generate assembly for a file
+source/algorithms.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.s
+.PHONY : source/algorithms.c.s
+
+source/camera.o: source/camera.c.o
+.PHONY : source/camera.o
+
+# target to build an object file
+source/camera.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o
+.PHONY : source/camera.c.o
+
+source/camera.i: source/camera.c.i
+.PHONY : source/camera.i
+
+# target to preprocess a source file
+source/camera.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.i
+.PHONY : source/camera.c.i
+
+source/camera.s: source/camera.c.s
+.PHONY : source/camera.s
+
+# target to generate assembly for a file
+source/camera.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.s
+.PHONY : source/camera.c.s
+
+source/cars.o: source/cars.c.o
+.PHONY : source/cars.o
+
+# target to build an object file
+source/cars.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o
+.PHONY : source/cars.c.o
+
+source/cars.i: source/cars.c.i
+.PHONY : source/cars.i
+
+# target to preprocess a source file
+source/cars.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.i
+.PHONY : source/cars.c.i
+
+source/cars.s: source/cars.c.s
+.PHONY : source/cars.s
+
+# target to generate assembly for a file
+source/cars.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.s
+.PHONY : source/cars.c.s
+
+source/gui.o: source/gui.c.o
+.PHONY : source/gui.o
+
+# target to build an object file
+source/gui.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o
+.PHONY : source/gui.c.o
+
+source/gui.i: source/gui.c.i
+.PHONY : source/gui.i
+
+# target to preprocess a source file
+source/gui.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.i
+.PHONY : source/gui.c.i
+
+source/gui.s: source/gui.c.s
+.PHONY : source/gui.s
+
+# target to generate assembly for a file
+source/gui.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.s
+.PHONY : source/gui.c.s
 
 source/main.o: source/main.c.o
 .PHONY : source/main.o
@@ -177,6 +297,102 @@ source/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.s
 .PHONY : source/main.c.s
 
+source/map.o: source/map.c.o
+.PHONY : source/map.o
+
+# target to build an object file
+source/map.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o
+.PHONY : source/map.c.o
+
+source/map.i: source/map.c.i
+.PHONY : source/map.i
+
+# target to preprocess a source file
+source/map.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.i
+.PHONY : source/map.c.i
+
+source/map.s: source/map.c.s
+.PHONY : source/map.s
+
+# target to generate assembly for a file
+source/map.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.s
+.PHONY : source/map.c.s
+
+source/render.o: source/render.c.o
+.PHONY : source/render.o
+
+# target to build an object file
+source/render.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o
+.PHONY : source/render.c.o
+
+source/render.i: source/render.c.i
+.PHONY : source/render.i
+
+# target to preprocess a source file
+source/render.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.i
+.PHONY : source/render.c.i
+
+source/render.s: source/render.c.s
+.PHONY : source/render.s
+
+# target to generate assembly for a file
+source/render.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.s
+.PHONY : source/render.c.s
+
+source/roads.o: source/roads.c.o
+.PHONY : source/roads.o
+
+# target to build an object file
+source/roads.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o
+.PHONY : source/roads.c.o
+
+source/roads.i: source/roads.c.i
+.PHONY : source/roads.i
+
+# target to preprocess a source file
+source/roads.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.i
+.PHONY : source/roads.c.i
+
+source/roads.s: source/roads.c.s
+.PHONY : source/roads.s
+
+# target to generate assembly for a file
+source/roads.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.s
+.PHONY : source/roads.c.s
+
+source/shader.o: source/shader.c.o
+.PHONY : source/shader.o
+
+# target to build an object file
+source/shader.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o
+.PHONY : source/shader.c.o
+
+source/shader.i: source/shader.c.i
+.PHONY : source/shader.i
+
+# target to preprocess a source file
+source/shader.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.i
+.PHONY : source/shader.c.i
+
+source/shader.s: source/shader.c.s
+.PHONY : source/shader.s
+
+# target to generate assembly for a file
+source/shader.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.s
+.PHONY : source/shader.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +402,39 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Automobile-Traffic-Simulation"
-	@echo "... source/glad.o"
-	@echo "... source/glad.i"
-	@echo "... source/glad.s"
+	@echo "... external/glad/glad.o"
+	@echo "... external/glad/glad.i"
+	@echo "... external/glad/glad.s"
+	@echo "... external/stb/stb_image.o"
+	@echo "... external/stb/stb_image.i"
+	@echo "... external/stb/stb_image.s"
+	@echo "... source/algorithms.o"
+	@echo "... source/algorithms.i"
+	@echo "... source/algorithms.s"
+	@echo "... source/camera.o"
+	@echo "... source/camera.i"
+	@echo "... source/camera.s"
+	@echo "... source/cars.o"
+	@echo "... source/cars.i"
+	@echo "... source/cars.s"
+	@echo "... source/gui.o"
+	@echo "... source/gui.i"
+	@echo "... source/gui.s"
 	@echo "... source/main.o"
 	@echo "... source/main.i"
 	@echo "... source/main.s"
+	@echo "... source/map.o"
+	@echo "... source/map.i"
+	@echo "... source/map.s"
+	@echo "... source/render.o"
+	@echo "... source/render.i"
+	@echo "... source/render.s"
+	@echo "... source/roads.o"
+	@echo "... source/roads.i"
+	@echo "... source/roads.s"
+	@echo "... source/shader.o"
+	@echo "... source/shader.i"
+	@echo "... source/shader.s"
 .PHONY : help
 
 

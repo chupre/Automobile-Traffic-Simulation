@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/source
+C_INCLUDES = -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source
 
 C_FLAGS = -g
 
