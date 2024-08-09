@@ -6,10 +6,7 @@
 
 // Custom modules
 #include <rlc.h>
-
-#define CELL_SIZE 0.1f
-#define CELL_LENGHT CELL_SIZE
-#define NUMBER_OF_CELLS 20
+#include <road.h>
 
 #define MAX_VELOCITY (_5_VELOCITY)
 #define NUMBER_OF_VELOCITY_TYPES (5)
@@ -20,7 +17,7 @@
 #define _4_VELOCITY (_1_VELOCITY * 4)
 #define _5_VELOCITY (_1_VELOCITY * 5)
 
-#define VELOCITY_MULTIPLIER CELL_SIZE
+#define VELOCITY_MULTIPLIER CELL_LENGHT
 
 #define ERROR_LIMIT 0.0000001f
 #define EMPTY -1

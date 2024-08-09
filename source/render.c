@@ -1,4 +1,6 @@
 // Standard
+#include "algorithms.h"
+#include "direction.h"
 #include <time.h>
 
 // External
@@ -45,6 +47,14 @@ GLdouble limitFPS = 1.0 / FPS;
 GLdouble lastTime;
 GLdouble deltaTime = 0, currTime = 0, endPauseTime = 0;
 GLdouble timer;
+
+#ifdef DEBUG
+
+GLuint cellsVBO, cellsVAO;
+GLfloat cellsVertices[(NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8];
+bool dbgIsCellsInit = false;
+
+#endif
 
 GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
@@ -221,6 +231,10 @@ GLvoid render()
     glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(lineVAO);
     glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
+
+    #ifdef DEBUG
+        dbgRenderCells();
+    #endif
     
     glUniform1i(isCarLoc, true);
     glBindVertexArray(carVAO);
@@ -325,3 +339,34 @@ GLvoid moveCarOnScreen(GLint carIndex)
         glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
     }
 }
+
+#ifdef DEBUG
+
+GLvoid dbgInitCells() {
+    glGenVertexArrays(1, &cellsVAO);
+    glGenBuffers(1, &cellsVBO);
+   
+    glBindVertexArray(cellsVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, cellsVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cellsVertices), cellsVertices, GL_STATIC_DRAW);
+    
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(2 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+GLvoid dbgRenderCells() {
+    if (!dbgIsCellsInit) {
+        dbgInitCells();
+        dbgIsCellsInit = true;
+    }
+
+    glBindVertexArray(cellsVAO);
+    glDrawArrays(GL_LINES, 0, 2 * 5 * 8 * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
+}
+
+#endif

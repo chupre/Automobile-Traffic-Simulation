@@ -4,6 +4,8 @@
 // Custom modules
 #include <road.h>
 #include <cars.h>
+#include <algorithms.h>
+#include <render.h>
 
 road roads[NUMBER_OF_ROADS];
 GLuint roadVAO, roadVBO, roadEBO;
@@ -183,8 +185,42 @@ GLvoid setLines(GLint roadIndex)
             memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
             roads[roadIndex].lines[i].carSpawnCoord = x;
         }
+
         memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
         roads[roadIndex].lines[i].carSpawnCoord = x + stride;
+
+        #ifdef DEBUG
+
+        x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH * 2;
+        y1 = roadVertices[1 + 4 * 5 * roadIndex];
+        y2 = roadVertices[11 + 4 * 5 * roadIndex];
+
+
+        int dir_multiplier;
+        if (roads[roadIndex].dir == NORTH)
+            dir_multiplier = 1;
+        else
+            dir_multiplier = -1;
+
+        for (i = 0; i < NUMBER_OF_LINES + 1; i++) {
+            x += stride;
+            for(int j = 0; j < NUMBER_OF_CELLS; j++) {
+                float cellVertices[] = {
+                    x, y1 + (j * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f, 
+                    x, y1 + ((j + 1) * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f, 
+                    x - CELL_WIDTH, y1 + (j * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f, 
+                    x - CELL_WIDTH, y1 + ((j + 1) * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f, 
+                    x - CELL_WIDTH, y1 + (j * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f, 
+                    x, y1 + (j * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f, 
+                    x - CELL_WIDTH, y1 + (j * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f, 
+                    x, y1 + (j * CELL_LENGHT) * dir_multiplier, 1.0f, 0.0f, 0.0f 
+                };        
+                int index = roadIndex * 5 * 8 * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS + i * 5 * 8 * NUMBER_OF_CELLS + j * 5 * 8;
+                memcpy(&cellsVertices[index], cellVertices, sizeof(GLfloat) * 5 * 8);
+            }
+        }
+
+        #endif
     }
     
     if (roads[roadIndex].dir == EAST || roads[roadIndex].dir == WEST)

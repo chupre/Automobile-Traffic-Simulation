@@ -141,5 +141,4 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/include/render.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h
+ /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h

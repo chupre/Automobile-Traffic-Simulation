@@ -3,6 +3,7 @@
   For D. 👤:\
 🟢 Migrate from visual studio and configure cmake to make it cross-platform.\
 🔴 Implement linear interpolation for camera movement and cars.\
+🔴 Fix zoom.\
 🔴 Add road selection UI.\
 🔴 Add camera acceleration.\
 🔴 Implement textures for cars.\

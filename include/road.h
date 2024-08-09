@@ -10,9 +10,12 @@
 #include <rlc.h>
 #include <direction.h>
 #include <map.h>
-#include <algorithms.h>
 
-#define ROAD_WIDTH CELL_SIZE * 1.5
+#define CELL_LENGHT 0.1f
+#define CELL_WIDTH ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f)
+#define NUMBER_OF_CELLS 20
+
+#define ROAD_WIDTH CELL_LENGHT
 #define NUMBER_OF_LINES 15
 
 typedef enum DIRECTION DIRECTION;

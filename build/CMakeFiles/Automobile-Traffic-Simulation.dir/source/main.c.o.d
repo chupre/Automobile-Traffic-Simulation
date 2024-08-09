@@ -148,6 +148,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/gui.h
+ /home/denis/dev/Automobile-Traffic-Simulation/include/gui.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h

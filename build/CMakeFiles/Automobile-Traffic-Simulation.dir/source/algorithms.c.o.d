@@ -22,8 +22,11 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
  /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
@@ -138,7 +141,4 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/render.h

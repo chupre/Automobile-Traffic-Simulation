@@ -179,8 +179,11 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: /home/denis/
   /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
   /usr/include/stdlib.h \
@@ -300,9 +303,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: /home/denis/
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/render.h
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/camera.c \
@@ -454,8 +454,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o: /home/denis/dev/
   /home/denis/dev/Automobile-Traffic-Simulation/include/render.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h
+  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/cars.c \
   /usr/include/stdc-predef.h \
@@ -641,6 +640,10 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o: /home/denis/dev/Aut
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
@@ -761,11 +764,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o: /home/denis/dev/Aut
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
   /usr/include/dirent.h \
   /usr/include/x86_64-linux-gnu/bits/dirent.h \
   /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
@@ -934,9 +932,9 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o: /home/denis/dev/Au
   /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/gui.h
+  /home/denis/dev/Automobile-Traffic-Simulation/include/gui.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/map.c \
   /usr/include/stdc-predef.h \
@@ -963,14 +961,16 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o: /home/denis/dev/Aut
   /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
-  /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h
+  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/render.c \
   /usr/include/stdc-predef.h \
-  /usr/include/time.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h \
+  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h \
   /usr/include/features-time64.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -979,11 +979,21 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o: /home/denis/dev/
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
-  /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
-  /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
+  /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
+  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
+  /usr/include/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
@@ -997,7 +1007,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o: /home/denis/dev/
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/stb/stb_image.h \
   /usr/include/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stdarg.h \
   /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
@@ -1012,7 +1021,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o: /home/denis/dev/
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/endian.h \
   /usr/include/x86_64-linux-gnu/bits/byteswap.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
@@ -1030,14 +1038,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o: /home/denis/dev/
   /usr/include/alloca.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/render.h \
-  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h \
-  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h \
-  /usr/include/stdint.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/camera.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
@@ -1120,11 +1120,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o: /home/denis/dev/
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/shader.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/nuklear/nuklear.h \
@@ -1161,8 +1156,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o: /home/denis/dev/A
   /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
@@ -1282,7 +1275,9 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o: /home/denis/dev/A
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/curve.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
-  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h
+  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/include/render.h \
+  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/shader.c \
   /usr/include/stdc-predef.h \
@@ -1375,14 +1370,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/include/render.h:
 
-/home/denis/dev/Automobile-Traffic-Simulation/include/map.h:
-
-/home/denis/dev/Automobile-Traffic-Simulation/source/cars.c:
-
-/home/denis/dev/Automobile-Traffic-Simulation/include/direction.h:
-
-/home/denis/dev/Automobile-Traffic-Simulation/include/road.h:
-
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h:
@@ -1424,6 +1411,8 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-pre.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/affine.h:
+
+/home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat2x4.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.h:
 
@@ -1497,9 +1486,17 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
+/home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/persp_rh_no.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
+/home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-mat.h:
+
+/usr/include/stdio.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
@@ -1547,6 +1544,8 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /usr/lib/gcc/x86_64-linux-gnu/12/include/mm_malloc.h:
 
+/home/denis/dev/Automobile-Traffic-Simulation/include/road.h:
+
 /usr/include/x86_64-linux-gnu/bits/dirent.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat2.h:
@@ -1580,10 +1579,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/types.h:
-
-/usr/include/stdio.h:
-
-/home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-mat.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.c:
 
@@ -1637,19 +1632,25 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h:
 
+/usr/include/x86_64-linux-gnu/bits/waitflags.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h:
+
+/home/denis/dev/Automobile-Traffic-Simulation/source/cars.c:
+
+/home/denis/dev/Automobile-Traffic-Simulation/include/direction.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/12/include/float.h:
+
+/home/denis/dev/Automobile-Traffic-Simulation/include/map.h:
+
 /home/denis/dev/Automobile-Traffic-Simulation/source/gui.c:
 
 /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/x86.h:
-
-/usr/include/x86_64-linux-gnu/bits/waitflags.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/12/include/float.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec2.h:
 
@@ -1664,8 +1665,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec3.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec4-ext.h:
-
-/home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat2x4.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h:
 
@@ -1704,7 +1703,3 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 /usr/include/math.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat3x2.h:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine.h:

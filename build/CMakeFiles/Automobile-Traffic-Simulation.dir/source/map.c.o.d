@@ -22,7 +22,4 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
  /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
- /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h
+ /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h
