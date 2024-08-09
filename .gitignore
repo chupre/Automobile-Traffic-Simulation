@@ -1,5 +1,5 @@
 .vscode
-.build
+build
 saves
-.build.sh
+build.sh
 .cache
