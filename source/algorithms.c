@@ -1,5 +1,6 @@
 // Custom modules
 #include <algorithms.h>
+//#include <cross.h>
 #include <cars.h>
 #include <road.h>
 #include <render.h>
@@ -16,7 +17,37 @@ GLvoid update()
 	}
 }
 
-//change cars' velocity & rlc
+GLvoid step()
+{
+	spawnCars();
+	// if (rand() % 2)
+	// {
+	// 	spawnCars();
+	// }
+
+	for (int i = 0; i < MAX_CARS; i++)
+	{    
+		if (!isInBornCars(i))//in order not to try it as it needn't be unbind
+		{
+			if (cars[i].isActive && !cars[i].isCrushed)
+			{
+				// cars[i].realPos > 1.0f || cars[i].realPos < -1.0f
+				if (isToExclude(&cars[i]))
+				{
+					excludeFromMap(&cars[i]);
+					continue;
+				}
+
+				unbindCarPtrFromCell(&cars[i]);
+				reinitCurrCellWithNextCell(&cars[i]);
+				thoughtsOfOneCar(&cars[i]);
+			}
+		}
+	}
+
+	clearInBornCarsIndedxes();
+}
+//changes car's velocity and rlc
 GLvoid thoughtsOfOneCar(car* Car)
 {
 	RLC rlc;
@@ -32,11 +63,11 @@ GLvoid thoughtsOfOneCar(car* Car)
 		forthCarVelocity = 0;
 	}
 
-	if (distance > Car->velocity || distance == NO_CAR)
+	if (distance > Car->velocity || distance == _NO_CAR_)
 	{
 		if (Car->velocity < MAX_VELOCITY)
 		{
-			Car->velocity += _1_CELL;
+			Car->velocity += _1_CELL_;
 		}
 	}
 	//else if ((forthCarVelocity < Car->velocity) && isAbleToChangeLine(Car, roads, &rlc))
@@ -57,31 +88,21 @@ GLvoid thoughtsOfOneCar(car* Car)
 	Car->nextCell.cell += Car->velocity;
 }
 
-
-GLvoid step()
+GLint isToExclude(car* Car)
 {
-	spawnCars();
-
-	for (int i = 0; i < MAX_CARS; i++)
+	// if (!isOutOfScreenSpace(Car->realPos))
+	// {
+	// 	return 0;
+	// }
+	road* Road = &roads[Car->currCell.road];
+	if (!isFurhterThanEndLine(Car, Road))
 	{
-		if (cars[i].isActive && !cars[i].isAvaria)
-		{
-
-			if (cars[i].realPos > 1.0f || cars[i].realPos < -1.0f)
-			{
-				excludeOutMappers(&cars[i]);
-				continue;
-			}
-
-			unbindCarPtrFromCell(&cars[i]);
-			reinitCurrCellWithNextCell(&cars[i]);
-			thoughtsOfOneCar(&cars[i]);
-		}
+		return 0;
 	}
-
+	return 1;
 }
 
-GLvoid excludeOutMappers(car* Car)
+GLvoid excludeFromMap(car* Car)
 {
 	car** ptrCell = getFirstCellPtr(Car->currCell);
 	GLint start = Car->currCell.cell;
@@ -113,7 +134,7 @@ GLvoid excludeOutMappers(car* Car)
 
 	Car->dirOnRoad = 0;
 
-	Car->isAvaria = 0;//though there is no sense to zeroize it because cars in Avaria cannot go out the boards of map
+	Car->isCrushed = 0;//though there is no sense to zeroize it because cars in Avaria cannot go out the boards of map
 	++freeCars;
 }
 
@@ -122,7 +143,7 @@ GLint getVelocityByRLC(RLC rlc)
 	car** ptrCell = ((roads + rlc.road)->lines + rlc.line)->cells;
 	if (ptrCell[rlc.cell] == NULL)
 	{
-		return NO_CAR;
+		return _NO_CAR_;
 	}
 	else
 	{
@@ -141,10 +162,11 @@ GLint distanceToForthCar(RLC rlc)
 		}
 		else if (ptrCell[i]->isActive == true)
 		{
+			if (ptrCell[i]->isCrushed) printf("!\n");
 			return (i - rlc.cell);
 		}
 	}
-	return NO_CAR;
+	return _NO_CAR_;
 }
 
 GLint distanceToBackCar(RLC rlc)
@@ -161,7 +183,7 @@ GLint distanceToBackCar(RLC rlc)
 			return (rlc.cell - i);
 		}
 	}
-	return NO_CAR;
+	return _NO_CAR_;
 }
 
 GLint isAbleToChangeLine(car* Car, RLC* posOnNewLine)
@@ -194,7 +216,7 @@ GLint isSafetyForthAndBack(car* Car, RLC rlc)
 	GLint forthDistance = distanceToForthCar(rlc);
 	GLint backDistance = distanceToBackCar(rlc);
 
-	return (forthDistance > _5_CELL && backDistance >= Car->velocity);
+	return (forthDistance > _5_CELL_ && backDistance >= Car->velocity);
 }
 
 GLvoid countSubVelocity(car* Car)

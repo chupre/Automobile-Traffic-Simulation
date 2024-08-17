@@ -241,7 +241,7 @@ GLvoid render()
 
     for (int i = 0; i < MAX_CARS; i++)
     {
-        if (cars[i].isActive)
+        if (cars[i].isActive && !cars[i].isCrushed)
         {
             moveCarOnScreen(i);
         }
@@ -322,10 +322,14 @@ GLvoid initGL()
 
 }
 
+GLfloat getScreenVelocity(GLint carIndex)
+{
+    return (GLfloat)(cars[carIndex].velocity * cars[carIndex].dirOnRoad * VELOCITY_MULTIPLIER) / FPS;
+}
 
 GLvoid moveCarOnScreen(GLint carIndex)
 {
-    GLfloat screenVelocity = (GLfloat)cars[carIndex].velocity * cars[carIndex].dirOnRoad * VELOCITY_MULTIPLIER / FPS;
+    GLfloat screenVelocity = getScreenVelocity(carIndex);
     cars[carIndex].realPos += screenVelocity;
 
     DIRECTION roadDir = roads[cars[carIndex].currCell.road].dir;
@@ -366,7 +370,7 @@ GLvoid dbgRenderCells() {
     }
 
     glBindVertexArray(cellsVAO);
-    glDrawArrays(GL_LINES, 0, 2 * 5 * 8 * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
+    glDrawArrays(GL_LINES, 0, (2 * 5 * 8 * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS));
 }
 
 #endif

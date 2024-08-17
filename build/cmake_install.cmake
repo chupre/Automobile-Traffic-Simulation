@@ -1,4 +1,4 @@
-# Install script for directory: /home/denis/dev/Automobile-Traffic-Simulation
+# Install script for directory: /home/vladimir/dev/Automobile-Traffic-Simulation
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/denis/dev/Automobile-Traffic-Simulation/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/vladimir/dev/Automobile-Traffic-Simulation/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

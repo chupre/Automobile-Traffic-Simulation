@@ -12,7 +12,7 @@
 
 #define FPS 60.0f
 
-// #define DEBUG
+#define DEBUG
 
 #define WINDOWS 0
 #define UNIX 1
@@ -48,6 +48,8 @@ GLvoid quit();
 GLvoid initGL();
 GLvoid moveCarOnScreen(GLint carIndex);
 GLvoid processKeyboardInput();
+
+GLfloat getScreenVelocity(GLint carIndex);
 
 #ifdef DEBUG
 

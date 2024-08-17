@@ -41,6 +41,31 @@ int main()
     initLines();
     initCars();
 
+    RLC crushRLC = {0, 3, 2};
+
+    for (int k = 19; k < NUMBER_OF_CELLS; k+=6)
+    {
+        crushRLC.cell = k;
+        for (int i = 0; i <= NUMBER_OF_LINES; i++)
+        {
+            crushRLC.line = i;
+            addCrushedCar(crushRLC);
+        }
+    }
+
+        
+
+    
+    // if (roads[crushRLC.road].lines[crushRLC.line].cells[crushRLC.cell]->isCrushed == true)
+    // {
+    //     printf("crushed car is bound with the cell\n");
+    // }
+
+
+
+
+
+
     initFont();
 
     glfwSetTime(0.0f);
@@ -58,6 +83,7 @@ int main()
             currTime = glfwGetTime();
             deltaTime += (currTime - lastTime) / limitFPS;
             lastTime = currTime;
+
             endPauseTime = 0;
 
             while (deltaTime >= 1.0)

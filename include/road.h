@@ -7,18 +7,26 @@
 #include <glad/glad.h>
 
 // Custom modules
+#include <cross.h>
 #include <rlc.h>
 #include <direction.h>
 #include <map.h>
 
-#define CELL_LENGHT 0.1f
-#define CELL_WIDTH ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f)
-#define NUMBER_OF_CELLS 20
+#define CELL_LENGTH 0.05f
+// #define CELL_WIDTH ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f)
+#define CELL_WIDTH (CELL_LENGTH)
+#define NUMBER_OF_CELLS 2
 
-#define ROAD_WIDTH CELL_LENGHT
-#define NUMBER_OF_LINES 15
+#define NUMBER_OF_LINES 2
+#define ROAD_WIDTH (CELL_LENGTH * (NUMBER_OF_LINES + 1))
+#define HALF_ROAD_WIDTH (ROAD_WIDTH / 2)
+
+#define NO_ROAD_INDEX -1
+#define NO_LINE_INDEX -1
+#define NO_CELL_INDEX -1
 
 typedef enum DIRECTION DIRECTION;
+typedef struct cross cross;
 typedef struct line line;
 typedef struct road road;
 typedef struct car car;
@@ -30,6 +38,11 @@ struct line {
 
 struct road {
     bool isEdge;
+    bool isCross;
+    cross Cross;
+    GLfloat stem;
+    GLfloat startLineCoord;
+    GLfloat endLineCoord;
     DIRECTION dir;
     line lines[NUMBER_OF_LINES + 1];
 };
@@ -41,13 +54,18 @@ extern GLint roadIndices[NUMBER_OF_ROADS * 6];
 extern GLuint lineVAO, lineVBO;
 extern GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2];
 
+GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat length, DIRECTION dir);
 GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir);
 GLvoid setLines(GLint roadIndex);
-DIRECTION getRoadDir(car* Сar);
+DIRECTION getRoadDir(car* Car);
 DIRECTION getOvertakeDir(DIRECTION roadDir);
 car** getFirstCellPtr(RLC rlc);
 GLint getCarDirOnRoad(road* Road);
-GLvoid unbindCarPtrFromCell(car* Сar);
-GLvoid reinitCurrCellWithNextCell(car* Сar);
+GLvoid unbindCarPtrFromCell(car* Car);
+GLvoid reinitCurrCellWithNextCell(car* Car);
 GLvoid setRoadsToDefault();
 
+GLvoid setRoadBoards(GLint roadIndex, GLfloat start_x, GLfloat start_y);
+GLvoid setEdgeState(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir);
+GLint isFurhterThanEndLine(car* Car, road* Road);
+GLint isOutOfScreenSpace(GLfloat realPos);
