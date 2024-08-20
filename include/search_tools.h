@@ -18,7 +18,6 @@ struct dot_coord {
 };
 
 extern dot_coord dot;
-extern GLint* _SEARCH_TREE_ROOT_;
 
 
 bool getRLCbyDot(RLC* rlc, dot_coord* dot);

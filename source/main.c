@@ -29,6 +29,9 @@
 #include <gui.h>
 #include <algorithms.h>
 
+#define crushhh 1
+//#define crushh 2
+
 int main()
 {
     initGL();
@@ -41,17 +44,50 @@ int main()
     initLines();
     initCars();
 
-    RLC crushRLC = {0, 3, 2};
 
-    for (int k = 19; k < NUMBER_OF_CELLS; k+=6)
-    {
-        crushRLC.cell = k;
-        for (int i = 0; i <= NUMBER_OF_LINES; i++)
-        {
-            crushRLC.line = i;
-            addCrushedCar(crushRLC);
-        }
-    }
+
+#ifdef crushhh
+    RLC crushRLC = {0, 5, 17};
+    addCrushedCar(crushRLC);
+
+    // RLC crushRLC2 = {0, 2, 17};
+    // addCrushedCar(crushRLC2);
+
+    // RLC crushRLC3 = {0, 8, 17};
+    // addCrushedCar(crushRLC3);
+ #endif
+
+
+ #ifdef crushh
+    RLC crushRLC0 = {0, 0, 29};
+    addCrushedCar(crushRLC0);
+    RLC crushRLC1 = {0, 1, 29};
+    addCrushedCar(crushRLC1);
+    RLC crushRLC2 = {0, 2, 29};
+    addCrushedCar(crushRLC2);
+    RLC crushRLC3 = {0, 3, 29};
+    addCrushedCar(crushRLC3);
+    RLC crushRLC4 = {0, 4, 29};
+    addCrushedCar(crushRLC4);
+    // RLC crushRLC5 = {0, 5, 29};
+    // addCrushedCar(crushRLC5);
+    RLC crushRLC6 = {0, 7, 29};
+    addCrushedCar(crushRLC6);
+    RLC crushRLC7 = {0, 8, 29};
+    addCrushedCar(crushRLC7);
+    RLC crushRLC8 = {0, 9, 29};
+    addCrushedCar(crushRLC8);
+ #endif      
+
+    // for (int k = 19; k < NUMBER_OF_CELLS; k+=6)
+    // {
+    //     crushRLC.cell = k;
+    //     for (int i = 0; i <= NUMBER_OF_LINES; i++)
+    //     {
+    //         crushRLC.line = i;
+    //         addCrushedCar(crushRLC);
+    //     }
+    // }
 
         
 
@@ -93,6 +129,7 @@ int main()
             }
 
             render();
+            printf("freeCars: %d \r", freeCars);
         }
         else
         {

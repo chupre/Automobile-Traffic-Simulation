@@ -13,11 +13,11 @@
 #include <direction.h>
 
 // #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
-#define CAR_WIDTH (CELL_LENGTH / 2)
+#define CAR_WIDTH (CELL_LENGTH / 1)
 #define CAR_LENGTH (CAR_WIDTH)
 // #define CAR_LENGHT (CAR_WIDTH * 1.7f)
 
-#define MAX_CARS 9
+#define MAX_CARS 1000
 
 #define NO_INNER_INDEX -1
 #define NO_CAR_INDEX -1
@@ -27,13 +27,14 @@ typedef struct car car;
 struct car {
     RLC currCell;
     RLC nextCell;
-    RLC crossCurrCell;
+    RLC crossCurrCell;//another struct must be
     RLC crossNextCell;
     GLint velocity;
     GLint dirOnRoad;
     GLint ID;
     DIRECTION target;
     DIRECTION overtake;
+    bool ableToChangeLine;
     GLfloat realPos;
     bool isActive;
     bool isCrushed;
@@ -55,10 +56,7 @@ GLvoid setCar(car* Car, GLint carIndex, RLC address);
 GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc);
 GLvoid getFreeSpotAddress(RLC* rlc);
 GLint getFreeCarIndex();
-GLvoid spawnCars();
 GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc);
 GLvoid setCrushedCarProperties(car* Car, GLint carIndex, RLC rlc);
 GLvoid setCarsToDefault();
-GLvoid appendInBornCarsIndexes(GLint freeCarIndex);
-GLvoid clearInBornCarsIndedxes();
-GLint isInBornCars(GLint i);
+GLvoid clearCarProperties(car* Car);

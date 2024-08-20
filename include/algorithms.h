@@ -4,6 +4,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+///Standart
+#include <stdbool.h>
+
 // Custom modules
 #include <rlc.h>
 #include <road.h>
@@ -16,15 +19,15 @@
 #define _6_VELOCITY (_1_VELOCITY * 6)
 #define _7_VELOCITY (_1_VELOCITY * 7)
 
-#define MAX_VELOCITY (_1_VELOCITY)
-#define NUMBER_OF_VELOCITY_TYPES (1)
+#define MAX_VELOCITY (_6_VELOCITY)
+#define NUMBER_OF_VELOCITY_TYPES (6)
 
 #define VELOCITY_MULTIPLIER (CELL_LENGTH)
 
 #define ERROR_LIMIT 0.0000001f
 #define EMPTY -1
 
-#define STEP_TIME 0.5f //seconds
+#define STEP_TIME 1.0f //seconds
 
 typedef enum VELOCITY VELOCITY;
 typedef struct car car;
@@ -41,18 +44,27 @@ enum VELOCITY {
     _NO_CAR_ = 666
 };
 
-GLint isToExclude(car* Car);
+bool isToExclude(car* Car);
 GLint getVelocityByRLC(RLC rlc);
 GLvoid excludeFromMap(car* Car);
 GLvoid thoughtsOfOneCar(car* Car);
 GLint distanceToForthCar(RLC rlc);
 GLint distanceToBackCar(RLC rlc);
-GLint isAbleToChangeLine(car* Car, RLC* posOnNewLine);
-GLint isSafetyForthAndBack(car* Car, RLC rlc);
+bool isAbleToChangeLine(car* Car, RLC* posOnNewLine);
+bool isSafetyForthAndBack(car* Car, RLC rlc);
 GLvoid countSubVelocity(car* Car);
 GLvoid update();
 GLvoid step();
+GLvoid spawnCars();
+GLvoid appendInBornCarsIndexes(GLint freeCarIndex);
+GLvoid clearInBornCarsIndedxes();
+bool isInBornCars(GLint i);
+GLvoid unbindCarPtrFromCell(car* Car);
+GLvoid reinitCurrCellWithNextCell(car* Car);
 
+
+GLint isRLCbad(RLC rlc);
+GLvoid printCarProperties(RLC rlc);
 /*
 //turn on the corner
 GLint isReadyToTurnRight(void);

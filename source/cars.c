@@ -31,30 +31,6 @@ GLint innerBornCarsIndex = NO_INNER_INDEX;
 GLint bornCarsIndexes[MAX_CARS];
 
 
-GLvoid spawnCars()
-{
-	if (freeCars)
-	{
-		int counter = freeCars;
-		for (int i = 0; i < counter; i++)
-		{
-			RLC freeSpotRLC = { EMPTY, EMPTY, EMPTY };
-			getFreeSpotAddress(&freeSpotRLC);
-			GLint carIndex = getFreeCarIndex();
-
-			if (freeSpotRLC.road != EMPTY && carIndex != NO_CAR_INDEX)
-			{
-				addCar(&cars[carIndex], carIndex, freeSpotRLC);
-				thoughtsOfOneCar(&cars[carIndex]);
-
-				--freeCars;
-
-				appendInBornCarsIndexes(carIndex);
-			}
-		}
-	}
-}
-
 GLvoid addCar(car* Car, GLint carIndex, RLC rlc)
 {
 	setBornCarProperties(&cars[carIndex], carIndex, rlc);
@@ -69,12 +45,14 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	ptrCell[rlc.cell] = Car;// bind a car pointer with a spawn cell
 
 	Car->target = rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
-	Car->velocity = _1_CELL_ ;//* (rand() % (NUMBER_OF_VELOCITY_TYPES));
+	//Car->velocity = _3_CELL_ + _1_CELL_ + (rand() % (NUMBER_OF_VELOCITY_TYPES - 3));
+	//Car->velocity = _1_CELL_;
+	Car->velocity = _1_CELL_ + rand() % NUMBER_OF_VELOCITY_TYPES;
 	Car->isActive = true;
 	memcpy(&Car->currCell, &rlc, sizeof(RLC));
 	memcpy(&Car->nextCell, &rlc, sizeof(RLC));
 
-	Car->dirOnRoad = getCarDirOnRoad(&roads[rlc.road]);
+	Car->dirOnRoad = getRoadDirForVelocity(&roads[rlc.road]);
  }
 
  GLvoid setCrushedCarProperties(car* Car, GLint carIndex, RLC rlc)
@@ -90,53 +68,24 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	ptrCell[rlc.cell] = Car;// bind a car pointer with a spawn cell
  }
 
- GLvoid getFreeSpotAddress(RLC* rlc)
-{
-	RLC freeSpots[MAX_CARS * sizeof(RLC)];
-	int freeSpotsCounter = 0;
-	int randFreeSpotIndex = 0;
-
-	for (int i = 0; i < NUMBER_OF_ROADS; i++)
-	{
-		if (roads[i].isEdge)
-		{
-			for (int j = 0; j < NUMBER_OF_LINES + 1; j++)
-			{
-				if (roads[i].lines[j].cells[0] == NULL)
-				{
-					freeSpots[freeSpotsCounter].road = i;
-					freeSpots[freeSpotsCounter].line = j;
-					freeSpotsCounter++;
-				}
-			}
-		}
-	}
-
-	if (freeSpotsCounter)
-	{
-		randFreeSpotIndex = rand() % freeSpotsCounter;
-		
-		rlc->road = freeSpots[randFreeSpotIndex].road;
-		rlc->line = freeSpots[randFreeSpotIndex].line;
-		rlc->cell = 0;
-	}
-}
-
 GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 {
+	GLfloat margin = CELL_WIDTH / 4;
+
 	DIRECTION carDir = roads[rlc.road].dir;
-	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - CAR_WIDTH * 0.75f;
-	GLfloat x2 = x1 - CAR_WIDTH * 0.75f;
+	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - margin * 2.0f;
+	GLfloat x2 = x1 - margin * 2.0f;
 	GLfloat y1 = 0, y2 = 0;
 
 	glm_mat3_identity(carTransformMatrixes[carIndex]);
+
 
 	switch (carDir)
 	{
 		case NORTH:
 		{
-			y1 = -1.0f + (CAR_WIDTH * 0.5f);
-			y2 = y1 + CAR_LENGTH + (CAR_WIDTH * 0.5f);
+			y1 = -1.0f + 0 * margin;
+			y2 = y1 + CAR_LENGTH + margin;
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };
@@ -147,8 +96,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 
 		case SOUTH:
 		{
-			y1 = 1.0f - CAR_LENGTH - (CAR_WIDTH * 0.5f);
-			y2 = y1 - CAR_LENGTH - (CAR_WIDTH * 0.5f);
+			y1 = 1.0f - CAR_LENGTH - 0 * margin;
+			y2 = y1 - CAR_LENGTH - margin;
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };
@@ -235,9 +184,11 @@ GLfloat getCellWall(RLC rlc)
 
 GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 {
+	GLfloat margin = CELL_WIDTH / 4;
+
 	DIRECTION carDir = roads[rlc.road].dir;
-	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - CAR_WIDTH * 0.75f;
-	GLfloat x2 = x1 - CAR_WIDTH * 0.75f;
+	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - (2.0f * margin);
+	GLfloat x2 = x1 - (2.0f * margin);
 	GLfloat y1 = 0, y2 = 0;
 
 	glm_mat3_identity(carTransformMatrixes[carIndex]);
@@ -250,8 +201,8 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 	{
 		case NORTH:
 		{
-			y1 = cellWall + (CAR_WIDTH * 0.5f);
-			y2 = y1 + CAR_LENGTH + (CAR_WIDTH * 0.5f);
+			y1 = cellWall + 0 * margin;
+			y2 = y1 + CAR_LENGTH + 0 * margin;
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };
@@ -262,8 +213,8 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 		case SOUTH:
 		{
-			y1 = cellWall - CAR_LENGTH - (CAR_WIDTH * 0.5f);
-			y2 = y1 - CAR_LENGTH - (CAR_WIDTH * 0.5f);
+			y1 = cellWall - CAR_LENGTH - 0 * margin;
+			y2 = y1 - CAR_LENGTH - margin;
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };
@@ -304,6 +255,38 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 	}
 }
 
+GLvoid getFreeSpotAddress(RLC* rlc)
+{
+	RLC freeSpots[MAX_CARS * sizeof(RLC)];
+	int freeSpotsCounter = 0;
+	int randFreeSpotIndex = 0;
+
+	for (int i = 0; i < NUMBER_OF_ROADS; i++)
+	{
+		if (roads[i].isEdge)
+		{
+			for (int j = 0; j < NUMBER_OF_LINES + 1; j++)
+			{
+				if (roads[i].lines[j].cells[0] == NULL)
+				{
+					freeSpots[freeSpotsCounter].road = i;
+					freeSpots[freeSpotsCounter].line = j;
+					freeSpotsCounter++;
+				}
+			}
+		}
+	}
+
+	if (freeSpotsCounter)
+	{
+		randFreeSpotIndex = rand() % freeSpotsCounter;
+		
+		rlc->road = freeSpots[randFreeSpotIndex].road;
+		rlc->line = freeSpots[randFreeSpotIndex].line;
+		rlc->cell = 0;
+	}
+}
+
 
 GLint getFreeCarIndex()
 {
@@ -322,41 +305,25 @@ GLvoid setCarsToDefault()
 {
 	for (int i = 0; i < MAX_CARS; i++)
 	{
-		cars[i].currCell.road = EMPTY;
-		cars[i].currCell.line = EMPTY;
-		cars[i].currCell.cell = EMPTY;
-		cars[i].nextCell.road = EMPTY;
-		cars[i].nextCell.line = EMPTY;
-		cars[i].nextCell.cell = EMPTY;
-		cars[i].dirOnRoad = 0;
-		cars[i].ID = EMPTY;
-		cars[i].realPos = EMPTY;
-		cars[i].target = NONE;
-		cars[i].velocity = 0;
-		cars[i].isActive = false;
-		cars[i].isCrushed = false;
-		cars[i].overtake = NONE;
+		clearCarProperties(&cars[i]);
 	}
 }
 
-GLvoid appendInBornCarsIndexes(GLint freeCarIndex)
+GLvoid clearCarProperties(car* Car)
 {
-	bornCarsIndexes[++innerBornCarsIndex] = freeCarIndex;
-}
-
-GLvoid clearInBornCarsIndedxes()
-{
-	innerBornCarsIndex = NO_INNER_INDEX;
-}
-
-GLint isInBornCars(GLint i)
-{
-	for (int k = 0; k <= innerBornCarsIndex; k++)
-	{
-		if (i == bornCarsIndexes[k])
-		{
-			return 1;
-		}
-	}
-	return 0;
+	Car->currCell.road = EMPTY;
+	Car->currCell.line = EMPTY;
+	Car->currCell.cell = EMPTY;
+	Car->nextCell.road = EMPTY;
+	Car->nextCell.line = EMPTY;
+	Car->nextCell.cell = EMPTY;
+	Car->dirOnRoad = 0;
+	Car->ID = EMPTY;
+	Car->realPos = EMPTY;
+	Car->target = NONE;
+	Car->velocity = 0;
+	Car->isActive = false;
+	Car->isCrushed = false;
+	Car->overtake = NONE;
+	Car->ableToChangeLine = false;
 }

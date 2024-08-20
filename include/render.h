@@ -50,6 +50,7 @@ GLvoid moveCarOnScreen(GLint carIndex);
 GLvoid processKeyboardInput();
 
 GLfloat getScreenVelocity(GLint carIndex);
+GLfloat getScreenVelocityOverTake(GLint carIndex);
 
 #ifdef DEBUG
 

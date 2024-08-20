@@ -3,13 +3,16 @@
 #include <cars.h>
 #include <algorithms.h>
 
+#include <stdlib.h>
+#include <stdbool.h>
+
 GLvoid setCross(GLint crossIndex, GLint* roadIndexes)
 {
     int index = -1;
     while (roadIndexes[++index])
     {
-        roads[roadIndexes[index]].isCross = true;
-        roads[roadIndexes[index]].Cross = crosses[crossIndex];
+        roads[roadIndexes[index]].isBeginCross = true;
+        roads[roadIndexes[index]].beginCross = &crosses[crossIndex];
     }
     
 }
@@ -36,4 +39,73 @@ GLvoid setCarTurningProperties(car* Car)
 {
     Car->dirOnRoad = Car->target;
     //target doesn't change as then it and the direction are identical and that's why then target is considered default.
+}
+
+GLint getCrossEnter(GLint cell, DIRECTION dir)
+{
+    if (dir == NORTH)   return (cell + HALF_CROSS_SIDE);
+    if (dir == SOUTH)   return abs(HALF_CROSS_SIDE - cell);
+    if (dir == EAST)    return (cell + HALF_CROSS_SIDE);
+    if (dir == WEST)    return abs(HALF_CROSS_SIDE - cell);
+}
+
+GLvoid getCrossExitAndRoadFirstCell(GLint enter, DIRECTION dir, DIRECTION target, GLint* exit, GLint* roadFirstCell)
+{
+    if (dir == NORTH)
+    {
+        if (target == NORTH || target == EAST)
+        {
+            *exit = enter;
+            *roadFirstCell = HALF_CROSS_SIDE - *exit;
+        }
+        else if (target == WEST)
+        {
+            *exit = CROSS_SIDE - enter - 1;
+            *roadFirstCell = abs(HALF_CROSS_SIDE - *exit);
+        }
+    }
+    else if (dir == SOUTH)
+    {
+        if (target == SOUTH ||target == WEST)
+        {
+            *exit = enter;
+            *roadFirstCell = abs(HALF_CROSS_SIDE - *exit);
+        }
+        else if (target == EAST)
+        {
+            *exit = CROSS_SIDE - enter - 1;
+            *roadFirstCell = *exit - HALF_CROSS_SIDE;
+        }
+    }
+    else if (dir == EAST)
+    {
+        if (target == EAST || target == NORTH)
+        {
+            *exit = enter;
+            *roadFirstCell = *exit - HALF_CROSS_SIDE;
+        }
+        if (target == SOUTH)
+        {
+            *exit = CROSS_SIDE - enter - 1;
+            *roadFirstCell = abs(HALF_CROSS_SIDE - *exit);
+        }
+    }
+    else if (dir == WEST)
+    {
+        if (target == WEST || target == SOUTH)
+        {
+            *exit = enter;
+            *roadFirstCell = abs(HALF_CROSS_SIDE - *exit);
+        }
+        if (target == NORTH)
+        {
+            *exit = CROSS_SIDE - enter - 1;
+            *roadFirstCell = *exit - HALF_CROSS_SIDE;
+        }
+    }
+}
+
+bool isEndCross(RLC rlc)
+{
+    return (roads[rlc.road].isEndCross);
 }

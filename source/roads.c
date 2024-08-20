@@ -19,19 +19,26 @@ DIRECTION getRoadDir(car* Car)
     return ((roads + Car->currCell.road)->dir);
 }
 
-GLint getCarDirOnRoad(road* Road)
+GLint getRoadDirForVelocity(road* Road)
 {
     if (Road->dir == NORTH || Road->dir == EAST) return 1;
     else if (Road->dir == SOUTH || Road->dir == WEST) return -1;
     else return 0;
 }
 
+GLint getOvertakeDirForVelocity(DIRECTION overtake)
+{
+    if (overtake == NORTH || overtake == EAST) return 1;
+    else if (overtake == SOUTH || overtake == WEST) return -1;
+    else return 0; 
+}
+
 DIRECTION getOvertakeDir(DIRECTION roadDir)
 {
-    if (roadDir == NORTH) return EAST;
-    else if (roadDir == SOUTH) return WEST;
-    else if (roadDir == WEST) return NORTH;
-    else if (roadDir == EAST) return SOUTH;
+    if (roadDir == NORTH) return WEST;
+    else if (roadDir == SOUTH) return EAST;
+    else if (roadDir == WEST) return SOUTH;
+    else if (roadDir == EAST) return NORTH;
     else return NONE;
 }
 
@@ -39,33 +46,16 @@ car** getFirstCellPtr(RLC rlc) {
     return roads[rlc.road].lines[rlc.line].cells;
 }
 
-GLvoid unbindCarPtrFromCell(car* Car)
-{
-    car** ptrCell = getFirstCellPtr(Car->currCell);
-    GLint start = Car->currCell.cell;
-    if (start < NUMBER_OF_CELLS) ptrCell[start] = NULL;
-
-    ptrCell = getFirstCellPtr(Car->nextCell);
-    GLint newStart = Car->nextCell.cell;
-    if (newStart < NUMBER_OF_CELLS) ptrCell[newStart] = Car;
-}
-
-GLvoid reinitCurrCellWithNextCell(car* Car)
-{
-    Car->currCell.road = Car->nextCell.road;
-    Car->currCell.line = Car->nextCell.line;
-    Car->currCell.cell = Car->nextCell.cell;
-}
-
-
-GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat length, DIRECTION dir)
+GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir)
 {
     // road properties
     roads[roadIndex].dir = dir;
-    roads[roadIndex].isCross = false; // by default
+    roads[roadIndex].isBeginCross = false; // by default
+    roads[roadIndex].isEndCross = false; // by default
     setRoadBoards(roadIndex, start_x, start_y);
     setEdgeState(roadIndex, start_x, start_y, dir);
 
+    GLfloat length = CELL_LENGTH * NUMBER_OF_CELLS;
     setRoad(roadIndex, start_x, start_y, length, dir);
 }
 
@@ -225,8 +215,7 @@ GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat length
 
 GLvoid setLines(GLint roadIndex)
 {
-    //GLfloat stride = ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f);
-    GLfloat stride = ROAD_WIDTH / (NUMBER_OF_LINES + 1.0f);
+    GLfloat stride = CELL_WIDTH;
     int i;
 
     if (roads[roadIndex].dir == NORTH || roads[roadIndex].dir == SOUTH)
@@ -294,7 +283,7 @@ GLvoid setLines(GLint roadIndex)
     {
         GLfloat y, x1, x2;
 
-        y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH * 2;
+        y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;
         x1 = roadVertices[0 + 4 * 5 * roadIndex];
         x2 = roadVertices[10 + 4 * 5 * roadIndex];
 

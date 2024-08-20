@@ -146,9 +146,9 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o: \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/render.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/road.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/cross.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/map.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/rlc.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/map.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/cars.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/direction.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/gui.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/gui.h

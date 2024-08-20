@@ -142,5 +142,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o: \
  /home/vladimir/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/road.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/cross.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/rlc.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/cars.h

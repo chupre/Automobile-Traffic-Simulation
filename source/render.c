@@ -327,21 +327,46 @@ GLfloat getScreenVelocity(GLint carIndex)
     return (GLfloat)(cars[carIndex].velocity * cars[carIndex].dirOnRoad * VELOCITY_MULTIPLIER) / FPS;
 }
 
+GLfloat getScreenVelocityOverTake(GLint carIndex)
+{
+    return (GLfloat)(_1_CELL_ * getOvertakeDirForVelocity(cars[carIndex].overtake) * VELOCITY_MULTIPLIER) / FPS;
+}
+
 GLvoid moveCarOnScreen(GLint carIndex)
 {
-    GLfloat screenVelocity = getScreenVelocity(carIndex);
-    cars[carIndex].realPos += screenVelocity;
+    car* Car = &cars[carIndex];
+    GLfloat screenVelocity;
 
-    DIRECTION roadDir = roads[cars[carIndex].currCell.road].dir;
-
-    if (roadDir == NORTH || roadDir == SOUTH)
+    if (Car->ableToChangeLine)
     {
-        glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
+        screenVelocity = getScreenVelocityOverTake(carIndex);
+        //Car->realPos += screenVelocity;//fthe car keeps on the same line or moving on the same road 
+
+        if (Car->overtake == NORTH || Car->overtake == SOUTH)
+        {
+            glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
+        }
+        else
+        {
+            glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
+        }
     }
     else
     {
-        glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
+        screenVelocity = getScreenVelocity(carIndex);
+        Car->realPos += screenVelocity;
+        DIRECTION roadDir = roads[Car->currCell.road].dir;
+
+        if (roadDir == NORTH || roadDir == SOUTH)
+        {
+            glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
+        }
+        else
+        {
+            glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
+        }  
     }
+        
 }
 
 #ifdef DEBUG

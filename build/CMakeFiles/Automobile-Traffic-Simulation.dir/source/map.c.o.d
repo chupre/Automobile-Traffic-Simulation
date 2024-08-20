@@ -18,13 +18,14 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o: \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/map.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/direction.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/road.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/cross.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/rlc.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/include/cars.h \
  /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
