@@ -56,6 +56,7 @@ GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir)
     setEdgeState(roadIndex, start_x, start_y, dir);
 
     GLfloat length = CELL_LENGTH * NUMBER_OF_CELLS;
+
     setRoad(roadIndex, start_x, start_y, length, dir);
 }
 

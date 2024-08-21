@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RENDER_H
+#define RENDER_H
 
 // Standard
 #include <stdbool.h>
@@ -7,12 +8,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-// Custom modules
-#include <road.h>
-
 #define FPS 60.0f
 
-#define DEBUG
+//#define DEBUG
 
 #define WINDOWS 0
 #define UNIX 1
@@ -54,11 +52,14 @@ GLfloat getScreenVelocityOverTake(GLint carIndex);
 
 #ifdef DEBUG
 
+#include <road.h>
 GLvoid dbgInitCells();
 GLvoid dbgRenderCells();
 extern GLuint cellsVBO, cellsVAO;
 extern GLfloat cellsVertices[(NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8];
 extern bool dbgIsCellsInit;
 #define DEFAULT_FOV 60
+
+#endif
 
 #endif

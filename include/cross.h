@@ -1,15 +1,12 @@
-#pragma once
-
+#ifndef CROSS_H
+#define CROSS_H
 // External
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 // Custom modules
-#include <algorithms.h>
 #include <map.h>
 #include <rlc.h>
-#include <cars.h>
-#include <road.h>
 #include <direction.h>
 
 #define NUMBER_OF_LI 9
@@ -42,3 +39,4 @@ GLvoid getCrossExitAndRoadFirstCell(GLint enter, DIRECTION dir, DIRECTION target
 
 bool isEndCross(RLC rlc);
 
+#endif

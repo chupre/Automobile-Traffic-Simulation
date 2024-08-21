@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
 
 // External
 #include <cglm/cglm.h>
@@ -27,3 +28,5 @@ GLint isPossibleToMoveCam(camDir dir, GLfloat offset);
 GLvoid getTestVertex(GLint roadIndex, camDir dir, vec4 dest);
 GLint isVertexOnCamBorders(vec4 vertex, camDir dir, GLfloat offset, DIRECTION roadDir);
 GLvoid setTestVertex(vec4 vertex, vec3 newCamPos);
+
+#endif

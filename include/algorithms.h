@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ALGO_H
+#define ALGO_H
 
 // External
 #include <glad/glad.h>
@@ -9,6 +10,7 @@
 
 // Custom modules
 #include <rlc.h>
+#include <cars.h>
 #include <road.h>
 
 #define _1_VELOCITY (1)
@@ -72,3 +74,5 @@ GLint isReadyToTurnRight(void);
 GLint isReadyToTurnLeft(void);
 GLint isReadyToChangeLine(void);
 */
+
+#endif

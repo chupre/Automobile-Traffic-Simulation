@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef ROAD_H
+#define ROAD_H
 
 // Standard
 #include <stdbool.h>
@@ -7,7 +8,6 @@
 #include <glad/glad.h>
 
 // Custom modules
-#include <cross.h>
 #include <rlc.h>
 #include <direction.h>
 #include <map.h>
@@ -15,7 +15,7 @@
 #define CELL_LENGTH 0.05f
 // #define CELL_WIDTH ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f)
 #define CELL_WIDTH (CELL_LENGTH)
-#define NUMBER_OF_CELLS 30
+#define NUMBER_OF_CELLS 40
 
 #define NUMBER_OF_LINES 9
 #define ROAD_WIDTH (CELL_LENGTH * (NUMBER_OF_LINES + 1))
@@ -70,3 +70,5 @@ GLvoid setEdgeState(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION
 GLint isFurhterThanEndLine(car* Car, road* Road);
 GLint isOutOfScreenSpace(GLfloat realPos);
 GLint getOvertakeDirForVelocity(DIRECTION overtake);
+
+#endif

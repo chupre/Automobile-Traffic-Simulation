@@ -73,7 +73,6 @@ GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 
     if (cameraFOV > DEFAULT_FOV)
     {
-        cameraFOV = DEFAULT_FOV;
     }
 }
 

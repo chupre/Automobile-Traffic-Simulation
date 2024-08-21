@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RLC_H
+#define RLC_H
 
 #include <glad/glad.h>
 
@@ -9,3 +10,4 @@ typedef struct
     GLint cell;
 } RLC;
 
+#endif

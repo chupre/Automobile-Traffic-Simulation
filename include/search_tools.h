@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SEARCH_TOOLS_H
+#define SEARCH_TOOLS_H
 
 // Standard
 #include <stdbool.h>
@@ -6,8 +7,6 @@
 // External
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-#include <road.h>
 
 #define NO_COORD 666.0f
 
@@ -27,3 +26,5 @@ GLint getLineIndex(dot_coord* dot, GLint roadIndex);
 GLfloat getRoadLeftCheek(GLint roadIndex);
 GLint getCellIndex(dot_coord* dot, GLint roadIndex, GLint lineIndex);
 GLvoid clearDot(dot_coord* dot);
+
+#endif

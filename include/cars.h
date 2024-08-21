@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CARS_H
+#define CARS_H
 
 // Standard
 #include <stdbool.h>
@@ -9,7 +10,6 @@
 
 // Custom modules
 #include <rlc.h>
-#include <road.h>
 #include <direction.h>
 
 // #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
@@ -60,3 +60,5 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc);
 GLvoid setCrushedCarProperties(car* Car, GLint carIndex, RLC rlc);
 GLvoid setCarsToDefault();
 GLvoid clearCarProperties(car* Car);
+
+#endif
