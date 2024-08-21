@@ -8,6 +8,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+// Custom modules
+#include <rlc.h>
+
 #define NO_COORD 666.0f
 
 typedef struct dot_coord dot_coord;
@@ -17,7 +20,6 @@ struct dot_coord {
 };
 
 extern dot_coord dot;
-
 
 bool getRLCbyDot(RLC* rlc, dot_coord* dot);
 GLint getRoadIndex(dot_coord* dot);

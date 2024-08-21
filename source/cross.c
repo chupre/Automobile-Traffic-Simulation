@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+cross crosses[NUMBER_OF_CROSSES];
+GLint crossTable[4][NUMBER_OF_LI * 2][NUMBER_OF_LI];
+
 GLvoid setCross(GLint crossIndex, GLint* roadIndexes)
 {
     int index = -1;

@@ -3,11 +3,11 @@
 // Standard
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <road.h>
 
 dot_coord dot = {NO_COORD, NO_COORD};
-
 
 bool getRLCbyDot(RLC* rlc, dot_coord* dot)
 {

@@ -53,5 +53,15 @@
   "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
   "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/gui.c",
   "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/gui.c"
+},
+{
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/cross.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/cross.c"
+},
+{
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/search_tools.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/search_tools.c"
 }
 ]

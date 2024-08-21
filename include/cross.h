@@ -9,6 +9,9 @@
 #include <rlc.h>
 #include <direction.h>
 
+// Standard 
+#include <stdbool.h>
+
 #define NUMBER_OF_LI 9
 #define CROSS_SIDE ((NUMBER_OF_LI + 1) * 2)
 #define HALF_CROSS_SIDE (CROSS_SIDE / 2)
@@ -30,7 +33,6 @@ struct cross {
 
 extern cross crosses[NUMBER_OF_CROSSES];
 extern GLint crossTable[4][NUMBER_OF_LI * 2][NUMBER_OF_LI];
-
 
 GLvoid setCross(GLint crossIndex, GLint* roadIndexes);
 GLvoid setCarPropertiesOnCross(car* Car);

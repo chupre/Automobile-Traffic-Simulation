@@ -12,7 +12,10 @@ add_executable(Automobile-Traffic-Simulation
     source/render.c
     source/camera.c
     source/shader.c
-    source/gui.c)
+    source/gui.c
+    source/cross.c
+    source/search_tools.c
+    )
 
 if (WIN32)
     target_link_libraries(Automobile-Traffic-Simulation ${CMAKE_SOURCE_DIR}/external/GLFW/glfw3.lib)

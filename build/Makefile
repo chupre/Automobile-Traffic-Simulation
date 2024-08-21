@@ -249,6 +249,30 @@ source/cars.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.s
 .PHONY : source/cars.c.s
 
+source/cross.o: source/cross.c.o
+.PHONY : source/cross.o
+
+# target to build an object file
+source/cross.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o
+.PHONY : source/cross.c.o
+
+source/cross.i: source/cross.c.i
+.PHONY : source/cross.i
+
+# target to preprocess a source file
+source/cross.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.i
+.PHONY : source/cross.c.i
+
+source/cross.s: source/cross.c.s
+.PHONY : source/cross.s
+
+# target to generate assembly for a file
+source/cross.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.s
+.PHONY : source/cross.c.s
+
 source/gui.o: source/gui.c.o
 .PHONY : source/gui.o
 
@@ -369,6 +393,30 @@ source/roads.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.s
 .PHONY : source/roads.c.s
 
+source/search_tools.o: source/search_tools.c.o
+.PHONY : source/search_tools.o
+
+# target to build an object file
+source/search_tools.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o
+.PHONY : source/search_tools.c.o
+
+source/search_tools.i: source/search_tools.c.i
+.PHONY : source/search_tools.i
+
+# target to preprocess a source file
+source/search_tools.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.i
+.PHONY : source/search_tools.c.i
+
+source/search_tools.s: source/search_tools.c.s
+.PHONY : source/search_tools.s
+
+# target to generate assembly for a file
+source/search_tools.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Automobile-Traffic-Simulation.dir/build.make CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.s
+.PHONY : source/search_tools.c.s
+
 source/shader.o: source/shader.c.o
 .PHONY : source/shader.o
 
@@ -417,6 +465,9 @@ help:
 	@echo "... source/cars.o"
 	@echo "... source/cars.i"
 	@echo "... source/cars.s"
+	@echo "... source/cross.o"
+	@echo "... source/cross.i"
+	@echo "... source/cross.s"
 	@echo "... source/gui.o"
 	@echo "... source/gui.i"
 	@echo "... source/gui.s"
@@ -432,6 +483,9 @@ help:
 	@echo "... source/roads.o"
 	@echo "... source/roads.i"
 	@echo "... source/roads.s"
+	@echo "... source/search_tools.o"
+	@echo "... source/search_tools.i"
+	@echo "... source/search_tools.s"
 	@echo "... source/shader.o"
 	@echo "... source/shader.i"
 	@echo "... source/shader.s"

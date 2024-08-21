@@ -1,6 +1,4 @@
 // Standard
-#include "algorithms.h"
-#include "direction.h"
 #include <time.h>
 
 // External
@@ -13,6 +11,8 @@
 #include <road.h>
 #include <cars.h>
 #include <shader.h>
+#include "algorithms.h"
+#include <search_tools.h>
 
 #define NK_ASSERT(a)
 #define MAX_VERTEX_BUFFER 512 * 1024
@@ -120,7 +120,17 @@ GLvoid cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
 
 void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-        printf("%f %f\n", mousePosX, mousePosY);
+        float normalizedX = (2.0f * mousePosX / WINDOW_WIDTH) - 1.0f;
+        float normalizedY = 1.0f - (2.0f * mousePosY / WINDOW_HEIGHT);
+
+        dot_coord mousePos;
+        mousePos.x = normalizedX;
+        mousePos.y = normalizedY;
+
+        RLC rlc;
+
+        getRLCbyDot(&rlc, &mousePos);
+        printf("R: %d L: %d C: %d\n", rlc.road, rlc.line, rlc.cell);
     }
 }
 

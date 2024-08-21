@@ -11,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o.d"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o.d"
+  "CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o"
+  "CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o.d"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o.d"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o"
@@ -21,6 +23,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o.d"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o.d"
+  "CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o"
+  "CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o.d"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o"
   "CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o.d"
 )
