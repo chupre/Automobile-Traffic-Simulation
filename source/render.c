@@ -1,6 +1,7 @@
 // Standard
 #include "algorithms.h"
 #include "direction.h"
+#include <stdio.h>
 #include <time.h>
 
 // External
@@ -73,6 +74,7 @@ GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 
     if (cameraFOV > DEFAULT_FOV)
     {
+        cameraFOV = DEFAULT_FOV;
     }
 }
 
@@ -107,6 +109,10 @@ GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mo
     {
         glfwSetWindowShouldClose(window, true);
     }
+}
+
+GLvoid cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
+    printf("%f %f\n", xpos, ypos);
 }
 
 GLvoid processKeyboardInput() {
@@ -291,6 +297,7 @@ GLvoid initGL()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_RESIZABLE, false);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_SAMPLES, 4);
 
     window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
     glfwMakeContextCurrent(window);
@@ -310,6 +317,7 @@ GLvoid initGL()
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_MULTISAMPLE);
 
     context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
 
@@ -318,7 +326,7 @@ GLvoid initGL()
     glfwSetKeyCallback(window, keyCallback);
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
     glfwSetScrollCallback(window, scrollCallback);
-
+    glfwSetCursorPosCallback(window, cursorPositionCallback);
 }
 
 GLfloat getScreenVelocity(GLint carIndex)
