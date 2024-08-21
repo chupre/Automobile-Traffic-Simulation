@@ -34,10 +34,15 @@ extern GLdouble limitFPS;
 extern GLdouble lastTime;
 extern GLdouble deltaTime, currTime, endPauseTime;
 extern GLdouble timer;
+extern float mousePosX;
+extern float mousePosY;
+
 GLdouble getPauseTime();
 GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 GLvoid framebufferSizeCallback(GLFWwindow* window, int width, int height);
 GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+GLvoid cursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 GLvoid initRoads();
 GLvoid initLines();
 GLvoid initCars();

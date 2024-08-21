@@ -1,7 +1,6 @@
 // Standard
 #include "algorithms.h"
 #include "direction.h"
-#include <stdio.h>
 #include <time.h>
 
 // External
@@ -35,6 +34,9 @@ GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
 bool paused = false;
 bool isSaveMenuActive = false;
 bool isLoadMenuActive = false;
+
+float mousePosX = 0.0;
+float mousePosY = 0.0;
 
 GLFWwindow* window;
 
@@ -112,7 +114,14 @@ GLvoid keyCallback(GLFWwindow* window, int key, int scancode, int action, int mo
 }
 
 GLvoid cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
-    printf("%f %f\n", xpos, ypos);
+    mousePosX = xpos;
+    mousePosY = ypos;
+}
+
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+        printf("%f %f\n", mousePosX, mousePosY);
+    }
 }
 
 GLvoid processKeyboardInput() {
@@ -327,6 +336,7 @@ GLvoid initGL()
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
     glfwSetScrollCallback(window, scrollCallback);
     glfwSetCursorPosCallback(window, cursorPositionCallback);
+    glfwSetMouseButtonCallback(window, mouseButtonCallback);
 }
 
 GLfloat getScreenVelocity(GLint carIndex)
