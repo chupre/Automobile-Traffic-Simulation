@@ -1,5 +1,5 @@
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: \
- /home/vladimir/dev/Automobile-Traffic-Simulation/source/cars.c \
+ /home/denis/dev/Automobile-Traffic-Simulation/source/cars.c \
  /usr/include/stdc-predef.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -9,7 +9,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
@@ -43,15 +43,15 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/cars.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/glad/glad.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -59,68 +59,68 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/types.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdalign.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/intrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/x86.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/intrin.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/vec2.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/util.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/vec2-ext.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/vec3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/vec4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/vec4-ext.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/vec3-ext.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ivec2.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ivec3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ivec4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/mat4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/../../common.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/../intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/float.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/types.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stdalign.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/mm_malloc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/emmintrin.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/x86.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/intrin.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec2.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/util.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec2-ext.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec4-ext.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec3-ext.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ivec2.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ivec3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ivec4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/mat4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/../../common.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/../intrin.h \
  /usr/include/assert.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat4x2.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat4x3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/mat3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat3x2.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat3x4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat2.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/mat2.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat2x3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/mat2x4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/affine.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/affine-mat.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/affine.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/affine-pre.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/affine-post.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/cam.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/plane.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/persp.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../common.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../plane.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../mat4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/ortho_rh_no.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/persp_rh_no.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/persp.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/view_rh_no.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/view_rh.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/frustum.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/quat.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/quat.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/euler.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/handed/euler_to_quat_rh.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/handed/../common.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/aabb2d.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/box.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/color.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/io.h \
- /usr/include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat4x2.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat4x3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/mat3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat3x2.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat3x4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat2.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/mat2.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat2x3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat2x4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-mat.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/affine.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-pre.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-post.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cam.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/plane.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/persp.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../common.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../plane.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../mat4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/ortho_rh_no.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/persp_rh_no.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/persp.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/view_rh_no.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/view_rh.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/frustum.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/quat.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/simd/sse2/quat.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/euler.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/handed/euler_to_quat_rh.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/handed/../common.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/aabb2d.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/box.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/color.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/io.h \
+ /usr/include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/12/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
@@ -128,20 +128,19 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec4.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/sphere.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ease.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/curve.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/rlc.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/road.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/cross.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/map.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/direction.h
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec4.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/sphere.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ease.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/curve.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/map.h

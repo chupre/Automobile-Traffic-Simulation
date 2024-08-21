@@ -1,7 +1,7 @@
 CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.o: \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/stb/stb_image.c \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/stb/stb_image.c \
  /usr/include/stdc-predef.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/stb/stb_image.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/stb/stb_image.h \
  /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -11,8 +11,8 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.o: \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
  /usr/include/x86_64-linux-gnu/bits/time64.h \
@@ -52,8 +52,8 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \
+ /usr/include/strings.h /usr/lib/gcc/x86_64-linux-gnu/12/include/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
  /usr/include/linux/limits.h \
@@ -67,10 +67,10 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.o: \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h /usr/include/assert.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/mm_malloc.h

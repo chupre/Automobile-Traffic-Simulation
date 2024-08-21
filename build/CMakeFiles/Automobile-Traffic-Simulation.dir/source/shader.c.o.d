@@ -1,5 +1,5 @@
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: \
- /home/vladimir/dev/Automobile-Traffic-Simulation/source/shader.c \
+ /home/denis/dev/Automobile-Traffic-Simulation/source/shader.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -9,8 +9,8 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
  /usr/include/x86_64-linux-gnu/bits/time64.h \
@@ -51,9 +51,9 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/include/shader.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/glad/glad.h \
- /home/vladimir/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/shader.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h \
+ /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h

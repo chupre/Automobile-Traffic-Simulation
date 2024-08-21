@@ -1,57 +1,57 @@
 [
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/external/stb/stb_image.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/external/stb/stb_image.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/external/stb/stb_image.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/external/stb/stb_image.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/external/stb/stb_image.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/external/glad/glad.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/external/glad/glad.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/external/glad/glad.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/external/glad/glad.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/main.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/main.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/main.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/main.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/algorithms.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/algorithms.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/algorithms.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/algorithms.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/cars.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/cars.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/cars.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/cars.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/roads.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/roads.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/roads.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/roads.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/map.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/map.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/map.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/map.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/render.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/render.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/render.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/render.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/camera.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/camera.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/camera.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/camera.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/shader.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/shader.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/shader.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/shader.c"
 },
 {
-  "directory": "/home/vladimir/dev/Automobile-Traffic-Simulation/build",
-  "command": "/usr/bin/cc  -I/home/vladimir/dev/Automobile-Traffic-Simulation/external -I/home/vladimir/dev/Automobile-Traffic-Simulation/include -I/home/vladimir/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/gui.c",
-  "file": "/home/vladimir/dev/Automobile-Traffic-Simulation/source/gui.c"
+  "directory": "/home/denis/dev/Automobile-Traffic-Simulation/build",
+  "command": "/usr/bin/cc  -I/home/denis/dev/Automobile-Traffic-Simulation/external -I/home/denis/dev/Automobile-Traffic-Simulation/include -I/home/denis/dev/Automobile-Traffic-Simulation/source -g -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/gui.c",
+  "file": "/home/denis/dev/Automobile-Traffic-Simulation/source/gui.c"
 }
 ]
