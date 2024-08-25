@@ -222,9 +222,14 @@ GLvoid setLines(GLint roadIndex)
     if (roads[roadIndex].dir == NORTH || roads[roadIndex].dir == SOUTH)
     {
         GLfloat x, y1, y2;
+        
+        if (roads[roadIndex].dir == SOUTH) {
+            stride *= -1;
+            x = roadVertices[0 + 4 * 5 * roadIndex];
+        }
+        else 
+            x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH;
 
-        // x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH * 2;
-        x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH;
         y1 = roadVertices[1 + 4 * 5 * roadIndex];
         y2 = roadVertices[11 + 4 * 5 * roadIndex];
 
@@ -243,11 +248,11 @@ GLvoid setLines(GLint roadIndex)
         }
 
         memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
-        roads[roadIndex].lines[i].carSpawnCoord = x + stride;
+        roads[roadIndex].lines[i].carSpawnCoord = x + stride;    
 
         #ifdef DEBUG
-
-        // x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH * 2;
+        
+        stride = fabs(stride);
         x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH;
         y1 = roadVertices[1 + 4 * 5 * roadIndex];
         y2 = roadVertices[11 + 4 * 5 * roadIndex];
@@ -284,7 +289,13 @@ GLvoid setLines(GLint roadIndex)
     {
         GLfloat y, x1, x2;
 
-        y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;
+        if (roads[roadIndex].dir == WEST) {
+            y = roadVertices[1 + 4 * 5 * roadIndex];
+            stride *= -1;
+        }
+        else 
+            y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;
+
         x1 = roadVertices[0 + 4 * 5 * roadIndex];
         x2 = roadVertices[10 + 4 * 5 * roadIndex];
 

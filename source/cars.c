@@ -73,17 +73,18 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	GLfloat margin = CELL_WIDTH / 4;
 
 	DIRECTION carDir = roads[rlc.road].dir;
-	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - margin * 2.0f;
-	GLfloat x2 = x1 - margin * 2.0f;
+	GLfloat x1;
+	GLfloat x2;
 	GLfloat y1 = 0, y2 = 0;
 
 	glm_mat3_identity(carTransformMatrixes[carIndex]);
-
 
 	switch (carDir)
 	{
 		case NORTH:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - margin * 2.0f;
+	        x2 = x1 - margin * 2.0f;
 			y1 = -1.0f + 0 * margin;
 			y2 = y1 + CAR_LENGTH + margin;
 			Car->realPos = y1;
@@ -96,6 +97,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 
 		case SOUTH:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord;
+	        x2 = x1;
 			y1 = 1.0f - CAR_LENGTH - 0 * margin;
 			y2 = y1 - CAR_LENGTH - margin;
 			Car->realPos = y1;
@@ -108,6 +111,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 
 		case EAST:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - margin * 2.0f;
+	        x2 = x1 - margin * 2.0f;
 			y1 = x1;
 			y2 = x2;
 			x1 = -1.0f;
@@ -123,6 +128,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 
 		case WEST:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord;
+	        x2 = x1;
 			y1 = x1;
 			y2 = x2;
 			x1 = 1.0f;
@@ -187,8 +194,8 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 	GLfloat margin = CELL_WIDTH / 4;
 
 	DIRECTION carDir = roads[rlc.road].dir;
-	GLfloat x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - (2.0f * margin);
-	GLfloat x2 = x1 - (2.0f * margin);
+	GLfloat x1;
+	GLfloat x2;
 	GLfloat y1 = 0, y2 = 0;
 
 	glm_mat3_identity(carTransformMatrixes[carIndex]);
@@ -201,6 +208,8 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 	{
 		case NORTH:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - (2.0f * margin);
+	        x2 = x1 - (2.0f * margin);
 			y1 = cellWall + 0 * margin;
 			y2 = y1 + CAR_LENGTH + 0 * margin;
 			Car->realPos = y1;
@@ -213,6 +222,8 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 		case SOUTH:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord;
+	        x2 = x1;
 			y1 = cellWall - CAR_LENGTH - 0 * margin;
 			y2 = y1 - CAR_LENGTH - margin;
 			Car->realPos = y1;
@@ -225,6 +236,8 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 		case EAST:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - (2.0f * margin);
+	        x2 = x1 - (2.0f * margin);
 			y1 = x1;
 			y2 = x2;
 			x1 = -1.0f;
@@ -240,6 +253,8 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 		case WEST:
 		{
+	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord;
+	        x2 = x1;
 			y1 = x1;
 			y2 = x2;
 			x1 = 1.0f;

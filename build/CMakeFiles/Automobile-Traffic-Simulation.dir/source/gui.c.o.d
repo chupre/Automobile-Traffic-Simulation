@@ -26,6 +26,10 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
+ /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
@@ -141,10 +145,6 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
  /usr/include/dirent.h /usr/include/x86_64-linux-gnu/bits/dirent.h \
  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \

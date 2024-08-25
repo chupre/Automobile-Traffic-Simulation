@@ -47,7 +47,7 @@ int main()
 
 
 #ifdef crushhh
-    RLC crushRLC = {0, 5, 17};
+    RLC crushRLC = {1, 0, 0};
     addCrushedCar(crushRLC);
 
     // RLC crushRLC2 = {0, 2, 17};

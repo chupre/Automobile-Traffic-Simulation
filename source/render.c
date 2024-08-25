@@ -129,7 +129,8 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
 
         RLC rlc;
 
-        getRLCbyDot(&rlc, &mousePos);
+        bool success = getRLCbyDot(&rlc, &mousePos);
+        printf("%d\n", success);
         printf("R: %d L: %d C: %d\n", rlc.road, rlc.line, rlc.cell);
     }
 }
