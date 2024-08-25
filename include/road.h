@@ -25,7 +25,7 @@
 #define NO_LINE_INDEX -1
 #define NO_CELL_INDEX -1
 
-#define NUMBER_OF_ROADS 1
+// #define NUMBER_OF_ROADS 1
 
 typedef enum DIRECTION DIRECTION;
 typedef struct cross cross;

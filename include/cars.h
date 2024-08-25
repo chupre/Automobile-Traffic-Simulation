@@ -75,3 +75,5 @@ GLvoid clearCarProperties(car* Car);
 
 GLvoid bindCellAndCar(RLC* rlc, car* Car);
 GLvoid setOccupyingCarProperties();
+
+#endif
