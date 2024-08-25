@@ -1,3 +1,0 @@
-/home/denis/dev/Automobile-Traffic-Simulation/build/CMakeFiles/Automobile-Traffic-Simulation.dir
-/home/denis/dev/Automobile-Traffic-Simulation/build/CMakeFiles/edit_cache.dir
-/home/denis/dev/Automobile-Traffic-Simulation/build/CMakeFiles/rebuild_cache.dir
