@@ -7,7 +7,13 @@
 
 #include <road.h>
 
-dot_coord dot = {NO_COORD, NO_COORD};
+dot_coord _DOT_ = {NO_COORD, NO_COORD};
+
+GLfloat absFloat(GLfloat a)
+{
+    if (a < 0) return (-1) * a;
+    else return a;
+}
 
 bool getRLCbyDot(RLC* rlc, dot_coord* dot)
 {
@@ -20,18 +26,21 @@ bool getRLCbyDot(RLC* rlc, dot_coord* dot)
     bool is_in = false;
 
     GLint roadIndex = getRoadIndex(dot);
+    printf("roadIndex: %d\n", roadIndex);
     if (roadIndex == NO_ROAD_INDEX)
     {
         return false;
     }
 
     GLint lineIndex = getLineIndex(dot, roadIndex);
+    printf("lineIndex: %d\n", lineIndex);
     if (lineIndex == NO_LINE_INDEX)
     {
         return false;
     }
 
     GLint cellIndex = getCellIndex(dot, roadIndex, lineIndex);
+    printf("cellIndex: %d\n", cellIndex);
     if (cellIndex == NO_LINE_INDEX)
     {
         return false;
@@ -118,28 +127,21 @@ GLint getLineIndex(dot_coord* dot, GLint roadIndex)
     GLfloat leftCheek = getRoadLeftCheek(roadIndex);
     GLfloat recess;
 
-    switch (roads[roadIndex].dir)
+    DIRECTION dir = roads[roadIndex].dir;
+    if (dir == NORTH || dir == SOUTH)
     {
-        case NORTH:
-        {
-            recess = abs(dot->x - leftCheek);
-        }
-        case SOUTH:
-        {
-            recess = abs(dot->x - leftCheek);
-        }
-        case EAST:
-        {
-            recess = abs(dot->y - leftCheek);
-        }
-        case WEST:
-        {
-            recess = abs(dot->y - leftCheek);
-        }
+        recess = absFloat(dot->x - leftCheek);
+    }
+    else
+    {
+        recess = absFloat(dot->y - leftCheek);
     }
 
-    GLint index = (GLint) recess / CELL_WIDTH;
-    if (index >= 0 && index < NUMBER_OF_LINES)
+    GLint index = recess / CELL_WIDTH;
+
+
+    // printf("leftCheek: %f, recess: %f, index: %d\n", leftCheek, recess, index);
+    if (index >= 0 && index < NUMBER_OF_LINES + 1)
     {
         return index;
     }
@@ -175,29 +177,17 @@ GLfloat getRoadLeftCheek(GLint roadIndex)
 GLint getCellIndex(dot_coord* dot, GLint roadIndex, GLint lineIndex)
 {
     GLfloat recess;
-
-    switch (roads[roadIndex].dir)
+    DIRECTION dir = roads[roadIndex].dir;
+    if (dir == NORTH || dir == SOUTH)
     {
-        case NORTH:
-        {
-            recess = abs(dot->y - roads[roadIndex].startLineCoord);
-        }
-        case SOUTH:
-        {
-            recess = abs(dot->y - roads[roadIndex].startLineCoord);
-        }
-        case EAST:
-        {
-            recess = abs(dot->x - roads[roadIndex].startLineCoord);
-        }
-        case WEST:
-        {
-            recess = abs(dot->x - roads[roadIndex].startLineCoord);
-        }
+        recess = absFloat(dot->y - roads[roadIndex].startLineCoord);
+    }
+    else
+    {
+        recess = absFloat(dot->x - roads[roadIndex].startLineCoord);
     }
 
-    GLint index = (GLint) recess / CELL_LENGTH;
-
+    GLint index = recess / CELL_LENGTH;
     if (index >= 0 && index < NUMBER_OF_CELLS)
     {
         return index;

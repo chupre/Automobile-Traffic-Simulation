@@ -24,12 +24,13 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o: \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/cross.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/rlc.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/cars.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
  /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
@@ -132,16 +133,16 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec3.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec4.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/sphere.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ease.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/curve.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h \
- /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
- /home/denis/dev/Automobile-Traffic-Simulation/include/render.h
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec3.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec4.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/sphere.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ease.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/curve.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/direction.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/map.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/render.h

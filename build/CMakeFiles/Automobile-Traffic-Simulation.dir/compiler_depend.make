@@ -176,6 +176,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: /home/denis/
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stdbool.h \
@@ -183,6 +184,15 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: /home/denis/
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
+=======
+  ../external/GLFW/glfw3.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
+  ../include/rlc.h \
+  ../include/cars.h \
+  ../external/cglm/cglm.h \
+  ../external/cglm/common.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -290,6 +300,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: /home/denis/
   /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec3.h \
@@ -305,6 +316,23 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/algorithms.c.o: /home/denis/
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/cross.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/render.h
+=======
+  ../external/cglm/project.h \
+  ../external/cglm/clipspace/project_no.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/sphere.h \
+  ../external/cglm/ease.h \
+  ../external/cglm/curve.h \
+  ../external/cglm/bezier.h \
+  ../external/cglm/ray.h \
+  ../external/cglm/affine2d.h \
+  ../include/road.h \
+  ../include/cross.h \
+  ../include/direction.h \
+  ../include/map.h \
+  ../include/render.h
+>>>>>>> d76d756 (search_tools are fixed)
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/camera.c \
   /usr/include/stdc-predef.h \
@@ -594,6 +622,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: /home/denis/dev/Au
   /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec3.h \
@@ -610,6 +639,176 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: /home/denis/dev/Au
   /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h
+=======
+  ../external/cglm/project.h \
+  ../external/cglm/clipspace/project_no.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/sphere.h \
+  ../external/cglm/ease.h \
+  ../external/cglm/curve.h \
+  ../external/cglm/bezier.h \
+  ../external/cglm/ray.h \
+  ../external/cglm/affine2d.h \
+  ../include/algorithms.h \
+  ../external/GLFW/glfw3.h \
+  ../include/rlc.h \
+  ../include/road.h \
+  ../include/cross.h \
+  ../include/direction.h \
+  ../include/map.h
+
+CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: ../source/cross.c \
+  /usr/include/stdc-predef.h \
+  ../include/cross.h \
+  ../external/glad/glad.h \
+  ../external/KHR/khrplatform.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/features.h \
+  /usr/include/features-time64.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  ../external/GLFW/glfw3.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+  ../include/algorithms.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
+  ../include/rlc.h \
+  ../include/cars.h \
+  ../external/cglm/cglm.h \
+  ../external/cglm/common.h \
+  /usr/include/stdlib.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/math.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
+  ../external/cglm/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdalign.h \
+  ../external/cglm/simd/intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
+  ../external/cglm/simd/x86.h \
+  ../external/cglm/simd/intrin.h \
+  ../external/cglm/vec2.h \
+  ../external/cglm/util.h \
+  ../external/cglm/vec2-ext.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/vec4-ext.h \
+  ../external/cglm/vec3-ext.h \
+  ../external/cglm/ivec2.h \
+  ../external/cglm/ivec3.h \
+  ../external/cglm/ivec4.h \
+  ../external/cglm/mat4.h \
+  ../external/cglm/simd/sse2/mat4.h \
+  ../external/cglm/common.h \
+  ../external/cglm/simd/intrin.h \
+  /usr/include/assert.h \
+  ../external/cglm/mat4x2.h \
+  ../external/cglm/mat4x3.h \
+  ../external/cglm/mat3.h \
+  ../external/cglm/simd/sse2/mat3.h \
+  ../external/cglm/mat3x2.h \
+  ../external/cglm/mat3x4.h \
+  ../external/cglm/mat2.h \
+  ../external/cglm/simd/sse2/mat2.h \
+  ../external/cglm/mat2x3.h \
+  ../external/cglm/mat2x4.h \
+  ../external/cglm/affine.h \
+  ../external/cglm/affine-mat.h \
+  ../external/cglm/simd/sse2/affine.h \
+  ../external/cglm/affine-pre.h \
+  ../external/cglm/affine-post.h \
+  ../external/cglm/cam.h \
+  ../external/cglm/plane.h \
+  ../external/cglm/clipspace/persp.h \
+  ../external/cglm/common.h \
+  ../external/cglm/plane.h \
+  ../external/cglm/mat4.h \
+  ../external/cglm/clipspace/ortho_rh_no.h \
+  ../external/cglm/clipspace/persp_rh_no.h \
+  ../external/cglm/clipspace/persp.h \
+  ../external/cglm/clipspace/view_rh_no.h \
+  ../external/cglm/clipspace/view_rh.h \
+  ../external/cglm/frustum.h \
+  ../external/cglm/quat.h \
+  ../external/cglm/simd/sse2/quat.h \
+  ../external/cglm/euler.h \
+  ../external/cglm/handed/euler_to_quat_rh.h \
+  ../external/cglm/common.h \
+  ../external/cglm/aabb2d.h \
+  ../external/cglm/box.h \
+  ../external/cglm/color.h \
+  ../external/cglm/io.h \
+  /usr/include/stdio.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  ../external/cglm/project.h \
+  ../external/cglm/clipspace/project_no.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/sphere.h \
+  ../external/cglm/ease.h \
+  ../external/cglm/curve.h \
+  ../external/cglm/bezier.h \
+  ../external/cglm/ray.h \
+  ../external/cglm/affine2d.h \
+  ../include/road.h \
+  ../include/direction.h \
+  ../include/map.h
+>>>>>>> d76d756 (search_tools are fixed)
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/cross.c \
   /usr/include/stdc-predef.h \
@@ -633,6 +832,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: /home/denis/dev/A
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
@@ -643,6 +843,16 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: /home/denis/dev/A
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
+=======
+  ../external/GLFW/glfw3.h \
+  ../include/road.h \
+  ../include/cross.h \
+  ../include/algorithms.h \
+  ../include/rlc.h \
+  ../include/cars.h \
+  ../external/cglm/cglm.h \
+  ../external/cglm/common.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -750,6 +960,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: /home/denis/dev/A
   /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec3.h \
@@ -916,6 +1127,20 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o: /home/denis/dev/Aut
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
+=======
+  ../external/cglm/project.h \
+  ../external/cglm/clipspace/project_no.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/sphere.h \
+  ../external/cglm/ease.h \
+  ../external/cglm/curve.h \
+  ../external/cglm/bezier.h \
+  ../external/cglm/ray.h \
+  ../external/cglm/affine2d.h \
+  ../include/direction.h \
+  ../include/map.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/dirent.h \
   /usr/include/x86_64-linux-gnu/bits/dirent.h \
   /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
@@ -1076,6 +1301,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o: /home/denis/dev/Au
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/strings.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/nuklear/nuklear_glfw_gl3.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/stb/stb_image.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/shader.h \
@@ -1087,6 +1313,21 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o: /home/denis/dev/Au
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/gui.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h
+=======
+  ../external/nuklear/nuklear_glfw_gl3.h \
+  ../external/stb/stb_image.h \
+  ../include/shader.h \
+  ../include/render.h \
+  ../include/road.h \
+  ../include/cross.h \
+  ../include/algorithms.h \
+  ../include/rlc.h \
+  ../include/cars.h \
+  ../include/direction.h \
+  ../include/map.h \
+  ../include/gui.h \
+  ../include/search_tools.h
+>>>>>>> d76d756 (search_tools are fixed)
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/map.c \
   /usr/include/stdc-predef.h \
@@ -1117,6 +1358,157 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/map.c.o: /home/denis/dev/Aut
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/render.c \
   /usr/include/stdc-predef.h \
+<<<<<<< HEAD
+=======
+  ../include/algorithms.h \
+  ../external/glad/glad.h \
+  ../external/KHR/khrplatform.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/features.h \
+  /usr/include/features-time64.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  ../external/GLFW/glfw3.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
+  ../include/rlc.h \
+  ../include/cars.h \
+  ../external/cglm/cglm.h \
+  ../external/cglm/common.h \
+  /usr/include/stdlib.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/math.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
+  ../external/cglm/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdalign.h \
+  ../external/cglm/simd/intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
+  ../external/cglm/simd/x86.h \
+  ../external/cglm/simd/intrin.h \
+  ../external/cglm/vec2.h \
+  ../external/cglm/util.h \
+  ../external/cglm/vec2-ext.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/vec4-ext.h \
+  ../external/cglm/vec3-ext.h \
+  ../external/cglm/ivec2.h \
+  ../external/cglm/ivec3.h \
+  ../external/cglm/ivec4.h \
+  ../external/cglm/mat4.h \
+  ../external/cglm/simd/sse2/mat4.h \
+  ../external/cglm/common.h \
+  ../external/cglm/simd/intrin.h \
+  /usr/include/assert.h \
+  ../external/cglm/mat4x2.h \
+  ../external/cglm/mat4x3.h \
+  ../external/cglm/mat3.h \
+  ../external/cglm/simd/sse2/mat3.h \
+  ../external/cglm/mat3x2.h \
+  ../external/cglm/mat3x4.h \
+  ../external/cglm/mat2.h \
+  ../external/cglm/simd/sse2/mat2.h \
+  ../external/cglm/mat2x3.h \
+  ../external/cglm/mat2x4.h \
+  ../external/cglm/affine.h \
+  ../external/cglm/affine-mat.h \
+  ../external/cglm/simd/sse2/affine.h \
+  ../external/cglm/affine-pre.h \
+  ../external/cglm/affine-post.h \
+  ../external/cglm/cam.h \
+  ../external/cglm/plane.h \
+  ../external/cglm/clipspace/persp.h \
+  ../external/cglm/common.h \
+  ../external/cglm/plane.h \
+  ../external/cglm/mat4.h \
+  ../external/cglm/clipspace/ortho_rh_no.h \
+  ../external/cglm/clipspace/persp_rh_no.h \
+  ../external/cglm/clipspace/persp.h \
+  ../external/cglm/clipspace/view_rh_no.h \
+  ../external/cglm/clipspace/view_rh.h \
+  ../external/cglm/frustum.h \
+  ../external/cglm/quat.h \
+  ../external/cglm/simd/sse2/quat.h \
+  ../external/cglm/euler.h \
+  ../external/cglm/handed/euler_to_quat_rh.h \
+  ../external/cglm/common.h \
+  ../external/cglm/aabb2d.h \
+  ../external/cglm/box.h \
+  ../external/cglm/color.h \
+  ../external/cglm/io.h \
+  /usr/include/stdio.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  ../external/cglm/project.h \
+  ../external/cglm/clipspace/project_no.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/sphere.h \
+  ../external/cglm/ease.h \
+  ../external/cglm/curve.h \
+  ../external/cglm/bezier.h \
+  ../external/cglm/ray.h \
+  ../external/cglm/affine2d.h \
+  ../include/road.h \
+  ../include/cross.h \
+  ../include/direction.h \
+  ../include/map.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/time.h \
   /usr/include/features.h \
   /usr/include/features-time64.h \
@@ -1306,12 +1698,22 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o: /home/denis/dev/A
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cglm.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/common.h \
+=======
+  ../include/cross.h \
+  ../external/GLFW/glfw3.h \
+  ../include/algorithms.h \
+  ../include/rlc.h \
+  ../include/cars.h \
+  ../external/cglm/cglm.h \
+  ../external/cglm/common.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -1419,6 +1821,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/roads.c.o: /home/denis/dev/A
   /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/vec3.h \
@@ -1440,6 +1843,29 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: /home/deni
   /home/denis/dev/Automobile-Traffic-Simulation/external/glad/glad.h \
   /home/denis/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h \
+=======
+  ../external/cglm/project.h \
+  ../external/cglm/clipspace/project_no.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/sphere.h \
+  ../external/cglm/ease.h \
+  ../external/cglm/curve.h \
+  ../external/cglm/bezier.h \
+  ../external/cglm/ray.h \
+  ../external/cglm/affine2d.h \
+  ../include/direction.h \
+  ../include/map.h \
+  ../include/render.h
+
+CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: ../source/search_tools.c \
+  /usr/include/stdc-predef.h \
+  ../include/search_tools.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
+  ../external/glad/glad.h \
+  ../external/KHR/khrplatform.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/stdint.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h \
@@ -1456,9 +1882,21 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: /home/deni
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/rlc.h \
+=======
+  ../external/GLFW/glfw3.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
+  ../include/road.h \
+  ../include/cross.h \
+  ../include/algorithms.h \
+  ../include/rlc.h \
+  ../include/cars.h \
+  ../external/cglm/cglm.h \
+  ../external/cglm/common.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -1488,8 +1926,82 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: /home/deni
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+<<<<<<< HEAD
   /usr/include/stdio.h \
   /usr/lib/gcc/x86_64-linux-gnu/12/include/stdarg.h \
+=======
+  /usr/include/math.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/float.h \
+  ../external/cglm/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdalign.h \
+  ../external/cglm/simd/intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h \
+  ../external/cglm/simd/x86.h \
+  ../external/cglm/simd/intrin.h \
+  ../external/cglm/vec2.h \
+  ../external/cglm/util.h \
+  ../external/cglm/vec2-ext.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/vec4-ext.h \
+  ../external/cglm/vec3-ext.h \
+  ../external/cglm/ivec2.h \
+  ../external/cglm/ivec3.h \
+  ../external/cglm/ivec4.h \
+  ../external/cglm/mat4.h \
+  ../external/cglm/simd/sse2/mat4.h \
+  ../external/cglm/common.h \
+  ../external/cglm/simd/intrin.h \
+  /usr/include/assert.h \
+  ../external/cglm/mat4x2.h \
+  ../external/cglm/mat4x3.h \
+  ../external/cglm/mat3.h \
+  ../external/cglm/simd/sse2/mat3.h \
+  ../external/cglm/mat3x2.h \
+  ../external/cglm/mat3x4.h \
+  ../external/cglm/mat2.h \
+  ../external/cglm/simd/sse2/mat2.h \
+  ../external/cglm/mat2x3.h \
+  ../external/cglm/mat2x4.h \
+  ../external/cglm/affine.h \
+  ../external/cglm/affine-mat.h \
+  ../external/cglm/simd/sse2/affine.h \
+  ../external/cglm/affine-pre.h \
+  ../external/cglm/affine-post.h \
+  ../external/cglm/cam.h \
+  ../external/cglm/plane.h \
+  ../external/cglm/clipspace/persp.h \
+  ../external/cglm/common.h \
+  ../external/cglm/plane.h \
+  ../external/cglm/mat4.h \
+  ../external/cglm/clipspace/ortho_rh_no.h \
+  ../external/cglm/clipspace/persp_rh_no.h \
+  ../external/cglm/clipspace/persp.h \
+  ../external/cglm/clipspace/view_rh_no.h \
+  ../external/cglm/clipspace/view_rh.h \
+  ../external/cglm/frustum.h \
+  ../external/cglm/quat.h \
+  ../external/cglm/simd/sse2/quat.h \
+  ../external/cglm/euler.h \
+  ../external/cglm/handed/euler_to_quat_rh.h \
+  ../external/cglm/common.h \
+  ../external/cglm/aabb2d.h \
+  ../external/cglm/box.h \
+  ../external/cglm/color.h \
+  ../external/cglm/io.h \
+  /usr/include/stdio.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
@@ -1497,11 +2009,28 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: /home/deni
   /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+<<<<<<< HEAD
   /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h \
   /home/denis/dev/Automobile-Traffic-Simulation/include/map.h
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/shader.c \
+=======
+  ../external/cglm/project.h \
+  ../external/cglm/clipspace/project_no.h \
+  ../external/cglm/vec3.h \
+  ../external/cglm/vec4.h \
+  ../external/cglm/sphere.h \
+  ../external/cglm/ease.h \
+  ../external/cglm/curve.h \
+  ../external/cglm/bezier.h \
+  ../external/cglm/ray.h \
+  ../external/cglm/affine2d.h \
+  ../include/direction.h \
+  ../include/map.h
+
+CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: ../source/shader.c \
+>>>>>>> d76d756 (search_tools are fixed)
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -1570,7 +2099,13 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/source/roads.c:
 
+<<<<<<< HEAD
 /home/denis/dev/Automobile-Traffic-Simulation/include/search_tools.h:
+=======
+../source/search_tools.c:
+
+../source/roads.c:
+>>>>>>> d76d756 (search_tools are fixed)
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
@@ -1580,7 +2115,13 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/source/render.c:
 
+<<<<<<< HEAD
 /home/denis/dev/Automobile-Traffic-Simulation/source/map.c:
+=======
+../include/search_tools.h:
+
+../source/main.c:
+>>>>>>> d76d756 (search_tools are fixed)
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/nuklear/nuklear_glfw_gl3.h:
 
@@ -1594,7 +2135,13 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/source/camera.c:
 
+<<<<<<< HEAD
 /home/denis/dev/Automobile-Traffic-Simulation/include/render.h:
+=======
+../source/cross.c:
+
+../include/shader.h:
+>>>>>>> d76d756 (search_tools are fixed)
 
 /home/denis/dev/Automobile-Traffic-Simulation/include/map.h:
 
@@ -1602,7 +2149,13 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/source/cars.c:
 
+<<<<<<< HEAD
 /home/denis/dev/Automobile-Traffic-Simulation/include/direction.h:
+=======
+../include/cross.h:
+
+../external/cglm/affine2d.h:
+>>>>>>> d76d756 (search_tools are fixed)
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h:
 
@@ -1640,6 +2193,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/plane.h:
 
+<<<<<<< HEAD
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-post.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine-pre.h:
@@ -1651,6 +2205,9 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+=======
+../external/glad/glad.h:
+>>>>>>> d76d756 (search_tools are fixed)
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
@@ -1660,9 +2217,15 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/cam.h:
 
+../external/cglm/plane.h:
+
+../external/cglm/mat2x4.h:
+
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/limits.h:
+
+../external/cglm/affine.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
 
@@ -1792,7 +2355,13 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /usr/include/stdlib.h:
 
+<<<<<<< HEAD
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+=======
+../external/cglm/affine-mat.h:
+
+../external/KHR/khrplatform.h:
+>>>>>>> d76d756 (search_tools are fixed)
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/KHR/khrplatform.h:
 
@@ -1928,8 +2497,88 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o: /home/denis/dev/
 
 /usr/include/math.h:
 
+<<<<<<< HEAD
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/mat3x2.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/affine.h:
+=======
+/usr/include/x86_64-linux-gnu/bits/math-vector.h:
+
+../external/cglm/mat3.h:
+
+/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
+
+../include/road.h:
+
+../external/cglm/frustum.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/xmmintrin.h:
+
+/usr/include/assert.h:
+
+../external/cglm/ivec2.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h:
+
+/usr/include/x86_64-linux-gnu/bits/dirent.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/mmintrin.h:
+
+../external/cglm/mat4x3.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/mm_malloc.h:
+
+../external/cglm/simd/sse2/quat.h:
+
+../include/algorithms.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h:
+
+../external/cglm/vec2.h:
+
+../include/rlc.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+../include/cars.h:
+
+../external/glad/glad.c:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/float.h:
+
+../include/map.h:
+
+/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdalign.h:
+
+../external/cglm/simd/x86.h:
+
+../external/cglm/util.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+../external/cglm/vec2-ext.h:
+
+../external/cglm/simd/sse2/mat2.h:
+
+../external/cglm/vec4-ext.h:
+
+../source/cars.c:
+
+../external/cglm/ivec3.h:
+
+../external/cglm/mat4.h:
+
+/usr/include/x86_64-linux-gnu/bits/dirent_ext.h:
+
+../external/cglm/mat4x2.h:
+
+../external/cglm/mat2.h:
+
+../external/cglm/mat2x3.h:
+>>>>>>> d76d756 (search_tools are fixed)

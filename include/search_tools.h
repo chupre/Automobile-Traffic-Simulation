@@ -16,10 +16,13 @@
 typedef struct dot_coord dot_coord;
 
 struct dot_coord {
-    GLfloat x, y
+    GLfloat x;
+    GLfloat y;
 };
 
-extern dot_coord dot;
+extern dot_coord _DOT_;
+
+GLfloat absFloat(GLfloat a);
 
 bool getRLCbyDot(RLC* rlc, dot_coord* dot);
 GLint getRoadIndex(dot_coord* dot);

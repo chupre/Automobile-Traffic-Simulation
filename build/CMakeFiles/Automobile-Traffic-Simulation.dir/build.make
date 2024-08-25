@@ -221,35 +221,35 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.i: cmake_force
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/denis/dev/Automobile-Traffic-Simulation/source/gui.c -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/vladimir/dev/Automobile-Traffic-Simulation/source/gui.c -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.s
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: CMakeFiles/Automobile-Traffic-Simulation.dir/flags.make
-CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/cross.c
+CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: ../source/cross.c
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o: CMakeFiles/Automobile-Traffic-Simulation.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/denis/dev/Automobile-Traffic-Simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o -MF CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o.d -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/cross.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vladimir/dev/Automobile-Traffic-Simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o -MF CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o.d -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/cross.c
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/denis/dev/Automobile-Traffic-Simulation/source/cross.c > CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/vladimir/dev/Automobile-Traffic-Simulation/source/cross.c > CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.i
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/denis/dev/Automobile-Traffic-Simulation/source/cross.c -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/vladimir/dev/Automobile-Traffic-Simulation/source/cross.c -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.s
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: CMakeFiles/Automobile-Traffic-Simulation.dir/flags.make
-CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: /home/denis/dev/Automobile-Traffic-Simulation/source/search_tools.c
+CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: ../source/search_tools.c
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o: CMakeFiles/Automobile-Traffic-Simulation.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/denis/dev/Automobile-Traffic-Simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o -MF CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o.d -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o -c /home/denis/dev/Automobile-Traffic-Simulation/source/search_tools.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vladimir/dev/Automobile-Traffic-Simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o -MF CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o.d -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o -c /home/vladimir/dev/Automobile-Traffic-Simulation/source/search_tools.c
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/denis/dev/Automobile-Traffic-Simulation/source/search_tools.c > CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/vladimir/dev/Automobile-Traffic-Simulation/source/search_tools.c > CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.i
 
 CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/denis/dev/Automobile-Traffic-Simulation/source/search_tools.c -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/vladimir/dev/Automobile-Traffic-Simulation/source/search_tools.c -o CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.s
 
 # Object files for target Automobile-Traffic-Simulation
 Automobile__Traffic__Simulation_OBJECTS = \
@@ -263,6 +263,9 @@ Automobile__Traffic__Simulation_OBJECTS = \
 "CMakeFiles/Automobile-Traffic-Simulation.dir/source/render.c.o" \
 "CMakeFiles/Automobile-Traffic-Simulation.dir/source/camera.c.o" \
 "CMakeFiles/Automobile-Traffic-Simulation.dir/source/shader.c.o" \
+"CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o" \
+"CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o" \
+"CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o"
 "CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o" \
 "CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o" \
 "CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o"
@@ -283,9 +286,11 @@ Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/sour
 Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/source/gui.c.o
 Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o
 Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o
+Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/source/cross.c.o
+Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/source/search_tools.c.o
 Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/build.make
 Automobile-Traffic-Simulation: CMakeFiles/Automobile-Traffic-Simulation.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/denis/dev/Automobile-Traffic-Simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking C executable Automobile-Traffic-Simulation"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vladimir/dev/Automobile-Traffic-Simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking C executable Automobile-Traffic-Simulation"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Automobile-Traffic-Simulation.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

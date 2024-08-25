@@ -128,6 +128,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+<<<<<<< HEAD
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec3.h \
@@ -144,3 +145,22 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/cars.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/road.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/map.h
+=======
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/project.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/project_no.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec3.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/clipspace/../vec4.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/sphere.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ease.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/curve.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/bezier.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/ray.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/cglm/affine2d.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/GLFW/glfw3.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/rlc.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/road.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/cross.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/direction.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/map.h
+>>>>>>> d76d756 (search_tools are fixed)

@@ -19,26 +19,28 @@ DIRECTION getRoadDir(car* Car)
     return ((roads + Car->currCell.road)->dir);
 }
 
-GLint getRoadDirForVelocity(road* Road)
+GLint getDirMultiplier(DIRECTION dir)
 {
-    if (Road->dir == NORTH || Road->dir == EAST) return 1;
-    else if (Road->dir == SOUTH || Road->dir == WEST) return -1;
-    else return 0;
-}
-
-GLint getOvertakeDirForVelocity(DIRECTION overtake)
-{
-    if (overtake == NORTH || overtake == EAST) return 1;
-    else if (overtake == SOUTH || overtake == WEST) return -1;
+    if (dir == NORTH || dir == EAST) return 1;
+    else if (dir == SOUTH || dir == WEST) return -1;
     else return 0; 
 }
 
-DIRECTION getOvertakeDir(DIRECTION roadDir)
+DIRECTION getLeftMoveDir(DIRECTION dir)
 {
-    if (roadDir == NORTH) return WEST;
-    else if (roadDir == SOUTH) return EAST;
-    else if (roadDir == WEST) return SOUTH;
-    else if (roadDir == EAST) return NORTH;
+    if (dir == NORTH) return WEST;
+    else if (dir == SOUTH) return EAST;
+    else if (dir == WEST) return SOUTH;
+    else if (dir == EAST) return NORTH;
+    else return NONE;
+}
+
+DIRECTION getRightMoveDir(DIRECTION dir)
+{
+    if (dir == NORTH) return EAST;
+    else if (dir == SOUTH) return WEST;
+    else if (dir == WEST) return NORTH;
+    else if (dir == EAST) return SOUTH;
     else return NONE;
 }
 
@@ -93,7 +95,7 @@ GLvoid setRoadBoards(GLint roadIndex, GLfloat start_x, GLfloat start_y)
             break;
         }
     }
-    printf("dir: %d, endLIneCoord: %f\n", roads[roadIndex].dir, roads[roadIndex].endLineCoord);
+    printf("dir: %d, endLIneCoord: %f, startLineCoord: %f\n", roads[roadIndex].dir, roads[roadIndex].endLineCoord, roads[roadIndex].startLineCoord);
 }
 
 GLvoid setEdgeState(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir)
@@ -333,7 +335,15 @@ GLint isFurhterThanEndLine(car* Car, road* Road)
     if (Road->dir == NORTH || Road->dir == EAST)
     {
         if (Car->realPos >= Road->endLineCoord)
+        {
+            //printf("isFurther\n");
             return 1;
+        }
+        else
+        {
+            // printf("realpos: %f, endLine: %f\n", Car->realPos, Road->endLineCoord);
+            // printCarProperties(Car->currCell);
+        }
     }
     else
     {

@@ -14,12 +14,12 @@ GLvoid setMap()
 	switch (MAP_TYPE)
 	{
 	case ONE_ROAD_N:
-		addRoad(0, 0.0f, -1.0f, NORTH);
+		addRoad(0, -0.5f, -1.0f, NORTH);
 		roads[0].isEndCross = true;
 		break;
 
 	case ONE_ROAD_S:
-		addRoad(0, 0.0f, 1.0f, SOUTH);
+		addRoad(0, 0.5f, 1.0f, SOUTH);
 		break;
 
 	case ONE_ROAD_W:

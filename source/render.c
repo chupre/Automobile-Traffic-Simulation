@@ -350,14 +350,14 @@ GLvoid initGL()
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
 }
 
-GLfloat getScreenVelocity(GLint carIndex)
+GLfloat getScreenVelocity(car* Car)
 {
-    return (GLfloat)(cars[carIndex].velocity * cars[carIndex].dirOnRoad * VELOCITY_MULTIPLIER) / FPS;
+    return (GLfloat)(Car->velocity * Car->roadDirMultiplier * VELOCITY_MULTIPLIER) / FPS;
 }
 
-GLfloat getScreenVelocityOverTake(GLint carIndex)
+GLfloat getScreenVelocityShift(car* Car)
 {
-    return (GLfloat)(_1_CELL_ * getOvertakeDirForVelocity(cars[carIndex].overtake) * VELOCITY_MULTIPLIER) / FPS;
+    return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) * VELOCITY_MULTIPLIER) / FPS;
 }
 
 GLvoid moveCarOnScreen(GLint carIndex)
@@ -365,36 +365,24 @@ GLvoid moveCarOnScreen(GLint carIndex)
     car* Car = &cars[carIndex];
     GLfloat screenVelocity;
 
-    if (Car->ableToChangeLine)
+    if (Car->move == FORWARD)
     {
-        screenVelocity = getScreenVelocityOverTake(carIndex);
-        //Car->realPos += screenVelocity;//fthe car keeps on the same line or moving on the same road 
-
-        if (Car->overtake == NORTH || Car->overtake == SOUTH)
-        {
-            glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
-        }
-        else
-        {
-            glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
-        }
+        screenVelocity = getScreenVelocity(Car);
+        Car->realPos += screenVelocity;  
     }
     else
     {
-        screenVelocity = getScreenVelocity(carIndex);
-        Car->realPos += screenVelocity;
-        DIRECTION roadDir = roads[Car->currCell.road].dir;
+        screenVelocity = getScreenVelocityShift(Car);
+    }  
 
-        if (roadDir == NORTH || roadDir == SOUTH)
-        {
-            glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
-        }
-        else
-        {
-            glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
-        }  
+    if (Car->moveDir == NORTH || Car->moveDir == SOUTH)
+    {
+        glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
     }
-        
+    else
+    {
+        glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
+    }
 }
 
 #ifdef DEBUG

@@ -5,21 +5,17 @@
 #include <GLFW/glfw3.h>
 
 // Custom modules
-#include <map.h>
+#include <algorithms.h>
 #include <rlc.h>
 #include <direction.h>
 
-// Standard 
-#include <stdbool.h>
-
-#define NUMBER_OF_LI 9
-#define CROSS_SIDE ((NUMBER_OF_LI + 1) * 2)
+#define CROSS_SIDE ((NUMBER_OF_LINES + 1) * 2)
 #define HALF_CROSS_SIDE (CROSS_SIDE / 2)
 
 #define NUMBER_OF_CROSSES 10
 #define NUMBER_OF_CROSS_ROADS 4
 
-#define CROSS_VELOCITY (1) // _1_VELOCITY
+#define CROSS_VELOCITY _1_VELOCITY
 
 typedef struct car car;
 typedef struct road road;
@@ -32,7 +28,7 @@ struct cross {
 };
 
 extern cross crosses[NUMBER_OF_CROSSES];
-extern GLint crossTable[4][NUMBER_OF_LI * 2][NUMBER_OF_LI];
+
 
 GLvoid setCross(GLint crossIndex, GLint* roadIndexes);
 GLvoid setCarPropertiesOnCross(car* Car);

@@ -24,13 +24,15 @@
 #include <shader.h>
 #include <render.h>
 #include <road.h>
+#include <cross.h>
 #include <map.h>
 #include <cars.h>
 #include <gui.h>
 #include <algorithms.h>
+#include <search_tools.h>
 
-#define crushhh 1
-//#define crushh 2
+// #define crushhhh3
+#define dot_debug 1
 
 int main()
 {
@@ -44,63 +46,78 @@ int main()
     initLines();
     initCars();
 
+    roads[0].isEdge = true;
 
+#ifdef dot_debug
+    dot_coord _dot;
+    _dot.x = -0.8f;
+    _dot.y = -0.55f;
+    RLC _rlc_;
+    if (getRLCbyDot(&_rlc_, &_dot))
+    {
+        printRLC(_rlc_, "_rlc_");
+    }
+    else printf("none\n");
+    // RLC crRLC = {0, 1, 2};
+    // addCrushedCar(crRLC);
 
-#ifdef crushhh
-    RLC crushRLC = {1, 0, 0};
-    addCrushedCar(crushRLC);
+#endif
+    
 
-    // RLC crushRLC2 = {0, 2, 17};
+#ifdef crushhhh3
+    // RLC crushRLC = {0, 19, 20};
+    // addCrushedCar(crushRLC);
+
+    // RLC crushRLC2 = {0, 18, 19};
     // addCrushedCar(crushRLC2);
 
-    // RLC crushRLC3 = {0, 8, 17};
+    // RLC crushRLC3 = {0, 17, 18};
     // addCrushedCar(crushRLC3);
- #endif
 
+    //  RLC crushRLC4 = {0, 16, 13};
+    // addCrushedCar(crushRLC4);
 
- #ifdef crushh
-    RLC crushRLC0 = {0, 0, 29};
-    addCrushedCar(crushRLC0);
-    RLC crushRLC1 = {0, 1, 29};
-    addCrushedCar(crushRLC1);
-    RLC crushRLC2 = {0, 2, 29};
-    addCrushedCar(crushRLC2);
-    RLC crushRLC3 = {0, 3, 29};
-    addCrushedCar(crushRLC3);
-    RLC crushRLC4 = {0, 4, 29};
-    addCrushedCar(crushRLC4);
-    // RLC crushRLC5 = {0, 5, 29};
+    //  RLC crushRLC5 = {0, 15, 14};
     // addCrushedCar(crushRLC5);
-    RLC crushRLC6 = {0, 7, 29};
-    addCrushedCar(crushRLC6);
-    RLC crushRLC7 = {0, 8, 29};
-    addCrushedCar(crushRLC7);
-    RLC crushRLC8 = {0, 9, 29};
-    addCrushedCar(crushRLC8);
- #endif      
 
-    // for (int k = 19; k < NUMBER_OF_CELLS; k+=6)
-    // {
-    //     crushRLC.cell = k;
-    //     for (int i = 0; i <= NUMBER_OF_LINES; i++)
-    //     {
-    //         crushRLC.line = i;
-    //         addCrushedCar(crushRLC);
-    //     }
-    // }
+    //  RLC crushRLC6 = {0, 14, 15};
+    // addCrushedCar(crushRLC6);
 
-        
+    //  RLC crushRLC7 = {0, 13, 16};
+    // addCrushedCar(crushRLC7);
 
-    
-    // if (roads[crushRLC.road].lines[crushRLC.line].cells[crushRLC.cell]->isCrushed == true)
-    // {
-    //     printf("crushed car is bound with the cell\n");
-    // }
+    // RLC crushRLC8 = {0, 12, 17};
+    // addCrushedCar(crushRLC8);
 
+    //  RLC crushRLC9 = {0, 11, 18};
+    // addCrushedCar(crushRLC9);
+
+    //  RLC crushRLC10 = {0, 10, 19};
+    // addCrushedCar(crushRLC10);
+
+    // RLC crushRLC11 = {0, 9, 20};
+    // addCrushedCar(crushRLC11);
+
+    for (int line = 10, cell = 19; line < 13 ; line++, cell--)
+    {
+        RLC cr = {0, line, cell};
+        addCrushedCar(cr);
+    }
 
 
+    for (int line = 20, cell = 17; line < 23 ; line++, cell++)
+    {
+        RLC cr = {0, line, cell};
+        addCrushedCar(cr);
+    }
 
 
+#endif
+
+
+    //setOccupingCarProperties();
+    occupying_car.velocity = _0_CELL_;
+    occupying_car.isActive = true;
 
     initFont();
 
@@ -129,7 +146,7 @@ int main()
             }
 
             render();
-            printf("freeCars: %d \r", freeCars);
+            //printf("\rfreeCars: %d ", freeCars);
         }
         else
         {

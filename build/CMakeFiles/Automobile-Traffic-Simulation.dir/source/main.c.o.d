@@ -140,6 +140,7 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
+<<<<<<< HEAD
  /home/denis/dev/Automobile-Traffic-Simulation/external/nuklear/nuklear_glfw_gl3.h \
  /home/denis/dev/Automobile-Traffic-Simulation/external/stb/stb_image.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/shader.h \
@@ -151,3 +152,18 @@ CMakeFiles/Automobile-Traffic-Simulation.dir/source/main.c.o: \
  /home/denis/dev/Automobile-Traffic-Simulation/include/cars.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/gui.h \
  /home/denis/dev/Automobile-Traffic-Simulation/include/algorithms.h
+=======
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/nuklear/nuklear_glfw_gl3.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/external/stb/stb_image.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/shader.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/render.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/road.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/cross.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/algorithms.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/rlc.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/cars.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/direction.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/map.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/gui.h \
+ /home/vladimir/dev/Automobile-Traffic-Simulation/include/search_tools.h
+>>>>>>> d76d756 (search_tools are fixed)

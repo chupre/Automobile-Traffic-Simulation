@@ -52,8 +52,8 @@ GLvoid initGL();
 GLvoid moveCarOnScreen(GLint carIndex);
 GLvoid processKeyboardInput();
 
-GLfloat getScreenVelocity(GLint carIndex);
-GLfloat getScreenVelocityOverTake(GLint carIndex);
+GLfloat getScreenVelocity(car* Car);
+GLfloat getScreenVelocityShift(car* Car);
 
 #ifdef DEBUG
 

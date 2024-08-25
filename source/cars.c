@@ -7,6 +7,9 @@
 #include <algorithms.h>
 #include <direction.h>
 
+car occupying_car;
+car* OCCUPYING_CAR = &occupying_car;
+
 mat3 carTransformMatrixes[MAX_CARS];
 car cars[MAX_CARS];
 
@@ -27,9 +30,17 @@ GLint carIndices[6] =
 };
 
 GLint freeCars = MAX_CARS;
-GLint innerBornCarsIndex = NO_INNER_INDEX;
-GLint bornCarsIndexes[MAX_CARS];
 
+GLvoid setOccupyingCarProperties()
+{
+	occupying_car.velocity = _0_CELL_;
+
+}
+
+GLvoid bindCellAndCar(RLC* rlc, car* Car)
+{
+	roads[rlc->road].lines[rlc->line].cells[rlc->cell] = Car;
+}
 
 GLvoid addCar(car* Car, GLint carIndex, RLC rlc)
 {
@@ -39,20 +50,20 @@ GLvoid addCar(car* Car, GLint carIndex, RLC rlc)
 
 GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 {
+	Car->move = FORWARD;
+	Car->moveDir = roads[rlc.road].dir;
 	Car->ID = carIndex;
-
-	car** ptrCell = getFirstCellPtr(rlc);
-	ptrCell[rlc.cell] = Car;// bind a car pointer with a spawn cell
-
+	Car->overtake = NONE;
 	Car->target = rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
 	//Car->velocity = _3_CELL_ + _1_CELL_ + (rand() % (NUMBER_OF_VELOCITY_TYPES - 3));
-	//Car->velocity = _1_CELL_;
-	Car->velocity = _1_CELL_ + rand() % NUMBER_OF_VELOCITY_TYPES;
+	Car->velocity = _1_CELL_;
+	// Car->velocity = _1_CELL_ + rand() % NUMBER_OF_VELOCITY_TYPES;
 	Car->isActive = true;
+	Car->roadDirMultiplier = getDirMultiplier(Car->moveDir);
 	memcpy(&Car->currCell, &rlc, sizeof(RLC));
 	memcpy(&Car->nextCell, &rlc, sizeof(RLC));
-
-	Car->dirOnRoad = getRoadDirForVelocity(&roads[rlc.road]);
+	
+	bindCellAndCar(&rlc, Car);
  }
 
  GLvoid setCrushedCarProperties(car* Car, GLint carIndex, RLC rlc)
@@ -64,8 +75,7 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	memcpy(&Car->currCell, &rlc, sizeof(RLC));//what's it for ?
 	memcpy(&Car->nextCell, &rlc, sizeof(RLC));
 
-	car** ptrCell = getFirstCellPtr(rlc);
-	ptrCell[rlc.cell] = Car;// bind a car pointer with a spawn cell
+	bindCellAndCar(&rlc, Car);
  }
 
 GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
@@ -278,12 +288,15 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 
 	for (int i = 0; i < NUMBER_OF_ROADS; i++)
 	{
+		printf("+\n");
 		if (roads[i].isEdge)
 		{
+			printf("\n");
 			for (int j = 0; j < NUMBER_OF_LINES + 1; j++)
 			{
 				if (roads[i].lines[j].cells[0] == NULL)
 				{
+					printf("__!__\n");
 					freeSpots[freeSpotsCounter].road = i;
 					freeSpots[freeSpotsCounter].line = j;
 					freeSpotsCounter++;
@@ -292,6 +305,7 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 		}
 	}
 
+	printf("__SPOTS-COUNTER: %d\n", freeSpotsCounter);
 	if (freeSpotsCounter)
 	{
 		randFreeSpotIndex = rand() % freeSpotsCounter;
@@ -301,7 +315,6 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 		rlc->cell = 0;
 	}
 }
-
 
 GLint getFreeCarIndex()
 {
@@ -332,7 +345,7 @@ GLvoid clearCarProperties(car* Car)
 	Car->nextCell.road = EMPTY;
 	Car->nextCell.line = EMPTY;
 	Car->nextCell.cell = EMPTY;
-	Car->dirOnRoad = 0;
+	Car->roadDirMultiplier = 0;
 	Car->ID = EMPTY;
 	Car->realPos = EMPTY;
 	Car->target = NONE;
@@ -340,5 +353,7 @@ GLvoid clearCarProperties(car* Car)
 	Car->isActive = false;
 	Car->isCrushed = false;
 	Car->overtake = NONE;
-	Car->ableToChangeLine = false;
+	Car->move = FORWARD;
+	Car->moveDir = NONE;
+	Car->markRight = false;
 }

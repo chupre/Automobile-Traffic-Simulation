@@ -1,4 +1,4 @@
-#include "cross.h"
+#include <cross.h>
 #include <road.h>
 #include <cars.h>
 #include <algorithms.h>
@@ -7,7 +7,6 @@
 #include <stdbool.h>
 
 cross crosses[NUMBER_OF_CROSSES];
-GLint crossTable[4][NUMBER_OF_LI * 2][NUMBER_OF_LI];
 
 GLvoid setCross(GLint crossIndex, GLint* roadIndexes)
 {
@@ -40,7 +39,7 @@ GLvoid setCarPropertiesOnCross(car* Car)
 
 GLvoid setCarTurningProperties(car* Car)
 {
-    Car->dirOnRoad = Car->target;
+    Car->roadDirMultiplier = Car->target;
     //target doesn't change as then it and the direction are identical and that's why then target is considered default.
 }
 
