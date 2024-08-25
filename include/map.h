@@ -16,10 +16,13 @@
     #define NUMBER_OF_ROADS 2
 #endif
 
-#if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == TWO_ROADS_NS
-    #define DEFAULT_FOV 45.0f
-#else
-    #define DEFAULT_FOV 30.0f
+//because debug has its own FOV
+#ifndef DEFAULT_POV 
+    #if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == TWO_ROADS_NS
+        #define DEFAULT_FOV 45.0f
+    #else
+        #define DEFAULT_FOV 30.0f
+    #endif
 #endif
 
 GLvoid setMap();

@@ -95,7 +95,7 @@ GLvoid setRoadBoards(GLint roadIndex, GLfloat start_x, GLfloat start_y)
             break;
         }
     }
-    printf("dir: %d, endLIneCoord: %f, startLineCoord: %f\n", roads[roadIndex].dir, roads[roadIndex].endLineCoord, roads[roadIndex].startLineCoord);
+    // printf("dir: %d, endLIneCoord: %f, startLineCoord: %f\n", roads[roadIndex].dir, roads[roadIndex].endLineCoord, roads[roadIndex].startLineCoord);
 }
 
 GLvoid setEdgeState(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir)

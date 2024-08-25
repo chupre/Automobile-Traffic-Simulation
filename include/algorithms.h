@@ -14,7 +14,7 @@
 #include <road.h>
 #include <direction.h>
 
-#define SPAWN_FRECUENCY 0
+#define SPAWN_FRECUENCY 50
 #define ANTI_SPAWN_FRECUENCY (100 - SPAWN_FRECUENCY)
 
 #define _1_VELOCITY (1)

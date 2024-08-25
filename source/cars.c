@@ -7,7 +7,7 @@
 #include <algorithms.h>
 #include <direction.h>
 
-car occupying_car;
+car occupying_car = {.isActive = true, .velocity = _0_CELL_};
 car* OCCUPYING_CAR = &occupying_car;
 
 mat3 carTransformMatrixes[MAX_CARS];
@@ -288,15 +288,12 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 
 	for (int i = 0; i < NUMBER_OF_ROADS; i++)
 	{
-		printf("+\n");
 		if (roads[i].isEdge)
 		{
-			printf("\n");
 			for (int j = 0; j < NUMBER_OF_LINES + 1; j++)
 			{
 				if (roads[i].lines[j].cells[0] == NULL)
 				{
-					printf("__!__\n");
 					freeSpots[freeSpotsCounter].road = i;
 					freeSpots[freeSpotsCounter].line = j;
 					freeSpotsCounter++;
@@ -305,7 +302,6 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 		}
 	}
 
-	printf("__SPOTS-COUNTER: %d\n", freeSpotsCounter);
 	if (freeSpotsCounter)
 	{
 		randFreeSpotIndex = rand() % freeSpotsCounter;

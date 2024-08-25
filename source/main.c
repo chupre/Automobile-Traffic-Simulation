@@ -31,8 +31,8 @@
 #include <algorithms.h>
 #include <search_tools.h>
 
-// #define crushhhh3
-#define dot_debug 1
+// #define crushhhh3 1
+// #define dot_debug 1
 
 int main()
 {
@@ -45,8 +45,6 @@ int main()
     initRoads();
     initLines();
     initCars();
-
-    roads[0].isEdge = true;
 
 #ifdef dot_debug
     dot_coord _dot;
@@ -62,62 +60,18 @@ int main()
     // addCrushedCar(crRLC);
 
 #endif
-    
-
 #ifdef crushhhh3
-    // RLC crushRLC = {0, 19, 20};
-    // addCrushedCar(crushRLC);
-
-    // RLC crushRLC2 = {0, 18, 19};
-    // addCrushedCar(crushRLC2);
-
-    // RLC crushRLC3 = {0, 17, 18};
-    // addCrushedCar(crushRLC3);
-
-    //  RLC crushRLC4 = {0, 16, 13};
-    // addCrushedCar(crushRLC4);
-
-    //  RLC crushRLC5 = {0, 15, 14};
-    // addCrushedCar(crushRLC5);
-
-    //  RLC crushRLC6 = {0, 14, 15};
-    // addCrushedCar(crushRLC6);
-
-    //  RLC crushRLC7 = {0, 13, 16};
-    // addCrushedCar(crushRLC7);
-
-    // RLC crushRLC8 = {0, 12, 17};
-    // addCrushedCar(crushRLC8);
-
-    //  RLC crushRLC9 = {0, 11, 18};
-    // addCrushedCar(crushRLC9);
-
-    //  RLC crushRLC10 = {0, 10, 19};
-    // addCrushedCar(crushRLC10);
-
-    // RLC crushRLC11 = {0, 9, 20};
-    // addCrushedCar(crushRLC11);
-
     for (int line = 10, cell = 19; line < 13 ; line++, cell--)
     {
         RLC cr = {0, line, cell};
         addCrushedCar(cr);
     }
-
-
     for (int line = 20, cell = 17; line < 23 ; line++, cell++)
     {
         RLC cr = {0, line, cell};
         addCrushedCar(cr);
     }
-
-
 #endif
-
-
-    //setOccupingCarProperties();
-    occupying_car.velocity = _0_CELL_;
-    occupying_car.isActive = true;
 
     initFont();
 

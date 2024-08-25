@@ -65,7 +65,7 @@ GLvoid dbgRenderCells();
 extern GLuint cellsVBO, cellsVAO;
 extern GLfloat cellsVertices[(NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8];
 extern bool dbgIsCellsInit;
-// #define DEFAULT_FOV 60
+#define DEFAULT_FOV 60
 
 #endif
 
