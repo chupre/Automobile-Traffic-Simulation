@@ -131,10 +131,19 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
     mousePos.y = worldPos[1];
 
     RLC rlc;
-    getRLCbyDot(&rlc, &mousePos);
+    if (!getRLCbyDot(&rlc, &mousePos)) {
+        glm_vec4_print(worldPos, stdout);
+        return;
+    }
 
-    glm_vec4_print(worldPos, stdout);
-    printf("R: %d L: %d C: %d\n", rlc.road, rlc.line, rlc.cell);
+    GLint carIndex = getFreeCarIndex();
+    if (carIndex == NO_CAR_INDEX) {
+      return;
+    }
+
+    addCar(&cars[carIndex], carIndex, rlc);
+    thoughtsOfOneCar(&cars[carIndex]);
+    --freeCars;
   }
 }
 

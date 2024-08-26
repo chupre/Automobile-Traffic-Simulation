@@ -1,4 +1,5 @@
 // Standard
+#include "road.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -95,8 +96,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 		{
 	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - margin * 2.0f;
 	        x2 = x1 - margin * 2.0f;
-			y1 = -1.0f + 0 * margin;
-			y2 = y1 + CAR_LENGTH + margin;
+			y1 = -1.0f + rlc.cell * CELL_LENGTH + margin;
+			y2 = y1 + rlc.cell * CELL_LENGTH + CAR_LENGTH + margin;
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };
@@ -109,8 +110,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 		{
 	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord;
 	        x2 = x1;
-			y1 = 1.0f - CAR_LENGTH - 0 * margin;
-			y2 = y1 - CAR_LENGTH - margin;
+			y1 = 1.0f - CAR_LENGTH - rlc.cell * CELL_LENGTH - margin;
+			y2 = y1 - CAR_LENGTH - rlc.cell * CELL_LENGTH - margin;
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };
@@ -125,8 +126,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	        x2 = x1 - margin * 2.0f;
 			y1 = x1;
 			y2 = x2;
-			x1 = -1.0f;
-			x2 = -1.0f - CAR_WIDTH;
+			x1 = -1.0f - rlc.cell * CELL_WIDTH;
+			x2 = -1.0f - rlc.cell * CELL_LENGTH - CAR_WIDTH;
 			Car->realPos = x1;
 
 			vec2 carTranslationVector = { x2, y2 };
@@ -142,8 +143,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	        x2 = x1;
 			y1 = x1;
 			y2 = x2;
-			x1 = 1.0f;
-			x2 = 1.0f - CAR_WIDTH;
+			x1 = 1.0f - rlc.cell * CELL_WIDTH;
+			x2 = 1.0f - rlc.cell * CELL_WIDTH - CAR_WIDTH;
 			Car->realPos = x1;
 
 			vec2 carTranslationVector = { x2, y2 };

@@ -8,7 +8,7 @@
 #define TWO_ROADS_NS 5
 #define TWO_ROADS_WE 6
 #define CROSS 7
-#define MAP_TYPE (5)
+#define MAP_TYPE (6)
 
 #if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == ONE_ROAD_W || MAP_TYPE == ONE_ROAD_E
     #define NUMBER_OF_ROADS 1
