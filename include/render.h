@@ -7,10 +7,11 @@
 // External
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <cglm/cglm.h>
 
 #define FPS 60.0f
 
-#define DEBUG
+//#define DEBUG
 
 #define WINDOWS 0
 #define UNIX 1
@@ -25,6 +26,8 @@ typedef struct car car;
 extern GLuint WINDOW_WIDTH;
 extern GLuint WINDOW_HEIGHT;
 extern GLchar WINDOW_NAME[];
+extern mat4 view;
+extern mat4 projection;
 extern bool paused;
 extern bool isSaveMenuActive;
 extern bool isLoadMenuActive;

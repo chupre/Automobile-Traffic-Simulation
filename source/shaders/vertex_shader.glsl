@@ -23,7 +23,6 @@ void main()
     {
         color = vec3(random(gl_InstanceID), random(cos(gl_InstanceID)), random(gl_InstanceID * sin(gl_InstanceID)));
         gl_Position = projection * view * vec4(aTransform * vec3(aPos, 1.0), 1.0);
-
     }
     else
     {

@@ -56,8 +56,8 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	Car->overtake = NONE;
 	Car->target = rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
 	//Car->velocity = _3_CELL_ + _1_CELL_ + (rand() % (NUMBER_OF_VELOCITY_TYPES - 3));
-	Car->velocity = _1_CELL_;
-	// Car->velocity = _1_CELL_ + rand() % NUMBER_OF_VELOCITY_TYPES;
+	//Car->velocity = _1_CELL_;
+	Car->velocity = _1_CELL_ + rand() % NUMBER_OF_VELOCITY_TYPES;
 	Car->isActive = true;
 	Car->roadDirMultiplier = getDirMultiplier(Car->moveDir);
 	memcpy(&Car->currCell, &rlc, sizeof(RLC));

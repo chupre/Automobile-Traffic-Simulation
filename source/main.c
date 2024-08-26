@@ -31,7 +31,7 @@
 #include <algorithms.h>
 #include <search_tools.h>
 
-// #define crushhhh3 1
+#define crushhhh3 1
 // #define dot_debug 1
 
 int main()
