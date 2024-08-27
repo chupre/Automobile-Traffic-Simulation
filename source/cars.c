@@ -96,8 +96,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 		{
 	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - margin * 2.0f;
 	        x2 = x1 - margin * 2.0f;
-			y1 = -1.0f + rlc.cell * CELL_LENGTH + margin;
-			y2 = y1 + rlc.cell * CELL_LENGTH + CAR_LENGTH + margin;
+			y1 = -1.0f + rlc.cell * CELL_LENGTH + 0 * margin;
+			y2 = y1 + rlc.cell * CELL_LENGTH + CAR_LENGTH + 0 * margin;
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };

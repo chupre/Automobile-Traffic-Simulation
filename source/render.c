@@ -136,14 +136,7 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
         return;
     }
 
-    GLint carIndex = getFreeCarIndex();
-    if (carIndex == NO_CAR_INDEX) {
-      return;
-    }
-
-    addCar(&cars[carIndex], carIndex, rlc);
-    thoughtsOfOneCar(&cars[carIndex]);
-    --freeCars;
+    addInRLCCarAddingQueue(rlc);
   }
 }
 
@@ -363,9 +356,7 @@ GLfloat getScreenVelocity(car *Car) {
 }
 
 GLfloat getScreenVelocityShift(car *Car) {
-  return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) *
-                   VELOCITY_MULTIPLIER) /
-         FPS;
+  return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) * VELOCITY_MULTIPLIER) / FPS;
 }
 
 GLvoid moveCarOnScreen(GLint carIndex) {
@@ -383,6 +374,7 @@ GLvoid moveCarOnScreen(GLint carIndex) {
     glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
   } else {
     glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
+    // printf("X shift\n");
   }
 }
 
