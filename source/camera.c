@@ -17,7 +17,7 @@ GLfloat cameraFOV = DEFAULT_FOV;
 GLvoid setProjection()
 {
     GLuint projLoc = glGetUniformLocation(shaderProgram, "projection");
-    glm_perspective(glm_rad(cameraFOV), 1.0f, 1.0f, 100.0f, projection);
+    glm_perspective(glm_rad(cameraFOV), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 1.0f, 100.0f, projection);
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, projection);
 }
 
