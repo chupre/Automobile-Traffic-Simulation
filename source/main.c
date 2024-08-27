@@ -30,9 +30,11 @@
 #include <gui.h>
 #include <algorithms.h>
 #include <search_tools.h>
+#include <spawn_logs.h>
 
 #define crushhhh3 1
 // #define dot_debug 1
+#define crus 1
 
 int main()
 {
@@ -45,6 +47,8 @@ int main()
     initRoads();
     initLines();
     initCars();
+
+    // openFile();
 
 #ifdef dot_debug
     dot_coord _dot;
@@ -71,6 +75,21 @@ int main()
         RLC cr = {0, line, cell};
         addCrushedCar(cr);
     }
+#endif
+#ifdef crus
+    RLC cr = {0, 2, 10};
+    addCrushedCar(cr);
+    RLC cr1 = {0, 4, 12};
+    addCrushedCar(cr1);
+    RLC cr2 = {0, 6, 14};
+    addCrushedCar(cr2);
+
+
+    // for (int line = 2, cell = 10; line < 5 ; line++)
+    // {
+    //     RLC cr = {0, line, cell};
+    //     addCrushedCar(cr);
+    // }
 #endif
 
     initFont();
@@ -112,6 +131,7 @@ int main()
         glfwPollEvents();
     }
 
+    // closeFile();
     quit();
 }
 

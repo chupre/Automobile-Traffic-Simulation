@@ -36,7 +36,7 @@ GLvoid update()
 		timer += STEP_TIME;
 
 		step();
-		// printf("\n..........................................................................\n");
+		printf("\n..........................................................................\n");
 	}
 }
 
@@ -48,30 +48,13 @@ GLvoid printRLC(RLC rlc, char* string)
 GLvoid step()
 {
 	car* Car;
+
 	while (getCarPtrByRoulette(&Car))
 	{
-		if (Car->isCrushed)
+		if (Car->isCrushed || Car == OCCUPYING_CAR)
 		{
-			// printf("rrr\n");
 			continue;
 		}
-		if (Car->markRight)
-		{
-			// printf("hhh\n");
-			Car->markRight = false;
-			continue;
-		}
-		if (Car == OCCUPYING_CAR)
-		{
-			// printf("OCCUPYING CAR\n");
-			// printRLC(rouletteRLC, "occupying RLC"); printf("\n");
-			roads[rouletteRLC.road].lines[rouletteRLC.line].cells[rouletteRLC.cell] = NULL;
-			continue;
-		}
-
-		//printf("(%d, %d, %d)\n", rouletteRLC.road, rouletteRLC.line, rouletteRLC.cell);
-		// printCarProperties(Car->currCell);
-
 		if (isToExclude(Car))
 		{
 			// printCarProperties(Car->currCell);
@@ -79,32 +62,40 @@ GLvoid step()
 			excludeFromMap(Car);
 			continue;
 		}
-
-		// printRLC(rouletteRLC, "roulette"); car* rouletteCar = getCarPtr(&rouletteRLC); printf("V: %d\n", rouletteCar->velocity);
-		
 		unbindCarPtrFromCell(Car);
 		reinitCurrCellWithNextCell(Car);
-		thoughtsOfOneCar(Car);
-		
-		// printRLC(Car->currCell, "currCell");
-		// printf("\n");
 	}
 	
-	// printf("_______________SPAWN_CARS______________\n");
-	if (rand() % 100 > ANTI_SPAWN_FRECUENCY)
+	while (getCarPtrByRoulette(&Car))
+	{
+		if (Car->isCrushed)
+		{
+			continue;
+		}
+		if (Car == OCCUPYING_CAR)
+		{
+			printRLC(rouletteRLC, "OCCUPYING_CAR RLC");
+			continue;
+		}
+
+		printRLC(rouletteRLC, "roulette"); car* rouletteCar = getCarPtr(&rouletteRLC); printf("V: %d\n", rouletteCar->velocity);
+		printf("\n");
+
+		thoughtsOfOneCar(Car);
+	}
+	
+	printf("_______________SPAWN_CARS______________\n");
+	if (rand() % 100 < SPAWN_FRECUENCY)
 	{
 		spawnCars();
 	}
-	
 }
 
 bool getCarPtrByRoulette(car** Car)
 {
-	//printf("getCarPtrByRoulette\n");
 	car* tmpCar;
 	while (rollRouletteRLC())
 	{
-		//printRLC(rouletteRLC, "dedug_roulette");
 		tmpCar = roads[rouletteRLC.road].lines[rouletteRLC.line].cells[rouletteRLC.cell];
 		if (tmpCar != NULL)
 		{
@@ -169,8 +160,9 @@ GLvoid spawnCars()
 
 				--freeCars;
 
-				// printCarProperties(freeSpotRLC);
-				// printf("\n");
+				// logCar(&cars[carIndex]);
+				printCarProperties(freeSpotRLC);
+				printf("\n");
 			}
 		}
 	}
@@ -281,30 +273,29 @@ GLvoid thoughtsOfOneCar(car* Car)
 	}
 
 	RLC overtakeRLC;
-	GLint distance = distanceToForthCar(Car->currCell);//the foo takes in cognisance that road can have endCross
-	RLC forthCarRLC;
-	GLint forthCarVelocity;
-	car* forthCar;
+	car* forthCar = NULL;
+	GLint distance = distanceToForthCar(Car->currCell, &forthCar);//the foo takes in cognisance that road can have endCross
 
-	if (distance != _NO_CAR_ /*&& !roads[Car->currCell.road].isEndCross*/)
-	{
-		forthCarRLC = Car->currCell;
-		forthCarRLC.cell += distance;
-		forthCarVelocity = getVelocityByRLC(forthCarRLC);
-		forthCar = getCarPtr(&forthCarRLC);
-
-		// printRLC(forthCarRLC, "forthCarRLC==========================");
-	}
 
 	// condition "distance - 1 > Car->velocity" will stay strickt because there considered is the faculty of mounting the car velocity a one more
-	if ((distance - 1 > Car->velocity && Car->velocity != _0_CELL_) || /*(Car->velocity == _0_CELL_ && distance == 1) ||*/ distance == _NO_CAR_)
-	{	/* car gets velocity if this car is newBorn or if this car doesn't stop because of the crushed car a cell before. */
-		if (Car->velocity < MAX_VELOCITY)
-		{
-			Car->velocity += _1_CELL_;
+	if (Car->velocity != _0_CELL_)
+	{
+		if (distance - 1 > Car->velocity || distance == _NO_CAR_)
+		{/* car gets velocity if this car is newBorn or if this car doesn't stop because of the crushed car a cell before. */
+			if (Car->velocity < MAX_VELOCITY)
+			{
+				Car->velocity += _1_CELL_;
+			}
+			Car->nextCell.cell += Car->velocity;
+			return;
 		}
-		Car->nextCell.cell += Car->velocity;
-		return;
+	}
+	else
+	{
+		if (distance > 1)
+		{
+			Car->velocity = _1_CELL_;
+		}
 	}
 	/*
 	condition "forthCarVelocity < Car->velocity" will stay strickt
@@ -313,7 +304,9 @@ GLvoid thoughtsOfOneCar(car* Car)
 	this additional condition is not done.  
 	moreover, including the additional condition deprives the driver of ability to escape from the case when there is an row of less-velocity cars before him.
 	*/
-	if ((forthCarVelocity <= Car->velocity /*|| (forthCarVelocity == _0_CELL_ && Car->velocity == _0_CELL_)*/) && forthCar != OCCUPYING_CAR)
+	if (Car->velocity != _0_CELL_ && forthCar->velocity < Car->velocity /*&& forthCar != OCCUPYING_CAR*/
+		|| Car->velocity == _0_CELL_ && distance == 1
+		)
 	{
 		RLC rlc = {NO_ROAD_INDEX, NO_LINE_INDEX, NO_CELL_INDEX};
 		MOVING_TYPE move = checkChangeLineAbility(Car, &rlc);
@@ -329,22 +322,23 @@ GLvoid thoughtsOfOneCar(car* Car)
 			if (Car->move == OVERTAKE && Car->velocity == _0_CELL_)
 			{
 				Car->velocity = _1_CELL_;
-				// printf("_0_CELL_ -> _1_CELL_\n");
+				printf("_0_CELL_ -> _1_CELL_\n");
 			}
 			if (Car->move == SHIFT)
 			{
-				// printf("SHIFT\n");
+				printf("__________________________SHIFT\n");
 				printDir(Car->moveDir);
 			}
 			if (Car->move == OVERTAKE)
 			{
-				// printf("OVERTAKE\n");
+				printf("OVERTAKE\n");
 				printDir(Car->moveDir);
 			}
 
 			return;
 		}
 	}
+	
 
 	//according to the so-called all-excluded condition
 	Car->velocity = distance - 1;
@@ -407,42 +401,92 @@ GLint getVelocityByRLC(RLC rlc)
 
 MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 {
-	GLint newLine = Car->currCell.line - 1;
-	if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter right line is excluded
-	{
-		rlc->road = Car->currCell.road;
-		rlc->line = newLine;
-		rlc->cell = Car->currCell.cell;
+	GLint newLine;
 
-		// printRLC(*rlc, "safeRLC");
-		if(getCarPtr(rlc) == NULL)
+	switch (rand() % 100 < TURN_LEFT_FREQUENCY)
+	{
+		case 0:
 		{
-			MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
-			if (res != FORWARD)
+			newLine = Car->currCell.line - 1;
+			if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter right line is excluded
 			{
-				Car->moveDir = getLeftMoveDir(getRoadDir(Car));
-				return res;
+				rlc->road = Car->currCell.road;
+				rlc->line = newLine;
+				rlc->cell = Car->currCell.cell;
+
+				printRLC(*rlc, "safeRLC left");
+				if(getCarPtr(rlc) == NULL)
+				{
+					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
+					if (res != FORWARD)
+					{
+						Car->moveDir = getLeftMoveDir(getRoadDir(Car));
+						return res;
+					}
+				}
 			}
+
+			newLine = Car->currCell.line + 1;
+			if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter right line is excluded
+			{
+				rlc->road = Car->currCell.road;
+				rlc->line = newLine;
+				rlc->cell = Car->currCell.cell;
+
+				printRLC(*rlc, "safeRLC right");
+				if(getCarPtr(rlc) == NULL)
+				{
+					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
+					if (res != FORWARD)
+					{
+						Car->moveDir = getRightMoveDir(getRoadDir(Car));
+						return res;
+					}
+				}
+			}
+
+			break;
 		}
-	}
-
-	newLine = Car->currCell.line + 1;
-	if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter right line is excluded
-	{
-		rlc->road = Car->currCell.road;
-		rlc->line = newLine;
-		rlc->cell = Car->currCell.cell;
-
-		// printRLC(*rlc, "safeRLC");
-		if(getCarPtr(rlc) == NULL)
+		case 1:
 		{
-			MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
-			if (res != FORWARD)
+			newLine = Car->currCell.line + 1;
+			if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter right line is excluded
 			{
-				// printf("RIGHT         RIGHT          RIGHT\n");
-				Car->moveDir = getRightMoveDir(getRoadDir(Car));
-				return res;
+				rlc->road = Car->currCell.road;
+				rlc->line = newLine;
+				rlc->cell = Car->currCell.cell;
+
+				printRLC(*rlc, "safeRLC right");
+				if(getCarPtr(rlc) == NULL)
+				{
+					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
+					if (res != FORWARD)
+					{
+						Car->moveDir = getRightMoveDir(getRoadDir(Car));
+						return res;
+					}
+				}
 			}
+			newLine = Car->currCell.line - 1;
+			if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter left line is excluded
+			{
+				rlc->road = Car->currCell.road;
+				rlc->line = newLine;
+				rlc->cell = Car->currCell.cell;
+
+				printRLC(*rlc, "safeRLC left");
+				if(getCarPtr(rlc) == NULL)
+				{
+					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
+					if (res != FORWARD)
+					{
+						Car->moveDir = getLeftMoveDir(getRoadDir(Car));
+						return res;
+					}
+				}
+			}
+
+			break;
 		}
 	}
 
@@ -451,63 +495,15 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 
 MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc)
 {
-	car* backCar = NULL;
-	GLint forth = distanceToForthCar(rlc);
-	GLint back = getPureBackDistance(Car, rlc, &backCar);
-	
-	while (1)
-	{
-		if (back == 0)
-		{
-			// printf("_____back == 0\n");
-			return FORWARD;
-		}
-		else if (back < 0 && abs(back) < forth)
-		{
-			// printf("_____back < 0\n");
-			appendInIgnoredBackCarsPtrs(backCar);
-			// printf("innerIgnorINDex: %d\n", innerIgnoredBackCarsIndex);
-
-			forth = abs(back);
-			back = getPureBackDistance(Car, rlc, &backCar);
-			// printf("_____getPure\n");
-		}
-		else
-		{
-			// printf("_____else\n");
-			break;
-		}
-	}
-	
-	// printf("~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	// for (int i = 0; i <= innerIgnoredBackCarsIndex; i++)
-	// {
-	// 	printCarProperties(ignoredBackCars[i]->currCell);
-	// 	printf("``````````````````\n");	
-	// }
-	// printf("~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	clearIgnoredBackCarsPtrs();
-
-
-	// printf("forth: %d\nback: %d\n", forth, back);
-
 	car* forthCar = NULL;
-	if (forth != _NO_CAR_)
-	{
-		forthCar = roads[rlc.road].lines[rlc.line].cells[rlc.cell + forth];
-	}
+	GLint forth = distanceToForthCar(rlc, &forthCar);
+	car* backCar = NULL;
+	GLint back = distanceToBackCar(rlc, &backCar);
 
-	/*
-	that ">=" is there and four times below means
-	that these cars can drive up to the further one with no space between them left.
-	it was bad idea as condition ">=" allows standing-a-step-before cars to drive upon the crushed cars while overtaking.
-	*/
-
-	if (1 || !(forthCar && forthCar->velocity == _0_CELL_))
+	if (back ==_NO_CAR_ || (backCar && back - 1 >= backCar->velocity))
 	{
-		if (backCar == NULL)
+		if (Car->velocity != _0_CELL_)
 		{
-			// printf("**NULL\n");
 			if (forth - 1 > Car->velocity)
 			{
 				return OVERTAKE;
@@ -515,52 +511,18 @@ MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc)
 		}
 		else
 		{
-			// printf("** != null\n");
-			if (forth - 1 > Car->velocity && back - 1 > backCar->velocity)
+			if (forth - 1 > _1_CELL_)
 			{
 				return OVERTAKE;
 			}
-		}
-	}
-	else 
-	{
-		if (forth == 1 && Car->velocity == _0_CELL_)
-		{
-			if (backCar == NULL)
+			if (forth != 0) //this is that on the neighbour cell there is no car
 			{
 				return SHIFT;
 			}
-			else if (back - 1 > backCar->velocity)
-			{
-				return SHIFT;
-			}
-		}
+		}			
 	}
-	
 
 	return FORWARD;
-}
-
-GLint getPureBackDistance(car* Car, RLC rlc, car** backCar)
-{
-	*backCar == NULL;
-	RLC backCarNextCell;
-	GLint distance = distanceToBackCar(rlc);
-	// printf("dist   : %d\n", distance);
-	if (distance != _NO_CAR_)
-	{
-		*backCar = roads[rlc.road].lines[rlc.line].cells[rlc.cell - distance];
-		backCarNextCell = (*backCar)->nextCell;
-		//printCarProperties((*backCar)->currCell);
-		if (backCarNextCell.line == rlc.line)
-		{
-			distance = rlc.cell - backCarNextCell.cell;
-			// printf("dist_!_: %d\n", distance);
-		}
-		// else printf("\n$$\n");
-	}
-
-	return distance;
 }
 
 GLvoid appendInIgnoredBackCarsPtrs(car* Car)
@@ -583,23 +545,21 @@ bool isInIgnoredBackCars(car* Car)
 	return false;
 }
 
-GLint distanceToForthCar(RLC rlc)
+GLint distanceToForthCar(RLC rlc, car** Car)
 {
 	car** ptrCell = getFirstCellPtr(rlc);
-	//int checkedCells = 0;
 	for (int i = 1 + rlc.cell; i < NUMBER_OF_CELLS; ++i)
 	{
-		//checkedCells += 1;
 		if (ptrCell[i] == NULL)
 		{
 			continue;
 		}
 		else if (ptrCell[i]->isActive == true)
 		{
+			*Car = ptrCell[i];
 			return (i - rlc.cell);
 		}
 	}
-
 	// if (roads[rlc.road].isEndCross)
 	// {
 	// 	return NUMBER_OF_CELLS - rlc.cell;
@@ -608,7 +568,7 @@ GLint distanceToForthCar(RLC rlc)
 	return _NO_CAR_;
 }
 
-GLint distanceToBackCar(RLC rlc)
+GLint distanceToBackCar(RLC rlc, car** Car)
 {
 	car** ptrCell = getFirstCellPtr(rlc);
 	for (int i = -1 + rlc.cell; i >= 0; --i)
@@ -623,6 +583,7 @@ GLint distanceToBackCar(RLC rlc)
 		}
 		else if (ptrCell[i]->isActive == true)
 		{
+			*Car = ptrCell[i];
 			return (rlc.cell - i);
 		}
 	}
