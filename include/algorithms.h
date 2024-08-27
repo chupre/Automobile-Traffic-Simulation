@@ -14,8 +14,8 @@
 #include <road.h>
 #include <direction.h>
 
-#define SPAWN_FRECUENCY 100
-#define ANTI_SPAWN_FRECUENCY (100 - SPAWN_FRECUENCY)
+#define SPAWN_FRECUENCY 20
+#define TURN_LEFT_FREQUENCY 30
 
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
@@ -72,13 +72,11 @@ bool isToExclude(car* Car);
 GLint getVelocityByRLC(RLC rlc);
 GLvoid excludeFromMap(car* Car);
 GLvoid thoughtsOfOneCar(car* Car);
-GLint distanceToForthCar(RLC rlc);
-GLint distanceToBackCar(RLC rlc);
-GLint getPureBackDistance(car* Car, RLC rlc, car** backCar);
+GLint distanceToForthCar(RLC rlc, car** forthCar);
+GLint distanceToBackCar(RLC rlc, car** backCar);
 
 MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc);
 MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc);
-//bool _isSafetyForthAndBack(car* Car, RLC rlc);
 GLvoid update();
 GLvoid step();
 GLvoid _step();
@@ -109,13 +107,5 @@ GLvoid printRLC(RLC rlc, char* string);
 GLint isRLCbad(RLC rlc);
 GLvoid printCarProperties(RLC rlc);
 GLvoid printDir(DIRECTION dir);
-
-/*
-//turn on the corner
-GLint isReadyToTurnRight(void);
-//turn through the cross
-GLint isReadyToTurnLeft(void);
-GLint isReadyToChangeLine(void);
-*/
 
 #endif

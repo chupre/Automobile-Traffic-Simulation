@@ -15,7 +15,7 @@ GLvoid setMap()
 	{
 	case ONE_ROAD_N:
 		addRoad(0, -0.5f, -1.0f, NORTH);
-		roads[0].isEndCross = true;
+		// roads[0].isEndCross = true;
 		break;
 
 	case ONE_ROAD_S:
