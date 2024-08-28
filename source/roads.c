@@ -291,7 +291,7 @@ GLvoid setLines(GLint roadIndex)
     {
         GLfloat y, x1, x2;
 
-        if (roads[roadIndex].dir == WEST) {
+        if (roads[roadIndex].dir == EAST) {
             y = roadVertices[1 + 4 * 5 * roadIndex];
             stride *= -1;
         }
