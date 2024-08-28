@@ -77,12 +77,14 @@ int main()
     }
 #endif
 #ifdef crus
-    RLC cr = {0, 2, 10};
+    GLint roadNum = 0; 
+    RLC cr = {roadNum, 0, 0};
     addCrushedCar(cr);
-    RLC cr1 = {0, 4, 12};
+    RLC cr1 = {1, 0, 0};
     addCrushedCar(cr1);
-    RLC cr2 = {0, 6, 14};
-    addCrushedCar(cr2);
+    // RLC cr2 = {roadNum, 6, 6};
+    // addCrushedCar(cr2);
+    
 
 
     // for (int line = 2, cell = 10; line < 5 ; line++)
