@@ -25,8 +25,8 @@
 #define _6_VELOCITY (_1_VELOCITY * 6)
 #define _7_VELOCITY (_1_VELOCITY * 7)
 
-#define MAX_VELOCITY (_3_VELOCITY)
-#define NUMBER_OF_VELOCITY_TYPES (3)
+#define MAX_VELOCITY (_1_VELOCITY)
+#define NUMBER_OF_VELOCITY_TYPES (1)
 
 #define VELOCITY_MULTIPLIER (CELL_LENGTH)
 
@@ -58,8 +58,8 @@ enum VELOCITY {
 
 #define max_cars 1000
 
-extern GLint bornCarsIndexes[max_cars];
-extern GLint innerBornCarsIndex;
+extern car* userCarsPtrs[max_cars];
+extern GLint innerUserCarsPtrsIndex;
 extern GLint overtakeCarsIndexes[max_cars]; 
 extern GLint innerOvertakeCarsIndex;
 
@@ -67,6 +67,9 @@ extern RLC rouletteRLC;
 
 extern car* ignoredBackCars[max_cars];
 extern GLint innerIgnoredBackCarsIndex;
+
+extern RLC carAddingQueue[max_cars];
+extern GLint innerCarAddingQueueIndex;
 
 bool isToExclude(car* Car);
 GLint getVelocityByRLC(RLC rlc);
@@ -79,12 +82,11 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc);
 MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc);
 GLvoid update();
 GLvoid step();
-GLvoid _step();
 GLvoid spawnCars();
 
-GLvoid appendInBornCarsIndexes(GLint carIndex);
-GLvoid clearBornCarsIndedxes();
-bool isInBornCars(GLint i);
+GLvoid appendInUserCarsPtrs(car* Car);
+GLvoid clearUserCarsPtrs();
+bool isInUserCarsPtrs(car* Car);
 
 GLvoid appendInOvertakeCarsIndexes(GLint carIndex);
 GLvoid clearOvertakeCarsIndedxes();
@@ -101,7 +103,13 @@ bool getCarPtrByRoulette(car** Car);
 bool rollRouletteRLC();
 
 bool isFurtherThanEndCell(car* Car);
+bool compareRLCs(RLC* rlc1, RLC* rlc2);
 
+GLvoid processCarAddingQueue();
+GLvoid addInRLCCarAddingQueue(RLC rlc);
+bool isInCarAddingQueue(RLC rlc);
+GLvoid clearCarAddingQueue();
+bool isRLCsuitableForSettingCar(RLC rlc);
 
 GLvoid printRLC(RLC rlc, char* string);
 GLint isRLCbad(RLC rlc);

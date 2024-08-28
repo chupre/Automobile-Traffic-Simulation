@@ -3,15 +3,24 @@
 #include <road.h>
 #include <render.h>
 
+RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
 
+GLint innerUserCarsPtrsIndex = NO_INNER_INDEX;
+car* userCarsPtrs[max_cars];
 
-GLint innerBornCarsIndex = NO_INNER_INDEX;
-GLint bornCarsIndexes[max_cars];
 GLint innerOvertakeCarsIndex = NO_INNER_INDEX;
 GLint overtakeCarsIndexes[max_cars];
-RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
+
 car* ignoredBackCars[max_cars];
 GLint innerIgnoredBackCarsIndex = NO_INNER_INDEX;
+
+RLC carAddingQueue[MAX_CARS];
+GLint innerCarAddingQueueIndex = NO_INNER_INDEX;
+
+bool compareRLCs(RLC* rlc1, RLC* rlc2)
+{
+	return (rlc1->road == rlc2->road && rlc1->line == rlc2->line && rlc1->cell == rlc2->cell);
+}
 
 car* getCarPtr(RLC* rlc)
 {
@@ -36,7 +45,7 @@ GLvoid update()
 		timer += STEP_TIME;
 
 		step();
-		printf("\n..........................................................................\n");
+		// printf("\n..........................................................................\n");
 	}
 }
 
@@ -65,7 +74,9 @@ GLvoid step()
 		unbindCarPtrFromCell(Car);
 		reinitCurrCellWithNextCell(Car);
 	}
-	
+
+	processCarAddingQueue();
+
 	while (getCarPtrByRoulette(&Car))
 	{
 		if (Car->isCrushed)
@@ -74,22 +85,30 @@ GLvoid step()
 		}
 		if (Car == OCCUPYING_CAR)
 		{
-			printRLC(rouletteRLC, "OCCUPYING_CAR RLC");
+			// printRLC(rouletteRLC, "OCCUPYING_CAR RLC");
+			continue;
+		}
+		if (isInUserCarsPtrs(Car))
+		{
 			continue;
 		}
 
-		printRLC(rouletteRLC, "roulette"); car* rouletteCar = getCarPtr(&rouletteRLC); printf("V: %d\n", rouletteCar->velocity);
-		printf("\n");
+		// printRLC(rouletteRLC, "roulette"); car* rouletteCar = getCarPtr(&rouletteRLC); printf("V: %d\n", rouletteCar->velocity);
+		// printf("\n");
 
 		thoughtsOfOneCar(Car);
 	}
+	clearUserCarsPtrs();
 	
-	printf("_______________SPAWN_CARS______________\n");
+	// printf("_______________SPAWN_CARS______________\n");
 	if (rand() % 100 < SPAWN_FRECUENCY)
 	{
 		spawnCars();
 	}
+	
 }
+
+
 
 bool getCarPtrByRoulette(car** Car)
 {
@@ -161,21 +180,33 @@ GLvoid spawnCars()
 				--freeCars;
 
 				// logCar(&cars[carIndex]);
-				printCarProperties(freeSpotRLC);
-				printf("\n");
+				// printCarProperties(freeSpotRLC);
+				// printf("\n");
 			}
 		}
 	}
 }
 
-GLvoid appendInBornCarsIndexes(GLint carIndex)
+GLvoid appendInUserCarsPtrs(car* Car)
 {
-	bornCarsIndexes[++innerBornCarsIndex] = carIndex;
+	userCarsPtrs[++innerUserCarsPtrsIndex] = Car;
 }
 
-GLvoid clearBornCarsIndedxes()
+bool isInUserCarsPtrs(car* Car)
 {
-	innerBornCarsIndex = NO_INNER_INDEX;
+	for (int i = 0; i <= innerUserCarsPtrsIndex; i++)
+	{
+		if (Car == userCarsPtrs[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+GLvoid clearUserCarsPtrs()
+{
+	innerUserCarsPtrsIndex = NO_INNER_INDEX;
 }
 
 GLvoid appendInOvertakeCarsIndexes(GLint carIndex)
@@ -186,18 +217,6 @@ GLvoid appendInOvertakeCarsIndexes(GLint carIndex)
 GLvoid clearOvertakeCarsIndedxes()
 {
 	innerOvertakeCarsIndex = NO_INNER_INDEX;
-}
-
-bool isInBornCars(GLint i)
-{
-	for (int k = 0; k <= innerBornCarsIndex; k++)
-	{
-		if (i == bornCarsIndexes[k])
-		{
-			return true;
-		}
-	}
-	return false;
 }
 
 GLvoid unbindCarPtrFromCell(car* Car)
@@ -255,7 +274,6 @@ GLvoid printCarProperties(RLC rlc)
 	}
 }
 
-//changes car's velocity and rlc
 GLvoid thoughtsOfOneCar(car* Car)
 {
 	if (Car->move == OVERTAKE)
@@ -276,6 +294,12 @@ GLvoid thoughtsOfOneCar(car* Car)
 	car* forthCar = NULL;
 	GLint distance = distanceToForthCar(Car->currCell, &forthCar);//the foo takes in cognisance that road can have endCross
 
+	// printf("distance: %d\n", distance);
+
+	// if (forthCar && forthCar->isCrushed)
+	// {
+	// 	printf("crushedCar is met\n");
+	// }
 
 	// condition "distance - 1 > Car->velocity" will stay strickt because there considered is the faculty of mounting the car velocity a one more
 	if (Car->velocity != _0_CELL_)
@@ -287,6 +311,7 @@ GLvoid thoughtsOfOneCar(car* Car)
 				Car->velocity += _1_CELL_;
 			}
 			Car->nextCell.cell += Car->velocity;
+			// printf("1\n");
 			return;
 		}
 	}
@@ -294,7 +319,10 @@ GLvoid thoughtsOfOneCar(car* Car)
 	{
 		if (distance > 1)
 		{
+			// printf("2\n");
 			Car->velocity = _1_CELL_;
+			Car->nextCell.cell += Car->velocity;
+			return;
 		}
 	}
 	/*
@@ -308,6 +336,7 @@ GLvoid thoughtsOfOneCar(car* Car)
 		|| Car->velocity == _0_CELL_ && distance == 1
 		)
 	{
+		// printf("3\n");
 		RLC rlc = {NO_ROAD_INDEX, NO_LINE_INDEX, NO_CELL_INDEX};
 		MOVING_TYPE move = checkChangeLineAbility(Car, &rlc);
 		if (move != FORWARD)
@@ -322,24 +351,24 @@ GLvoid thoughtsOfOneCar(car* Car)
 			if (Car->move == OVERTAKE && Car->velocity == _0_CELL_)
 			{
 				Car->velocity = _1_CELL_;
-				printf("_0_CELL_ -> _1_CELL_\n");
+				// printf("_0_CELL_ -> _1_CELL_\n");
 			}
 			if (Car->move == SHIFT)
 			{
-				printf("__________________________SHIFT\n");
-				printDir(Car->moveDir);
+				// printf("SHIFT\n");
+				// printDir(Car->moveDir);
 			}
 			if (Car->move == OVERTAKE)
 			{
-				printf("OVERTAKE\n");
-				printDir(Car->moveDir);
+				// printf("OVERTAKE\n");
+				// printDir(Car->moveDir);
 			}
 
 			return;
 		}
 	}
 	
-
+	// printf("4\n");
 	//according to the so-called all-excluded condition
 	Car->velocity = distance - 1;
 	Car->nextCell.cell += Car->velocity;
@@ -414,7 +443,7 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 				rlc->line = newLine;
 				rlc->cell = Car->currCell.cell;
 
-				printRLC(*rlc, "safeRLC left");
+				// printRLC(*rlc, "safeRLC left");
 				if(getCarPtr(rlc) == NULL)
 				{
 					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
@@ -433,7 +462,7 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 				rlc->line = newLine;
 				rlc->cell = Car->currCell.cell;
 
-				printRLC(*rlc, "safeRLC right");
+				// printRLC(*rlc, "safeRLC right");
 				if(getCarPtr(rlc) == NULL)
 				{
 					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
@@ -456,7 +485,7 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 				rlc->line = newLine;
 				rlc->cell = Car->currCell.cell;
 
-				printRLC(*rlc, "safeRLC right");
+				// printRLC(*rlc, "safeRLC right");
 				if(getCarPtr(rlc) == NULL)
 				{
 					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
@@ -474,7 +503,7 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 				rlc->line = newLine;
 				rlc->cell = Car->currCell.cell;
 
-				printRLC(*rlc, "safeRLC left");
+				// printRLC(*rlc, "safeRLC left");
 				if(getCarPtr(rlc) == NULL)
 				{
 					MOVING_TYPE res = isSafetyForthAndBack(Car, *rlc);
@@ -500,8 +529,7 @@ MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc)
 	car* backCar = NULL;
 	GLint back = distanceToBackCar(rlc, &backCar);
 
-	if (back ==_NO_CAR_ || (backCar && back - 1 >= backCar->velocity))
-	{
+	if (back ==_NO_CAR_ || (backCar && back - 1 >= backCar->velocity)){
 		if (Car->velocity != _0_CELL_)
 		{
 			if (forth - 1 > Car->velocity)
@@ -515,7 +543,7 @@ MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc)
 			{
 				return OVERTAKE;
 			}
-			if (forth != 0) //this is that on the neighbour cell there is no car
+			if (forth != 0) //this is that on the neighbour cell there is no cacr
 			{
 				return SHIFT;
 			}
@@ -590,3 +618,63 @@ GLint distanceToBackCar(RLC rlc, car** Car)
 	return _NO_CAR_;
 }
 
+bool isRLCsuitableForSettingCar(RLC rlc)
+{
+	if (getCarPtr(&rlc) != NULL)
+	{
+		return false;
+	}
+	car* forthCar = NULL;
+	GLint forth = distanceToForthCar(rlc, &forthCar);
+	car* backCar = NULL;
+	GLint back = distanceToBackCar(rlc, &backCar);
+	if (forth > 1 && back > 1)
+	{
+		return true;
+	}
+	return false;
+}
+
+GLvoid addInRLCCarAddingQueue(RLC rlc)
+{
+	carAddingQueue[++innerCarAddingQueueIndex] = rlc;
+}
+
+GLvoid clearCarAddingQueue()
+{
+	innerCarAddingQueueIndex = NO_INNER_INDEX;
+}
+
+GLvoid processCarAddingQueue()
+{
+	for (int i = 0; i <= innerCarAddingQueueIndex; i++)
+	{
+		if (isRLCsuitableForSettingCar(carAddingQueue[i]))
+		{
+			GLint carIndex = getFreeCarIndex();
+			if (carIndex == NO_CAR_INDEX)
+			{
+				return;
+			}
+			car* Car = &cars[carIndex];
+			addCar(Car, carIndex, carAddingQueue[i]);
+			thoughtsOfOneCar(Car);
+			--freeCars;
+
+			appendInUserCarsPtrs(Car);
+		}
+	}
+	clearCarAddingQueue();
+}
+
+bool isInCarAddingQueue(RLC rlc)
+{
+	for (int i = 0; i < innerCarAddingQueueIndex; i++)
+	{
+		if (compareRLCs(&rlc, &carAddingQueue[i]))
+		{
+			return true;
+		}
+	}
+	return false;
+}

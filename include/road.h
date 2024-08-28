@@ -72,6 +72,5 @@ GLvoid setRoadBoards(GLint roadIndex, GLfloat start_x, GLfloat start_y);
 GLvoid setEdgeState(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir);
 GLint isFurhterThanEndLine(car* Car, road* Road);
 GLint isOutOfScreenSpace(GLfloat realPos);
-GLint getOvertakeDirForVelocity(DIRECTION overtake);
 
 #endif

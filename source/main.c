@@ -32,7 +32,7 @@
 #include <search_tools.h>
 #include <spawn_logs.h>
 
-#define crushhhh3 1
+// #define crushhhh3 1
 // #define dot_debug 1
 #define crus 1
 

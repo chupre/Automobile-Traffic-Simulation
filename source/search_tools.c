@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include <road.h>
+#include <algorithms.h>
 
 dot_coord _DOT_ = {NO_COORD, NO_COORD};
 
@@ -26,29 +27,30 @@ bool getRLCbyDot(RLC* rlc, dot_coord* dot)
     bool is_in = false;
 
     GLint roadIndex = getRoadIndex(dot);
-    printf("roadIndex: %d\n", roadIndex);
     if (roadIndex == NO_ROAD_INDEX)
     {
+        printf("roadIndex is bad\n");
         return false;
     }
 
     GLint lineIndex = getLineIndex(dot, roadIndex);
-    printf("lineIndex: %d\n", lineIndex);
     if (lineIndex == NO_LINE_INDEX)
     {
+        printf("lineIndex is bad\n");
         return false;
     }
 
     GLint cellIndex = getCellIndex(dot, roadIndex, lineIndex);
-    printf("cellIndex: %d\n", cellIndex);
     if (cellIndex == NO_LINE_INDEX)
     {
+        printf("cellIndex is bad\n");
         return false;
     }
 
     rlc->road = roadIndex;
     rlc->line = lineIndex;
     rlc->cell = cellIndex;
+    printRLC(*rlc, "clicked RLC");
     return true;
 }
 
