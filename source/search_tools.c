@@ -81,9 +81,14 @@ bool isInRoadRange(GLint roadIndex, dot_coord* dot)
 {
     road* Road = &roads[roadIndex];
 
-    if (!(dot->x > Road->stem - HALF_ROAD_WIDTH && dot->x < Road->stem + HALF_ROAD_WIDTH))
-    {
-        return false;
+    if (Road->dir == NORTH || Road->dir == SOUTH) {
+        if (!(dot->x > Road->stem - HALF_ROAD_WIDTH && dot->x < Road->stem + HALF_ROAD_WIDTH)) {
+            return false;
+        }
+    } else {
+        if (!(dot->y > Road->stem - HALF_ROAD_WIDTH && dot->y < Road->stem + HALF_ROAD_WIDTH)) {
+            return false;
+        }
     }
 
     switch (Road->dir)
