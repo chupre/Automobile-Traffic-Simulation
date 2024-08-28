@@ -316,6 +316,40 @@ GLvoid setLines(GLint roadIndex)
         }
         memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
+        
+        #ifdef DEBUG
+        
+        stride = fabs(stride);
+        y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;
+        x1 = roadVertices[0 + 4 * 5 * roadIndex];
+        x2 = roadVertices[10 + 4 * 5 * roadIndex];
+
+
+        int dir_multiplier;
+        if (roads[roadIndex].dir == EAST)
+            dir_multiplier = 1;
+        else
+            dir_multiplier = -1;
+
+        for (i = 0; i < NUMBER_OF_LINES + 1; i++) {
+            y += stride;
+            for(int j = 0; j < NUMBER_OF_CELLS; j++) {
+                float cellVertices[] = {
+                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f, 
+                    x1 + ((j + 1) * CELL_LENGTH) * dir_multiplier, y,                1.0f, 0.0f, 0.0f, 
+                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                    x1 + ((j + 1) * CELL_LENGTH) * dir_multiplier, y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f, 
+                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f 
+                };        
+                int index = roadIndex * 5 * 8 * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS + i * 5 * 8 * NUMBER_OF_CELLS + j * 5 * 8;
+                memcpy(&cellsVertices[index], cellVertices, sizeof(GLfloat) * 5 * 8);
+            }
+        }
+
+        #endif
     }
 }
 
