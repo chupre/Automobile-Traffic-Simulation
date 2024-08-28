@@ -172,11 +172,11 @@ GLfloat getRoadLeftCheek(GLint roadIndex)
         }
         case EAST:
         {
-            return roads[roadIndex].stem - HALF_ROAD_WIDTH;
+            return roads[roadIndex].stem + HALF_ROAD_WIDTH;
         }
         case WEST:
         {
-            return roads[roadIndex].stem + HALF_ROAD_WIDTH;
+            return roads[roadIndex].stem - HALF_ROAD_WIDTH;
         }
     }
 }
