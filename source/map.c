@@ -36,8 +36,8 @@ GLvoid setMap()
 		break;
 
 	case TWO_ROADS_WE:
-		addRoad(1, 1.0f, 0.5f, WEST);
-		addRoad(0, -1.0f, -0.5f, EAST);
+		addRoad(1, 1.0f, 0.4f, WEST);
+		addRoad(0, -1.0f, -0.4f, EAST);
 		break;
 
 	case CROSS:

@@ -132,7 +132,6 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 
 			vec2 carTranslationVector = { x2, y2 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
-			glm_scale2d(carTransformMatrixes[carIndex], (vec2){ 1.7, 0.7 });
 
 			break;
 		}
@@ -149,7 +148,6 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 
 			vec2 carTranslationVector = { x2, y2 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
-			glm_scale2d(carTransformMatrixes[carIndex], (vec2) { 1.7, 0.7 });
 
 			break;
 		}
@@ -257,7 +255,6 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 			vec2 carTranslationVector = { x2, y2 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
-			glm_scale2d(carTransformMatrixes[carIndex], (vec2){ 1.7, 0.7 });
 
 			break;
 		}
@@ -274,7 +271,6 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 			vec2 carTranslationVector = { x2, y2 };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
-			glm_scale2d(carTransformMatrixes[carIndex], (vec2) { 1.7, 0.7 });
 
 			break;
 		}
