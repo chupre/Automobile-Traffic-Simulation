@@ -21,7 +21,7 @@
     #if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == TWO_ROADS_NS
         #define DEFAULT_FOV 45.0f
     #else
-        #define DEFAULT_FOV 45.0f
+        #define DEFAULT_FOV 40.0f
     #endif
 #endif
 
