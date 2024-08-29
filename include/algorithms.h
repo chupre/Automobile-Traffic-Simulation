@@ -10,7 +10,6 @@
 
 // Custom modules
 #include <rlc.h>
-#include <cars.h>
 #include <road.h>
 #include <direction.h>
 

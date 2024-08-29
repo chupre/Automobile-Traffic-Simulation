@@ -6,10 +6,6 @@
 
 // Custom modules
 #include <algorithms.h>
-// #include <cars.h>
-#include <road.h>
-// #include <rlc.h>
-// #include <direction.h>
 
 #define CROSS_SIDE ((NUMBER_OF_LINES + 1) * 2)
 #define HALF_CROSS_SIDE (CROSS_SIDE / 2)
@@ -27,16 +23,16 @@
 
 typedef struct car car;
 typedef struct road road;
-typedef struct cross cross;
 
+typedef struct cross_cell cross_cell;
 typedef struct cross_roulette cross_roulette;
+typedef struct cross cross;
 
 struct cross_cell {
     GLint x;
     GLint y;
     GLint crossNum;
 };
-typedef struct cross_cell cross_cell;
 struct cross_roulette {
     GLint cellNum;
     GLint crossNum;
