@@ -126,8 +126,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	        x2 = x1;
 			y1 = x1;
 			y2 = x2;
-			x1 = -1.0f - rlc.cell * CELL_WIDTH;
-			x2 = -1.0f - rlc.cell * CELL_LENGTH - CAR_WIDTH;
+			x1 = -1.0f + rlc.cell * CELL_LENGTH;
+			x2 = -1.0f + rlc.cell * CELL_LENGTH;
 			Car->realPos = x1;
 
 			vec2 carTranslationVector = { x2, y2 };
@@ -339,6 +339,12 @@ GLvoid clearCarProperties(car* Car)
 	Car->nextCell.road = EMPTY;
 	Car->nextCell.line = EMPTY;
 	Car->nextCell.cell = EMPTY;
+	Car->crossCurrCell.crossNum = EMPTY;
+	Car->crossCurrCell.x = EMPTY;
+	Car->crossCurrCell.y = EMPTY;
+	Car->crossNextCell.crossNum = EMPTY;
+	Car->crossNextCell.x = EMPTY;
+	Car->crossNextCell.y = EMPTY;
 	Car->roadDirMultiplier = 0;
 	Car->ID = EMPTY;
 	Car->realPos = EMPTY;
@@ -349,5 +355,4 @@ GLvoid clearCarProperties(car* Car)
 	Car->overtake = NONE;
 	Car->move = FORWARD;
 	Car->moveDir = NONE;
-	Car->markRight = false;
 }

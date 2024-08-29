@@ -1,6 +1,8 @@
 #include <algorithms.h>
+#include <traffic_density.h>
 #include <cars.h>
 #include <road.h>
+#include <cross.h>
 #include <render.h>
 
 RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
@@ -44,7 +46,7 @@ GLvoid update()
 
 		timer += STEP_TIME;
 
-		step();
+		stepRoad();
 		// printf("\n..........................................................................\n");
 	}
 }
@@ -54,11 +56,11 @@ GLvoid printRLC(RLC rlc, char* string)
 	printf("%s:(%d, %d, %d)\n", string, rlc.road, rlc.line, rlc.cell);
 }
 
-GLvoid step()
+GLvoid stepRoad()
 {
 	car* Car;
 
-	while (getCarPtrByRoulette(&Car))
+	while (getCarByRoulette(&Car))
 	{
 		if (Car->isCrushed || Car == OCCUPYING_CAR)
 		{
@@ -71,13 +73,13 @@ GLvoid step()
 			excludeFromMap(Car);
 			continue;
 		}
-		unbindCarPtrFromCell(Car);
-		reinitCurrCellWithNextCell(Car);
+		rebindRoadCars(Car);
+		reinitRoadCells(Car);
 	}
 
 	processCarAddingQueue();
 
-	while (getCarPtrByRoulette(&Car))
+	while (getCarByRoulette(&Car))
 	{
 		if (Car->isCrushed)
 		{
@@ -101,16 +103,14 @@ GLvoid step()
 	clearUserCarsPtrs();
 	
 	// printf("_______________SPAWN_CARS______________\n");
-	if (rand() % 100 < SPAWN_FRECUENCY)
+	if (rand() % 100 < SPAWN_FREQUENCY)
 	{
 		spawnCars();
 	}
 	
 }
 
-
-
-bool getCarPtrByRoulette(car** Car)
+bool getCarByRoulette(car** Car)
 {
 	car* tmpCar;
 	while (rollRouletteRLC())
@@ -158,11 +158,17 @@ bool rollRouletteRLC()
 
 GLvoid spawnCars()
 {
+	GLint carsToSpawn = rand() % NUMBER_OF_LINES;
+	GLint spawnedCars = 0;
 	if (freeCars > 0)
 	{
 		int counter = freeCars;
 		for (int i = 0; i < counter; i++)
 		{
+			if (spawnedCars > carsToSpawn)
+			{
+				return;
+			}
 			GLint carIndex = getFreeCarIndex();
 			if (carIndex == NO_CAR_INDEX)
 			{
@@ -178,6 +184,8 @@ GLvoid spawnCars()
 				thoughtsOfOneCar(&cars[carIndex]);
 
 				--freeCars;
+				++spawnedCars;
+				increaseDensityData(freeSpotRLC.road);
 
 				// logCar(&cars[carIndex]);
 				// printCarProperties(freeSpotRLC);
@@ -219,15 +227,30 @@ GLvoid clearOvertakeCarsIndedxes()
 	innerOvertakeCarsIndex = NO_INNER_INDEX;
 }
 
-GLvoid unbindCarPtrFromCell(car* Car)
+GLvoid initRoadCell(RLC *rlc, car* Car)
 {
-    car** ptrCell = getFirstCellPtr(Car->currCell);
-    GLint start = Car->currCell.cell;
-    if (start < NUMBER_OF_CELLS) ptrCell[start] = NULL;
+	roads[rlc->road].lines[rlc->line].cells[rlc->cell] = Car;
+}
 
-    ptrCell = getFirstCellPtr(Car->nextCell);
-    GLint newStart = Car->nextCell.cell;
-    if (newStart < NUMBER_OF_CELLS) ptrCell[newStart] = Car;
+GLvoid rebindRoadCars(car* Car)
+{
+    if (Car->currCell.cell < NUMBER_OF_CELLS)
+	{
+		initRoadCell(&Car->nextCell, NULL);
+	}
+
+	if (Car->nextCell.road != NEXT_CELL_IS_ON_CROSS)
+	{
+		if (Car->nextCell.cell < NUMBER_OF_CELLS)
+		{
+			initRoadCell(&Car->nextCell, Car);
+		}
+	}
+	else
+	{
+		initCrossCell(&Car->crossNextCell, Car);
+	}
+    
     //else // what would be ohterwise ?
     /*
     a car won't belong to the road, but will be still drawning
@@ -235,7 +258,7 @@ GLvoid unbindCarPtrFromCell(car* Car)
     */
 }
 
-GLvoid reinitCurrCellWithNextCell(car* Car)
+GLvoid reinitRoadCells(car* Car)
 {
     Car->currCell.road = Car->nextCell.road;
     Car->currCell.line = Car->nextCell.line;
@@ -276,24 +299,30 @@ GLvoid printCarProperties(RLC rlc)
 
 GLvoid thoughtsOfOneCar(car* Car)
 {
+	bool isAllowedToOvertake = true;
 	if (Car->move == OVERTAKE)
 	{	//as end fo line changing which is just done
 		Car->move = FORWARD;
 		Car->moveDir = getRoadDir(Car);
-		Car->nextCell.cell += Car->velocity;
-		return;
+		// Car->nextCell.cell += Car->velocity;
+		// return;
 	}
 	else if (Car->move == SHIFT)
 	{
 		Car->move = FORWARD;
 		Car->moveDir = getRoadDir(Car);
-		// Car->velocity = _0_CELL_;
 	}
 
 	RLC overtakeRLC;
 	car* forthCar = NULL;
 	GLint distance = distanceToForthCar(Car->currCell, &forthCar);//the foo takes in cognisance that road can have endCross
 
+
+	if (distance == _NO_CAR_ && isEndedWithCross(Car->currCell))
+	{
+		distance = NUMBER_OF_CELLS - Car->currCell.cell;
+		isAllowedToOvertake = false;
+	}
 	// printf("distance: %d\n", distance);
 
 	// if (forthCar && forthCar->isCrushed)
@@ -306,6 +335,11 @@ GLvoid thoughtsOfOneCar(car* Car)
 	{
 		if (distance - 1 > Car->velocity || distance == _NO_CAR_)
 		{/* car gets velocity if this car is newBorn or if this car doesn't stop because of the crushed car a cell before. */
+			if (rand() % 100 < DROP_VELOCITY_FREQUENCY)
+			{
+				Car->velocity = rand() % Car->velocity;
+			}
+			
 			if (Car->velocity < MAX_VELOCITY)
 			{
 				Car->velocity += _1_CELL_;
@@ -332,8 +366,11 @@ GLvoid thoughtsOfOneCar(car* Car)
 	this additional condition is not done.  
 	moreover, including the additional condition deprives the driver of ability to escape from the case when there is an row of less-velocity cars before him.
 	*/
-	if (Car->velocity != _0_CELL_ && forthCar->velocity < Car->velocity /*&& forthCar != OCCUPYING_CAR*/
-		|| Car->velocity == _0_CELL_ && distance == 1
+	if (isAllowedToOvertake &&
+			(
+				Car->velocity != _0_CELL_ && forthCar->velocity < Car->velocity /*&& forthCar != OCCUPYING_CAR*/
+			|| 	Car->velocity == _0_CELL_ && distance == 1
+			)
 		)
 	{
 		// printf("3\n");
@@ -412,7 +449,7 @@ GLvoid excludeFromMap(car* Car)
 
 	clearCarProperties(Car);
 	++freeCars;
-	//printf("!\n");
+	decreaseDensityData(Car->currCell.road);
 }
 
 GLint getVelocityByRLC(RLC rlc)
@@ -588,6 +625,7 @@ GLint distanceToForthCar(RLC rlc, car** Car)
 			return (i - rlc.cell);
 		}
 	}
+	//this condition will be checked only if no car is found on the road before
 	// if (roads[rlc.road].isEndCross)
 	// {
 	// 	return NUMBER_OF_CELLS - rlc.cell;

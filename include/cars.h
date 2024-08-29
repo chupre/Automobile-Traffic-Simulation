@@ -10,8 +10,9 @@
 
 // Custom modules
 #include <algorithms.h>
-#include <rlc.h>
+// #include <rlc.h>
 #include <direction.h>
+// #include <cross.h>
 
 // #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
 #define CAR_WIDTH (CELL_LENGTH / 1)
@@ -26,18 +27,18 @@
 typedef enum DIRECTION DIRECTION;
 typedef enum MOVING_TYPE MOVING_TYPE;
 typedef enum VELOCITY VELOCITY;
+typedef struct cross_cell cross_cell;
+typedef struct car car;
 
 enum MOVING_TYPE {
     FORWARD, SHIFT, OVERTAKE
 };
 
-typedef struct car car;
-
 struct car {
+    cross_cell crossCurrCell;
+    cross_cell crossNextCell;
     RLC currCell;
     RLC nextCell;
-    RLC crossCurrCell;//struct must be another than RLC
-    RLC crossNextCell;
     GLint velocity;
     GLint roadDirMultiplier;
     GLint ID;
@@ -48,7 +49,6 @@ struct car {
     GLfloat realPos;
     bool isActive;
     bool isCrushed;
-    bool markRight;
 };
 
 extern mat3 carTransformMatrixes[MAX_CARS];

@@ -16,6 +16,7 @@ add_executable(Automobile-Traffic-Simulation
     source/cross.c
     source/search_tools.c
     source/spawn_logs.c
+    source/traffic_density.c
     )
 
 if (WIN32)

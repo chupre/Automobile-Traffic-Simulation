@@ -125,7 +125,6 @@ bool isInRoadRange(GLint roadIndex, dot_coord* dot)
             }
             else return false;
         }
-        
     }
 }
 

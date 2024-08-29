@@ -14,8 +14,9 @@
 #include <road.h>
 #include <direction.h>
 
-#define SPAWN_FRECUENCY 0
+#define SPAWN_FREQUENCY 100
 #define TURN_LEFT_FREQUENCY 30
+#define DROP_VELOCITY_FREQUENCY 30
 
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
@@ -25,8 +26,8 @@
 #define _6_VELOCITY (_1_VELOCITY * 6)
 #define _7_VELOCITY (_1_VELOCITY * 7)
 
-#define MAX_VELOCITY (_1_VELOCITY)
-#define NUMBER_OF_VELOCITY_TYPES (1)
+#define MAX_VELOCITY (_7_VELOCITY)
+#define NUMBER_OF_VELOCITY_TYPES (7)
 
 #define VELOCITY_MULTIPLIER (CELL_LENGTH)
 
@@ -38,6 +39,8 @@
 #define MAX_CELL_DIGIT (NUMBER_OF_CELLS - 1)
 #define MAX_LINE_DIGIT (NUMBER_OF_LINES)
 #define MAX_ROAD_DIGIT (NUMBER_OF_ROADS - 1)
+
+#define NEXT_CELL_IS_ON_CROSS -45737
 
 typedef enum MOVING_TYPE MOVING_TYPE;
 typedef enum VELOCITY VELOCITY;
@@ -71,6 +74,8 @@ extern GLint innerIgnoredBackCarsIndex;
 extern RLC carAddingQueue[max_cars];
 extern GLint innerCarAddingQueueIndex;
 
+GLvoid initRoadCell(RLC *rlc, car* Car);
+
 bool isToExclude(car* Car);
 GLint getVelocityByRLC(RLC rlc);
 GLvoid excludeFromMap(car* Car);
@@ -81,7 +86,7 @@ GLint distanceToBackCar(RLC rlc, car** backCar);
 MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc);
 MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc);
 GLvoid update();
-GLvoid step();
+GLvoid stepRoad();
 GLvoid spawnCars();
 
 GLvoid appendInUserCarsPtrs(car* Car);
@@ -95,11 +100,11 @@ GLvoid appendInIgnoredBackCarsPtrs(car* Car);
 GLvoid clearIgnoredBackCarsPtrs();
 bool isInIgnoredBackCars(car* Car);
 
-GLvoid unbindCarPtrFromCell(car* Car);
-GLvoid reinitCurrCellWithNextCell(car* Car);
+GLvoid rebindRoadCars(car* Car);
+GLvoid reinitRoadCells(car* Car);
 
 car* getCarPtr(RLC* rlc);
-bool getCarPtrByRoulette(car** Car);
+bool getCarByRoulette(car** Car);
 bool rollRouletteRLC();
 
 bool isFurtherThanEndCell(car* Car);

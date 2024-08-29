@@ -7,6 +7,17 @@
 #include <stdbool.h>
 
 cross crosses[NUMBER_OF_CROSSES];
+cross_roulette rouletteCross = {0, 0};
+
+car* getCarByCrossCell(cross_cell c)
+{
+    return crosses[c.crossNum].cells[c.x + c.y * CROSS_SIDE];
+}
+
+GLvoid initCrossCell(cross_cell* c, car* Car)
+{
+    crosses[c->crossNum].cells[c->x + c->y * CROSS_SIDE] = Car;
+}
 
 GLvoid setCross(GLint crossIndex, GLint* roadIndexes)
 {
@@ -21,8 +32,10 @@ GLvoid setCross(GLint crossIndex, GLint* roadIndexes)
 
 GLvoid setCarPropertiesOnCross(car* Car)
 {
-    RLC rlc = Car->currCell;
-    roads[rlc.road].lines[rlc.line].cells[rlc.cell] = NULL;
+    /*
+    dangerous foo as nulifying of cell is done in rebind foo.
+    */
+    initRoadCell(&Car->currCell, NULL);
     
     Car->currCell.road = NO_ROAD_INDEX;
     Car->currCell.line = NO_LINE_INDEX;
@@ -40,6 +53,7 @@ GLvoid setCarPropertiesOnCross(car* Car)
 GLvoid setCarTurningProperties(car* Car)
 {
     Car->roadDirMultiplier = Car->target;
+    Car->moveDir = Car->target;
     //target doesn't change as then it and the direction are identical and that's why then target is considered default.
 }
 
@@ -107,7 +121,79 @@ GLvoid getCrossExitAndRoadFirstCell(GLint enter, DIRECTION dir, DIRECTION target
     }
 }
 
-bool isEndCross(RLC rlc)
+bool isEndedWithCross(RLC rlc)
 {
     return (roads[rlc.road].isEndCross);
+}
+
+bool getCarByRouletteCross(car** Car)
+{
+    car* tmpCar;
+	while (rollRouletteCross())
+	{
+        tmpCar = crosses[rouletteCross.crossNum].cells[rouletteCross.cellNum];
+		if (tmpCar != NULL)
+		{
+			*Car = tmpCar;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool rollRouletteCross()
+{
+    if (rouletteCross.cellNum < MAX_CELL_NUM)
+    {
+        rouletteCross.cellNum += 1;
+    }
+    else
+    {
+        rouletteCross.cellNum = 0;
+        if (rouletteCross.crossNum < MAX_CROSS_NUM)
+        {
+            rouletteCross.crossNum += 1;
+        }
+        else
+        {
+            rouletteCross.crossNum = 0;
+            return false;
+        }
+    }
+    return true;
+}
+
+GLvoid stepCross()
+{
+    car* Car = NULL;
+    while (getCarByRouletteCross(&Car))
+    {
+        rebindCrossCars(Car);
+        reinitCrossCells(Car);
+    }
+    
+}
+
+GLvoid rebindCrossCars(car* Car)
+{
+    cross_cell cell = Car->crossCurrCell;
+    initCrossCell(&Car->crossCurrCell, NULL);
+
+    cell = Car->crossNextCell;
+    if (cell.crossNum != NEXT_CELL_IS_ON_ROAD)
+    {
+        initCrossCell(&Car->crossNextCell, Car);
+    }
+    else
+    {
+        initRoadCell(&Car->nextCell, Car);
+    }
+    
+}
+
+GLvoid reinitCrossCells(car* Car)
+{
+    Car->crossCurrCell.crossNum = Car->crossNextCell.crossNum;
+    Car->crossCurrCell.x = Car->crossNextCell.x;
+    Car->crossCurrCell.y = Car->crossNextCell.y;
 }
