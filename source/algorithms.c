@@ -47,6 +47,8 @@ GLvoid update()
 		timer += STEP_TIME;
 
 		stepRoad();
+		// printf("0 density: %d\n", getDensityData(0));
+		// printf("1 density: %d\n", getDensityData(1));
 		// printf("\n..........................................................................\n");
 	}
 }
@@ -59,7 +61,6 @@ GLvoid printRLC(RLC rlc, char* string)
 GLvoid stepRoad()
 {
 	car* Car;
-
 	while (getCarByRoulette(&Car))
 	{
 		if (Car->isCrushed || Car == OCCUPYING_CAR)
@@ -68,8 +69,6 @@ GLvoid stepRoad()
 		}
 		if (isToExclude(Car))
 		{
-			// printCarProperties(Car->currCell);
-			// printf("excluded\n\n");
 			excludeFromMap(Car);
 			continue;
 		}
@@ -87,27 +86,19 @@ GLvoid stepRoad()
 		}
 		if (Car == OCCUPYING_CAR)
 		{
-			// printRLC(rouletteRLC, "OCCUPYING_CAR RLC");
 			continue;
 		}
 		if (isInUserCarsPtrs(Car))
 		{
 			continue;
 		}
-
-		// printRLC(rouletteRLC, "roulette"); car* rouletteCar = getCarPtr(&rouletteRLC); printf("V: %d\n", rouletteCar->velocity);
-		// printf("\n");
-
 		thoughtsOfOneCar(Car);
 	}
 	clearUserCarsPtrs();
-	
-	// printf("_______________SPAWN_CARS______________\n");
 	if (rand() % 100 < SPAWN_FREQUENCY)
 	{
 		spawnCars();
-	}
-	
+	}	
 }
 
 bool getCarByRoulette(car** Car)
@@ -115,7 +106,7 @@ bool getCarByRoulette(car** Car)
 	car* tmpCar;
 	while (rollRouletteRLC())
 	{
-		tmpCar = roads[rouletteRLC.road].lines[rouletteRLC.line].cells[rouletteRLC.cell];
+		tmpCar = getCarPtr(&rouletteRLC);
 		if (tmpCar != NULL)
 		{
 			*Car = tmpCar;
@@ -236,7 +227,7 @@ GLvoid rebindRoadCars(car* Car)
 {
     if (Car->currCell.cell < NUMBER_OF_CELLS)
 	{
-		initRoadCell(&Car->nextCell, NULL);
+		initRoadCell(&Car->currCell, NULL);
 	}
 
 	if (Car->nextCell.road != NEXT_CELL_IS_ON_CROSS)
@@ -260,9 +251,12 @@ GLvoid rebindRoadCars(car* Car)
 
 GLvoid reinitRoadCells(car* Car)
 {
-    Car->currCell.road = Car->nextCell.road;
-    Car->currCell.line = Car->nextCell.line;
-    Car->currCell.cell = Car->nextCell.cell;
+	if (Car->nextCell.road != NEXT_CELL_IS_ON_CROSS)
+	{
+		Car->currCell.road = Car->nextCell.road;
+		Car->currCell.line = Car->nextCell.line;
+		Car->currCell.cell = Car->nextCell.cell;
+	}
 }
 
 GLint isRLCbad(RLC rlc)
@@ -339,10 +333,13 @@ GLvoid thoughtsOfOneCar(car* Car)
 			{
 				Car->velocity = rand() % Car->velocity;
 			}
-			
-			if (Car->velocity < MAX_VELOCITY)
+			else
 			{
-				Car->velocity += _1_CELL_;
+				if (Car->velocity < MAX_VELOCITY)
+				{
+					Car->velocity += _1_CELL_;
+				}
+				
 			}
 			Car->nextCell.cell += Car->velocity;
 			// printf("1\n");
@@ -421,7 +418,6 @@ bool isToExclude(car* Car)
 	road* roadPtr = &roads[Car->currCell.road];
 	if (isFurhterThanEndLine(Car, roadPtr) || isFurtherThanEndCell(Car))
 	{
-		//printf("isToExclude\n");
 		return true;
 	}
 	return false;
@@ -433,18 +429,10 @@ bool isFurtherThanEndCell(car* Car)
 }
 
 GLvoid excludeFromMap(car* Car)
-{
-	car** ptrCell = getFirstCellPtr(Car->currCell);
-	GLint start = Car->currCell.cell;
-	GLint end = Car->nextCell.cell;
-	
-	if (start < NUMBER_OF_CELLS)
+{	
+	if (Car->currCell.cell < NUMBER_OF_CELLS)
 	{
-		ptrCell[start] = NULL;
-	}
-	if (end < NUMBER_OF_CELLS)
-	{
-		ptrCell[end] = NULL;
+		initRoadCell(&Car->currCell, NULL);
 	}
 
 	clearCarProperties(Car);
@@ -673,7 +661,7 @@ bool isRLCsuitableForSettingCar(RLC rlc)
 	return false;
 }
 
-GLvoid addInRLCCarAddingQueue(RLC rlc)
+GLvoid addInRLCcarAddingQueue(RLC rlc)
 {
 	carAddingQueue[++innerCarAddingQueueIndex] = rlc;
 }
@@ -697,7 +685,9 @@ GLvoid processCarAddingQueue()
 			car* Car = &cars[carIndex];
 			addCar(Car, carIndex, carAddingQueue[i]);
 			thoughtsOfOneCar(Car);
+
 			--freeCars;
+			increaseDensityData(carAddingQueue[i].road);
 
 			appendInUserCarsPtrs(Car);
 		}
@@ -716,3 +706,5 @@ bool isInCarAddingQueue(RLC rlc)
 	}
 	return false;
 }
+
+

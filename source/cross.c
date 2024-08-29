@@ -193,7 +193,10 @@ GLvoid rebindCrossCars(car* Car)
 
 GLvoid reinitCrossCells(car* Car)
 {
-    Car->crossCurrCell.crossNum = Car->crossNextCell.crossNum;
-    Car->crossCurrCell.x = Car->crossNextCell.x;
-    Car->crossCurrCell.y = Car->crossNextCell.y;
+    if (Car->crossNextCell.crossNum != NEXT_CELL_IS_ON_ROAD)
+    {
+        Car->crossCurrCell.crossNum = Car->crossNextCell.crossNum;
+        Car->crossCurrCell.x = Car->crossNextCell.x;
+        Car->crossCurrCell.y = Car->crossNextCell.y;
+    }
 }

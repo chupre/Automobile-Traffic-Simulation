@@ -15,7 +15,7 @@
 
 #define SPAWN_FREQUENCY 100
 #define TURN_LEFT_FREQUENCY 30
-#define DROP_VELOCITY_FREQUENCY 30
+#define DROP_VELOCITY_FREQUENCY 10
 
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
@@ -110,7 +110,7 @@ bool isFurtherThanEndCell(car* Car);
 bool compareRLCs(RLC* rlc1, RLC* rlc2);
 
 GLvoid processCarAddingQueue();
-GLvoid addInRLCCarAddingQueue(RLC rlc);
+GLvoid addInRLCcarAddingQueue(RLC rlc);
 bool isInCarAddingQueue(RLC rlc);
 GLvoid clearCarAddingQueue();
 bool isRLCsuitableForSettingCar(RLC rlc);

@@ -136,7 +136,7 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
         return;
     }
 
-    addInRLCCarAddingQueue(rlc);
+    addInRLCcarAddingQueue(rlc);
   }
 }
 
