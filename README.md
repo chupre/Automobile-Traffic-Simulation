@@ -13,6 +13,6 @@
 
   For V. 👤:\
 🔴 Develop algorithms for cross.\
-🔴 Develop algorithms for overtake.\
+🟢 Develop algorithms for overtake.\
 🟢 Try to fix a bug with cars going through each other.\
-🔴 Develop a way to count the traffic density.
+🟢 Develop a way to count the traffic density.
