@@ -9,9 +9,7 @@
 #include <cglm/cglm.h>
 
 // Custom modules
-#include <algorithms.h>
 #include <direction.h>
-#include <cross.h>
 
 // #define CAR_WIDTH (ROAD_WIDTH * 2.0f / ((GLfloat)NUMBER_OF_LINES + 1.0f) / 3.0f)
 #define CAR_WIDTH (CELL_LENGTH / 1)

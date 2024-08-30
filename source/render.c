@@ -108,7 +108,7 @@ GLvoid cursorPositionCallback(GLFWwindow *window, double xpos, double ypos) {
 }
 
 void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
-  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && !paused) {
     float normalizedX = (2.0f * mousePosX / WINDOW_WIDTH) - 1.0f;
     float normalizedY = 1.0f - (2.0f * mousePosY / WINDOW_HEIGHT);
 
