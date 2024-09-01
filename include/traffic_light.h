@@ -25,4 +25,7 @@ struct traffic_light {
 extern traffic_light lights[NUMBER_OF_TRAFFIC_LIGHTS];
 extern bool yellowRedChange;
 
+GLvoid changeLightsColor();
+COLOR getLightColor(GLint lightIndex);
+
 #endif

@@ -25,3 +25,13 @@ GLvoid changeLightsColor()
         }
     }
 }
+
+COLOR getLightColor(GLint lightIndex)
+{
+    return lights[lightIndex].color;
+}
+
+
+
+
+
