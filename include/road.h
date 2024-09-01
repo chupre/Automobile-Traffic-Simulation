@@ -42,6 +42,7 @@ struct road {
     bool isEdge;
     bool isBeginCross;
     bool isEndCross;
+    GLint endCrossNum;
     cross* beginCross;
     cross* endCross;
     GLfloat stem;

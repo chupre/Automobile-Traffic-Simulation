@@ -21,9 +21,12 @@
 #include <stb/stb_image.h>
 
 // Custom modules
+#include <macros.h>
 #include <shader.h>
 #include <render.h>
+#include <camera.h>
 #include <road.h>
+#include <direction.h>
 #include <cross.h>
 #include <map.h>
 #include <cars.h>
@@ -31,6 +34,8 @@
 #include <algorithms.h>
 #include <search_tools.h>
 #include <spawn_logs.h>
+#include <traffic_light.h>
+#include <traffic_density.h>
 
 // #define crushhhh3 1
 // #define dot_debug 1

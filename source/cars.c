@@ -1,5 +1,6 @@
-// Standard
-#include "road.h"
+#include <road.h>
+#include <macros.h>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -355,4 +356,7 @@ GLvoid clearCarProperties(car* Car)
 	Car->overtake = NONE;
 	Car->move = FORWARD;
 	Car->moveDir = NONE;
+	Car->maneuverPtr = NULL;
+	Car->arrivingPtr = NULL;
+	Car->checked = false;// used only on the cross
 }

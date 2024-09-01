@@ -1,6 +1,8 @@
 #ifndef ALGO_H
 #define ALGO_H
 
+#include <macros.h>
+
 // External
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -13,18 +15,6 @@
 #include <cars.h>
 #include <road.h>
 #include <direction.h>
-
-#define SPAWN_FREQUENCY 100
-#define TURN_LEFT_FREQUENCY 30
-#define DROP_VELOCITY_FREQUENCY 10
-
-#define _1_VELOCITY (1)
-#define _2_VELOCITY (_1_VELOCITY * 2)
-#define _3_VELOCITY (_1_VELOCITY * 3)
-#define _4_VELOCITY (_1_VELOCITY * 4)
-#define _5_VELOCITY (_1_VELOCITY * 5)
-#define _6_VELOCITY (_1_VELOCITY * 6)
-#define _7_VELOCITY (_1_VELOCITY * 7)
 
 #define MAX_VELOCITY (_7_VELOCITY)
 #define NUMBER_OF_VELOCITY_TYPES (7)
@@ -59,24 +49,22 @@ enum VELOCITY {
 };
 
 
-#define max_cars 1000
-
-extern car* userCarsPtrs[max_cars];
+extern car* userCarsPtrs[MAX_CARS];
 extern GLint innerUserCarsPtrsIndex;
-extern GLint overtakeCarsIndexes[max_cars]; 
+extern GLint overtakeCarsIndexes[MAX_CARS]; 
 extern GLint innerOvertakeCarsIndex;
 
 extern RLC rouletteRLC;
 
-extern car* ignoredBackCars[max_cars];
+extern car* ignoredBackCars[MAX_CARS];
 extern GLint innerIgnoredBackCarsIndex;
 
-extern RLC carAddingQueue[max_cars];
+extern RLC carAddingQueue[MAX_CARS];
 extern GLint innerCarAddingQueueIndex;
 
 GLvoid initRoadCell(RLC *rlc, car* Car);
 
-bool isToExclude(car* Car);
+bool isToExcludeFormRoad(car* Car);
 GLint getVelocityByRLC(RLC rlc);
 GLvoid excludeFromMap(car* Car);
 GLvoid thoughtsOfOneCar(car* Car);

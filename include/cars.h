@@ -1,6 +1,8 @@
 #ifndef CARS_H
 #define CARS_H
 
+// #include <macros.h>
+
 // Standard
 #include <stdbool.h>
 
@@ -15,8 +17,6 @@
 #define CAR_WIDTH (CELL_LENGTH / 1)
 #define CAR_LENGTH (CAR_WIDTH)
 // #define CAR_LENGHT (CAR_WIDTH * 1.7f)
-
-#define MAX_CARS 1000
 
 #define NO_INNER_INDEX -1
 #define NO_CAR_INDEX -1
@@ -46,6 +46,9 @@ struct car {
     GLfloat realPos;
     bool isActive;
     bool isCrushed;
+    car** maneuverPtr;
+    car** arrivingPtr;
+    bool checked;
 };
 
 extern mat3 carTransformMatrixes[MAX_CARS];

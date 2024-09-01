@@ -1,4 +1,5 @@
 #include <algorithms.h>
+#include <macros.h>
 #include <traffic_density.h>
 #include <cars.h>
 #include <road.h>
@@ -8,12 +9,12 @@
 RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
 
 GLint innerUserCarsPtrsIndex = NO_INNER_INDEX;
-car* userCarsPtrs[max_cars];
+car* userCarsPtrs[MAX_CARS];
 
 GLint innerOvertakeCarsIndex = NO_INNER_INDEX;
-GLint overtakeCarsIndexes[max_cars];
+GLint overtakeCarsIndexes[MAX_CARS];
 
-car* ignoredBackCars[max_cars];
+car* ignoredBackCars[MAX_CARS];
 GLint innerIgnoredBackCarsIndex = NO_INNER_INDEX;
 
 RLC carAddingQueue[MAX_CARS];
@@ -67,7 +68,7 @@ GLvoid stepRoad()
 		{
 			continue;
 		}
-		if (isToExclude(Car))
+		if (isToExcludeFormRoad(Car))
 		{
 			excludeFromMap(Car);
 			continue;
@@ -253,9 +254,7 @@ GLvoid reinitRoadCells(car* Car)
 {
 	if (Car->nextCell.road != NEXT_CELL_IS_ON_CROSS)
 	{
-		Car->currCell.road = Car->nextCell.road;
-		Car->currCell.line = Car->nextCell.line;
-		Car->currCell.cell = Car->nextCell.cell;
+		Car->currCell = Car->nextCell;
 	}
 }
 
@@ -298,8 +297,6 @@ GLvoid thoughtsOfOneCar(car* Car)
 	{	//as end fo line changing which is just done
 		Car->move = FORWARD;
 		Car->moveDir = getRoadDir(Car);
-		// Car->nextCell.cell += Car->velocity;
-		// return;
 	}
 	else if (Car->move == SHIFT)
 	{
@@ -312,10 +309,25 @@ GLvoid thoughtsOfOneCar(car* Car)
 	GLint distance = distanceToForthCar(Car->currCell, &forthCar);//the foo takes in cognisance that road can have endCross
 
 
-	if (distance == _NO_CAR_ && isEndedWithCross(Car->currCell))
+	if (distance == _NO_CAR_ && isEndedWithCross(&Car->currCell))
 	{
 		distance = NUMBER_OF_CELLS - Car->currCell.cell;
 		isAllowedToOvertake = false;
+
+		if (distance == 1) {
+			Car->velocity = _0_CELL_;
+			cross_cell c;
+			transformRLCIntoCrossCell(&c, Car);
+			if (getCarByCrossCell(&c) == NULL) {
+				Car->crossNextCell = c;
+				Car->velocity = CROSS_VELOCITY;
+			}
+			else {
+				Car->velocity = _0_CELL_;
+			}
+			
+			return;
+		}
 	}
 	// printf("distance: %d\n", distance);
 
@@ -356,6 +368,11 @@ GLvoid thoughtsOfOneCar(car* Car)
 			return;
 		}
 	}
+
+
+
+
+
 	/*
 	condition "forthCarVelocity < Car->velocity" will stay strickt
 	because the conceding the unstrickt condition means additional condition
@@ -376,12 +393,8 @@ GLvoid thoughtsOfOneCar(car* Car)
 		if (move != FORWARD)
 		{
 			Car->move = move;
-			Car->nextCell.road = rlc.road;
-			Car->nextCell.line = rlc.line;
-			Car->nextCell.cell = rlc.cell;
+			Car->nextCell = rlc;
 			bindCellAndCar(&rlc, OCCUPYING_CAR);
-
-
 			if (Car->move == OVERTAKE && Car->velocity == _0_CELL_)
 			{
 				Car->velocity = _1_CELL_;
@@ -397,11 +410,9 @@ GLvoid thoughtsOfOneCar(car* Car)
 				// printf("OVERTAKE\n");
 				// printDir(Car->moveDir);
 			}
-
 			return;
 		}
 	}
-	
 	// printf("4\n");
 	//according to the so-called all-excluded condition
 	Car->velocity = distance - 1;
@@ -409,7 +420,7 @@ GLvoid thoughtsOfOneCar(car* Car)
 	// printf("_____distance - 1\n");
 }
 
-bool isToExclude(car* Car)
+bool isToExcludeFormRoad(car* Car)
 {
 	// if (isOutOfScreenSpace(Car->realPos))
 	// {
@@ -428,15 +439,19 @@ bool isFurtherThanEndCell(car* Car)
 	return (Car->nextCell.cell >= NUMBER_OF_CELLS);
 }
 
+// road ends up to the cross then Car is exluded only from the road, otherwise from road and MAP
 GLvoid excludeFromMap(car* Car)
 {	
 	if (Car->currCell.cell < NUMBER_OF_CELLS)
 	{
 		initRoadCell(&Car->currCell, NULL);
 	}
-
-	clearCarProperties(Car);
-	++freeCars;
+	if (!isEndedWithCross(&Car->currCell))
+	{
+		clearCarProperties(Car);
+		++freeCars;
+	}
+	// as cars' amount on the road is decreasing
 	decreaseDensityData(Car->currCell.road);
 }
 
@@ -613,11 +628,6 @@ GLint distanceToForthCar(RLC rlc, car** Car)
 			return (i - rlc.cell);
 		}
 	}
-	//this condition will be checked only if no car is found on the road before
-	// if (roads[rlc.road].isEndCross)
-	// {
-	// 	return NUMBER_OF_CELLS - rlc.cell;
-	// }
 
 	return _NO_CAR_;
 }
