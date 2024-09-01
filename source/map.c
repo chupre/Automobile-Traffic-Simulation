@@ -42,8 +42,17 @@ GLvoid setMap()
 		break;
 
 	case CROSS:
-		addRoad(0, 0.0f, -1.0f, NORTH);
-		addRoad(1, 1.0f, 0.0f, WEST);
+		// addRoad(0, ); // N
+		// addRoad(1, ); // S
+		// addRoad(2, ); // E
+		// addRoad(3, ); // W
+		// addRoad(4, ); // N
+		// addRoad(5, ); // S
+		// addRoad(6, ); // E
+		// addRoad(7, ); // W
+		GLint enterRoadIndexes[] = {0, 1, 2, 3};
+		GLint exitRoadIndexes[] = {4, 5, 6, 7};
+		addCross(0, 0.0f, 0.0f, enterRoadIndexes, exitRoadIndexes);
 	}
 
 	for (int i = 0; i < NUMBER_OF_ROADS; i++)

@@ -1,7 +1,7 @@
 #ifndef CARS_H
 #define CARS_H
 
-// #include <macros.h>
+#include <macros.h>
 
 // Standard
 #include <stdbool.h>
@@ -21,6 +21,7 @@
 #define NO_INNER_INDEX -1
 #define NO_CAR_INDEX -1
 
+// typedef struct RLC RLC;
 typedef enum DIRECTION DIRECTION;
 typedef enum MOVING_TYPE MOVING_TYPE;
 typedef enum VELOCITY VELOCITY;
@@ -49,6 +50,7 @@ struct car {
     car** maneuverPtr;
     car** arrivingPtr;
     bool checked;
+    cross_cell curvingCell;//the pole stays uninitializing after GLvoid clearCarProperties(car* Car)
 };
 
 extern mat3 carTransformMatrixes[MAX_CARS];

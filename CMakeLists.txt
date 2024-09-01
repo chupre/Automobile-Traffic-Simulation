@@ -15,7 +15,6 @@ add_executable(Automobile-Traffic-Simulation
     source/gui.c
     source/cross.c
     source/search_tools.c
-    source/spawn_logs.c
     source/traffic_density.c
     source/traffic_light.c
     )

@@ -26,6 +26,7 @@
 #include <render.h>
 #include <camera.h>
 #include <road.h>
+#include <rlc.h>
 #include <direction.h>
 #include <cross.h>
 #include <map.h>
@@ -33,7 +34,6 @@
 #include <gui.h>
 #include <algorithms.h>
 #include <search_tools.h>
-#include <spawn_logs.h>
 #include <traffic_light.h>
 #include <traffic_density.h>
 
@@ -138,7 +138,6 @@ int main()
         glfwPollEvents();
     }
 
-    // closeFile();
     quit();
 }
 

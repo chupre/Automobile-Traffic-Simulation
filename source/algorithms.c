@@ -318,11 +318,15 @@ GLvoid thoughtsOfOneCar(car* Car)
 			Car->velocity = _0_CELL_;
 			cross_cell c;
 			transformRLCIntoCrossCell(&c, Car);
-			if (getCarByCrossCell(&c) == NULL) {
+			if (getCarByCrossCell(&c) == NULL)
+			{
 				Car->crossNextCell = c;
 				Car->velocity = CROSS_VELOCITY;
+
+				getCurvingCell(&Car->curvingCell, Car, c);
 			}
-			else {
+			else
+			{
 				Car->velocity = _0_CELL_;
 			}
 			
@@ -351,7 +355,6 @@ GLvoid thoughtsOfOneCar(car* Car)
 				{
 					Car->velocity += _1_CELL_;
 				}
-				
 			}
 			Car->nextCell.cell += Car->velocity;
 			// printf("1\n");
@@ -368,10 +371,6 @@ GLvoid thoughtsOfOneCar(car* Car)
 			return;
 		}
 	}
-
-
-
-
 
 	/*
 	condition "forthCarVelocity < Car->velocity" will stay strickt
