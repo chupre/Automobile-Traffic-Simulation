@@ -1,11 +1,9 @@
 #ifndef MACROS_H
 #define MACROS_H
 
-#define SPAWN_FREQUENCY 100
 #define TURN_LEFT_FREQUENCY 30
 #define DROP_VELOCITY_FREQUENCY 10
 
-#define MAX_CARS 1000
 #define NUMBER_OF_CROSSES 10
 
 #define _1_VELOCITY (1)

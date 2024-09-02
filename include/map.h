@@ -8,23 +8,21 @@
 #define TWO_ROADS_NS 5
 #define TWO_ROADS_WE 6
 #define CROSS 7
-#define MAP_TYPE (5)
 
-#if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == ONE_ROAD_W || MAP_TYPE == ONE_ROAD_E
-    #define NUMBER_OF_ROADS 1
-#elif MAP_TYPE == TWO_ROADS_NS || MAP_TYPE == TWO_ROADS_WE || MAP_TYPE == CROSS
-    #define NUMBER_OF_ROADS 2
-#endif
+typedef struct road road;
+extern int NUMBER_OF_ROADS;
+extern int NUMBER_OF_LINES;
+extern int MAX_CARS;
+extern int SPAWN_FREQUENCY;
+extern float DEFAULT_FOV;
 
-//because debug has its own FOV
-#ifndef DEFAULT_POV 
-    #if MAP_TYPE == ONE_ROAD_N || MAP_TYPE == ONE_ROAD_S || MAP_TYPE == TWO_ROADS_NS
-        #define DEFAULT_FOV 45.0f
-    #else
-        #define DEFAULT_FOV 38.0f
-    #endif
-#endif
+extern road* roads;
+extern unsigned int roadVAO, roadVBO, roadEBO;
+extern float* roadVertices;
+extern int* roadIndices;
+extern unsigned int lineVAO, lineVBO;
+extern float* lineVertices;
 
-void setMap();
+void setMap(int map_type, int lines, int max_cars, int spawn_frequency);
 
 #endif

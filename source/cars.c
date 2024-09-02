@@ -5,15 +5,17 @@
 #include <string.h>
 
 // Custom modules
-#include <cars.h>
 #include <algorithms.h>
 #include <direction.h>
+#include <map.h>
+#include <cars.h>
+#include <malloc.h>
 
 car occupying_car = {.isActive = true, .velocity = _0_CELL_};
 car* OCCUPYING_CAR = &occupying_car;
 
-mat3 carTransformMatrixes[MAX_CARS];
-car cars[MAX_CARS];
+mat3 carTransformMatrixes[1000];
+car * cars;
 
 GLuint carVAO, carVBO, carEBO, carInstanceVBO;
 
@@ -31,7 +33,7 @@ GLint carIndices[6] =
     0, 1, 3
 };
 
-GLint freeCars = MAX_CARS;
+GLint freeCars;
 
 GLvoid setOccupyingCarProperties()
 {
@@ -326,6 +328,9 @@ GLint getFreeCarIndex()
 
 GLvoid setCarsToDefault()
 {
+    cars = malloc(sizeof(car) * MAX_CARS);
+    freeCars = MAX_CARS;
+
 	for (int i = 0; i < MAX_CARS; i++)
 	{
 		clearCarProperties(&cars[i]);

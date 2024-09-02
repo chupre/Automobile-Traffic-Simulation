@@ -12,10 +12,17 @@ vec3 cameraUp = { 0.0f, 1.0f, 0.0f };
 mat4 projection;
 mat4 view;
 
-GLfloat cameraFOV = DEFAULT_FOV;
+GLfloat cameraFOV;
+
+bool cameraConstInit = false;
 
 GLvoid setProjection()
 {
+    if (!cameraConstInit) {
+        cameraFOV = DEFAULT_FOV;
+        cameraConstInit = true;
+    }
+
     GLuint projLoc = glGetUniformLocation(shaderProgram, "projection");
     glm_perspective(glm_rad(cameraFOV), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 1.0f, 100.0f, projection);
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, projection);

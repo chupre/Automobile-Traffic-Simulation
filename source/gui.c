@@ -458,9 +458,7 @@ void showInitMenu() {
 }
 
 void init () {
-    printf("Cars: %d\nLines: %d\nSpawn Frequency: %d\nMap Type: %d\n", initConfig.max_cars, initConfig.lines, initConfig.spawn_frequency, initConfig.map_type);
-
-    setMap();
+    setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);
     setCarsToDefault();
 
     initRoads();

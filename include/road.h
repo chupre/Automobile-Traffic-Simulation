@@ -10,22 +10,18 @@
 // Custom modules
 #include <rlc.h>
 #include <direction.h>
-#include <map.h>
 
 #define CELL_LENGTH 0.05f
 // #define CELL_WIDTH ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f)
 #define CELL_WIDTH (CELL_LENGTH)
 #define NUMBER_OF_CELLS 40
 
-#define NUMBER_OF_LINES 7
-#define ROAD_WIDTH (CELL_LENGTH * (NUMBER_OF_LINES + 1))
-#define HALF_ROAD_WIDTH (ROAD_WIDTH / 2)
-
 #define NO_ROAD_INDEX -1
 #define NO_LINE_INDEX -1
 #define NO_CELL_INDEX -1
 
-// #define NUMBER_OF_ROADS 1
+extern float ROAD_WIDTH;
+extern float HALF_ROAD_WIDTH;
 
 typedef enum DIRECTION DIRECTION;
 typedef struct cross cross;
@@ -49,15 +45,8 @@ struct road {
     GLfloat startLineCoord;
     GLfloat endLineCoord;
     DIRECTION dir;
-    line lines[NUMBER_OF_LINES + 1];
+    line* lines;
 };
-
-extern road roads[NUMBER_OF_ROADS];
-extern GLuint roadVAO, roadVBO, roadEBO;
-extern GLfloat roadVertices[NUMBER_OF_ROADS * 4 * 5];
-extern GLint roadIndices[NUMBER_OF_ROADS * 6];
-extern GLuint lineVAO, lineVBO;
-extern GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2];
 
 GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir);
 GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat lenght, DIRECTION dir);

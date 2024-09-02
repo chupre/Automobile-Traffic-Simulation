@@ -27,8 +27,6 @@
 #define STEP_TIME 1.0f //seconds
 
 #define MAX_CELL_DIGIT (NUMBER_OF_CELLS - 1)
-#define MAX_LINE_DIGIT (NUMBER_OF_LINES)
-#define MAX_ROAD_DIGIT (NUMBER_OF_ROADS - 1)
 
 #define NEXT_CELL_IS_ON_CROSS -45737
 
@@ -48,18 +46,19 @@ enum VELOCITY {
     _NO_CAR_ = 666
 };
 
-
-extern car* userCarsPtrs[MAX_CARS];
+extern int MAX_LINE_DIGIT;
+extern int MAX_ROAD_DIGIT;
+extern car ** userCarsPtrs;
 extern GLint innerUserCarsPtrsIndex;
-extern GLint overtakeCarsIndexes[MAX_CARS]; 
+extern GLint * overtakeCarsIndexes; 
 extern GLint innerOvertakeCarsIndex;
 
 extern RLC rouletteRLC;
 
-extern car* ignoredBackCars[MAX_CARS];
+extern car** ignoredBackCars;
 extern GLint innerIgnoredBackCarsIndex;
 
-extern RLC carAddingQueue[MAX_CARS];
+extern RLC * carAddingQueue;
 extern GLint innerCarAddingQueueIndex;
 
 GLvoid initRoadCell(RLC *rlc, car* Car);

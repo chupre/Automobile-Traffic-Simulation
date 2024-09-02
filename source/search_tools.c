@@ -7,6 +7,7 @@
 
 #include <road.h>
 #include <algorithms.h>
+#include <map.h>
 
 dot_coord _DOT_ = {NO_COORD, NO_COORD};
 

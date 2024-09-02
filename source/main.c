@@ -37,10 +37,6 @@
 #include <traffic_light.h>
 #include <traffic_density.h>
 
-// #define crushhhh3 1
-// #define dot_debug 1
-#define crus 1
-
 int main()
 {
     initGL();
@@ -61,35 +57,6 @@ int main()
     // RLC crRLC = {0, 1, 2};
     // addCrushedCar(crRLC);
 
-#endif
-#ifdef crushhhh3
-    for (int line = 10, cell = 19; line < 13 ; line++, cell--)
-    {
-        RLC cr = {0, line, cell};
-        addCrushedCar(cr);
-    }
-    for (int line = 20, cell = 17; line < 23 ; line++, cell++)
-    {
-        RLC cr = {0, line, cell};
-        addCrushedCar(cr);
-    }
-#endif
-#ifdef crus
-    GLint roadNum = 0; 
-    RLC cr = {roadNum, 0, 0};
-    addCrushedCar(cr);
-    RLC cr1 = {1, 0, 0};
-    addCrushedCar(cr1);
-    // RLC cr2 = {roadNum, 6, 6};
-    // addCrushedCar(cr2);
-    
-
-
-    // for (int line = 2, cell = 10; line < 5 ; line++)
-    // {
-    //     RLC cr = {0, line, cell};
-    //     addCrushedCar(cr);
-    // }
 #endif
 
     initFont();
@@ -112,12 +79,13 @@ int main()
 
             endPauseTime = 0;
 
-            while (deltaTime >= 1.0)
-            {
-                update();
-                deltaTime--;
-            }
             if (isInit) {
+                while (deltaTime >= 1.0)
+                {
+                    update();
+                    deltaTime--;
+                }
+
                 render();
             }
             //printf("\rfreeCars: %d ", freeCars);

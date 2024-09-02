@@ -55,8 +55,8 @@ struct car {
     cross_cell curvingCell;//the pole stays uninitializing after GLvoid clearCarProperties(car* Car)
 };
 
-extern mat3 carTransformMatrixes[MAX_CARS];
-extern car cars[MAX_CARS];
+extern mat3 carTransformMatrixes[1000];
+extern car * cars;
 extern GLuint carVAO, carVBO, carEBO, carInstanceVBO;
 extern GLfloat carVertices[4 * 2];
 extern GLint carIndices[6];

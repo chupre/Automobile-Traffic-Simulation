@@ -1,5 +1,6 @@
 #include <cross.h>
 #include <macros.h>
+#include <map.h>
 
 #include <direction.h>
 
@@ -10,6 +11,12 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+
+int CROSS_SIDE;
+int HALF_CROSS_SIDE;
+int CROSS_WIDTH;
+int NUMBER_OF_CROSS_CELLS;
+int MAX_CELL_NUM;
 
 cross crosses[NUMBER_OF_CROSSES];
 cross_roulette rouletteCross = {0, 0};
@@ -542,6 +549,15 @@ GLvoid transformRLCIntoCrossCell(cross_cell* c, car* Car)
 //....................................................................................................................
 GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enterRoadIndexes, GLint* exitRoadIndexes)
 {
+    
+    CROSS_SIDE = (NUMBER_OF_LINES + 1) * 2;
+    HALF_CROSS_SIDE = CROSS_SIDE / 2;
+    CROSS_WIDTH = CELL_WIDTH * CROSS_SIDE;
+    NUMBER_OF_CROSS_CELLS = CROSS_SIDE * CROSS_SIDE;
+    MAX_CELL_NUM = CROSS_SIDE * CROSS_SIDE;
+
+    crosses[crossIndex].cells = malloc(sizeof(car*) * NUMBER_OF_CROSS_CELLS);
+
     setCrossProperties(crossIndex, enterRoadIndexes, exitRoadIndexes);
     // setCross(); // for D.
 }

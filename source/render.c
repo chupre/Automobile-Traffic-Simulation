@@ -210,7 +210,7 @@ GLvoid initCars() {
   glGenBuffers(1, &carInstanceVBO);
   glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(mat3) * MAX_CARS,
-               &carTransformMatrixes[0], GL_DYNAMIC_DRAW);
+               carTransformMatrixes, GL_DYNAMIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   glGenVertexArrays(1, &carVAO);
@@ -281,7 +281,7 @@ GLvoid render() {
   }
 
   glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
-  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(carTransformMatrixes),
+  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(mat3) * MAX_CARS,
                   carTransformMatrixes);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
   glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, MAX_CARS);

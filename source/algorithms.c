@@ -1,23 +1,28 @@
+#include "map.h"
 #include <algorithms.h>
 #include <macros.h>
+#include <stdlib.h>
 #include <traffic_density.h>
 #include <cars.h>
 #include <road.h>
 #include <cross.h>
 #include <render.h>
 
-RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
+bool constsInit = false;
+int MAX_LINE_DIGIT;
+int MAX_ROAD_DIGIT;
+RLC rouletteRLC;
 
 GLint innerUserCarsPtrsIndex = NO_INNER_INDEX;
-car* userCarsPtrs[MAX_CARS];
+car ** userCarsPtrs;
 
 GLint innerOvertakeCarsIndex = NO_INNER_INDEX;
-GLint overtakeCarsIndexes[MAX_CARS];
+GLint * overtakeCarsIndexes;
 
-car* ignoredBackCars[MAX_CARS];
+car ** ignoredBackCars;
 GLint innerIgnoredBackCarsIndex = NO_INNER_INDEX;
 
-RLC carAddingQueue[MAX_CARS];
+RLC * carAddingQueue;
 GLint innerCarAddingQueueIndex = NO_INNER_INDEX;
 
 bool compareRLCs(RLC* rlc1, RLC* rlc2)
@@ -41,6 +46,17 @@ GLvoid printDir(DIRECTION dir)
 
 GLvoid update()
 {
+    if (!constsInit) {
+        MAX_LINE_DIGIT = NUMBER_OF_LINES;
+        MAX_ROAD_DIGIT = NUMBER_OF_ROADS - 1;
+        RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
+        userCarsPtrs = malloc(sizeof(car) * MAX_CARS);
+        overtakeCarsIndexes = malloc(sizeof(GLint) * MAX_CARS); 
+        ignoredBackCars = malloc(sizeof(car) * MAX_CARS);
+        carAddingQueue = malloc(sizeof(RLC) * MAX_CARS);
+        constsInit = true;
+    }
+
 	if (glfwGetTime() - timer > STEP_TIME)
 	{
 		//printf("Step: %lf\n", glfwGetTime());		

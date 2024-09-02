@@ -8,7 +8,7 @@
 
 #include <map.h>
 
-extern GLint densityData[NUMBER_OF_ROADS];
+extern GLint * densityData;
 
 GLvoid increaseDensityData(GLint roadIndex);
 GLvoid decreaseDensityData(GLint roadIndex);

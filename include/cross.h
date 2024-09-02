@@ -11,17 +11,9 @@
 #include <traffic_light.h>
 #include <road.h>
 
-#define CROSS_SIDE ((NUMBER_OF_LINES + 1) * 2)
-#define HALF_CROSS_SIDE (CROSS_SIDE / 2)
-
-#define CROSS_WIDTH (CELL_WIDTH * CROSS_SIDE)
-
 #define NUMBER_OF_CROSS_ROADS 4
-#define BIG_NUMBER_OF_CROSS_ROADS (NUMBER_OF_CROSS_ROADS * 2)
-#define NUMBER_OF_CROSS_CELLS (CROSS_SIDE * CROSS_SIDE)
 
 #define MAX_CROSS_NUM (NUMBER_OF_CROSSES)
-#define MAX_CELL_NUM (CROSS_SIDE * CROSS_SIDE)
 
 #define NEXT_CELL_IS_ON_ROAD -12312
 
@@ -66,10 +58,16 @@ struct cross {
     GLint exitRoadsIndexes[NUMBER_OF_CROSS_ROADS];
     road* enterRoadsPtrs[NUMBER_OF_CROSS_ROADS]; //DIRECTION type values can be indexes of roads of corresponding directions
     road* exitRoadsPtrs[NUMBER_OF_CROSS_ROADS];
-    car* cells[NUMBER_OF_CROSS_CELLS];
+    car** cells;
     queue carsEndingManeuver;
     queue carsArriving;
 };
+
+extern int CROSS_SIDE;
+extern int HALF_CROSS_SIDE;
+extern int CROSS_WIDTH;
+extern int NUMBER_OF_CROSS_CELLS;
+extern int MAX_CELL_NUM;
 
 extern cross crosses[NUMBER_OF_CROSSES];
 extern cross_roulette rouletteCross;

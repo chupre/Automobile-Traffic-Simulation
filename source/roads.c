@@ -1,18 +1,17 @@
 // Standard
+#include <stdlib.h>
 #include <string.h>
 
 // Custom modules
 #include <road.h>
+#include <map.h>
 #include <cars.h>
 #include <algorithms.h>
 #include <render.h>
 
-road roads[NUMBER_OF_ROADS];
-GLuint roadVAO, roadVBO, roadEBO;
-GLfloat roadVertices[NUMBER_OF_ROADS * 4 * 5];
-GLint roadIndices[NUMBER_OF_ROADS * 6];
-GLuint lineVAO, lineVBO;
-GLfloat lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2];
+float ROAD_WIDTH;
+float HALF_ROAD_WIDTH;
+bool roadsConstInit = false;
 
 DIRECTION getRoadDir(car* Car)
 {
@@ -50,6 +49,12 @@ car** getFirstCellPtr(RLC rlc) {
 
 GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir)
 {
+    if (!roadsConstInit) {
+        ROAD_WIDTH = CELL_LENGTH * (NUMBER_OF_LINES + 1);
+        HALF_ROAD_WIDTH = ROAD_WIDTH / 2;
+        roadsConstInit = true;
+    }
+
     // road properties
     roads[roadIndex].dir = dir;
     roads[roadIndex].isBeginCross = false; // by default
@@ -218,6 +223,8 @@ GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat length
 
 GLvoid setLines(GLint roadIndex)
 {
+    roads[roadIndex].lines = malloc(sizeof(line) * (NUMBER_OF_LINES + 1));
+
     GLfloat stride = CELL_WIDTH;
     int i;
 
