@@ -2,14 +2,13 @@
 # 🗒️ TO-DO
   For D. 👤:\
 🟢 Migrate from visual studio and configure cmake to make it cross-platform.\
-🔴 Implement linear interpolation for camera movement and cars.\
-🔴 Fix zoom.\
-🔴 Add road selection UI.\
-🔴 Add camera acceleration.\
-🔴 Implement textures for cars.\
-🔴 Add main menu with map selection.\
+🟢 Add main menu with map selection.\
+🔴 fix crosses.\
 🔴 Add restart button.\
-🔴 Split roads in two parts to make them two-directional like IRL.
+🔴 fix saves.\
+🔴 Split roads in two parts to make them two-directional like IRL.\
+🔴 Implement linear interpolation for camera movement and cars.\
+🔴 Implement textures for cars.
 
   For V. 👤:\
 🟢 Develop algorithms for cross.\
