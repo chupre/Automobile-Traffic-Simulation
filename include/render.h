@@ -29,8 +29,10 @@ extern GLchar WINDOW_NAME[];
 extern mat4 view;
 extern mat4 projection;
 extern bool paused;
+extern bool isInitMenuActive;
 extern bool isSaveMenuActive;
 extern bool isLoadMenuActive;
+extern bool isInit;
 extern GLFWwindow* window;
 extern struct nk_glfw glfw;
 extern struct nk_context* context;
@@ -56,6 +58,7 @@ GLvoid quit();
 GLvoid initGL();
 GLvoid moveCarOnScreen(GLint carIndex);
 GLvoid processKeyboardInput();
+void showInitMenu();
 
 GLfloat getScreenVelocity(car* Car);
 GLfloat getScreenVelocityShift(car* Car);

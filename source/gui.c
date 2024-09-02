@@ -6,6 +6,7 @@
 #include <render.h>
 #include <cars.h>
 #include <road.h>
+#include "map.h"
 
 // External 
 #if defined(_WIN32) || defined(WIN32)
@@ -28,9 +29,15 @@
 #include <nuklear/nuklear_glfw_gl3.h>
 #include <style.c>
 
-
 char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
+
+config initConfig = {
+    100,
+    3,
+    65,
+    ONE_ROAD_N
+};
 
 void initGUI()
 {
@@ -46,25 +53,46 @@ void initGUI()
         return;
     }
 
+    if (isInitMenuActive) {
+        showInitMenu();
+        return;
+    }
+
     if (nk_begin(context, "PauseMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
         nk_layout_row_dynamic(context, 50, 1);
         nk_label(context, "Main Menu", NK_TEXT_CENTERED);
 
-        nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
-        nk_spacer(context);
-        nk_layout_row_push(context, 150);
+        if (!isInit) {
+            nk_layout_row_begin(context, NK_STATIC, 30, 2);
+            nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+            nk_spacer(context);
+            nk_layout_row_push(context, 150);
 
-        if (nk_button_label(context, "Save Model"))
-        {
-            strcpy(userSaveName, "");
-            isSaveMenuActive = true;
+            if (nk_button_label(context, "New Model"))
+            {
+                isInitMenuActive = true;
+            }
+
+            nk_layout_row_end(context);
+
+            nk_layout_row_dynamic(context, 10, 1);
+        } else {
+            nk_layout_row_begin(context, NK_STATIC, 30, 2);
+            nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+            nk_spacer(context);
+            nk_layout_row_push(context, 150);
+
+            if (nk_button_label(context, "Save Model"))
+            {
+                strcpy(userSaveName, "");
+                isSaveMenuActive = true;
+            }
+
+            nk_layout_row_end(context);
+
+            nk_layout_row_dynamic(context, 10, 1);
         }
-
-        nk_layout_row_end(context);
-
-        nk_layout_row_dynamic(context, 10, 1);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
@@ -276,7 +304,7 @@ void showLoadMenu()
                 }
                 else if (OS == UNIX)
                 {
-                    for (int i = 0; i < save_counter - 2; i++)
+                    for (int i = 2; i < save_counter; i++)
                     {
                         nk_layout_row_dynamic(context, 30, 1);
 
@@ -379,4 +407,67 @@ void load(char* fileName)
     fclose(saveFile);
 
     isLoadMenuActive = false;
+}
+
+void showInitMenu() {
+    if (nk_begin(context, "InitMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
+    {
+        nk_layout_row_dynamic(context, 50, 1);
+        nk_label(context, "New Model", NK_TEXT_CENTERED);
+        
+        nk_layout_row_dynamic(context, 25, 1);
+        char cars_label[MAX_BUFFER_SIZE];
+        sprintf(cars_label, "Max amount of cars: %d", initConfig.max_cars);
+        nk_label(context, cars_label, NK_TEXT_LEFT);
+        nk_slider_int(context, 0, &initConfig.max_cars, 1000, 10);
+
+        nk_layout_row_dynamic(context, 25, 1);
+        char lines_label[MAX_BUFFER_SIZE];
+        sprintf(lines_label, "Number of lines: %d", initConfig.lines);
+        nk_label(context, lines_label, NK_TEXT_LEFT);
+        nk_slider_int(context, 0, &initConfig.lines, 100, 1);
+
+        nk_layout_row_dynamic(context, 25, 1);
+        char spawn_label[MAX_BUFFER_SIZE];
+        sprintf(spawn_label, "Cars spawn frequency: %d%%", initConfig.spawn_frequency);
+        nk_label(context, spawn_label, NK_TEXT_LEFT);
+        nk_slider_int(context, 0, &initConfig.spawn_frequency, 100, 1);
+
+        nk_layout_row_dynamic(context, 25, 1);
+        nk_label(context, "Choose map type:", NK_TEXT_LEFT);
+        if (nk_option_label(context, "N", initConfig.map_type == ONE_ROAD_N)) initConfig.map_type = ONE_ROAD_N;
+        if (nk_option_label(context, "S", initConfig.map_type == ONE_ROAD_S)) initConfig.map_type = ONE_ROAD_S;
+        if (nk_option_label(context, "W", initConfig.map_type == ONE_ROAD_W)) initConfig.map_type = ONE_ROAD_W;
+        if (nk_option_label(context, "E", initConfig.map_type == ONE_ROAD_E)) initConfig.map_type = ONE_ROAD_E;
+        if (nk_option_label(context, "NS", initConfig.map_type == TWO_ROADS_NS)) initConfig.map_type = TWO_ROADS_NS;
+        if (nk_option_label(context, "WE", initConfig.map_type == TWO_ROADS_WE)) initConfig.map_type = TWO_ROADS_WE;
+        if (nk_option_label(context, "CROSS", initConfig.map_type == CROSS)) initConfig.map_type = CROSS;
+
+        nk_layout_row_dynamic(context, 40, 5);
+        nk_spacer(context);
+        nk_spacer(context);
+
+        if (nk_button_label(context, "Create a new model"))
+        {
+            init();
+        }
+    }
+
+    nk_end(context);
+    nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+}
+
+void init () {
+    printf("Cars: %d\nLines: %d\nSpawn Frequency: %d\nMap Type: %d\n", initConfig.max_cars, initConfig.lines, initConfig.spawn_frequency, initConfig.map_type);
+
+    setMap();
+    setCarsToDefault();
+
+    initRoads();
+    initLines();
+    initCars();
+
+    isInit = true;
+    isInitMenuActive = false;
+    paused = false;
 }

@@ -46,13 +46,6 @@ int main()
     initGL();
     genShader();
 
-    setMap();
-    setCarsToDefault();
-
-    initRoads();
-    initLines();
-    initCars();
-
     // openFile();
 
 #ifdef dot_debug
@@ -124,8 +117,9 @@ int main()
                 update();
                 deltaTime--;
             }
-
-            render();
+            if (isInit) {
+                render();
+            }
             //printf("\rfreeCars: %d ", freeCars);
         }
         else

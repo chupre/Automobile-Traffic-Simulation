@@ -9,7 +9,7 @@
 #include <road.h>
 
 //a road gets a direction, an edge state
-GLvoid setMap()
+void setMap()
 {
 	switch (MAP_TYPE)
 	{

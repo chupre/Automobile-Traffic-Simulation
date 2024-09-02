@@ -25,6 +25,6 @@
     #endif
 #endif
 
-GLvoid setMap();
+void setMap();
 
 #endif

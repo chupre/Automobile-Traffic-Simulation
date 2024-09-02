@@ -32,7 +32,9 @@ GLuint WINDOW_WIDTH = 1024;
 GLuint WINDOW_HEIGHT = 768;
 GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
 
-bool paused = false;
+bool paused = true;
+bool isInit = false;
+bool isInitMenuActive = false;
 bool isSaveMenuActive = false;
 bool isLoadMenuActive = false;
 
