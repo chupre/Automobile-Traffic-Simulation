@@ -12,7 +12,7 @@
 🔴 Split roads in two parts to make them two-directional like IRL.
 
   For V. 👤:\
-🔴 Develop algorithms for cross.\
+🟢 Develop algorithms for cross.\
 🟢 Develop algorithms for overtake.\
 🟢 Try to fix a bug with cars going through each other.\
 🟢 Develop a way to count the traffic density.
