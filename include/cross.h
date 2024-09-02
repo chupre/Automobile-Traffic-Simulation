@@ -8,14 +8,13 @@
 #include <GLFW/glfw3.h>
 
 // Custom modules
-#include <algorithms.h>
 #include <traffic_light.h>
+#include <road.h>
 
 #define CROSS_SIDE ((NUMBER_OF_LINES + 1) * 2)
 #define HALF_CROSS_SIDE (CROSS_SIDE / 2)
 
 #define CROSS_WIDTH (CELL_WIDTH * CROSS_SIDE)
-
 
 #define NUMBER_OF_CROSS_ROADS 4
 #define BIG_NUMBER_OF_CROSS_ROADS (NUMBER_OF_CROSS_ROADS * 2)
