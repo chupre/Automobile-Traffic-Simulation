@@ -63,21 +63,21 @@ void initGUI()
         nk_layout_row_dynamic(context, 50, 1);
         nk_label(context, "Main Menu", NK_TEXT_CENTERED);
 
-        if (!isInit) {
-            nk_layout_row_begin(context, NK_STATIC, 30, 2);
-            nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
-            nk_spacer(context);
-            nk_layout_row_push(context, 150);
+        nk_layout_row_begin(context, NK_STATIC, 30, 2);
+        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+        nk_spacer(context);
+        nk_layout_row_push(context, 150);
 
-            if (nk_button_label(context, "New Model"))
-            {
-                isInitMenuActive = true;
-            }
+        if (nk_button_label(context, "New Model"))
+        {
+            isInitMenuActive = true;
+        }
 
-            nk_layout_row_end(context);
+        nk_layout_row_end(context);
 
-            nk_layout_row_dynamic(context, 10, 1);
-        } else {
+        nk_layout_row_dynamic(context, 10, 1);
+
+        if (isInit) {
             nk_layout_row_begin(context, NK_STATIC, 30, 2);
             nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
             nk_spacer(context);
@@ -460,12 +460,11 @@ void showInitMenu() {
 void init () {
     setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);
     setCarsToDefault();
-
     initRoads();
     initLines();
     initCars();
 
-    isInit = true;
     isInitMenuActive = false;
+    isInit = true;
     paused = false;
 }

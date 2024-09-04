@@ -9,9 +9,6 @@
 #include <algorithms.h>
 #include <render.h>
 
-float ROAD_WIDTH;
-float HALF_ROAD_WIDTH;
-bool roadsConstInit = false;
 
 DIRECTION getRoadDir(car* Car)
 {
@@ -49,12 +46,6 @@ car** getFirstCellPtr(RLC rlc) {
 
 GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir)
 {
-    if (!roadsConstInit) {
-        ROAD_WIDTH = CELL_LENGTH * (NUMBER_OF_LINES + 1);
-        HALF_ROAD_WIDTH = ROAD_WIDTH / 2;
-        roadsConstInit = true;
-    }
-
     // road properties
     roads[roadIndex].dir = dir;
     roads[roadIndex].isBeginCross = false; // by default
@@ -224,6 +215,9 @@ GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat length
 GLvoid setLines(GLint roadIndex)
 {
     roads[roadIndex].lines = malloc(sizeof(line) * (NUMBER_OF_LINES + 1));
+    for (int i = 0; i < NUMBER_OF_LINES + 1; i++) {
+        roads[roadIndex].lines[i].cells = malloc(sizeof(car*) * NUMBER_OF_CELLS);
+    }
 
     GLfloat stride = CELL_WIDTH;
     int i;
@@ -252,11 +246,11 @@ GLvoid setLines(GLint roadIndex)
             };
 
             memcpy(&lineVertices[i * 5 * 2 + roadIndex * 5 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 5 * 2);
-            memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
+            memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
             roads[roadIndex].lines[i].carSpawnCoord = x;
         }
 
-        memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
+        memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
         roads[roadIndex].lines[i].carSpawnCoord = x + stride;    
 
         #ifdef DEBUG
@@ -318,10 +312,10 @@ GLvoid setLines(GLint roadIndex)
             };
 
             memcpy(&lineVertices[i * 5 * 2 + roadIndex * 5 * NUMBER_OF_LINES * 2], vertices, sizeof(GLfloat) * 5 * 2);
-            memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
+            memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
             roads[roadIndex].lines[i].carSpawnCoord = y;
         }
-        memset(roads[roadIndex].lines[i].cells, 0, sizeof(roads[roadIndex].lines[i].cells));
+        memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
         
         #ifdef DEBUG

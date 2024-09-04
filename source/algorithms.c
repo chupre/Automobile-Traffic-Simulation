@@ -50,16 +50,16 @@ GLvoid update()
         MAX_LINE_DIGIT = NUMBER_OF_LINES;
         MAX_ROAD_DIGIT = NUMBER_OF_ROADS - 1;
         RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
-        userCarsPtrs = malloc(sizeof(car) * MAX_CARS);
+        userCarsPtrs = malloc(sizeof(car*) * MAX_CARS);
         overtakeCarsIndexes = malloc(sizeof(GLint) * MAX_CARS); 
-        ignoredBackCars = malloc(sizeof(car) * MAX_CARS);
+        ignoredBackCars = malloc(sizeof(car*) * MAX_CARS);
         carAddingQueue = malloc(sizeof(RLC) * MAX_CARS);
         constsInit = true;
     }
 
 	if (glfwGetTime() - timer > STEP_TIME)
 	{
-		//printf("Step: %lf\n", glfwGetTime());		
+		printf("Step: %lf\n", glfwGetTime());		
 
 		timer += STEP_TIME;
 
@@ -459,9 +459,9 @@ GLvoid excludeFromMap(car* Car)
 {	
 	if (Car->currCell.cell < NUMBER_OF_CELLS)
 	{
-		initRoadCell(&Car->currCell, NULL);
+		initRoadCell(&Car->nextCell, NULL);
 	}
-	if (!isEndedWithCross(&Car->currCell))
+	if (!isEndedWithCross(&Car->nextCell))
 	{
 		clearCarProperties(Car);
 		++freeCars;

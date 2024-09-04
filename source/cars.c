@@ -283,7 +283,7 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 GLvoid getFreeSpotAddress(RLC* rlc)
 {
-	RLC freeSpots[MAX_CARS * sizeof(RLC)];
+	RLC freeSpots[MAX_CARS];
 	int freeSpotsCounter = 0;
 	int randFreeSpotIndex = 0;
 

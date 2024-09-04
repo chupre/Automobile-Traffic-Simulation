@@ -71,7 +71,11 @@ int main()
 
         if (!paused)
         {
-            glfwSetTime(glfwGetTime() - getPauseTime());
+            if (isInit) {
+                glfwSetTime(glfwGetTime() - getPauseTime());
+            } else {
+                glfwSetTime(0.0f);
+            }
 
             currTime = glfwGetTime();
             deltaTime += (currTime - lastTime) / limitFPS;
@@ -80,7 +84,7 @@ int main()
             endPauseTime = 0;
 
             if (isInit) {
-                while (deltaTime >= 1.0)
+                    while (deltaTime >= 1.0)
                 {
                     update();
                     deltaTime--;
@@ -88,7 +92,6 @@ int main()
 
                 render();
             }
-            //printf("\rfreeCars: %d ", freeCars);
         }
         else
         {

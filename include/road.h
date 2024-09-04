@@ -11,17 +11,10 @@
 #include <rlc.h>
 #include <direction.h>
 
-#define CELL_LENGTH 0.05f
-// #define CELL_WIDTH ROAD_WIDTH * 2 / (NUMBER_OF_LINES + 1.0f)
-#define CELL_WIDTH (CELL_LENGTH)
-#define NUMBER_OF_CELLS 40
-
 #define NO_ROAD_INDEX -1
 #define NO_LINE_INDEX -1
 #define NO_CELL_INDEX -1
 
-extern float ROAD_WIDTH;
-extern float HALF_ROAD_WIDTH;
 
 typedef enum DIRECTION DIRECTION;
 typedef struct cross cross;
@@ -30,7 +23,7 @@ typedef struct road road;
 typedef struct car car;
 
 struct line {
-    car* cells[NUMBER_OF_CELLS];
+    car** cells;
     GLfloat carSpawnCoord;
 };
 

@@ -9,12 +9,18 @@
 #define TWO_ROADS_WE 6
 #define CROSS 7
 
+#define CELL_LENGTH 0.05f
+#define CELL_WIDTH (CELL_LENGTH)
+
 typedef struct road road;
 extern int NUMBER_OF_ROADS;
 extern int NUMBER_OF_LINES;
+extern int NUMBER_OF_CELLS;
 extern int MAX_CARS;
 extern int SPAWN_FREQUENCY;
 extern float DEFAULT_FOV;
+extern float ROAD_WIDTH;
+extern float HALF_ROAD_WIDTH;
 
 extern road* roads;
 extern unsigned int roadVAO, roadVBO, roadEBO;
