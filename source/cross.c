@@ -197,21 +197,18 @@ GLvoid stepCross()
  
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
-        q_item* queue = crosses[crossIndex].carsEndingManeuver.head;
-        q_item* item = queue;
+        q_item* item = crosses[crossIndex].carsEndingManeuver.head;
         while (item != NULL)
         {
-            if (!isAnybodyToDriveBeforeNose(queue, item->value->moveDir)) {
-                thoughtsOfOneCar(item->value);
-            }
+            thoughtsOfOneCar(item->value);
             item = item->next;
         }
     }
 
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
-        q_item* queue = crosses[crossIndex].carsArriving.head;
-        q_item* item = queue;
+        q_item* queue = crosses[crossIndex].carsEndingManeuver.head;
+        q_item* item = crosses[crossIndex].carsArriving.head;
         while (item != NULL)
         {
             if (!isAnybodyToDriveBeforeNose(queue, item->value->moveDir)) {
