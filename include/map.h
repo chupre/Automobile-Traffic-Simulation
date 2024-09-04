@@ -1,6 +1,9 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <glad/glad.h>
+
+
 #define ONE_ROAD_N 1
 #define ONE_ROAD_S 2
 #define ONE_ROAD_W 3
@@ -29,6 +32,7 @@ extern int* roadIndices;
 extern unsigned int lineVAO, lineVBO;
 extern float* lineVertices;
 
-void setMap(int map_type, int lines, int max_cars, int spawn_frequency);
+GLvoid setMap(int map_type, int lines, int max_cars, int spawn_frequency);
+GLvoid setRoadsAroundCross(GLfloat start_x, GLfloat start_y);
 
 #endif

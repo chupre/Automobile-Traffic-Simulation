@@ -16,8 +16,8 @@
 #include <road.h>
 #include <direction.h>
 
-#define MAX_VELOCITY (_7_VELOCITY)
-#define NUMBER_OF_VELOCITY_TYPES (7)
+#define MAX_VELOCITY (_2_VELOCITY)
+#define NUMBER_OF_VELOCITY_TYPES (2)
 
 #define VELOCITY_MULTIPLIER (CELL_LENGTH)
 

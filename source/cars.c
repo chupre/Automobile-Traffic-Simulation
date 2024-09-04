@@ -99,7 +99,7 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 		{
 	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord - margin * 2.0f;
 	        x2 = x1 - margin * 2.0f;
-			y1 = -1.0f + rlc.cell * CELL_LENGTH + 0 * margin;
+			y1 = roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH + 0 * margin;
 			y2 = y1 + rlc.cell * CELL_LENGTH + CAR_LENGTH + 0 * margin;
 			Car->realPos = y1;
 
@@ -113,7 +113,7 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 		{
 	        x1 = roads[rlc.road].lines[rlc.line].carSpawnCoord;
 	        x2 = x1;
-			y1 = 1.0f - CAR_LENGTH - rlc.cell * CELL_LENGTH - 0 * margin;
+			y1 = roads[rlc.road].startLineCoord - CAR_LENGTH - rlc.cell * CELL_LENGTH - 0 * margin;
 			y2 = 1.0f;//y1 - CAR_LENGTH - rlc.cell * CELL_LENGTH - 0 * margin;
 			Car->realPos = y1;
 
@@ -129,8 +129,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	        x2 = x1;
 			y1 = x1;
 			y2 = x2;
-			x1 = -1.0f + rlc.cell * CELL_LENGTH;
-			x2 = -1.0f + rlc.cell * CELL_LENGTH;
+			x1 = roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
+			x2 = roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
 			Car->realPos = x1;
 
 			vec2 carTranslationVector = { x2, y2 };
@@ -145,8 +145,8 @@ GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
 	        x2 = x1 - margin * 2.0f;
 			y1 = x1;
 			y2 = x2;
-			x1 = 1.0f - rlc.cell * CELL_WIDTH;
-			x2 = 1.0f - rlc.cell * CELL_WIDTH - CAR_WIDTH;
+			x1 = roads[rlc.road].startLineCoord - rlc.cell * CELL_WIDTH;
+			x2 = roads[rlc.road].startLineCoord - rlc.cell * CELL_WIDTH - CAR_WIDTH;
 			Car->realPos = x1;
 
 			vec2 carTranslationVector = { x2, y2 };
@@ -295,8 +295,12 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 
 	for (int i = 0; i < NUMBER_OF_ROADS; i++)
 	{
-		if (roads[i].isEdge)
+		if (/*roads[i].isEdge ||*/ !roads[i].isBeginCross)
 		{
+			if (i >= 4 && i <= 7)
+			{
+				printf("i:%d, begin:%d, end:%d\n", i, roads[i].isBeginCross, roads[i].isEndCross);
+			}
 			for (int j = 0; j < NUMBER_OF_LINES + 1; j++)
 			{
 				if (roads[i].lines[j].cells[0] == NULL)

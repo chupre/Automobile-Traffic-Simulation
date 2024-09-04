@@ -464,8 +464,8 @@ bool isToExcludeFormRoad(car* Car)
 	// {
 	// 	return true;
 	// }
-	road* roadPtr = &roads[Car->currCell.road];
-	if (isFurhterThanEndLine(Car, roadPtr) || isFurtherThanEndCell(Car))
+	// road* roadPtr = &roads[Car->nextCell.road];
+	if (/*isFurhterThanEndLine(Car, roadPtr) || */isFurtherThanEndCell(Car))
 	{
 		return true;
 	}

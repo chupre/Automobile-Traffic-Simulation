@@ -591,11 +591,13 @@ GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exit
     for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++)
     {
         roads[enterRoadIndexes[i]].isEndCross = true;
+        roads[enterRoadIndexes[i]].isBeginCross = false;
         roads[enterRoadIndexes[i]].endCrossNum = crossIndex;
         roads[enterRoadIndexes[i]].endCross = Cross;
 
         roads[exitRoadIndexes[i]].beginCross = Cross;
         roads[exitRoadIndexes[i]].isBeginCross = true;
+        roads[exitRoadIndexes[i]].isEndCross = false;
     }   
 }
 
