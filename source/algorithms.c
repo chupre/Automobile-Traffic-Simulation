@@ -49,7 +49,9 @@ GLvoid update()
     if (!alghorithmsInit) {
         MAX_LINE_DIGIT = NUMBER_OF_LINES;
         MAX_ROAD_DIGIT = NUMBER_OF_ROADS - 1;
-        RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
+        rouletteRLC.road = MAX_ROAD_DIGIT;
+        rouletteRLC.line = -1;
+        rouletteRLC.cell = MAX_CELL_DIGIT;
         userCarsPtrs = malloc(sizeof(car*) * MAX_CARS);
 
         if (userCarsPtrs == NULL) {

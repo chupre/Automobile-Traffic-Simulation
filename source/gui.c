@@ -374,8 +374,9 @@ void save()
         return;
     }
 
+    fwrite(&initConfig, sizeof(initConfig), 1, saveFile);
     fwrite(cars, sizeof(car) * MAX_CARS, 1, saveFile);
-    fwrite(carTransformMatrixes, sizeof(mat3) * MAX_CARS, 1, saveFile);
+    fwrite(carTransformMatrixes, sizeof(mat3) * 1000, 1, saveFile);
     fwrite(roads, sizeof(road) * NUMBER_OF_ROADS, 1, saveFile);
     fwrite(&freeCars, sizeof(freeCars), 1, saveFile);
 
@@ -402,6 +403,8 @@ void load(char* fileName)
     setRoadsToDefault();
     glm_mat3_identity_array(carTransformMatrixes, 1000);
 
+    fread(&initConfig, sizeof(initConfig), 1, saveFile);
+    init();
     fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
     fread(carTransformMatrixes, sizeof(mat3) * MAX_CARS, 1, saveFile);
     fread(roads, sizeof(road) * NUMBER_OF_ROADS, 1, saveFile);
