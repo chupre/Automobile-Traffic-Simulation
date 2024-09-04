@@ -404,13 +404,7 @@ void load(char* fileName)
     glm_mat3_identity_array(carTransformMatrixes, 1000);
 
     fread(&initConfig, sizeof(initConfig), 1, saveFile);
-    init();
-    fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
-    fread(carTransformMatrixes, sizeof(mat3) * MAX_CARS, 1, saveFile);
-    fread(roads, sizeof(road) * NUMBER_OF_ROADS, 1, saveFile);
-    fread(&freeCars, sizeof(freeCars), 1, saveFile);
-
-    fclose(saveFile);
+    init(saveFile);
 
     isLoadMenuActive = false;
 }
@@ -455,7 +449,7 @@ void showInitMenu() {
 
         if (nk_button_label(context, "Create a new model"))
         {
-            init();
+            init(NULL);
         }
     }
 
@@ -463,7 +457,7 @@ void showInitMenu() {
     nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
 }
 
-void init () {
+void init (FILE* saveFile) {
     if (isInit) {
         glm_mat3_identity_array(carTransformMatrixes, 1000);
         for (int i = 0; i < 1000; i++) {
@@ -486,6 +480,15 @@ void init () {
     initRoads();
     initLines();
     initCars();
+
+    if (saveFile) {
+        fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
+        fread(carTransformMatrixes, sizeof(mat3) * MAX_CARS, 1, saveFile);
+        fread(roads, sizeof(road) * NUMBER_OF_ROADS, 1, saveFile);
+        fread(&freeCars, sizeof(freeCars), 1, saveFile);
+
+        fclose(saveFile);
+    }
 
     isInitMenuActive = false;
     isInit = true;
