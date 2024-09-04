@@ -470,6 +470,7 @@ void init () {
 
 #ifdef DEBUG
     dbgIsCellsInit = false;
+    dbgVerticesInit = false;
 #endif
 
     setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);

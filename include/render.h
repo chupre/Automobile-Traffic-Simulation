@@ -70,6 +70,7 @@ GLvoid dbgRenderCells();
 extern GLuint cellsVBO, cellsVAO;
 extern GLfloat * cellsVertices;
 extern bool dbgIsCellsInit;
+extern bool dbgVerticesInit;
 
 #endif
 

@@ -59,6 +59,7 @@ GLdouble timer;
 GLuint cellsVBO, cellsVAO;
 GLfloat *cellsVertices;
 bool dbgIsCellsInit = false;
+bool dbgVerticesInit = false;
 
 #endif
 

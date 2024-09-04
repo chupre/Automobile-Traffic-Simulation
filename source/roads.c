@@ -266,7 +266,11 @@ GLvoid setLines(GLint roadIndex)
 
         #ifdef DEBUG
         
-        cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
+        if (!dbgVerticesInit) {
+            cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
+            dbgVerticesInit = true;
+        }
+
         DEFAULT_FOV = 60;
 
         stride = fabs(stride);
@@ -334,9 +338,12 @@ GLvoid setLines(GLint roadIndex)
         
         #ifdef DEBUG
 
-        cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
-        DEFAULT_FOV = 60;
+        if (!dbgVerticesInit) {
+            cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
+            dbgVerticesInit = true;
+        }
         
+        DEFAULT_FOV = 60;
         stride = fabs(stride);
         y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;
         x1 = roadVertices[0 + 4 * 5 * roadIndex];
