@@ -191,9 +191,16 @@ GLvoid initLines() {
   glBindVertexArray(lineVAO);
 
   glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-  glBufferData(GL_ARRAY_BUFFER,
-               sizeof(GLfloat) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2,
-               lineVertices, GL_STATIC_DRAW);
+
+  if (MAP_TYPE == CROSS) {
+      glBufferData(GL_ARRAY_BUFFER,
+              sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2),
+              lineVertices, GL_STATIC_DRAW);
+  } else {
+      glBufferData(GL_ARRAY_BUFFER,
+              sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2,
+              lineVertices, GL_STATIC_DRAW);
+  }
 
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
                         (GLvoid *)0);
@@ -265,7 +272,7 @@ GLvoid render() {
   glBindVertexArray(roadVAO);
   glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
   glBindVertexArray(lineVAO);
-  glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
+  glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2 + 8);
 
 #ifdef DEBUG
   dbgRenderCells();

@@ -71,7 +71,10 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         exit(1);
     }
 
-    lineVertices = malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
+    if (map_type == CROSS) {
+        lineVertices = malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2));
+    } else 
+        lineVertices = malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
 
     if (lineVertices == NULL) {
         printf("malloc failed on lineVertices");
@@ -113,7 +116,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 		break;
 
 	case CROSS:
-        DEFAULT_FOV = 29.0f;
+        DEFAULT_FOV = 39.0f;
         GLfloat crossCenterX = 0.0f;
         GLfloat crossCenterY = 0.0f;
         setRoadsAroundCross(crossCenterX, crossCenterX);
