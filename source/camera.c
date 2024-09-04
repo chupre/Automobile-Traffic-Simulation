@@ -158,6 +158,28 @@ GLint isPossibleToMoveCam(camDir dir, GLfloat offset)
 {
     int roadsOnEdge = 0, roadsOnCamBorder = 0;
 
+    if (MAP_TYPE == CROSS) {
+        if (dir == UP) {
+            vec4 upNorthRoadEdge = { roadVertices[4 * 5 * 4 + 10], roadVertices[4 * 5 * 4 + 11], 1.0f, 1.0f };
+            return isVertexOnCamBorders(upNorthRoadEdge, dir, offset, NORTH);
+        }
+        
+        if (dir == DOWN) {
+            vec4 downNorthRoadEdge = { roadVertices[0 * 5 * 4 + 0], roadVertices[0 * 5 * 4 + 1], 1.0f, 1.0f };
+            return isVertexOnCamBorders(downNorthRoadEdge, dir, offset, NORTH);
+        }
+        
+        if (dir == RIGHT) {
+            vec4 rightWestRoadEdge = { roadVertices[3 * 5 * 4 + 0], roadVertices[3 * 5 * 4 + 1], 1.0f, 1.0f };
+            return isVertexOnCamBorders(rightWestRoadEdge, dir, offset, WEST);
+        }
+
+        if (dir == LEFT) {
+            vec4 leftWestRoadEdge = { roadVertices[7 * 5 * 4 + 10], roadVertices[7 * 5 * 4 + 11], 1.0f, 1.0f };
+            return isVertexOnCamBorders(leftWestRoadEdge, dir, offset, WEST);
+        }
+    }
+
     for (int i = 0; i < NUMBER_OF_ROADS; i++)
     {
         if (roads[i].isEdge)
