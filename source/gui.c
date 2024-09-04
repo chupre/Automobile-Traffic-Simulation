@@ -293,28 +293,16 @@ void showLoadMenu()
             }
             else
             {
-                if (OS == WINDOWS)
+                for (int i = 0; i < save_counter; i++)
                 {
-                    for (int i = 2; i < save_counter; i++)
-                    {
-                        nk_layout_row_dynamic(context, 30, 1);
+                    if (strcmp("..", saves[i]) == 0 || strcmp(".", saves[i]) == 0)
+                        continue;
 
-                        if (nk_option_label(context, saves[i], i == activeFileIndex))
-                        {
-                            activeFileIndex = i;
-                        }
-                    }
-                }
-                else if (OS == UNIX)
-                {
-                    for (int i = 2; i < save_counter; i++)
-                    {
-                        nk_layout_row_dynamic(context, 30, 1);
+                    nk_layout_row_dynamic(context, 30, 1);
 
-                        if (nk_option_label(context, saves[i], i == activeFileIndex))
-                        {
-                            activeFileIndex = i;
-                        }
+                    if (nk_option_label(context, saves[i], i == activeFileIndex))
+                    {
+                        activeFileIndex = i;
                     }
                 }
             }
@@ -484,7 +472,6 @@ void init (FILE* saveFile) {
     if (saveFile) {
         fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
         fread(carTransformMatrixes, sizeof(mat3) * MAX_CARS, 1, saveFile);
-        fread(roads, sizeof(road) * NUMBER_OF_ROADS, 1, saveFile);
         fread(&freeCars, sizeof(freeCars), 1, saveFile);
 
         fclose(saveFile);

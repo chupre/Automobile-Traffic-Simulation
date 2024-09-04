@@ -94,7 +94,7 @@ GLvoid keyCallback(GLFWwindow *window, int key, int scancode, int action,
       isSaveMenuActive = false;
     } else if (isLoadMenuActive) {
       isLoadMenuActive = false;
-    } else if(isInitMenuActive && isInit) {
+    } else if(isInitMenuActive) {
       isInitMenuActive = false;
     } else {
       paused = !paused;
