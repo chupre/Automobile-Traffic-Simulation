@@ -17,6 +17,7 @@ int NUMBER_OF_CELLS;
 int NUMBER_OF_LINES;
 int MAX_CARS;
 int SPAWN_FREQUENCY;
+int MAP_TYPE;
 float DEFAULT_FOV;
 float ROAD_WIDTH;
 float HALF_ROAD_WIDTH;
@@ -41,7 +42,8 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_ROADS = 1;
         NUMBER_OF_CELLS = 40;
     }
-
+    
+    MAP_TYPE = map_type;
     NUMBER_OF_LINES = lines;
     MAX_CARS = max_cars;
     SPAWN_FREQUENCY = spawn_frequency;

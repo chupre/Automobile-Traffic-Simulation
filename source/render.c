@@ -390,10 +390,16 @@ GLvoid dbgInitCells() {
 
   glBindVertexArray(cellsVAO);
   glBindBuffer(GL_ARRAY_BUFFER, cellsVBO);
+  if (MAP_TYPE == CROSS) {
+  glBufferData(GL_ARRAY_BUFFER,
+               sizeof(float) * 2 * 5 * (NUMBER_OF_CELLS * 2 + CROSS_SIDE + 1) * 2,
+               cellsVertices, GL_STATIC_DRAW);
+  } else {
   glBufferData(GL_ARRAY_BUFFER,
                sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS *
                    NUMBER_OF_CELLS * 5 * 8,
                cellsVertices, GL_STATIC_DRAW);
+  }
 
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
                         (GLvoid *)0);

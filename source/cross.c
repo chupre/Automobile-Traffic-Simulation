@@ -6,15 +6,17 @@
 
 #include <road.h>
 #include <cars.h>
+#include <string.h>
 #include <traffic_light.h>
 #include <algorithms.h>
+#include <render.h>
 
 #include <stdlib.h>
 #include <stdbool.h>
 
 int CROSS_SIDE;
 int HALF_CROSS_SIDE;
-int CROSS_WIDTH;
+float CROSS_WIDTH;
 int NUMBER_OF_CROSS_CELLS;
 int MAX_CELL_NUM;
 
@@ -545,13 +547,37 @@ GLvoid transformRLCIntoCrossCell(cross_cell* c, car* Car)
 
 //....................................................................................................................
 GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enterRoadIndexes, GLint* exitRoadIndexes)
-{
-    
+{    
     CROSS_SIDE = (NUMBER_OF_LINES + 1) * 2;
     HALF_CROSS_SIDE = CROSS_SIDE / 2;
     CROSS_WIDTH = CELL_WIDTH * CROSS_SIDE;
     NUMBER_OF_CROSS_CELLS = CROSS_SIDE * CROSS_SIDE;
     MAX_CELL_NUM = CROSS_SIDE * CROSS_SIDE;
+
+#ifdef DEBUG
+    DEFAULT_FOV = 60;
+
+    vec2 top_left = { roads[enterRoadIndexes[2]].startLineCoord, roads[enterRoadIndexes[1]].startLineCoord };  
+    vec2 bottom_right = { roads[enterRoadIndexes[3]].startLineCoord, roads[enterRoadIndexes[0]].startLineCoord };
+
+    cellsVertices = malloc(sizeof(float) * 2 * 5 * (CROSS_SIDE + NUMBER_OF_CELLS * 2 + 1) * 2);
+    
+    for (int i = 0; i < CROSS_SIDE + NUMBER_OF_CELLS * 2 + 1; i++) {
+        float line_vertices[10] = {
+            top_left[0], top_left[1] - CELL_WIDTH * i, 1.0f, 0.0f, 0.0f,
+            bottom_right[0], top_left[1] - CELL_WIDTH * i, 1.0f, 0.0f, 0.0f
+        };
+        memcpy(&cellsVertices[2 * 5 * i], line_vertices, 2 * 5 * sizeof(float));
+    }
+
+    for (int i = 0; i < CROSS_SIDE + NUMBER_OF_CELLS * 2 + 1; i++) {
+        float line_vertices[10] = {
+            top_left[0] + CELL_WIDTH * i, top_left[1], 1.0f, 0.0f, 0.0f,
+            top_left[0] + CELL_WIDTH * i, bottom_right[1], 1.0f, 0.0f, 0.0f
+        };
+        memcpy(&cellsVertices[2 * 5 * (CROSS_SIDE + NUMBER_OF_CELLS * 2 + 1) + 2 * 5 * i], line_vertices, 2 * 5 * sizeof(float));
+    }
+#endif
 
     crosses[crossIndex].cells = malloc(sizeof(car*) * NUMBER_OF_CROSS_CELLS);
 

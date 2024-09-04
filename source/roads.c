@@ -265,44 +265,44 @@ GLvoid setLines(GLint roadIndex)
         roads[roadIndex].lines[i].carSpawnCoord = x + stride;    
 
         #ifdef DEBUG
-        
-        if (!dbgVerticesInit) {
-            cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
-            dbgVerticesInit = true;
-        }
+        if (MAP_TYPE != CROSS) { 
+            if (!dbgVerticesInit) {
+                cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
+                dbgVerticesInit = true;
+            }
 
-        DEFAULT_FOV = 60;
+            DEFAULT_FOV = 60;
 
-        stride = fabs(stride);
-        x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH;
-        y1 = roadVertices[1 + 4 * 5 * roadIndex];
-        y2 = roadVertices[11 + 4 * 5 * roadIndex];
+            stride = fabs(stride);
+            x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH;
+            y1 = roadVertices[1 + 4 * 5 * roadIndex];
+            y2 = roadVertices[11 + 4 * 5 * roadIndex];
 
 
-        int dir_multiplier;
-        if (roads[roadIndex].dir == NORTH)
-            dir_multiplier = 1;
-        else
-            dir_multiplier = -1;
+            int dir_multiplier;
+            if (roads[roadIndex].dir == NORTH)
+                dir_multiplier = 1;
+            else
+                dir_multiplier = -1;
 
-        for (i = 0; i < NUMBER_OF_LINES + 1; i++) {
-            x += stride;
-            for(int j = 0; j < NUMBER_OF_CELLS; j++) {
-                float cellVertices[] = {
-                    x,              y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
-                    x,              y1 + ((j + 1) * CELL_LENGTH) * dir_multiplier,  1.0f, 0.0f, 0.0f, 
-                    x - CELL_WIDTH, y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
-                    x - CELL_WIDTH, y1 + ((j + 1) * CELL_LENGTH) * dir_multiplier,  1.0f, 0.0f, 0.0f, 
-                    x - CELL_WIDTH, y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
-                    x,              y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
-                    x - CELL_WIDTH, y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
-                    x,              y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f 
-                };        
-                int index = roadIndex * 5 * 8 * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS + i * 5 * 8 * NUMBER_OF_CELLS + j * 5 * 8;
-                memcpy(&cellsVertices[index], cellVertices, sizeof(GLfloat) * 5 * 8);
+            for (i = 0; i < NUMBER_OF_LINES + 1; i++) {
+                x += stride;
+                for(int j = 0; j < NUMBER_OF_CELLS; j++) {
+                    float cellVertices[] = {
+                        x,              y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
+                        x,              y1 + ((j + 1) * CELL_LENGTH) * dir_multiplier,  1.0f, 0.0f, 0.0f, 
+                        x - CELL_WIDTH, y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
+                        x - CELL_WIDTH, y1 + ((j + 1) * CELL_LENGTH) * dir_multiplier,  1.0f, 0.0f, 0.0f, 
+                        x - CELL_WIDTH, y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
+                        x,              y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
+                        x - CELL_WIDTH, y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f, 
+                        x,              y1 + (j * CELL_LENGTH) * dir_multiplier,        1.0f, 0.0f, 0.0f 
+                    };        
+                    int index = roadIndex * 5 * 8 * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS + i * 5 * 8 * NUMBER_OF_CELLS + j * 5 * 8;
+                    memcpy(&cellsVertices[index], cellVertices, sizeof(GLfloat) * 5 * 8);
+                }
             }
         }
-
         #endif
     }
     
@@ -337,43 +337,43 @@ GLvoid setLines(GLint roadIndex)
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
         
         #ifdef DEBUG
+        if (MAP_TYPE != CROSS) {
+            if (!dbgVerticesInit) {
+                cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
+                dbgVerticesInit = true;
+            }
 
-        if (!dbgVerticesInit) {
-            cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
-            dbgVerticesInit = true;
-        }
-        
-        DEFAULT_FOV = 60;
-        stride = fabs(stride);
-        y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;
-        x1 = roadVertices[0 + 4 * 5 * roadIndex];
-        x2 = roadVertices[10 + 4 * 5 * roadIndex];
+            DEFAULT_FOV = 60;
+            stride = fabs(stride);
+            y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;
+            x1 = roadVertices[0 + 4 * 5 * roadIndex];
+            x2 = roadVertices[10 + 4 * 5 * roadIndex];
 
 
-        int dir_multiplier;
-        if (roads[roadIndex].dir == EAST)
-            dir_multiplier = 1;
-        else
-            dir_multiplier = -1;
+            int dir_multiplier;
+            if (roads[roadIndex].dir == EAST)
+                dir_multiplier = 1;
+            else
+                dir_multiplier = -1;
 
-        for (i = 0; i < NUMBER_OF_LINES + 1; i++) {
-            y += stride;
-            for(int j = 0; j < NUMBER_OF_CELLS; j++) {
-                float cellVertices[] = {
-                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f, 
-                    x1 + ((j + 1) * CELL_LENGTH) * dir_multiplier, y,                1.0f, 0.0f, 0.0f, 
-                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
-                    x1 + ((j + 1) * CELL_LENGTH) * dir_multiplier, y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
-                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
-                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f, 
-                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
-                    x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f 
-                };        
-                int index = roadIndex * 5 * 8 * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS + i * 5 * 8 * NUMBER_OF_CELLS + j * 5 * 8;
-                memcpy(&cellsVertices[index], cellVertices, sizeof(GLfloat) * 5 * 8);
+            for (i = 0; i < NUMBER_OF_LINES + 1; i++) {
+                y += stride;
+                for(int j = 0; j < NUMBER_OF_CELLS; j++) {
+                    float cellVertices[] = {
+                        x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f, 
+                        x1 + ((j + 1) * CELL_LENGTH) * dir_multiplier, y,                1.0f, 0.0f, 0.0f, 
+                        x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                        x1 + ((j + 1) * CELL_LENGTH) * dir_multiplier, y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                        x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                        x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f, 
+                        x1 + (j * CELL_LENGTH) * dir_multiplier,       y - CELL_WIDTH,   1.0f, 0.0f, 0.0f, 
+                        x1 + (j * CELL_LENGTH) * dir_multiplier,       y,                1.0f, 0.0f, 0.0f 
+                    };        
+                    int index = roadIndex * 5 * 8 * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS + i * 5 * 8 * NUMBER_OF_CELLS + j * 5 * 8;
+                    memcpy(&cellsVertices[index], cellVertices, sizeof(GLfloat) * 5 * 8);
+                }
             }
         }
-
         #endif
     }
 }

@@ -65,7 +65,7 @@ struct cross {
 
 extern int CROSS_SIDE;
 extern int HALF_CROSS_SIDE;
-extern int CROSS_WIDTH;
+extern float CROSS_WIDTH;
 extern int NUMBER_OF_CROSS_CELLS;
 extern int MAX_CELL_NUM;
 

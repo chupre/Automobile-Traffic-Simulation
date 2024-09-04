@@ -19,6 +19,7 @@ typedef struct road road;
 extern int NUMBER_OF_ROADS;
 extern int NUMBER_OF_LINES;
 extern int NUMBER_OF_CELLS;
+extern int MAP_TYPE;
 extern int MAX_CARS;
 extern int SPAWN_FREQUENCY;
 extern float DEFAULT_FOV;
