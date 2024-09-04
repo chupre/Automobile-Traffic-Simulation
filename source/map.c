@@ -112,12 +112,12 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 
 	case CROSS:
         DEFAULT_FOV = 45.0f;
-        GLfloat crossX = 0.0f;
-        GLfloat crossY = 0.0f;
-        setRoadsAroundCross(crossX, crossX);
+        GLfloat crossCenterX = 0.0f;
+        GLfloat crossCenterY = 0.0f;
+        setRoadsAroundCross(crossCenterX, crossCenterX);
 		GLint enterRoadIndexes[] = {0, 1, 2, 3};
 		GLint exitRoadIndexes[] = {4, 5, 6, 7};
-		addCross(0, 0.0f, 0.0f, enterRoadIndexes, exitRoadIndexes);
+		addCross(0, crossCenterX, crossCenterY, enterRoadIndexes, exitRoadIndexes);
 	}
 
 #ifdef DEBUG
