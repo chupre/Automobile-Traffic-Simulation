@@ -26,6 +26,12 @@ char* getShaderContent(const GLchar* fileName)
     rewind(shaderFile);
 
     shaderContent = memset(malloc(size + 1), '\0', size + 1);
+
+    if (shaderContent == NULL) {
+        printf("malloc failed with shaderContent");
+        exit(1);
+    }
+
     fread(shaderContent, 1, size, shaderFile);
     fclose(shaderFile);
 

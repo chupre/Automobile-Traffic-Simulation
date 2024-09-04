@@ -9,7 +9,7 @@
 #include <direction.h>
 #include <map.h>
 #include <cars.h>
-#include <malloc.h>
+#include <rlc.h>
 
 car occupying_car = {.isActive = true, .velocity = _0_CELL_};
 car* OCCUPYING_CAR = &occupying_car;
@@ -283,7 +283,13 @@ GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
 
 GLvoid getFreeSpotAddress(RLC* rlc)
 {
-	RLC freeSpots[MAX_CARS];
+	RLC * freeSpots = malloc(sizeof(RLC) * MAX_CARS);
+
+	if (freeSpots == NULL) {
+		printf("malloc failed on freeSpots");
+		exit(1);
+	}
+
 	int freeSpotsCounter = 0;
 	int randFreeSpotIndex = 0;
 
@@ -311,6 +317,8 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 		rlc->line = freeSpots[randFreeSpotIndex].line;
 		rlc->cell = 0;
 	}
+
+	free(freeSpots);
 }
 
 GLint getFreeCarIndex()
@@ -329,6 +337,12 @@ GLint getFreeCarIndex()
 GLvoid setCarsToDefault()
 {
     cars = malloc(sizeof(car) * MAX_CARS);
+
+    if (cars == NULL) {
+        printf("malloc failed on cars");
+        exit(1);
+    }
+
     freeCars = MAX_CARS;
 
 	for (int i = 0; i < MAX_CARS; i++)

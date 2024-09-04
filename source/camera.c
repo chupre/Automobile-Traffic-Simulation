@@ -14,13 +14,13 @@ mat4 view;
 
 GLfloat cameraFOV;
 
-bool cameraConstInit = false;
+bool cameraInit = false;
 
 GLvoid setProjection()
 {
-    if (!cameraConstInit) {
+    if (!cameraInit) {
         cameraFOV = DEFAULT_FOV;
-        cameraConstInit = true;
+        cameraInit = true;
     }
 
     GLuint projLoc = glGetUniformLocation(shaderProgram, "projection");

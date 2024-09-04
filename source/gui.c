@@ -6,7 +6,10 @@
 #include <render.h>
 #include <cars.h>
 #include <road.h>
+#include "algorithms.h"
+#include "camera.h"
 #include "map.h"
+#include "traffic_density.h"
 
 // External 
 #if defined(_WIN32) || defined(WIN32)
@@ -397,7 +400,7 @@ void load(char* fileName)
     
     setCarsToDefault();
     setRoadsToDefault();
-    glm_mat3_identity_array(carTransformMatrixes, MAX_CARS);
+    glm_mat3_identity_array(carTransformMatrixes, 1000);
 
     fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
     fread(carTransformMatrixes, sizeof(mat3) * MAX_CARS, 1, saveFile);
@@ -425,7 +428,7 @@ void showInitMenu() {
         char lines_label[MAX_BUFFER_SIZE];
         sprintf(lines_label, "Number of lines: %d", initConfig.lines);
         nk_label(context, lines_label, NK_TEXT_LEFT);
-        nk_slider_int(context, 0, &initConfig.lines, 100, 1);
+        nk_slider_int(context, 0, &initConfig.lines, 64, 1);
 
         nk_layout_row_dynamic(context, 25, 1);
         char spawn_label[MAX_BUFFER_SIZE];
@@ -458,7 +461,23 @@ void showInitMenu() {
 }
 
 void init () {
+    if (isInit) {
+        glm_mat3_identity_array(carTransformMatrixes, 1000);
+        for (int i = 0; i < 1000; i++) {
+            glm_translate2d(carTransformMatrixes[i], (vec2){100.0, 100.0});
+        }
+    } 
+
+#ifdef DEBUG
+    dbgIsCellsInit = false;
+#endif
+
     setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);
+
+    densityDataInit = false;
+    alghorithmsInit = false;
+    cameraInit = false;
+
     setCarsToDefault();
     initRoads();
     initLines();

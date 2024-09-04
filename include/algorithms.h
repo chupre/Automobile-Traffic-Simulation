@@ -52,6 +52,7 @@ extern car ** userCarsPtrs;
 extern GLint innerUserCarsPtrsIndex;
 extern GLint * overtakeCarsIndexes; 
 extern GLint innerOvertakeCarsIndex;
+extern bool alghorithmsInit;
 
 extern RLC rouletteRLC;
 

@@ -8,8 +8,11 @@
 // Custom modules
 #include <direction.h>
 
+#include <stdbool.h>
+
 #define MAX_CAMERA_DISTANCE 1.0f
 
+extern bool cameraInit;
 extern vec3 cameraPos;
 extern vec3 cameraFront;
 extern vec3 cameraUp;

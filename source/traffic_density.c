@@ -1,19 +1,26 @@
-#include "map.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <traffic_density.h>
-#include <stdbool.h>
 
 GLint * densityData;
-bool isDensityDataInit = false;
+bool densityDataInit = false;
 
 GLvoid increaseDensityData(GLint roadIndex)
 {
-    if (!isDensityDataInit) {
+    if (!densityDataInit) {
         densityData = malloc(sizeof(GLint) * NUMBER_OF_ROADS);
-        memset(densityData, 0, sizeof(densityData));
-        isDensityDataInit = true;
+
+        if (densityData == NULL) {
+            printf("malloc failed with densityData");
+            exit(1);
+        } 
+
+        memset(densityData, 0, sizeof(GLint) * NUMBER_OF_ROADS);
+        
+        densityDataInit = true;
     }
+
     densityData[roadIndex] += 1;
 }
 

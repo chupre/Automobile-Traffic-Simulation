@@ -11,7 +11,7 @@
 
 #define FPS 60.0f
 
-//#define DEBUG
+#define DEBUG
 
 #define WINDOWS 0
 #define UNIX 1
@@ -65,13 +65,11 @@ GLfloat getScreenVelocityShift(car* Car);
 
 #ifdef DEBUG
 
-#include <road.h>
 GLvoid dbgInitCells();
 GLvoid dbgRenderCells();
 extern GLuint cellsVBO, cellsVAO;
-extern GLfloat cellsVertices[(NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8];
+extern GLfloat * cellsVertices;
 extern bool dbgIsCellsInit;
-#define DEFAULT_FOV 60
 
 #endif
 

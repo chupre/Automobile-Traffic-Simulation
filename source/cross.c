@@ -558,6 +558,11 @@ GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enter
 
     crosses[crossIndex].cells = malloc(sizeof(car*) * NUMBER_OF_CROSS_CELLS);
 
+    if (crosses[crossIndex].cells == NULL) {
+        printf("malloc failed on crosses cells on index %d", crossIndex);
+        exit(1);
+    }
+
     setCrossProperties(crossIndex, enterRoadIndexes, exitRoadIndexes);
     // setCross(); // for D.
 }

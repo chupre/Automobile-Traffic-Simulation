@@ -7,8 +7,10 @@
 #include <GLFW/glfw3.h>
 
 #include <map.h>
+#include <stdbool.h>
 
 extern GLint * densityData;
+extern bool densityDataInit;
 
 GLvoid increaseDensityData(GLint roadIndex);
 GLvoid decreaseDensityData(GLint roadIndex);

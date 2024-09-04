@@ -215,8 +215,19 @@ GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat length
 GLvoid setLines(GLint roadIndex)
 {
     roads[roadIndex].lines = malloc(sizeof(line) * (NUMBER_OF_LINES + 1));
+
+    if (roads[roadIndex].lines == NULL) {
+        printf("malloc failed on lines on road %d", roadIndex);
+        exit(1);
+    }
+
     for (int i = 0; i < NUMBER_OF_LINES + 1; i++) {
         roads[roadIndex].lines[i].cells = malloc(sizeof(car*) * NUMBER_OF_CELLS);
+        
+        if (roads[roadIndex].lines[i].cells == NULL) {
+            printf("malloc failed on cells on road %d line %d", roadIndex, i);
+            exit(1);
+        }
     }
 
     GLfloat stride = CELL_WIDTH;
@@ -255,6 +266,9 @@ GLvoid setLines(GLint roadIndex)
 
         #ifdef DEBUG
         
+        cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
+        DEFAULT_FOV = 60;
+
         stride = fabs(stride);
         x = roadVertices[0 + 4 * 5 * roadIndex] - ROAD_WIDTH;
         y1 = roadVertices[1 + 4 * 5 * roadIndex];
@@ -319,6 +333,9 @@ GLvoid setLines(GLint roadIndex)
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
         
         #ifdef DEBUG
+
+        cellsVertices = malloc(sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS * NUMBER_OF_CELLS * 5 * 8);
+        DEFAULT_FOV = 60;
         
         stride = fabs(stride);
         y = roadVertices[1 + 4 * 5 * roadIndex] - ROAD_WIDTH;

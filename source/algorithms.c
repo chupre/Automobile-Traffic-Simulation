@@ -8,7 +8,7 @@
 #include <cross.h>
 #include <render.h>
 
-bool constsInit = false;
+bool alghorithmsInit = false;
 int MAX_LINE_DIGIT;
 int MAX_ROAD_DIGIT;
 RLC rouletteRLC;
@@ -46,15 +46,39 @@ GLvoid printDir(DIRECTION dir)
 
 GLvoid update()
 {
-    if (!constsInit) {
+    if (!alghorithmsInit) {
         MAX_LINE_DIGIT = NUMBER_OF_LINES;
         MAX_ROAD_DIGIT = NUMBER_OF_ROADS - 1;
         RLC rouletteRLC = {MAX_ROAD_DIGIT, -1, MAX_CELL_DIGIT};
         userCarsPtrs = malloc(sizeof(car*) * MAX_CARS);
+
+        if (userCarsPtrs == NULL) {
+            printf("malloc failed on userCarsPtrs");
+            exit(1);
+        }
+
         overtakeCarsIndexes = malloc(sizeof(GLint) * MAX_CARS); 
+
+        if (overtakeCarsIndexes == NULL) {
+            printf("malloc failed on overtakeCarIndeces");
+            exit(1);
+        }
+
         ignoredBackCars = malloc(sizeof(car*) * MAX_CARS);
+
+        if (ignoredBackCars == NULL) {
+            printf("malloc failed on ignoredBackCars");
+            exit(1);
+        }
+
         carAddingQueue = malloc(sizeof(RLC) * MAX_CARS);
-        constsInit = true;
+
+        if (carAddingQueue == NULL) {
+            printf("malloc failed on carAddingQueue");
+            exit(1);
+        }
+
+        alghorithmsInit = true;
     }
 
 	if (glfwGetTime() - timer > STEP_TIME)
@@ -194,7 +218,6 @@ GLvoid spawnCars()
 				--freeCars;
 				++spawnedCars;
 				increaseDensityData(freeSpotRLC.road);
-
 				// logCar(&cars[carIndex]);
 				// printCarProperties(freeSpotRLC);
 				// printf("\n");
@@ -459,9 +482,9 @@ GLvoid excludeFromMap(car* Car)
 {	
 	if (Car->currCell.cell < NUMBER_OF_CELLS)
 	{
-		initRoadCell(&Car->nextCell, NULL);
+		initRoadCell(&Car->currCell, NULL);
 	}
-	if (!isEndedWithCross(&Car->nextCell))
+	if (!isEndedWithCross(&Car->currCell))
 	{
 		clearCarProperties(Car);
 		++freeCars;

@@ -57,8 +57,7 @@ GLdouble timer;
 #ifdef DEBUG
 
 GLuint cellsVBO, cellsVAO;
-GLfloat cellsVertices[(NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS *
-                      NUMBER_OF_CELLS * 5 * 8];
+GLfloat *cellsVertices;
 bool dbgIsCellsInit = false;
 
 #endif
@@ -134,8 +133,8 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
 
     RLC rlc;
     if (!getRLCbyDot(&rlc, &mousePos)) {
-        glm_vec4_print(worldPos, stdout);
-        return;
+      glm_vec4_print(worldPos, stdout);
+      return;
     }
 
     addInRLCcarAddingQueue(rlc);
@@ -209,8 +208,8 @@ GLvoid initLines() {
 GLvoid initCars() {
   glGenBuffers(1, &carInstanceVBO);
   glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(mat3) * MAX_CARS,
-               carTransformMatrixes, GL_DYNAMIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(mat3) * 1000, carTransformMatrixes,
+               GL_DYNAMIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   glGenVertexArrays(1, &carVAO);
@@ -358,7 +357,9 @@ GLfloat getScreenVelocity(car *Car) {
 }
 
 GLfloat getScreenVelocityShift(car *Car) {
-  return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) * VELOCITY_MULTIPLIER) / FPS;
+  return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) *
+                   VELOCITY_MULTIPLIER) /
+         FPS;
 }
 
 GLvoid moveCarOnScreen(GLint carIndex) {
@@ -388,8 +389,10 @@ GLvoid dbgInitCells() {
 
   glBindVertexArray(cellsVAO);
   glBindBuffer(GL_ARRAY_BUFFER, cellsVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(cellsVertices), cellsVertices,
-               GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER,
+               sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS *
+                   NUMBER_OF_CELLS * 5 * 8,
+               cellsVertices, GL_STATIC_DRAW);
 
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
                         (GLvoid *)0);

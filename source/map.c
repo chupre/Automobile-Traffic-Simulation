@@ -3,6 +3,7 @@
 
 // Standard
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 // Custom modules
@@ -48,9 +49,32 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     HALF_ROAD_WIDTH = ROAD_WIDTH / 2;
 
     roads = malloc(sizeof(road) * NUMBER_OF_ROADS);
+
+    if (roads == NULL) {
+        printf("malloc failed on roads");
+        exit(1);
+    }
+
     roadVertices = malloc(sizeof(float) * NUMBER_OF_ROADS * 4 * 5);
+
+    if (roadVertices == NULL) {
+        printf("malloc failed on roadVertices");
+        exit(1);
+    }
+
     roadIndices = malloc(sizeof(int) * NUMBER_OF_ROADS * 6);
+
+    if (roadIndices == NULL) {
+        printf("malloc failed on roadIndices");
+        exit(1);
+    }
+
     lineVertices = malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
+
+    if (lineVertices == NULL) {
+        printf("malloc failed on lineVertices");
+        exit(1);
+    }
 
 	switch (map_type)
 	{
@@ -76,15 +100,14 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 
 	case TWO_ROADS_NS:
         DEFAULT_FOV = 45.0f;
-		addRoad(0, ROAD_WIDTH, -1.0f, NORTH);
-		addRoad(1, -ROAD_WIDTH, 1.0f, SOUTH);
+		addRoad(0, HALF_ROAD_WIDTH, -1.0f, NORTH);
+		addRoad(1, -HALF_ROAD_WIDTH - 0.1f, 1.0f, SOUTH);
 		break;
 
 	case TWO_ROADS_WE:
         DEFAULT_FOV = 38.0f;
-		addRoad(1, 1.0f, 0.4f, WEST);
-		addRoad(0, -1.0f, -0.4f, EAST);
-		// roads[1].isEndCross = true;
+		addRoad(1, 1.0f, CELL_WIDTH * (NUMBER_OF_LINES + 1) / 2, WEST);
+		addRoad(0, -1.0f, -CELL_WIDTH * (NUMBER_OF_LINES + 1) / 2 - 0.1f, EAST);
 		break;
 
 	case CROSS:
