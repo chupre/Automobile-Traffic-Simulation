@@ -166,6 +166,12 @@ GLvoid initRoads() {
   glGenBuffers(1, &roadEBO);
   glBindVertexArray(roadVAO);
 
+  if (MAP_TYPE == CROSS) {
+      roadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+      roadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+      roadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+      roadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+  }
   glBindBuffer(GL_ARRAY_BUFFER, roadVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUMBER_OF_ROADS * 4 * 5,
                roadVertices, GL_STATIC_DRAW);
