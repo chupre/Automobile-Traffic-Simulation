@@ -53,6 +53,8 @@ GLvoid update()
         rouletteRLC.line = -1;
         rouletteRLC.cell = MAX_CELL_DIGIT;
         userCarsPtrs = malloc(sizeof(car*) * MAX_CARS);
+        innerUserCarsPtrsIndex = NO_INNER_INDEX;
+        innerCarAddingQueueIndex = NO_INNER_INDEX;
 
         if (userCarsPtrs == NULL) {
             printf("malloc failed on userCarsPtrs");
@@ -85,10 +87,14 @@ GLvoid update()
 
 	if (glfwGetTime() - timer > STEP_TIME)
 	{
-		printf("Step: %lf\n", glfwGetTime());		
-
 		timer += STEP_TIME;
 
+        if (isInitByFile) {
+            isInitByFile = false;
+            return;
+        }
+
+		printf("Step: %lf\n", glfwGetTime());		
 		stepRoad();
 		// printf("0 density: %d\n", getDensityData(0));
 		// printf("1 density: %d\n", getDensityData(1));

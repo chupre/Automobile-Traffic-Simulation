@@ -35,6 +35,7 @@ GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
 bool paused = true;
 bool isInit = false;
 bool isInitMenuActive = false;
+bool isInitByFile = false;
 bool isSaveMenuActive = false;
 bool isLoadMenuActive = false;
 
