@@ -366,23 +366,36 @@ void save()
     }
 
     fwrite(&initConfig, sizeof(initConfig), 1, saveFile);
- 
-    RLC* occupiedCells = malloc(sizeof(car) * MAX_CARS);
+
+    RLC* occupiedCells = malloc(sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS);
     int occupiedCellsCounter = 0;
 
     for (int i = 0; i < NUMBER_OF_ROADS; i++)
-        for (int j = 0; j < NUMBER_OF_LINES; j++)
+        for (int j = 0; j < NUMBER_OF_LINES + 1; j++)
             for(int k = 0; k < NUMBER_OF_CELLS; k++)
-                if (roads[i].lines[j].cells[k] == OCCUPYING_CAR)
-                    occupiedCells[occupiedCellsCounter++] = (RLC){i, j, k};
-                else
-                    occupiedCells[occupiedCellsCounter++] = (RLC){-1, -1, -1};
+                if (roads[i].lines[j].cells[k] == OCCUPYING_CAR) {
+                    occupiedCells[occupiedCellsCounter].road = i;
+                    occupiedCells[occupiedCellsCounter].line = j;
+                    occupiedCells[occupiedCellsCounter].cell = k;
+                    occupiedCellsCounter++;
+                }
+                else {
+                    occupiedCells[occupiedCellsCounter].road = -1;
+                    occupiedCells[occupiedCellsCounter].line = -1;
+                    occupiedCells[occupiedCellsCounter].cell = -1;
+                    occupiedCellsCounter++;
+                }
 
     fwrite(cars, sizeof(car) * MAX_CARS, 1, saveFile);
-    fwrite(occupiedCells, sizeof(RLC) * MAX_CARS, 1, saveFile);
+    fwrite(occupiedCells, sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS, 1, saveFile);
 
     free(occupiedCells);
     fclose(saveFile);
+
+    for (int i = 0; i < MAX_CARS; i++) {
+        printf("%d\n", cars[i].velocity);   
+    }
+    printf("\n");
 
     isSaveMenuActive = false;
 }
@@ -479,21 +492,27 @@ void init (FILE* saveFile) {
     initCars();
 
     if (saveFile) {
-        RLC * occupiedCells = malloc(sizeof(RLC) * MAX_CARS);
+        RLC * occupiedCells = malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
 
         fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
-        fread(occupiedCells, sizeof(RLC) * MAX_CARS, 1, saveFile);
-        fclose(saveFile);
+        fread(occupiedCells, sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS, 1, saveFile);
 
-        for (int i = 0; i < MAX_CARS; i++) {
+        for (int i = 0; i < NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS; i++) {
             if (occupiedCells[i].road != -1)
                 roads[occupiedCells[i].road].lines[occupiedCells[i].line].cells[occupiedCells[i].cell] = OCCUPYING_CAR;
-
-            if(cars[i].isActive)
-                setCarByRLC(&cars[i], i, cars[i].currCell);
         }
 
+        for (int i = 0; i < MAX_CARS; i++)
+            if(cars[i].isActive && cars[i].ID > 0)
+                setCarByRLC(&cars[i], i, cars[i].currCell);
+
+        fclose(saveFile);
         free(occupiedCells);
+
+        for (int i = 0; i < MAX_CARS; i++) {
+            printf("%d\n", cars[i].velocity);
+        }
+
         isInitByFile = true;
     }
 

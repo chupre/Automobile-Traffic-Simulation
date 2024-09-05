@@ -283,7 +283,7 @@ GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc)
 
 GLvoid getFreeSpotAddress(RLC* rlc)
 {
-	RLC * freeSpots = malloc(sizeof(RLC) * MAX_CARS);
+	RLC * freeSpots = malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1));
 
 	if (freeSpots == NULL) {
 		printf("malloc failed on freeSpots");
