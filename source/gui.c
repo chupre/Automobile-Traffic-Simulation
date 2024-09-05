@@ -321,6 +321,9 @@ void showLoadMenu()
 
         if (nk_button_label(context, "Load"))
         {
+            if (strcmp("..", saves[activeFileIndex]) == 0 || strcmp(".", saves[activeFileIndex]) == 0)
+                return;
+
             load(saves[activeFileIndex]);
         }
 
@@ -364,9 +367,6 @@ void save()
 
     fwrite(&initConfig, sizeof(initConfig), 1, saveFile);
     fwrite(cars, sizeof(car) * MAX_CARS, 1, saveFile);
-    fwrite(carTransformMatrixes, sizeof(mat3) * 1000, 1, saveFile);
-    fwrite(roads, sizeof(road) * NUMBER_OF_ROADS, 1, saveFile);
-    fwrite(&freeCars, sizeof(freeCars), 1, saveFile);
 
     fclose(saveFile);
 
@@ -387,10 +387,6 @@ void load(char* fileName)
         return;
     }
     
-    setCarsToDefault();
-    setRoadsToDefault();
-    glm_mat3_identity_array(carTransformMatrixes, 1000);
-
     fread(&initConfig, sizeof(initConfig), 1, saveFile);
     init(saveFile);
 
@@ -413,7 +409,7 @@ void showInitMenu() {
         char lines_label[MAX_BUFFER_SIZE];
         sprintf(lines_label, "Number of lines: %d", initConfig.lines);
         nk_label(context, lines_label, NK_TEXT_LEFT);
-        nk_slider_int(context, 0, &initConfig.lines, 64, 1);
+        nk_slider_int(context, 1, &initConfig.lines, 64, 1);
 
         nk_layout_row_dynamic(context, 25, 1);
         char spawn_label[MAX_BUFFER_SIZE];
@@ -446,12 +442,10 @@ void showInitMenu() {
 }
 
 void init (FILE* saveFile) {
-    if (isInit) {
-        glm_mat3_identity_array(carTransformMatrixes, 1000);
-        for (int i = 0; i < 1000; i++) {
-            glm_translate2d(carTransformMatrixes[i], (vec2){100.0, 100.0});
-        }
-    } 
+    glm_mat3_identity_array(carTransformMatrixes, 1000);
+
+    for (int i = 0; i < 1000; i++)
+        glm_translate2d(carTransformMatrixes[i], (vec2){100.0, 100.0});
 
 #ifdef DEBUG
     dbgIsCellsInit = false;
@@ -465,16 +459,18 @@ void init (FILE* saveFile) {
     cameraInit = false;
 
     setCarsToDefault();
+    setRoadsToDefault();
     initRoads();
     initLines();
     initCars();
 
     if (saveFile) {
         fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
-        fread(carTransformMatrixes, sizeof(mat3) * MAX_CARS, 1, saveFile);
-        fread(&freeCars, sizeof(freeCars), 1, saveFile);
-
         fclose(saveFile);
+
+        for (int i = 0; i < MAX_CARS; i++)
+            if(cars[i].isActive)
+                setCarByRLC(&cars[i], i, cars[i].currCell);
     }
 
     isInitMenuActive = false;

@@ -68,8 +68,8 @@ extern car* OCCUPYING_CAR;
 
 GLvoid addCar(car* Car, GLint carIndex, RLC rlc);
 GLvoid addCrushedCar(RLC rlc);
-GLvoid setCar(car* Car, GLint carIndex, RLC address);
-GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc);
+GLvoid setBornCar(car* Car, GLint carIndex, RLC address);
+GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc);
 GLvoid getFreeSpotAddress(RLC* rlc);
 GLint getFreeCarIndex();
 GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc);

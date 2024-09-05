@@ -49,7 +49,7 @@ GLvoid bindCellAndCar(RLC* rlc, car* Car)
 GLvoid addCar(car* Car, GLint carIndex, RLC rlc)
 {
 	setBornCarProperties(&cars[carIndex], carIndex, rlc);
-	setCar(&cars[carIndex], carIndex, rlc);
+	setBornCar(&cars[carIndex], carIndex, rlc);
 }
 
 GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
@@ -82,7 +82,7 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	bindCellAndCar(&rlc, Car);
  }
 
-GLvoid setCar(car* Car, GLint carIndex, RLC rlc)
+GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 {
 	GLfloat margin = CELL_WIDTH / 4;
 
@@ -174,7 +174,7 @@ GLvoid addCrushedCar(RLC rlc)
 
 	--freeCars;
 	setCrushedCarProperties(&cars[carIndex], carIndex, rlc);
-	setCrushedCar(&cars[carIndex], carIndex, rlc);
+	setCarByRLC(&cars[carIndex], carIndex, rlc);
 }
 
 GLfloat getCellWall(RLC rlc)
@@ -200,7 +200,7 @@ GLfloat getCellWall(RLC rlc)
 	}
 }
 
-GLvoid setCrushedCar(car* Car, GLint carIndex, RLC rlc)
+GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc)
 {
 	GLfloat margin = CELL_WIDTH / 4;
 
