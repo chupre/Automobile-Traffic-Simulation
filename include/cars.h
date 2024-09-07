@@ -56,7 +56,6 @@ struct car {
 };
 
 extern mat3 carTransformMatrixes[1000];
-extern car * cars;
 extern GLuint carVAO, carVBO, carEBO, carInstanceVBO;
 extern GLfloat carVertices[4 * 2];
 extern GLint carIndices[6];

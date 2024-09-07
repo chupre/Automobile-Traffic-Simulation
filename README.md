@@ -6,6 +6,7 @@
 🟢🔴 fix crosses.\
 🟢 Add restart button.\
 🟢 fix saves.\
+🟢 add traffic lights.\
 🔴 Split roads in two parts to make them two-directional like IRL.\
 🔴 Implement linear interpolation for camera movement and cars.\
 🔴 Implement textures for cars.

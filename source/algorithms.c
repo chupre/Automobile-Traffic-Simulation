@@ -89,7 +89,6 @@ GLvoid update()
 	{
 		timer += STEP_TIME;
 
-
 		printf("Step: %lf\n", glfwGetTime());		
 		stepRoad();
 		// printf("0 density: %d\n", getDensityData(0));
