@@ -257,7 +257,11 @@ GLvoid setLines(GLint roadIndex)
             };
 
             memcpy(&lineVertices[i * 5 * 2 + roadIndex * 5 * NUMBER_OF_LINES * 2], vertices, sizeof(float) * 5 * 2);
-            memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
+
+            for (int cell = 0; cell < NUMBER_OF_CELLS; cell++) {
+                roads[roadIndex].lines[i].cells[cell] = NULL;
+            }
+
             roads[roadIndex].lines[i].carSpawnCoord = x;
         }
 
@@ -271,7 +275,10 @@ GLvoid setLines(GLint roadIndex)
             memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + roadIndex * 5 * 2], vertices, sizeof(float) * 5 * 2);
         }
 
-        memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
+        for (int cell = 0; cell < NUMBER_OF_CELLS; cell++) {
+            roads[roadIndex].lines[i].cells[cell] = NULL;
+        }
+
         roads[roadIndex].lines[i].carSpawnCoord = x + stride;    
 
         #ifdef DEBUG
@@ -340,7 +347,11 @@ GLvoid setLines(GLint roadIndex)
             };
 
             memcpy(&lineVertices[i * 5 * 2 + roadIndex * 5 * NUMBER_OF_LINES * 2], vertices, sizeof(float) * 5 * 2);
-            memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
+
+            for (int cell = 0; cell < NUMBER_OF_CELLS; cell++) {
+                roads[roadIndex].lines[i].cells[cell] = NULL;
+            }
+
             roads[roadIndex].lines[i].carSpawnCoord = y;
         }
 
@@ -355,7 +366,10 @@ GLvoid setLines(GLint roadIndex)
             memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + roadIndex * 5 * 2], vertices, sizeof(float) * 5 * 2);
         }
 
-        memset(roads[roadIndex].lines[i].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
+        for (int cell = 0; cell < NUMBER_OF_CELLS; cell++) {
+            roads[roadIndex].lines[i].cells[cell] = NULL;
+        }
+
         roads[roadIndex].lines[i].carSpawnCoord = y + stride;
         
         #ifdef DEBUG
@@ -397,17 +411,6 @@ GLvoid setLines(GLint roadIndex)
             }
         }
         #endif
-    }
-}
-
-GLvoid setRoadsToDefault()
-{
-    for (int i = 0; i < NUMBER_OF_ROADS; i++)
-    {
-        for (int j = 0; j < NUMBER_OF_LINES; j++)
-        {
-            memset(roads[i].lines[j].cells, 0, sizeof(car*) * NUMBER_OF_CELLS);
-        }
     }
 }
 

@@ -89,10 +89,6 @@ GLvoid update()
 	{
 		timer += STEP_TIME;
 
-        if (isInitByFile) {
-            isInitByFile = false;
-            return;
-        }
 
 		printf("Step: %lf\n", glfwGetTime());		
 		stepRoad();
@@ -113,14 +109,14 @@ GLvoid stepRoad()
 	while (getCarByRoulette(&Car))
 	{
 		if (Car->isCrushed || Car == OCCUPYING_CAR)
-		{
 			continue;
-		}
+			
 		if (isToExcludeFormRoad(Car))
 		{
 			excludeFromMap(Car);
 			continue;
 		}
+
 		rebindRoadCars(Car);
 		reinitRoadCells(Car);
 	}
@@ -130,24 +126,21 @@ GLvoid stepRoad()
 	while (getCarByRoulette(&Car))
 	{
 		if (Car->isCrushed)
-		{
 			continue;
-		}
+
 		if (Car == OCCUPYING_CAR)
-		{
 			continue;
-		}
+
 		if (isInUserCarsPtrs(Car))
-		{
 			continue;
-		}
+
 		thoughtsOfOneCar(Car);
 	}
+
 	clearUserCarsPtrs();
+
 	if (rand() % 100 < SPAWN_FREQUENCY)
-	{
 		spawnCars();
-	}	
 }
 
 bool getCarByRoulette(car** Car)

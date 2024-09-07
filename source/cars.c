@@ -15,7 +15,6 @@ car occupying_car = {.isActive = true, .velocity = _0_CELL_};
 car* OCCUPYING_CAR = &occupying_car;
 
 mat3 carTransformMatrixes[1000];
-car * cars;
 
 GLuint carVAO, carVBO, carEBO, carInstanceVBO;
 
@@ -38,7 +37,6 @@ GLint freeCars;
 GLvoid setOccupyingCarProperties()
 {
 	occupying_car.velocity = _0_CELL_;
-
 }
 
 GLvoid bindCellAndCar(RLC* rlc, car* Car)
@@ -340,13 +338,6 @@ GLint getFreeCarIndex()
 
 GLvoid setCarsToDefault()
 {
-    cars = malloc(sizeof(car) * MAX_CARS);
-
-    if (cars == NULL) {
-        printf("malloc failed on cars");
-        exit(1);
-    }
-
     freeCars = MAX_CARS;
 
 	for (int i = 0; i < MAX_CARS; i++)

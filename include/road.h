@@ -49,7 +49,6 @@ DIRECTION getRoadDir(car* Car);
 DIRECTION getLeftMoveDir(DIRECTION dir);
 DIRECTION getRightMoveDir(DIRECTION dir);
 car** getFirstCellPtr(RLC rlc);
-GLvoid setRoadsToDefault();
 
 GLvoid setRoadBoards(GLint roadIndex, GLfloat start_x, GLfloat start_y);
 GLvoid setEdgeState(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir);

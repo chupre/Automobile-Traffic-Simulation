@@ -32,7 +32,6 @@ extern bool paused;
 extern bool isInitMenuActive;
 extern bool isSaveMenuActive;
 extern bool isLoadMenuActive;
-extern bool isInitByFile;
 extern bool isInit;
 extern GLFWwindow* window;
 extern struct nk_glfw glfw;

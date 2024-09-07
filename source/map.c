@@ -11,6 +11,7 @@
 #include <direction.h>
 #include <road.h>
 #include <cross.h>
+#include <cars.h>
 
 int NUMBER_OF_ROADS;
 int NUMBER_OF_CELLS;
@@ -28,6 +29,7 @@ float* roadVertices;
 int* roadIndices;
 unsigned int lineVAO, lineVBO;
 float* lineVertices;
+car * cars;
 
 //a road gets a direction, an edge state
 void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
@@ -68,6 +70,13 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 
     if (roadIndices == NULL) {
         printf("malloc failed on roadIndices");
+        exit(1);
+    }
+
+    cars = malloc(sizeof(car) * MAX_CARS);
+
+    if (cars == NULL) {
+        printf("malloc failed on cars");
         exit(1);
     }
 

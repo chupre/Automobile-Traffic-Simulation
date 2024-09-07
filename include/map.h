@@ -16,6 +16,8 @@
 #define CELL_WIDTH (CELL_LENGTH)
 
 typedef struct road road;
+typedef struct car car;
+
 extern int NUMBER_OF_ROADS;
 extern int NUMBER_OF_LINES;
 extern int NUMBER_OF_CELLS;
@@ -32,6 +34,7 @@ extern float* roadVertices;
 extern int* roadIndices;
 extern unsigned int lineVAO, lineVBO;
 extern float* lineVertices;
+extern car* cars;
 
 GLvoid setMap(int map_type, int lines, int max_cars, int spawn_frequency);
 GLvoid setRoadsAroundCross(GLfloat start_x, GLfloat start_y);

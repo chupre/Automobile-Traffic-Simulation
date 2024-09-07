@@ -10,6 +10,7 @@
 #include "camera.h"
 #include "map.h"
 #include "traffic_density.h"
+#include <rlc.h>
 
 // External 
 #if defined(_WIN32) || defined(WIN32)
@@ -36,7 +37,7 @@ char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
 
 config initConfig = {
-    100,
+    1,
     3,
     65,
     ONE_ROAD_N
@@ -267,6 +268,7 @@ void showLoadMenu()
     if (directory == NULL)
     {
         printf("Error opening directory\n");
+        isLoadMenuActive = false;
         return;
     }
 
@@ -386,16 +388,13 @@ void save()
                     occupiedCellsCounter++;
                 }
 
+
     fwrite(cars, sizeof(car) * MAX_CARS, 1, saveFile);
     fwrite(occupiedCells, sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS, 1, saveFile);
+    fwrite(&freeCars, sizeof(int), 1, saveFile);
 
     free(occupiedCells);
     fclose(saveFile);
-
-    for (int i = 0; i < MAX_CARS; i++) {
-        printf("%d\n", cars[i].velocity);   
-    }
-    printf("\n");
 
     isSaveMenuActive = false;
 }
@@ -430,7 +429,7 @@ void showInitMenu() {
         char cars_label[MAX_BUFFER_SIZE];
         sprintf(cars_label, "Max amount of cars: %d", initConfig.max_cars);
         nk_label(context, cars_label, NK_TEXT_LEFT);
-        nk_slider_int(context, 0, &initConfig.max_cars, 1000, 10);
+        nk_slider_int(context, 0, &initConfig.max_cars, 1000, 1);
 
         nk_layout_row_dynamic(context, 25, 1);
         char lines_label[MAX_BUFFER_SIZE];
@@ -486,7 +485,6 @@ void init (FILE* saveFile) {
     cameraInit = false;
 
     setCarsToDefault();
-    setRoadsToDefault();
     initRoads();
     initLines();
     initCars();
@@ -496,24 +494,27 @@ void init (FILE* saveFile) {
 
         fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
         fread(occupiedCells, sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS, 1, saveFile);
+        fread(&freeCars, sizeof(int), 1, saveFile);
 
         for (int i = 0; i < NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS; i++) {
             if (occupiedCells[i].road != -1)
                 roads[occupiedCells[i].road].lines[occupiedCells[i].line].cells[occupiedCells[i].cell] = OCCUPYING_CAR;
         }
 
-        for (int i = 0; i < MAX_CARS; i++)
-            if(cars[i].isActive && cars[i].ID > 0)
+        for (int i = 0; i < MAX_CARS; i++) {
+            if(cars[i].isActive) {
                 setCarByRLC(&cars[i], i, cars[i].currCell);
+                roads[cars[i].currCell.road].lines[cars[i].currCell.line].cells[cars[i].currCell.cell] = &cars[i];
+            }
+        }
 
         fclose(saveFile);
         free(occupiedCells);
 
-        for (int i = 0; i < MAX_CARS; i++) {
-            printf("%d\n", cars[i].velocity);
-        }
-
-        isInitByFile = true;
+        glfwSetTime(0.0f);
+        lastTime = glfwGetTime();
+        timer = lastTime;
+        deltaTime = 0.0f;
     }
 
     isInitMenuActive = false;
