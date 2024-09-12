@@ -16,18 +16,22 @@ RLC rouletteRLC;
 GLint innerUserCarsPtrsIndex = NO_INNER_INDEX;
 car ** userCarsPtrs;
 
-GLint innerOvertakeCarsIndex = NO_INNER_INDEX;
-GLint * overtakeCarsIndexes;
-
-car ** ignoredBackCars;
-GLint innerIgnoredBackCarsIndex = NO_INNER_INDEX;
-
 RLC * carAddingQueue;
 GLint innerCarAddingQueueIndex = NO_INNER_INDEX;
+
+car** skipCarsFromCross;
+GLint innerSkipCarsFromCrossIndex = NO_INNER_INDEX;
+
+car** checkedCars;
+GLint innerCheckedCarsIndex = NO_INNER_INDEX;
 
 bool compareRLCs(RLC* rlc1, RLC* rlc2)
 {
 	return (rlc1->road == rlc2->road && rlc1->line == rlc2->line && rlc1->cell == rlc2->cell);
+}
+
+GLvoid printCrossCell(cross_cell c){
+	printf("crossCell:(%d,%d,%d)\n", c.crossNum, c.x, c.y);
 }
 
 car* getCarPtr(RLC* rlc)
@@ -61,20 +65,6 @@ GLvoid update()
             exit(1);
         }
 
-        overtakeCarsIndexes = malloc(sizeof(GLint) * MAX_CARS); 
-
-        if (overtakeCarsIndexes == NULL) {
-            printf("malloc failed on overtakeCarIndeces");
-            exit(1);
-        }
-
-        ignoredBackCars = malloc(sizeof(car*) * MAX_CARS);
-
-        if (ignoredBackCars == NULL) {
-            printf("malloc failed on ignoredBackCars");
-            exit(1);
-        }
-
         carAddingQueue = malloc(sizeof(RLC) * MAX_CARS);
 
         if (carAddingQueue == NULL) {
@@ -82,18 +72,40 @@ GLvoid update()
             exit(1);
         }
 
+		skipCarsFromCross = malloc(sizeof(car*) * MAX_CARS);
+		if (skipCarsFromCross == NULL){
+			printf("malloc failed on skipCars");
+            exit(1);
+		}
+
+		checkedCars = malloc(sizeof(car*) * MAX_CARS);
+		if (checkedCars == NULL){
+			printf("malloc failed on checkedCars");
+            exit(1);
+		}
+
         alghorithmsInit = true;
     }
 
+
 	if (glfwGetTime() - timer > STEP_TIME)
 	{
+		// printf("Step: %lf\n", glfwGetTime());
 		timer += STEP_TIME;
 
-		printf("Step: %lf\n", glfwGetTime());		
-		stepRoad();
-		// printf("0 density: %d\n", getDensityData(0));
-		// printf("1 density: %d\n", getDensityData(1));
-		// printf("\n..........................................................................\n");
+		if (MAP_TYPE == CROSS){
+			// printLights();
+		}
+		renewCells();
+		if (MAP_TYPE == CROSS){
+			stepCross();
+			stepRoad();
+			changeLightsColor();
+		}
+		else{
+			stepRoad();
+		}
+		// printf("_____________________________________________\n");
 	}
 }
 
@@ -105,41 +117,25 @@ GLvoid printRLC(RLC rlc, char* string)
 GLvoid stepRoad()
 {
 	car* Car;
-	while (getCarByRoulette(&Car))
-	{
-		if (Car->isCrushed || Car == OCCUPYING_CAR)
-			continue;
-			
-		if (isToExcludeFormRoad(Car))
-		{
-			excludeFromMap(Car);
-			continue;
-		}
-
-		rebindRoadCars(Car);
-		reinitRoadCells(Car);
-	}
-
 	processCarAddingQueue();
 
-	while (getCarByRoulette(&Car))
-	{
-		if (Car->isCrushed)
+	while (getCarByRoulette(&Car)){
+		if (Car->isCrushed){
 			continue;
-
-		if (Car == OCCUPYING_CAR)
+		}
+		if (Car == OCCUPYING_CAR){
 			continue;
-
-		if (isInUserCarsPtrs(Car))
+		}
+		if (isInUserCarsPtrs(Car)){
 			continue;
-
+		}
 		thoughtsOfOneCar(Car);
 	}
 
 	clearUserCarsPtrs();
-
-	if (rand() % 100 < SPAWN_FREQUENCY)
+	if (rand() % 100 < SPAWN_FREQUENCY){
 		spawnCars();
+	}
 }
 
 bool getCarByRoulette(car** Car)
@@ -192,35 +188,26 @@ GLvoid spawnCars()
 {
 	GLint carsToSpawn = rand() % NUMBER_OF_LINES;
 	GLint spawnedCars = 0;
-	if (freeCars > 0)
-	{
+	if (freeCars > 0){
 		int counter = freeCars;
-		for (int i = 0; i < counter; i++)
-		{
-			if (spawnedCars > carsToSpawn)
-			{
+		for (int i = 0; i < counter; i++){
+			if (spawnedCars > carsToSpawn){
 				return;
 			}
 			GLint carIndex = getFreeCarIndex();
-			if (carIndex == NO_CAR_INDEX)
-			{
+			if (carIndex == NO_CAR_INDEX){
 				return;
 			}
 			RLC freeSpotRLC = { EMPTY, EMPTY, EMPTY };
 			getFreeSpotAddress(&freeSpotRLC);
 			
-			
-			if (freeSpotRLC.road != EMPTY && carIndex != NO_CAR_INDEX)
-			{
+			if (freeSpotRLC.road != EMPTY && carIndex != NO_CAR_INDEX){
 				addCar(&cars[carIndex], carIndex, freeSpotRLC);
 				thoughtsOfOneCar(&cars[carIndex]);
 
 				--freeCars;
 				++spawnedCars;
 				increaseDensityData(freeSpotRLC.road);
-				// logCar(&cars[carIndex]);
-				// printCarProperties(freeSpotRLC);
-				// printf("\n");
 			}
 		}
 	}
@@ -228,15 +215,18 @@ GLvoid spawnCars()
 
 GLvoid appendInUserCarsPtrs(car* Car)
 {
-	userCarsPtrs[++innerUserCarsPtrsIndex] = Car;
+	if (innerUserCarsPtrsIndex == MAX_CARS){
+		printf("extra car is trying to appned in userCarsPtrs\n");
+		exit(-1);
+	}
+	userCarsPtrs[innerUserCarsPtrsIndex] = Car;
+	++innerUserCarsPtrsIndex;
 }
 
 bool isInUserCarsPtrs(car* Car)
 {
-	for (int i = 0; i <= innerUserCarsPtrsIndex; i++)
-	{
-		if (Car == userCarsPtrs[i])
-		{
+	for (int i = 0; i < innerUserCarsPtrsIndex; i++){
+		if (Car == userCarsPtrs[i]){
 			return true;
 		}
 	}
@@ -248,38 +238,148 @@ GLvoid clearUserCarsPtrs()
 	innerUserCarsPtrsIndex = NO_INNER_INDEX;
 }
 
-GLvoid appendInOvertakeCarsIndexes(GLint carIndex)
-{
-	overtakeCarsIndexes[++innerOvertakeCarsIndex] = carIndex;
-}
-
-GLvoid clearOvertakeCarsIndedxes()
-{
-	innerOvertakeCarsIndex = NO_INNER_INDEX;
-}
-
 GLvoid initRoadCell(RLC *rlc, car* Car)
 {
 	roads[rlc->road].lines[rlc->line].cells[rlc->cell] = Car;
 }
+//................................................................................................
+GLvoid renewCells(){
+	car* Car;
+	// printCarCharacter(crosses[0].cells[0]);
+	if (MAP_TYPE == CROSS){
+		while (getCarByRouletteCross(&Car))
+		{
+			// printCrossRoulette();
+			if (Car == OCCUPYING_CAR){
+				// printf("is occupying car\n");
+				continue;
+			}
+			if (isInCheckedCars(Car)){
+				// printf("checked\n");
+				continue;
+			}
+			rebindCrossCars(Car);
+			appendInCheckedCars(Car);
+			appendInSkipCarsFromCross(Car);
+		}
+		// printCheckedCars();
+		clearCheckedCars();
+		// printSkipCars();
+		while (getCarByRoulette(&Car)){
+			if (Car->isCrushed || Car == OCCUPYING_CAR){
+				continue;
+			}
+			if (isInSkipCarsFromCross(Car)){
+				// printf("in skip cars\n");
+				continue;
+			}
+			if (isToExcludeFormRoad(Car)){
+				excludeFromMap(Car);
+				continue;
+			}
+			rebindRoadCars(Car);
+		}
+		clearSkipCarsFromCross();
 
+	}else{
+		while (getCarByRoulette(&Car)){
+			if (Car->isCrushed || Car == OCCUPYING_CAR){
+				continue;
+			}
+			if (isToExcludeFormRoad(Car)){
+				excludeFromMap(Car);
+				continue;
+			}
+			rebindRoadCars(Car);
+		}
+	}
+}	
+
+GLvoid appendInSkipCarsFromCross(car* Car){
+	if (innerSkipCarsFromCrossIndex == MAX_CARS){
+		printf("extra car is trying to appned in skipCarsFromCross\n");
+		exit(-1);
+	}
+	skipCarsFromCross[innerSkipCarsFromCrossIndex] = Car;
+	++innerSkipCarsFromCrossIndex;
+}
+
+GLvoid printSkipCars(){
+	printf("============skip============\n");
+	for (int i = 0; i < innerSkipCarsFromCrossIndex; i++){
+		printCarCharacter(skipCarsFromCross[i]);
+		printf("`\n");
+	}
+	printf("============================\n");
+}
+
+GLvoid clearSkipCarsFromCross(){
+	innerSkipCarsFromCrossIndex = NO_INNER_INDEX;
+}
+
+bool isInSkipCarsFromCross(car* Car)
+{
+	for (int i = 0; i < innerSkipCarsFromCrossIndex; i++){
+		if (Car == skipCarsFromCross[i]){
+			return true;
+		}
+	}
+	return false;
+}
+
+GLvoid appendInCheckedCars(car* Car){
+	if (innerCheckedCarsIndex == MAX_CARS){
+		printf("extra car is trying to appned in checkedCars\n");
+		exit(-1);
+	}
+	checkedCars[innerCheckedCarsIndex] = Car;
+	++innerCheckedCarsIndex;
+}
+
+GLvoid printCheckedCars(){
+	printf("============check===========\n");
+	for (int i = 0; i < innerCheckedCarsIndex; i++){
+		printCarCharacter(checkedCars[i]);
+		printf("`\n");
+	}
+	printf("============================\n");
+}
+
+GLvoid clearCheckedCars(){
+	innerCheckedCarsIndex = NO_INNER_INDEX;
+}
+
+bool isInCheckedCars(car* Car)
+{
+	for (int i = 0; i < innerCheckedCarsIndex; i++){
+		if (Car == checkedCars[i]){
+			return true;
+		}
+	}
+	return false;
+}
+
+//...............................................................................................
 GLvoid rebindRoadCars(car* Car)
 {
-    if (Car->currCell.cell < NUMBER_OF_CELLS)
-	{
+    if (Car->currCell.cell < NUMBER_OF_CELLS){
 		initRoadCell(&Car->currCell, NULL);
 	}
 
-	if (Car->nextCell.road != NEXT_CELL_IS_ON_CROSS)
-	{
-		if (Car->nextCell.cell < NUMBER_OF_CELLS)
-		{
+	if (Car->nextCell.road != NEXT_CELL_IS_ON_CROSS){
+		if (Car->nextCell.cell < NUMBER_OF_CELLS){
 			initRoadCell(&Car->nextCell, Car);
 		}
-	}
-	else
-	{
+		Car->currCell = Car->nextCell;
+	}else{
+		// printf("NEXT_CELL_IS_ON_CROSS\n");
+		// printRLC(Car->currCell, "rlc");
+		// printCrossCell(Car->crossNextCell);
+
 		initCrossCell(&Car->crossNextCell, Car);
+		Car->crossCurrCell = Car->crossNextCell;
+		q_append(Car, &crosses[Car->crossNextCell.crossNum].carsArriving);
+		// printf(">> NEXT ON CROSS << ID: %d\n", Car->ID);
 	}
     
     //else // what would be ohterwise ?
@@ -287,14 +387,6 @@ GLvoid rebindRoadCars(car* Car)
     a car won't belong to the road, but will be still drawning
     then a single way to delete from screen is done by using cars massive.
     */
-}
-
-GLvoid reinitRoadCells(car* Car)
-{
-	if (Car->nextCell.road != NEXT_CELL_IS_ON_CROSS)
-	{
-		Car->currCell = Car->nextCell;
-	}
 }
 
 GLint isRLCbad(RLC rlc)
@@ -332,13 +424,11 @@ GLvoid printCarProperties(RLC rlc)
 GLvoid thoughtsOfOneCar(car* Car)
 {
 	bool isAllowedToOvertake = true;
-	if (Car->move == OVERTAKE)
-	{	//as end fo line changing which is just done
+	if (Car->move == OVERTAKE){	//as end fo line changing which is just done
 		Car->move = FORWARD;
 		Car->moveDir = getRoadDir(Car);
 	}
-	else if (Car->move == SHIFT)
-	{
+	else if (Car->move == SHIFT){
 		Car->move = FORWARD;
 		Car->moveDir = getRoadDir(Car);
 	}
@@ -347,9 +437,7 @@ GLvoid thoughtsOfOneCar(car* Car)
 	car* forthCar = NULL;
 	GLint distance = distanceToForthCar(Car->currCell, &forthCar);//the foo takes in cognisance that road can have endCross
 
-
-	if (distance == _NO_CAR_ && isEndedWithCross(&Car->currCell))
-	{
+	if (distance == _NO_CAR_ && isEndedWithCross(&Car->currCell)){
 		distance = NUMBER_OF_CELLS - Car->currCell.cell;
 		isAllowedToOvertake = false;
 
@@ -357,54 +445,42 @@ GLvoid thoughtsOfOneCar(car* Car)
 			Car->velocity = _0_CELL_;
 			cross_cell c;
 			transformRLCIntoCrossCell(&c, Car);
-			if (getCarByCrossCell(&c) == NULL)
-			{
+
+			// printRLC(Car->currCell, "TO CROSS");
+			// printCrossCell(c);
+
+			if (getLightColorByCar(Car) == GREEN && getCarByCrossCell(&c) == NULL){
 				Car->crossNextCell = c;
+				Car->nextCell.road = NEXT_CELL_IS_ON_CROSS;
 				Car->velocity = CROSS_VELOCITY;
 
 				getCurvingCell(&Car->curvingCell, Car, c);
+				// q_append(Car, &crosses[c.crossNum].carsArriving);
 			}
-			else
-			{
+			else{
 				Car->velocity = _0_CELL_;
 			}
 			
 			return;
 		}
 	}
-	// printf("distance: %d\n", distance);
-
-	// if (forthCar && forthCar->isCrushed)
-	// {
-	// 	printf("crushedCar is met\n");
-	// }
-
 	// condition "distance - 1 > Car->velocity" will stay strickt because there considered is the faculty of mounting the car velocity a one more
-	if (Car->velocity != _0_CELL_)
-	{
-		if (distance - 1 > Car->velocity || distance == _NO_CAR_)
-		{/* car gets velocity if this car is newBorn or if this car doesn't stop because of the crushed car a cell before. */
-			if (rand() % 100 < DROP_VELOCITY_FREQUENCY)
-			{
+	if (Car->velocity != _0_CELL_){
+		if (distance - 1 > Car->velocity || distance == _NO_CAR_){
+		/* car gets velocity if this car is newBorn or if this car doesn't stop because of the crushed car a cell before. */
+			if (rand() % 100 < DROP_VELOCITY_FREQUENCY){
 				Car->velocity = rand() % Car->velocity;
 			}
-			else
-			{
-				if (Car->velocity < MAX_VELOCITY)
-				{
+			else{
+				if (Car->velocity < MAX_VELOCITY){
 					Car->velocity += _1_CELL_;
 				}
 			}
 			Car->nextCell.cell += Car->velocity;
-			// printf("1\n");
 			return;
 		}
-	}
-	else
-	{
-		if (distance > 1)
-		{
-			// printf("2\n");
+	}else{
+		if (distance > 1){
 			Car->velocity = _1_CELL_;
 			Car->nextCell.cell += Car->velocity;
 			return;
@@ -425,37 +501,21 @@ GLvoid thoughtsOfOneCar(car* Car)
 			)
 		)
 	{
-		// printf("3\n");
 		RLC rlc = {NO_ROAD_INDEX, NO_LINE_INDEX, NO_CELL_INDEX};
 		MOVING_TYPE move = checkChangeLineAbility(Car, &rlc);
-		if (move != FORWARD)
-		{
+		if (move != FORWARD){
 			Car->move = move;
 			Car->nextCell = rlc;
 			bindCellAndCar(&rlc, OCCUPYING_CAR);
-			if (Car->move == OVERTAKE && Car->velocity == _0_CELL_)
-			{
+			if (Car->move == OVERTAKE && Car->velocity == _0_CELL_){
 				Car->velocity = _1_CELL_;
-				// printf("_0_CELL_ -> _1_CELL_\n");
-			}
-			if (Car->move == SHIFT)
-			{
-				// printf("SHIFT\n");
-				// printDir(Car->moveDir);
-			}
-			if (Car->move == OVERTAKE)
-			{
-				// printf("OVERTAKE\n");
-				// printDir(Car->moveDir);
 			}
 			return;
 		}
 	}
-	// printf("4\n");
 	//according to the so-called all-excluded condition
 	Car->velocity = distance - 1;
 	Car->nextCell.cell += Car->velocity;
-	// printf("_____distance - 1\n");
 }
 
 bool isToExcludeFormRoad(car* Car)
@@ -480,12 +540,10 @@ bool isFurtherThanEndCell(car* Car)
 // road ends up to the cross then Car is exluded only from the road, otherwise from road and MAP
 GLvoid excludeFromMap(car* Car)
 {	
-	if (Car->currCell.cell < NUMBER_OF_CELLS)
-	{
+	if (Car->currCell.cell < NUMBER_OF_CELLS){
 		initRoadCell(&Car->currCell, NULL);
 	}
-	if (!isEndedWithCross(&Car->currCell))
-	{
+	if (!isEndedWithCross(&Car->currCell)){
 		clearCarProperties(Car);
 		++freeCars;
 	}
@@ -496,12 +554,9 @@ GLvoid excludeFromMap(car* Car)
 GLint getVelocityByRLC(RLC rlc)
 {
 	car** ptrCell = ((roads + rlc.road)->lines + rlc.line)->cells;
-	if (ptrCell[rlc.cell] == NULL)
-	{
+	if (ptrCell[rlc.cell] == NULL){
 		return _NO_CAR_;
-	}
-	else
-	{
+	}else{
 		return ptrCell[rlc.cell]->velocity;
 	}
 }
@@ -510,10 +565,8 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 {
 	GLint newLine;
 
-	switch (rand() % 100 < TURN_LEFT_FREQUENCY)
-	{
-		case 0:
-		{
+	switch (rand() % 100 < TURN_LEFT_FREQUENCY){
+		case 0:{
 			newLine = Car->currCell.line - 1;
 			if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter right line is excluded
 			{
@@ -553,9 +606,7 @@ MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc)
 			}
 
 			break;
-		}
-		case 1:
-		{
+		}case 1:{
 			newLine = Car->currCell.line + 1;
 			if (newLine >= 0 && newLine < NUMBER_OF_LINES + 1)//the utter right line is excluded
 			{
@@ -608,21 +659,15 @@ MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc)
 	GLint back = distanceToBackCar(rlc, &backCar);
 
 	if (back ==_NO_CAR_ || (backCar && back - 1 >= backCar->velocity)){
-		if (Car->velocity != _0_CELL_)
-		{
-			if (forth - 1 > Car->velocity)
-			{
+		if (Car->velocity != _0_CELL_){
+			if (forth - 1 > Car->velocity){
 				return OVERTAKE;
 			}
-		}
-		else
-		{
-			if (forth - 1 > _1_CELL_)
-			{
+		}else{
+			if (forth - 1 > _1_CELL_){
 				return OVERTAKE;
 			}
-			if (forth != 0) //this is that on the neighbour cell there is no cacr
-			{
+			if (forth != 0){ //this is that on the neighbour cell there is no cacr
 				return SHIFT;
 			}
 		}			
@@ -631,37 +676,14 @@ MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc)
 	return FORWARD;
 }
 
-GLvoid appendInIgnoredBackCarsPtrs(car* Car)
-{
-	ignoredBackCars[++innerIgnoredBackCarsIndex] = Car;
-}
-
-GLvoid clearIgnoredBackCarsPtrs()
-{
-	innerIgnoredBackCarsIndex = NO_INNER_INDEX;
-}
-
-bool isInIgnoredBackCars(car* Car)
-{
-	for (GLint i = 0; i <= innerIgnoredBackCarsIndex; i++)
-	{
-		if (ignoredBackCars[i] == Car)
-			return true;
-	}
-	return false;
-}
-
 GLint distanceToForthCar(RLC rlc, car** Car)
 {
 	car** ptrCell = getFirstCellPtr(rlc);
-	for (int i = 1 + rlc.cell; i < NUMBER_OF_CELLS; ++i)
-	{
-		if (ptrCell[i] == NULL)
-		{
+	for (int i = 1 + rlc.cell; i < NUMBER_OF_CELLS; ++i){
+		if (ptrCell[i] == NULL){
 			continue;
 		}
-		else if (ptrCell[i]->isActive == true)
-		{
+		else if (ptrCell[i]->isActive == true){
 			*Car = ptrCell[i];
 			return (i - rlc.cell);
 		}
@@ -673,18 +695,11 @@ GLint distanceToForthCar(RLC rlc, car** Car)
 GLint distanceToBackCar(RLC rlc, car** Car)
 {
 	car** ptrCell = getFirstCellPtr(rlc);
-	for (int i = -1 + rlc.cell; i >= 0; --i)
-	{
-		if (ptrCell[i] == NULL)
-		{
+	for (int i = -1 + rlc.cell; i >= 0; --i){
+		if (ptrCell[i] == NULL){
 			continue;
 		}
-		if (isInIgnoredBackCars(ptrCell[i]))
-		{
-			continue;
-		}
-		else if (ptrCell[i]->isActive == true)
-		{
+		if (ptrCell[i]->isActive == true){
 			*Car = ptrCell[i];
 			return (rlc.cell - i);
 		}
@@ -694,24 +709,26 @@ GLint distanceToBackCar(RLC rlc, car** Car)
 
 bool isRLCsuitableForSettingCar(RLC rlc)
 {
-	if (getCarPtr(&rlc) != NULL)
-	{
+	if (getCarPtr(&rlc) != NULL){
 		return false;
 	}
 	car* forthCar = NULL;
 	GLint forth = distanceToForthCar(rlc, &forthCar);
 	car* backCar = NULL;
 	GLint back = distanceToBackCar(rlc, &backCar);
-	if (forth > 1 && back > 1)
-	{
+	if (forth > 1 && back > 1){
 		return true;
 	}
 	return false;
 }
 
-GLvoid addInRLCcarAddingQueue(RLC rlc)
+GLvoid appendRLCinCarAddingQueue(RLC rlc)
 {
-	carAddingQueue[++innerCarAddingQueueIndex] = rlc;
+	if (innerCarAddingQueueIndex == MAX_CARS){
+		return;
+	}
+	carAddingQueue[innerCarAddingQueueIndex] = rlc;
+	++innerCarAddingQueueIndex;
 }
 
 GLvoid clearCarAddingQueue()
@@ -721,13 +738,10 @@ GLvoid clearCarAddingQueue()
 
 GLvoid processCarAddingQueue()
 {
-	for (int i = 0; i <= innerCarAddingQueueIndex; i++)
-	{
-		if (isRLCsuitableForSettingCar(carAddingQueue[i]))
-		{
+	for (int i = 0; i < innerCarAddingQueueIndex; i++){
+		if (isRLCsuitableForSettingCar(carAddingQueue[i])){
 			GLint carIndex = getFreeCarIndex();
-			if (carIndex == NO_CAR_INDEX)
-			{
+			if (carIndex == NO_CAR_INDEX){
 				return;
 			}
 			car* Car = &cars[carIndex];
@@ -745,10 +759,8 @@ GLvoid processCarAddingQueue()
 
 bool isInCarAddingQueue(RLC rlc)
 {
-	for (int i = 0; i < innerCarAddingQueueIndex; i++)
-	{
-		if (compareRLCs(&rlc, &carAddingQueue[i]))
-		{
+	for (int i = 0; i < innerCarAddingQueueIndex; i++){
+		if (compareRLCs(&rlc, &carAddingQueue[i])){
 			return true;
 		}
 	}

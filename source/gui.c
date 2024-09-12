@@ -11,6 +11,7 @@
 #include "map.h"
 #include "traffic_density.h"
 #include <rlc.h>
+#include <texture.h>
 
 // External 
 #if defined(_WIN32) || defined(WIN32)
@@ -37,9 +38,9 @@ char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
 
 config initConfig = {
-    1,
-    3,
-    65,
+    500,
+    6,
+    100,
     ONE_ROAD_N
 };
 
@@ -129,7 +130,7 @@ void initGUI()
         nk_layout_row_dynamic(context, 30, 1);
         nk_label(context, "Theme", NK_TEXT_CENTERED);
 
-        static int op = THEME_BLACK;
+        static int op = THEME_RED;
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);

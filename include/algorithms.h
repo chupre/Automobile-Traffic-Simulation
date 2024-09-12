@@ -16,8 +16,8 @@
 #include <road.h>
 #include <direction.h>
 
-#define MAX_VELOCITY (_2_VELOCITY)
-#define NUMBER_OF_VELOCITY_TYPES (2)
+#define MAX_VELOCITY (_7_VELOCITY)
+#define NUMBER_OF_VELOCITY_TYPES (7)
 
 #define VELOCITY_MULTIPLIER (CELL_LENGTH)
 
@@ -48,19 +48,21 @@ enum VELOCITY {
 
 extern int MAX_LINE_DIGIT;
 extern int MAX_ROAD_DIGIT;
-extern car ** userCarsPtrs;
-extern GLint innerUserCarsPtrsIndex;
-extern GLint * overtakeCarsIndexes; 
-extern GLint innerOvertakeCarsIndex;
-extern bool alghorithmsInit;
 
+extern bool alghorithmsInit;
 extern RLC rouletteRLC;
 
-extern car** ignoredBackCars;
-extern GLint innerIgnoredBackCarsIndex;
+extern car ** userCarsPtrs;
+extern GLint innerUserCarsPtrsIndex;
 
 extern RLC * carAddingQueue;
 extern GLint innerCarAddingQueueIndex;
+
+extern car** skipCarsFromCross;
+extern GLint innerSkipCarsFromCrossIndex;
+
+extern car** checkedCars;
+extern GLint innerCheckedCarsIndex;
 
 GLvoid initRoadCell(RLC *rlc, car* Car);
 
@@ -74,6 +76,7 @@ GLint distanceToBackCar(RLC rlc, car** backCar);
 MOVING_TYPE checkChangeLineAbility(car* Car, RLC* rlc);
 MOVING_TYPE isSafetyForthAndBack(car* Car, RLC rlc);
 GLvoid update();
+GLvoid renewCells();
 GLvoid stepRoad();
 GLvoid spawnCars();
 
@@ -81,15 +84,15 @@ GLvoid appendInUserCarsPtrs(car* Car);
 GLvoid clearUserCarsPtrs();
 bool isInUserCarsPtrs(car* Car);
 
-GLvoid appendInOvertakeCarsIndexes(GLint carIndex);
-GLvoid clearOvertakeCarsIndedxes();
+GLvoid appendInSkipCarsFromCross(car* Car);
+GLvoid clearSkipCarsFromCross();
+bool isInSkipCarsFromCross(car* Car);
 
-GLvoid appendInIgnoredBackCarsPtrs(car* Car);
-GLvoid clearIgnoredBackCarsPtrs();
-bool isInIgnoredBackCars(car* Car);
+GLvoid appendInCheckedCars(car* Car);
+GLvoid clearCheckedCars();
+bool isInCheckedCars(car* Car);
 
 GLvoid rebindRoadCars(car* Car);
-GLvoid reinitRoadCells(car* Car);
 
 car* getCarPtr(RLC* rlc);
 bool getCarByRoulette(car** Car);
@@ -99,14 +102,17 @@ bool isFurtherThanEndCell(car* Car);
 bool compareRLCs(RLC* rlc1, RLC* rlc2);
 
 GLvoid processCarAddingQueue();
-GLvoid addInRLCcarAddingQueue(RLC rlc);
+GLvoid appendRLCinCarAddingQueue(RLC rlc);
 bool isInCarAddingQueue(RLC rlc);
 GLvoid clearCarAddingQueue();
 bool isRLCsuitableForSettingCar(RLC rlc);
 
 GLvoid printRLC(RLC rlc, char* string);
+GLvoid printCrossCell(cross_cell c);
 GLint isRLCbad(RLC rlc);
 GLvoid printCarProperties(RLC rlc);
 GLvoid printDir(DIRECTION dir);
+GLvoid printSkipCars();
+GLvoid printCheckedCars();
 
 #endif

@@ -18,16 +18,83 @@ int CROSS_SIDE;
 int HALF_CROSS_SIDE;
 float CROSS_WIDTH;
 int NUMBER_OF_CROSS_CELLS;
-int MAX_CELL_NUM;
 
 cross crosses[NUMBER_OF_CROSSES];
-cross_roulette rouletteCross = {0, 0};
+cross_roulette rouletteCross = {.crossNum=0, .cellNum=-1};
 DIRECTION crossQuaters[8] = {
     NORTH, EAST,
     SOUTH, WEST,
     WEST, NORTH,
     EAST, SOUTH
 };
+
+//...................................................................................................................
+GLvoid printCrossRoulette(){
+    printf("roulette: cross:%d, cell:%d\n", rouletteCross.crossNum, rouletteCross.cellNum);
+}
+
+GLvoid printCarCharacter(car* Car){
+    if (Car == NULL)
+	{
+		printf("Car == NULL\n");
+	}
+	else
+	{
+		// printf(	"currCell:(%d, %d, %d)\n",
+		// 	Car->currCell.road, Car->currCell.line, Car->currCell.cell
+        //     );
+        printf("ID: %d\n", Car->ID);
+        return;
+        printf(
+            "crossCurrCell:(%d, %d, %d)\ncrossNextCell:(%d, %d, %d)\nvelocity:%d\ncurvingCell:  (%d, %d, %d)\n",
+            Car->crossCurrCell.crossNum, Car->crossCurrCell.x, Car->crossCurrCell.y,
+			Car->crossNextCell.crossNum, Car->crossNextCell.x, Car->crossNextCell.y,
+			Car->velocity,
+            Car->curvingCell.crossNum, Car->curvingCell.x, Car->curvingCell.y
+        );
+
+
+        if (Car->moveDir == NORTH){
+            printf("moveDir: NORTH\n");
+        }
+        else if (Car->moveDir == SOUTH){
+            printf("moveDir: SOUTH\n");
+        }
+        else if (Car->moveDir == EAST){
+            printf("moveDir: EAST\n");
+        }
+        else if (Car->moveDir == WEST){
+            printf("moveDir: WEST\n");
+        }
+        if (Car->target == NORTH){
+            printf("target: NORTH\n");
+        }
+        else if (Car->target == SOUTH){
+            printf("target: SOUTH\n");
+        }
+        else if (Car->target == EAST){
+            printf("target: EAST\n");
+        }
+        else if (Car->target == WEST){
+            printf("target: WEST\n");
+        }
+	}
+}
+
+GLvoid q_print(queue* q){
+    q_item* tmp = q->head;
+    // printf(".........queue.........: %d\n", q->qauntity);
+    GLint count = q->qauntity;
+    while (tmp != NULL){
+        printf("ID: %d\n", tmp->value->ID);
+        // printCarCharacter(tmp->value);
+        // printf("`\n");
+        tmp = tmp->next;
+        --count;
+    }
+    // printf(".........q.............\n");
+    
+}
 
 //...................................................................................................................
 car* getCarByCrossCell(cross_cell* c)
@@ -85,7 +152,7 @@ GLvoid getCurvingCell(cross_cell* c, car* Car, cross_cell firstCellOnRoad)
             c->y = firstCellOnRoad.x;
         }
         else if (target == EAST) {
-            c->x = CROSS_SIDE - firstCellOnRoad.x - 1;
+            c->y = CROSS_SIDE - firstCellOnRoad.x - 1;
         }
     }
     else if (dir == EAST)
@@ -159,19 +226,14 @@ bool getCarByRouletteCross(car** Car)
 
 bool rollRouletteCross()
 {
-    if (rouletteCross.cellNum < MAX_CELL_NUM)
-    {
+    if (rouletteCross.cellNum < MAX_CROSS_CELL_DIGIT){
         rouletteCross.cellNum += 1;
-    }
-    else
-    {
-        rouletteCross.cellNum = 0;
-        if (rouletteCross.crossNum < MAX_CROSS_NUM)
-        {
+    }else{
+        rouletteCross.cellNum = -1;
+        if (rouletteCross.crossNum < MAX_CROSS_DIGIT){
             rouletteCross.crossNum += 1;
         }
-        else
-        {
+        else{
             rouletteCross.crossNum = 0;
             return false;
         }
@@ -182,43 +244,54 @@ bool rollRouletteCross()
 GLvoid stepCross()
 {
     car* Car = NULL;
-    while (getCarByRouletteCross(&Car))
-    {
-        rebindCrossCars(Car);
-        reinitCrossCells(Car);
-    }
 
-    if (yellowRedChange)
+    if (yellowRedChange == true)
     {
         yellowRedChange = false;
         for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
         {
+            // printf("q_fill\n");
             q_fill(&crosses[crossIndex].carsEndingManeuver, &crosses[crossIndex].carsArriving);
+            // if (crosses[crossIndex].carsEndingManeuver.head != NULL) q_print(&crosses[crossIndex].carsEndingManeuver);
         }
     }
- 
+    // printf("MANEUVER: %d\n", crosses[0].carsEndingManeuver.qauntity);// q_print(&crosses[0].carsEndingManeuver);
+    // printf("ARRIVE: %d\n", crosses[0].carsArriving.qauntity);// q_print(&crosses[0].carsArriving);
+
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
         q_item* item = crosses[crossIndex].carsEndingManeuver.head;
+        // printf(">> m <<\n");
         while (item != NULL)
         {
-            thoughtsOfOneCar(item->value);
+            // printf("ID: %d\n", item->value->ID);
+            thoughtsOfOneCarOnCross(item->value);
+            // printCarCharacter(item->value);
             item = item->next;
         }
+        // printf("<< m >>\n");
     }
 
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
-        q_item* queue = crosses[crossIndex].carsEndingManeuver.head;
+        queue* q = &crosses[crossIndex].carsEndingManeuver;
         q_item* item = crosses[crossIndex].carsArriving.head;
+        // printf(">> a <<\n");
         while (item != NULL)
         {
-            if (!isAnybodyToDriveBeforeNose(queue, item->value->moveDir)) {
-                thoughtsOfOneCar(item->value);
+            if (!isAnybodyToDriveBeforeNose(q, item->value->moveDir)) {
+                // printf("ID: %d\n", item->value->ID);
+                thoughtsOfOneCarOnCross(item->value);
+                // printCarCharacter(item->value); 
+            }else{
+                item->value->velocity = _0_CELL_;
             }
             item = item->next;
         }
+        // printf("<< a >>\n");
     }
+    // printf("MANEUVER\n"); q_print(&crosses[0].carsEndingManeuver);
+    // printf("ARRIVE\n"); q_print(&crosses[0].carsArriving);
 }
 
 bool isAnybodyToDriveBeforeNose(queue* q, DIRECTION ourCarDir)
@@ -238,54 +311,66 @@ bool isAnybodyToDriveBeforeNose(queue* q, DIRECTION ourCarDir)
 //....................................................................................................................
 GLvoid rebindCrossCars(car* Car)
 {
-    cross_cell cell = Car->crossCurrCell;
     initCrossCell(&Car->crossCurrCell, NULL);
 
-    cell = Car->crossNextCell;
-    if (cell.crossNum != NEXT_CELL_IS_ON_ROAD)
-    {
+    if (Car->crossNextCell.crossNum != NEXT_CELL_IS_ON_ROAD){
         initCrossCell(&Car->crossNextCell, Car);
-    }
-    else
-    {
-        initRoadCell(&Car->nextCell, Car);
-    }   
-}
-
-GLvoid reinitCrossCells(car* Car)
-{
-    if (Car->crossNextCell.crossNum != NEXT_CELL_IS_ON_ROAD)
-    {
         Car->crossCurrCell = Car->crossNextCell;
+        // printf(">> INIT CROSS   << ID: %d\n", Car->ID);
     }
+    else{
+        initRoadCell(&Car->nextCell, Car);
+        Car->currCell = Car->nextCell;
+        q_del_item(&crosses[Car->crossCurrCell.crossNum].carsEndingManeuver, Car);
+        q_del_item(&crosses[Car->crossCurrCell.crossNum].carsArriving, Car);
+        // printf(">> NEXT ON ROAD << ID: %d\n", Car->ID);
+    }   
 }
 
 //....................................................................................................................
 GLvoid q_append(car* Car, queue* q)
 {
-    q_item* item = (q_item*) malloc(sizeof(q_item*));
+    // printf("APPEND ID: %d\n", Car->ID); //printCarCharacter(Car);
+    q_item* item = (q_item*) malloc(sizeof(q_item));
     if (item == NULL) exit(-1);
     item->value = Car;
     item->next = NULL;
+    // printf("***\n");
+    // q_print(q);
+    // printf("***\n");
 
-    if (q->qauntity > 0) {
+    // if (q->head) printf("head ID: %d\n", q->head->value->ID);
+    // if (q->tail) printf("tail ID: %d\n", q->tail->value->ID);
+
+    if (q->head && q->tail) {
         q->tail->next = item;
-    }
-    else {
+        q->tail = item;
+    }else{
         q->head = item;
+        q->head->next = NULL;
+        q->tail = item;
     }
-    q->tail = item;
-
     ++q->qauntity;
+
+    // printf("======= arrive queue =======\n");
+    // q_print(q);
+    // printf("============================\n");
+
 }
 
 car* q_pop(queue* q)
 {
+    if (q->head == NULL){
+        exit(-2);
+    }
     car* Car = q->head->value;
     if (q->qauntity > 1) {
+        q_item* tmp = q->head;
         q->head = q->head->next;
+        free(tmp);
     }
     else {
+        free(q->head);
         q->head = NULL;
         q->tail = NULL;
     }
@@ -295,14 +380,29 @@ car* q_pop(queue* q)
 
 GLvoid q_fill(queue* dest, queue* src)
 {
-    q_delete(dest);
-    dest->head = src->head;
+    if (src->qauntity == 0){
+        return;
+    }
+    if (dest->qauntity == 0){
+        dest->head = src->head;
+    }
+    else{
+        dest->tail->next = src->head;
+    }
+    
     dest->tail = src->tail;
-    dest->qauntity = dest->qauntity;
+    dest->qauntity += src->qauntity;
+
+    src->head = NULL;
+    src->tail = NULL;
+    src->qauntity = 0;
 }
 
 GLvoid q_delete(queue* q)
 {
+    if (q->head == NULL){
+        return;
+    }
     q_item* tmp;
     GLint quantity = q->qauntity;
     while (--quantity >= 0)
@@ -316,51 +416,81 @@ GLvoid q_delete(queue* q)
     q->qauntity = 0;
 }
 
+GLvoid q_del_item(queue* q, car* Car){
+    // printf("del ID: %d\n", Car->ID);
+    if (q->head == NULL){
+        return;
+    }
+    if (q->head->value == Car){
+        q_item* del_item = q->head;
+        if (q->head == q->tail){
+            q->head = NULL;
+            q->tail = NULL;
+        }
+        else{
+            q->head = q->head->next;
+        }
+        free(del_item);
+        --q->qauntity;
+        // printf("AFTER_DEL _h\n");
+        // q_print(q);
+        // printf("after_del\n");
+        return;
+    }
+    q_item* prev = q->head;
+    q_item* tmp = prev->next;
+    while (tmp != NULL){
+        if (tmp->value == Car){
+            prev->next = tmp->next;
+            if (q->tail == tmp){
+                q->tail = prev;
+            }
+            // if (prev->next == NULL) printf("tail->next==NULL\n");
+            free(tmp);
+            --q->qauntity;
+            // printf("AFTER_DEL_t\n");
+            // q_print(q);
+            // printf("after_del\n");
+            return;
+        }
+        prev = tmp;
+        tmp = tmp->next;
+    }
+}
 //....................................................................................................................
 GLvoid thoughtsOfOneCarOnCross(car* Car)
 {
-    if (isOnCurvingCell(Car))
-    {
+    if (isOnCurvingCell(Car)){
         Car->moveDir = Car->target;
         Car->roadDirMultiplier = getDirMultiplier(Car->target);
     }
-
-    bool frontCheck, sideCheck;
-    cross_flood flood = getCodirectional(Car->moveDir, getQuaterNum(Car->crossCurrCell));
-    
     cross_cell c;
     getNextCrossCell(Car, &c);
+    // printf("curr:");printCrossCell(Car->crossCurrCell);
+    // printf("NEXT:");printCrossCell(c);
 
-    if (isInCrossBoards(c))
-    {
-        frontCheck = isSafetyFront(c);
-        if (flood == ENTER) {
-            sideCheck = isSafetyLeft(c, Car);
-        }
-        else {
-            sideCheck = isSafetyRight(c, Car);
-        }
-
-        if (frontCheck && sideCheck) {
+    if (isInCrossBoards(c)){
+        if (getCarByCrossCell(&c) == NULL){
             Car->crossNextCell = c;
             Car->velocity = CROSS_VELOCITY;
-        }
-        else {
+            initCrossCell(&c, OCCUPYING_CAR);
+        }else{
             Car->velocity = _0_CELL_;
         }
-    }
-    else
-    {
+    }else{
+        // printf("else\n");
         RLC rlc;
         transformCrossCellIntoRLC(&rlc, Car);
-        if (getCarPtr(&rlc) == NULL) {
+        // printCrossCell(Car->crossCurrCell);
+        if (getCarPtr(&rlc) == NULL){
             Car->nextCell = rlc;
+            Car->crossNextCell.crossNum = NEXT_CELL_IS_ON_ROAD;
             Car->velocity = _1_CELL_;
-        }
-        else {
+            initRoadCell(&rlc, OCCUPYING_CAR);
+            // printRLC(rlc, "rlc");
+        }else{
             Car->velocity = _0_CELL_;
         }
-        /*else Car->crossNextCell = Car->crossCurrCell; is useless as before thoughtsOfOneCarOnCross the pointers were rebinded.*/ 
     }
 }
 
@@ -374,16 +504,16 @@ bool isOnCurvingCell(car* Car)
 GLvoid getNextCrossCell(car* Car, cross_cell* c)
 {
     *c = Car->crossCurrCell;
-    if (Car->moveDir == NORTH) {
+    if (Car->moveDir == NORTH){
         --c->y;
     }
-    else if (Car->moveDir == SOUTH) {
+    else if (Car->moveDir == SOUTH){
         ++c->y;
     }
-    else if (Car->moveDir == EAST) {
+    else if (Car->moveDir == EAST){
         ++c->x;
     }
-    else if (Car->moveDir == WEST) {
+    else if (Car->moveDir == WEST){
         --c->x;
     }
 }
@@ -391,117 +521,6 @@ GLvoid getNextCrossCell(car* Car, cross_cell* c)
 bool isInCrossBoards(cross_cell c)
 {
     return (c.x >= 0 && c.x < CROSS_SIDE && c.y >= 0 && c.y < CROSS_SIDE);
-}
-
-/*the foo is applied after rebinding pointers. by the momemnt the foo is carried cars have identical next and current cells*/
-/*cars the foo is applied are false-cheked, has identical next and cureent cells*/
-bool isSafetyLeft(cross_cell cell, car* Car)
-{
-    cross_cell c = cell;
-    car* leftCar = NULL;
-    GLint leftCarCoord = - 1;
-    if (Car->moveDir == NORTH) //y is the same
-    {
-        while (--(c.x) >= 0)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.x;
-                return (cell.x - leftCarCoord >= 1);
-            }
-        }
-    }
-    else if (Car->moveDir == SOUTH) //y is the same
-    {
-        while (++(c.x) < CROSS_SIDE)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.x;
-                return (leftCarCoord - cell.x >= 1);
-            }
-        }
-    }
-    else if (Car->moveDir == EAST) //x is the same
-    {
-        while (--(c.y) >= 0)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.y;
-                return (cell.y - leftCarCoord);
-            }
-        }
-    }
-    else if (Car->moveDir == WEST) //x is the same
-    {
-        while (++(c.y) < CROSS_SIDE)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.y;
-                return (leftCarCoord - cell.y);
-            }
-        }
-    }
-    return false;
-}
-
-bool isSafetyRight(cross_cell cell, car* Car)
-{
-    cross_cell c = cell;
-    car* leftCar = NULL;
-    GLint leftCarCoord = - 1;
-    if (Car->moveDir == NORTH) //y is the same
-    {
-        while (++(c.x) < CROSS_SIDE)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.x;
-                return (leftCarCoord - cell.x >= 1);
-            }
-        }
-    }
-    else if (Car->moveDir == SOUTH) //y is the same
-    {
-        while (--(c.x) >= 0)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.x;
-                return (cell.x - leftCarCoord >= 1);
-            }
-        }
-    }
-    else if (Car->moveDir == EAST) //x is the same
-    {
-        while (++(c.y) < CROSS_SIDE)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.y;
-                return (leftCarCoord - cell.y);
-            }
-        }
-    }
-    else if (Car->moveDir == WEST) //x is the same
-    {
-        while (--(c.y) >= 0)
-        {
-            if ((leftCar = getCarByCrossCell(&c)) != NULL)
-            {
-                leftCarCoord = leftCar->crossNextCell.y;
-                return (cell.y - leftCarCoord);
-            }
-        }
-    }
-    return false;
-}
-
-bool isSafetyFront(cross_cell cell)
-{
-    return (getCarByCrossCell(&cell) == NULL);
 }
 
 GLvoid transformCrossCellIntoRLC(RLC* rlc, car* Car)
@@ -522,7 +541,7 @@ GLint getLineOfAppearingOnRoadFromCross(car* Car)
 //....................................................................................................................
 GLvoid transformRLCIntoCrossCell(cross_cell* c, car* Car)
 {
-    Car->crossNextCell.crossNum = roads[Car->currCell.road].endCrossNum;
+    c->crossNum = roads[Car->currCell.road].endCrossNum;
     if (Car->moveDir == NORTH)
     {
         c->x = getCrossEnter(Car->currCell.line, Car->moveDir);
@@ -552,7 +571,6 @@ GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enter
     HALF_CROSS_SIDE = CROSS_SIDE / 2;
     CROSS_WIDTH = CELL_WIDTH * CROSS_SIDE;
     NUMBER_OF_CROSS_CELLS = CROSS_SIDE * CROSS_SIDE;
-    MAX_CELL_NUM = CROSS_SIDE * CROSS_SIDE;
 
 #ifdef DEBUG
     DEFAULT_FOV = 60;
@@ -594,15 +612,13 @@ GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exit
 {
     cross* Cross = &crosses[crossIndex];
 
-    for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++)
-    {
+    for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++){
         Cross->enterRoadsIndexes[i] = enterRoadIndexes[i];
         Cross->exitRoadsIndexes[i] = exitRoadIndexes[i];
         Cross->enterRoadsPtrs[i] = &roads[enterRoadIndexes[i]];
         Cross->exitRoadsPtrs[i] = &roads[exitRoadIndexes[i]];
     }
-    for (GLint i = 0; i < NUMBER_OF_CROSS_CELLS; i++)
-    {
+    for (GLint i = 0; i < NUMBER_OF_CROSS_CELLS; i++){
         Cross->cells[i] = NULL;
     }
     Cross->carsEndingManeuver.head = NULL;
@@ -611,11 +627,8 @@ GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exit
     Cross->carsArriving.head = NULL;
     Cross->carsArriving.tail = NULL;
     Cross->carsArriving.qauntity = 0;
-
-
     // binding crosses with roads
-    for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++)
-    {
+    for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++){
         roads[enterRoadIndexes[i]].isEndCross = true;
         roads[enterRoadIndexes[i]].isBeginCross = false;
         roads[enterRoadIndexes[i]].endCrossNum = crossIndex;
@@ -624,7 +637,14 @@ GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exit
         roads[exitRoadIndexes[i]].beginCross = Cross;
         roads[exitRoadIndexes[i]].isBeginCross = true;
         roads[exitRoadIndexes[i]].isEndCross = false;
-    }   
+    }
+    for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++){
+        GLint index = getFreeTrafficLightIndex();
+        roads[enterRoadIndexes[i]].traffic_light_index = index;
+        roads[enterRoadIndexes[i]].traffic_light_ptr = &lights[index];
+        // printf("dir: %d, enter: %d, light_index: %d\n", roads[enterRoadIndexes[i]].dir, enterRoadIndexes[i], index);
+    }
+    setDefaultTrafficLightProperties();
 }
 
 

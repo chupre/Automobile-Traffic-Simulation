@@ -16,25 +16,25 @@ GLfloat cameraFOV;
 
 bool cameraInit = false;
 
-GLvoid setProjection()
+GLvoid setProjection(int shader)
 {
     if (!cameraInit) {
         cameraFOV = DEFAULT_FOV;
         cameraInit = true;
     }
 
-    GLuint projLoc = glGetUniformLocation(shaderProgram, "projection");
+    GLuint projLoc = glGetUniformLocation(shader , "projection");
     glm_perspective(glm_rad(cameraFOV), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 1.0f, 100.0f, projection);
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, projection);
 }
 
 
-GLvoid setView()
+GLvoid setView(int shader)
 {
     vec3 temp;
     glm_vec3_add(cameraPos, cameraFront, temp);
     glm_lookat(cameraPos, temp, cameraUp, view);
-    GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
+    GLuint viewLoc = glGetUniformLocation(shader, "view");
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view);
 }
 

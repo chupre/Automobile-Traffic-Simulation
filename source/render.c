@@ -14,6 +14,7 @@
 #include <road.h>
 #include <search_tools.h>
 #include <shader.h>
+#include <texture.h>
 
 #define NK_ASSERT(a)
 #define MAX_VERTEX_BUFFER 512 * 1024
@@ -94,7 +95,7 @@ GLvoid keyCallback(GLFWwindow *window, int key, int scancode, int action,
       isSaveMenuActive = false;
     } else if (isLoadMenuActive) {
       isLoadMenuActive = false;
-    } else if(isInitMenuActive) {
+    } else if (isInitMenuActive) {
       isInitMenuActive = false;
     } else {
       paused = !paused;
@@ -116,8 +117,12 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
     float normalizedX = (2.0f * mousePosX / WINDOW_WIDTH) - 1.0f;
     float normalizedY = 1.0f - (2.0f * mousePosY / WINDOW_HEIGHT);
 
-    setProjection();
-    setView();
+    glUseProgram(carShader);
+    setProjection(carShader);
+    setView(carShader);
+    glUseProgram(shaderProgram);
+    setProjection(shaderProgram);
+    setView(shaderProgram);
 
     mat4 inverseProjectionView;
     glm_mat4_mul(projection, view, inverseProjectionView);
@@ -140,7 +145,7 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
       return;
     }
 
-    addInRLCcarAddingQueue(rlc);
+    appendRLCinCarAddingQueue(rlc);
   }
 }
 
@@ -169,10 +174,10 @@ GLvoid initRoads() {
   glBindVertexArray(roadVAO);
 
   if (MAP_TYPE == CROSS) {
-      roadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
-      roadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
-      roadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
-      roadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
   }
   glBindBuffer(GL_ARRAY_BUFFER, roadVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUMBER_OF_ROADS * 4 * 5,
@@ -201,13 +206,14 @@ GLvoid initLines() {
   glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
 
   if (MAP_TYPE == CROSS) {
-      glBufferData(GL_ARRAY_BUFFER,
-              sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2),
-              lineVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) *
+                     (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2),
+                 lineVertices, GL_STATIC_DRAW);
   } else {
-      glBufferData(GL_ARRAY_BUFFER,
-              sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2,
-              lineVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2,
+                 lineVertices, GL_STATIC_DRAW);
   }
 
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
@@ -223,27 +229,29 @@ GLvoid initLines() {
 
 GLvoid initCars() {
   glGenBuffers(1, &carInstanceVBO);
-  glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(mat3) * 1000, carTransformMatrixes,
-               GL_DYNAMIC_DRAW);
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-
   glGenVertexArrays(1, &carVAO);
   glGenBuffers(1, &carVBO);
   glGenBuffers(1, &carEBO);
+
   glBindVertexArray(carVAO);
 
+  glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(mat3) * 1000, carTransformMatrixes,
+               GL_DYNAMIC_DRAW);
+
   glBindBuffer(GL_ARRAY_BUFFER, carVBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * MAX_CARS * 4 * 2, carVertices,
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * 4, carVertices,
                GL_STATIC_DRAW);
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint) * MAX_CARS * 6,
-               carIndices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
                         (GLvoid *)0);
-  glEnableVertexAttribArray(0);
+
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
+                        (GLvoid *)(2 * sizeof(float)));
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint) * 6, carIndices,
+               GL_STATIC_DRAW);
 
   glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
   glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(mat3),
@@ -252,9 +260,14 @@ GLvoid initCars() {
                         (GLvoid *)(sizeof(float) * 3));
   glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(mat3),
                         (GLvoid *)(sizeof(float) * 6));
+
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
   glEnableVertexAttribArray(2);
   glEnableVertexAttribArray(3);
   glEnableVertexAttribArray(4);
+  glVertexAttribDivisor(0, 0);
+  glVertexAttribDivisor(1, 0);
   glVertexAttribDivisor(2, 1);
   glVertexAttribDivisor(3, 1);
   glVertexAttribDivisor(4, 1);
@@ -265,17 +278,14 @@ GLvoid initCars() {
 
 GLvoid render() {
   glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
 
   glUseProgram(shaderProgram);
 
-  isCarLoc = glGetUniformLocation(shaderProgram, "isCar");
-  glUniform1i(isCarLoc, false);
-
   processKeyboardInput();
 
-  setProjection();
-  setView();
+  setProjection(shaderProgram);
+  setView(shaderProgram);
 
   glBindVertexArray(roadVAO);
   glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
@@ -286,7 +296,10 @@ GLvoid render() {
   dbgRenderCells();
 #endif
 
-  glUniform1i(isCarLoc, true);
+  glUseProgram(carShader);
+  glBindTexture(GL_TEXTURE_2D, textures[0]);
+  setView(carShader);
+  setProjection(carShader);
   glBindVertexArray(carVAO);
 
   for (int i = 0; i < MAX_CARS; i++) {
@@ -352,7 +365,6 @@ GLvoid initGL() {
 
   gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-  glEnable(GL_DEPTH_TEST);
   glEnable(GL_MULTISAMPLE);
 
   context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
@@ -367,15 +379,11 @@ GLvoid initGL() {
 }
 
 GLfloat getScreenVelocity(car *Car) {
-  return (GLfloat)(Car->velocity * Car->roadDirMultiplier *
-                   VELOCITY_MULTIPLIER) /
-         FPS;
+  return (GLfloat)(Car->velocity * Car->roadDirMultiplier * VELOCITY_MULTIPLIER) / FPS;
 }
 
 GLfloat getScreenVelocityShift(car *Car) {
-  return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) *
-                   VELOCITY_MULTIPLIER) /
-         FPS;
+  return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) * VELOCITY_MULTIPLIER) / FPS;
 }
 
 GLvoid moveCarOnScreen(GLint carIndex) {
@@ -389,12 +397,10 @@ GLvoid moveCarOnScreen(GLint carIndex) {
     screenVelocity = getScreenVelocityShift(Car);
   }
 
-  if (Car->moveDir == NORTH || Car->moveDir == SOUTH) {
-    glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
-  } else {
-    glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
-    // printf("X shift\n");
-  }
+  if (Car->move == FORWARD)
+      glm_translate2d_y(carTransformMatrixes[carIndex], screenVelocity);
+  else
+      glm_translate2d_x(carTransformMatrixes[carIndex], screenVelocity);
 }
 
 #ifdef DEBUG
@@ -406,14 +412,15 @@ GLvoid dbgInitCells() {
   glBindVertexArray(cellsVAO);
   glBindBuffer(GL_ARRAY_BUFFER, cellsVBO);
   if (MAP_TYPE == CROSS) {
-  glBufferData(GL_ARRAY_BUFFER,
-               sizeof(float) * 2 * 5 * (NUMBER_OF_CELLS * 2 + CROSS_SIDE + 1) * 2,
-               cellsVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * 2 * 5 *
+                     (NUMBER_OF_CELLS * 2 + CROSS_SIDE + 1) * 2,
+                 cellsVertices, GL_STATIC_DRAW);
   } else {
-  glBufferData(GL_ARRAY_BUFFER,
-               sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS *
-                   NUMBER_OF_CELLS * 5 * 8,
-               cellsVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS *
+                     NUMBER_OF_CELLS * 5 * 8,
+                 cellsVertices, GL_STATIC_DRAW);
   }
 
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),

@@ -18,12 +18,13 @@ mat3 carTransformMatrixes[1000];
 
 GLuint carVAO, carVBO, carEBO, carInstanceVBO;
 
-GLfloat carVertices[4 * 2] =
+GLfloat carVertices[4 * 4] =
 {
-    0.0f, 0.0f,
-    CAR_WIDTH, 0.0f,
-    0.0f, CAR_LENGTH,
-    CAR_WIDTH, CAR_LENGTH,
+    // VERTICES COORDS     // TEXTURE COORDS
+    0.0f,      0.0f,        0.0f, 0.0f,
+    CAR_WIDTH, 0.0f,        1.0f, 0.0f,
+    0.0f,      CAR_LENGTH,  0.0f, 1.0f,
+    CAR_WIDTH, CAR_LENGTH,  1.0f, 1.0f
 };
 
 GLint carIndices[6] =
@@ -57,6 +58,9 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	Car->ID = carIndex;
 	Car->overtake = NONE;
 	Car->target = rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
+	if (Car->target == getOppositeDir(Car->moveDir)){
+		Car->target = Car->moveDir;
+	}
 	//Car->velocity = _3_CELL_ + _1_CELL_ + (rand() % (NUMBER_OF_VELOCITY_TYPES - 3));
 	//Car->velocity = _1_CELL_;
 	Car->velocity = _1_CELL_ + rand() % NUMBER_OF_VELOCITY_TYPES;
@@ -66,6 +70,13 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	memcpy(&Car->nextCell, &rlc, sizeof(RLC));
 	
 	bindCellAndCar(&rlc, Car);
+ }
+
+ DIRECTION getOppositeDir(DIRECTION dir){
+	if (dir == NORTH) return SOUTH;
+	if (dir == SOUTH) return NORTH;
+	if (dir == EAST) return WEST;
+	if (dir == WEST) return EAST;
  }
 
  GLvoid setCrushedCarProperties(car* Car, GLint carIndex, RLC rlc)
@@ -131,7 +142,13 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 			x2 = roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
 			Car->realPos = x1;
 
-			vec2 carTranslationVector = { x2, y2 };
+			vec2 carTranslationVector = { y2, x2 };
+            mat3 rotation_matrix = {
+                0, 1, 0,
+                -1, 0, 0,
+                0, 0, 1
+            };
+            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -147,7 +164,13 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 			x2 = roads[rlc.road].startLineCoord - rlc.cell * CELL_WIDTH - CAR_WIDTH;
 			Car->realPos = x1;
 
-			vec2 carTranslationVector = { x2, y2 };
+			vec2 carTranslationVector = { y2, x2 };
+            mat3 rotation_matrix = {
+                0, 1, 0,
+                -1, 0, 0,
+                0, 0, 1
+            };
+            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -254,7 +277,13 @@ GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc)
 			x2 = cellWall;
 			Car->realPos = x1;
 
-			vec2 carTranslationVector = { x2, y2 };
+			vec2 carTranslationVector = { y2, x2 };
+            mat3 rotation_matrix = {
+                0, 1, 0,
+                -1, 0, 0,
+                0, 0, 1
+            };
+            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -271,7 +300,13 @@ GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc)
 			x2 = cellWall - CAR_WIDTH;
 			Car->realPos = x1;
 
-			vec2 carTranslationVector = { x2, y2 };
+			vec2 carTranslationVector = { y2, x2 };
+            mat3 rotation_matrix = {
+                0, 1, 0,
+                -1, 0, 0,
+                0, 0, 1
+            };
+            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -295,10 +330,6 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 	{
 		if (/*roads[i].isEdge ||*/ !roads[i].isBeginCross)
 		{
-			if (i >= 4 && i <= 7)
-			{
-				printf("i:%d, begin:%d, end:%d\n", i, roads[i].isBeginCross, roads[i].isEndCross);
-			}
 			for (int j = 0; j < NUMBER_OF_LINES + 1; j++)
 			{
 				if (roads[i].lines[j].cells[0] == NULL)

@@ -24,8 +24,8 @@ enum camDir {
     UP, DOWN, RIGHT, LEFT
 }; 
 
-GLvoid setProjection();
-GLvoid setView();
+GLvoid setProjection(int shader);
+GLvoid setView(int shader);
 GLvoid moveCamera(camDir dir);
 GLint isPossibleToMoveCam(camDir dir, GLfloat offset);
 GLvoid getTestVertex(GLint roadIndex, camDir dir, vec4 dest);

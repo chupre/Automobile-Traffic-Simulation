@@ -17,12 +17,23 @@ add_executable(Automobile-Traffic-Simulation
     source/search_tools.c
     source/traffic_density.c
     source/traffic_light.c
+    source/texture.c
     )
 
 if (WIN32)
-    target_link_libraries(Automobile-Traffic-Simulation ${CMAKE_SOURCE_DIR}/external/GLFW/glfw3.lib)
+    target_link_libraries(Automobile-Traffic-Simulation 
+        ${CMAKE_SOURCE_DIR}/external/GLFW/glfw3.lib)
 else()
-    target_link_libraries(Automobile-Traffic-Simulation glfw m)
+    target_link_libraries(Automobile-Traffic-Simulation 
+        glfw 
+        m 
+    )
 endif()
 
-include_directories(${CMAKE_SOURCE_DIR}/external ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/source)
+target_include_directories(
+    Automobile-Traffic-Simulation
+    PRIVATE
+    ${CMAKE_SOURCE_DIR}/external               
+    ${CMAKE_SOURCE_DIR}/include 
+    ${CMAKE_SOURCE_DIR}/source
+)

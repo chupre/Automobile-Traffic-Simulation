@@ -21,6 +21,7 @@ typedef struct cross cross;
 typedef struct line line;
 typedef struct road road;
 typedef struct car car;
+typedef struct traffic_light traffic_light;
 
 struct line {
     car** cells;
@@ -39,6 +40,8 @@ struct road {
     GLfloat endLineCoord;
     DIRECTION dir;
     line* lines;
+    GLint traffic_light_index;
+    traffic_light* traffic_light_ptr;//for the celerity of inquiring
 };
 
 GLvoid addRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir);

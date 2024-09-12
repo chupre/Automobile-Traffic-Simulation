@@ -4,9 +4,9 @@
 // External
 #include <glad/glad.h>
 
-extern GLuint shaderProgram;
+extern GLuint shaderProgram, carShader;
 
-void genShader();
+void genShader(int * shader, char * vertexShaderName, char * fragmentShaderName);
 char* getShaderContent(const GLchar* fileName);
 
 #endif

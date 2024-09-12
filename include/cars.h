@@ -20,7 +20,7 @@
 #define CAR_LENGTH (CAR_WIDTH)
 // #define CAR_LENGHT (CAR_WIDTH * 1.7f)
 
-#define NO_INNER_INDEX -1
+#define NO_INNER_INDEX 0
 #define NO_CAR_INDEX -1
 
 // typedef struct RLC RLC;
@@ -57,13 +57,12 @@ struct car {
 
 extern mat3 carTransformMatrixes[1000];
 extern GLuint carVAO, carVBO, carEBO, carInstanceVBO;
-extern GLfloat carVertices[4 * 2];
+extern GLfloat carVertices[4 * 4];
 extern GLint carIndices[6];
 extern GLint freeCars;
 
 extern car occupying_car;
 extern car* OCCUPYING_CAR;
-
 
 GLvoid addCar(car* Car, GLint carIndex, RLC rlc);
 GLvoid addCrushedCar(RLC rlc);
@@ -78,5 +77,6 @@ GLvoid clearCarProperties(car* Car);
 
 GLvoid bindCellAndCar(RLC* rlc, car* Car);
 GLvoid setOccupyingCarProperties();
+DIRECTION getOppositeDir(DIRECTION dir);
 
 #endif

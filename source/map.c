@@ -38,7 +38,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_ROADS = 2;
         NUMBER_OF_CELLS = 40;
     } else if (map_type == CROSS) {
-        NUMBER_OF_CELLS = 10;
+        NUMBER_OF_CELLS = 40;
         NUMBER_OF_ROADS = 8;
     } else {
         NUMBER_OF_ROADS = 1;
@@ -149,12 +149,12 @@ GLvoid setRoadsAroundCross(GLfloat start_x, GLfloat start_y)
     GLfloat roadLength = CELL_LENGTH * NUMBER_OF_CELLS;
     GLfloat halfRoadIndent = ((NUMBER_OF_LINES + 1) / 2) * CELL_LENGTH;
     GLfloat crossIndent = (NUMBER_OF_LINES + 1) * CELL_LENGTH;
-    addRoad(0, start_x + halfRoadIndent,           start_y - crossIndent - roadLength, NORTH); // N;
-    addRoad(1, start_x - halfRoadIndent,           start_y + crossIndent + roadLength, SOUTH); // S
-    addRoad(2, start_x - crossIndent - roadLength, start_y - halfRoadIndent,            EAST); // E
-    addRoad(3, start_x + crossIndent + roadLength, start_y + halfRoadIndent,            WEST); // W
-    addRoad(4, start_x + halfRoadIndent,           start_y + crossIndent,              NORTH); // N
-    addRoad(5, start_x - halfRoadIndent,           start_y - crossIndent,              SOUTH); // S
-    addRoad(6, start_x + crossIndent,              start_y - halfRoadIndent,            EAST); // E
-    addRoad(7, start_x - crossIndent,              start_y + halfRoadIndent,            WEST); // W
+    addRoad(0, start_x + halfRoadIndent,           start_y - crossIndent - roadLength, NORTH);
+    addRoad(1, start_x - halfRoadIndent,           start_y + crossIndent + roadLength, SOUTH);
+    addRoad(2, start_x - crossIndent - roadLength, start_y - halfRoadIndent,            EAST);
+    addRoad(3, start_x + crossIndent + roadLength, start_y + halfRoadIndent,            WEST);
+    addRoad(4, start_x + halfRoadIndent,           start_y + crossIndent,              NORTH);
+    addRoad(5, start_x - halfRoadIndent,           start_y - crossIndent,              SOUTH);
+    addRoad(6, start_x + crossIndent,              start_y - halfRoadIndent,            EAST);
+    addRoad(7, start_x - crossIndent,              start_y + halfRoadIndent,            WEST);
 }

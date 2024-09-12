@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 // External
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
@@ -36,11 +34,13 @@
 #include <search_tools.h>
 #include <traffic_light.h>
 #include <traffic_density.h>
+#include <texture.h>
 
 #include <sys/resource.h>
 
 int main()
 {
+    // defining stack size
     const rlim_t kStackSize = 64L * 1024L * 1024L; 
     struct rlimit rl;
     int result;
@@ -60,7 +60,9 @@ int main()
     }
 
     initGL();
-    genShader();
+    initTextures();
+    genShader(&shaderProgram, "vertex_shader.glsl", "fragment_shader.glsl");
+    genShader(&carShader, "vCar.glsl", "fCar.glsl");
 
     // openFile();
 

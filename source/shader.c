@@ -6,7 +6,7 @@
 // Custom modules
 #include <shader.h>
 
-GLuint shaderProgram;
+GLuint shaderProgram, carShader;
 
 char* getShaderContent(const GLchar* fileName)
 {
@@ -38,10 +38,15 @@ char* getShaderContent(const GLchar* fileName)
     return shaderContent;
 }
 
-void genShader()
+void genShader(int * shader, char * vertexShaderName, char * fragmentShaderName)
 {
-    const GLchar* vertexShaderSource = getShaderContent("../source/shaders/vertex_shader.glsl");
-    const GLchar* fragmentShaderSource = getShaderContent("../source/shaders/fragment_shader.glsl");
+    char vertexShaderFullName[128] = "../source/shaders/";
+    char fragmentShaderFullName[128] = "../source/shaders/";
+    strcat(vertexShaderFullName, vertexShaderName);
+    strcat(fragmentShaderFullName, fragmentShaderName);
+
+    const GLchar* vertexShaderSource = getShaderContent(vertexShaderFullName);
+    const GLchar* fragmentShaderSource = getShaderContent(fragmentShaderFullName);
 
     GLuint vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -53,10 +58,10 @@ void genShader()
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
 
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    *shader = glCreateProgram();
+    glAttachShader(*shader, vertexShader);
+    glAttachShader(*shader, fragmentShader);
+    glLinkProgram(*shader);
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
