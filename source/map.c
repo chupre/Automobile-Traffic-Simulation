@@ -40,9 +40,6 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     } else if (map_type == CROSS) {
         NUMBER_OF_CELLS = 12;
         NUMBER_OF_ROADS = 8;
-    }else if (map_type == ONE_ROAD_N){
-        NUMBER_OF_CELLS = 20;
-        NUMBER_OF_ROADS = 24;
     } else {
         NUMBER_OF_ROADS = 1;
         NUMBER_OF_CELLS = 40;
