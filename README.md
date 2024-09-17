@@ -3,13 +3,15 @@
   For D. 👤:\
 🟢 Migrate from visual studio and configure cmake to make it cross-platform.\
 🟢 Add main menu with map selection.\
-🟢🔴 fix crosses.\
+🟢 fix crosses.\
 🟢 Add restart button.\
 🟢 fix saves.\
-🟢 add traffic lights.\
-🔴 Split roads in two parts to make them two-directional like IRL.\
-🔴 Implement linear interpolation for camera movement and cars.\
-🔴 Implement textures for cars.
+🔴 Add crushed cars on right click.\
+🔴 Add traffic lights.\
+🔴 Add help section in menu.\
+🔴 Add proper logging.\
+🔴 Fix saves for crosses.\
+🟢 Implement textures for cars.
 
   For V. 👤:\
 🟢 Develop algorithms for cross.\
