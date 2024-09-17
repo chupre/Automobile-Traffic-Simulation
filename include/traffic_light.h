@@ -13,9 +13,9 @@
 #define TRAFFIC_LIGHTS_TIME_DIGIT (4)
 #define NUMBER_OF_TRAFFIC_LIGHTS (4 * NUMBER_OF_CROSSES)
 
-#define RED_TIME 3*2
-#define YELLOW_TIME 1*2
-#define GREEN_TIME 2*2
+#define RED_TIME 3
+#define YELLOW_TIME 1
+#define GREEN_TIME 2
 
 typedef struct car car;
 

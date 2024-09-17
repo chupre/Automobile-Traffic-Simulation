@@ -39,10 +39,10 @@ char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
 
 config initConfig = {
+    1000,
     5,
-    1,
     100,
-    CROSS 
+    CROSS
 };
 
 void initGUI()

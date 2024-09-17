@@ -13,6 +13,8 @@
 #define _5_VELOCITY (_1_VELOCITY * 5)
 #define _6_VELOCITY (_1_VELOCITY * 6)
 #define _7_VELOCITY (_1_VELOCITY * 7)
+#define _8_VELOCITY (_1_VELOCITY * 8)
+#define _9_VELOCITY (_1_VELOCITY * 9)
 
 
 #endif

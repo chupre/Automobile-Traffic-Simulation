@@ -62,8 +62,8 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 		Car->target = Car->moveDir;
 	}
 	//Car->velocity = _3_CELL_ + _1_CELL_ + (rand() % (NUMBER_OF_VELOCITY_TYPES - 3));
-	//Car->velocity = _1_CELL_;
-	Car->velocity = _1_CELL_ + rand() % NUMBER_OF_VELOCITY_TYPES;
+	// Car->velocity = _1_CELL_;
+	Car->velocity = MIN_SPAWN_VELOCITY + rand() % (NUMBER_OF_VELOCITY_TYPES - MIN_SPAWN_VELOCITY + 1);
 	Car->isActive = true;
 	Car->roadDirMultiplier = getDirMultiplier(Car->moveDir);
 	memcpy(&Car->currCell, &rlc, sizeof(RLC));

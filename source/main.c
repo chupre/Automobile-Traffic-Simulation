@@ -34,13 +34,15 @@
 #include <search_tools.h>
 #include <traffic_light.h>
 #include <traffic_density.h>
+#include <log.h>
 #include <texture.h>
 
 #include <sys/resource.h>
 
 int main()
 {
-    // defining stack size
+    openFile();
+
     const rlim_t kStackSize = 64L * 1024L * 1024L; 
     struct rlimit rl;
     int result;
@@ -60,15 +62,35 @@ int main()
     }
 
     initGL();
+    genShader();
+
+
+#ifdef dot_debug
+    dot_coord _dot;
+    _dot.x = -0.8f;
+    _dot.y = -0.55f;
+    RLC _rlc_;
+    if (getRLCbyDot(&_rlc_, &_dot))
+    {
+        printRLC(_rlc_, "_rlc_");
+    }
+    else printf("none\n");
+    // RLC crRLC = {0, 1, 2};
+    // addCrushedCar(crRLC);
+
+#endif
+
     initFont();
 
     glfwSetTime(0.0f);
     lastTime = glfwGetTime();
     timer = lastTime;
 
-    while (!glfwWindowShouldClose(window)) {
-        if (paused || !isInit) 
+    while (!glfwWindowShouldClose(window))
+    {
+        if (paused || !isInit){
             initGUI();
+        }
 
         if (!paused) {
             if (isInit) 
@@ -99,6 +121,7 @@ int main()
         glfwPollEvents();
     }
 
+    closeFile();
     quit();
 }
 
