@@ -21,7 +21,6 @@ bool getRLCbyDot(RLC* rlc, dot_coord* dot)
 {
     if (dot->x == NO_COORD || dot->y == NO_COORD)
     {
-        printf("Given dot is {NO_COORD, NO_COORD}\n");
         return false;
     }
 
@@ -30,28 +29,24 @@ bool getRLCbyDot(RLC* rlc, dot_coord* dot)
     GLint roadIndex = getRoadIndex(dot);
     if (roadIndex == NO_ROAD_INDEX)
     {
-        printf("roadIndex is bad\n");
         return false;
     }
 
     GLint lineIndex = getLineIndex(dot, roadIndex);
     if (lineIndex == NO_LINE_INDEX)
     {
-        printf("lineIndex is bad\n");
         return false;
     }
 
     GLint cellIndex = getCellIndex(dot, roadIndex, lineIndex);
     if (cellIndex == NO_LINE_INDEX)
     {
-        printf("cellIndex is bad\n");
         return false;
     }
 
     rlc->road = roadIndex;
     rlc->line = lineIndex;
     rlc->cell = cellIndex;
-    printRLC(*rlc, "clicked RLC");
     return true;
 }
 

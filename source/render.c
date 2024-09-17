@@ -38,6 +38,9 @@ bool isInit = false;
 bool isInitMenuActive = false;
 bool isSaveMenuActive = false;
 bool isLoadMenuActive = false;
+bool isShowInfo = false;
+bool isLinePicked = false;
+RLC pickedRLC;
 
 float mousePosX = 0.0;
 float mousePosY = 0.0;
@@ -90,8 +93,7 @@ GLvoid framebufferSizeCallback(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
 }
 
-GLvoid keyCallback(GLFWwindow *window, int key, int scancode, int action,
-                   int mods) {
+GLvoid keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     if (isSaveMenuActive) {
       isSaveMenuActive = false;
@@ -104,9 +106,11 @@ GLvoid keyCallback(GLFWwindow *window, int key, int scancode, int action,
     }
   }
 
-  if (key == GLFW_KEY_F6 && action == GLFW_PRESS) {
+  if (key == GLFW_KEY_F6 && action == GLFW_PRESS) 
     glfwSetWindowShouldClose(window, true);
-  }
+  
+  if (key == GLFW_KEY_GRAVE_ACCENT && action == GLFW_PRESS) 
+      isShowInfo = !isShowInfo;
 }
 
 GLvoid cursorPositionCallback(GLFWwindow *window, double xpos, double ypos) {
@@ -144,15 +148,19 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
     RLC rlc;
 
     if (!getRLCbyDot(&rlc, &mousePos)) {
-      glm_vec4_print(worldPos, stdout);
       return;
     }
 
-    if (button == GLFW_MOUSE_BUTTON_LEFT)
+    if (button == GLFW_MOUSE_BUTTON_LEFT && !isShowInfo)
         appendRLCinCarAddingQueue(rlc);
-    if (button == GLFW_MOUSE_BUTTON_RIGHT)
+
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && !isShowInfo)
         addCrushedCar(rlc);
 
+    if (button == GLFW_MOUSE_BUTTON_LEFT && isShowInfo) {
+        pickedRLC = rlc;
+        isLinePicked = true;
+    }
   }
 }
 
@@ -324,6 +332,9 @@ GLvoid render() {
   glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(mat3) * MAX_CARS, carTransformMatrixes);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
   glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, MAX_CARS);
+
+  if (isShowInfo && isInit) 
+      showInfo();
 }
 
 GLvoid quit() {

@@ -9,7 +9,7 @@
 🟢 Add crushed cars on right click.\
 🔴 Add traffic lights.\
 🔴 Add help section in menu.\
-🔴 Add proper logging.\
+🟢 Add proper logging.\
 🔴 Fix saves for crosses.\
 🟢 Implement textures for cars.
 

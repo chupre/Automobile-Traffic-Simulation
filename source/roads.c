@@ -444,3 +444,16 @@ GLint isOutOfScreenSpace(GLfloat realPos)
         return 1;
     return 0;
 }
+
+int getCarsNumOnLine(int roadIndex, int lineIndex) {
+    int counter = 0;
+
+    for (int i = 0; i < NUMBER_OF_CELLS; i++) {
+        car * cellPtr = roads[roadIndex].lines[lineIndex].cells[i];
+
+        if (cellPtr && cellPtr->isActive)
+            counter++;
+    }
+
+    return counter;
+}

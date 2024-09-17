@@ -6,6 +6,7 @@
 #include <render.h>
 #include <cars.h>
 #include <road.h>
+#include "GLFW/glfw3.h"
 #include "algorithms.h"
 #include "camera.h"
 #include "map.h"
@@ -526,3 +527,55 @@ void init (FILE* saveFile) {
     isInit = true;
     paused = false;
 }
+
+void showInfo() {
+    int width = 720;
+    int height = 320;
+
+    if (nk_begin(context, 
+                "Info", 
+                nk_rect((float)WINDOW_WIDTH/2 - 110, 
+                        (float)WINDOW_HEIGHT/2 - 110, 
+                        width, 
+                        height),
+                NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_CLOSABLE))
+    {
+        char carsInfo[MAX_BUFFER_SIZE];
+        char timeInfo[MAX_BUFFER_SIZE];
+        char trafficDensityInfo[MAX_BUFFER_SIZE];
+        char carsOnLine[MAX_BUFFER_SIZE];
+
+        sprintf(carsInfo, "Total cars: %d", MAX_CARS - freeCars);
+        sprintf(timeInfo, "Time: %.2f", glfwGetTime());
+
+        nk_layout_row_dynamic(context, 20, 1);
+        nk_label(context, carsInfo, NK_TEXT_LEFT);
+        nk_label(context, timeInfo, NK_TEXT_LEFT);
+
+
+        if (isLinePicked) {
+            sprintf(trafficDensityInfo, "Traffic Density: %d", getDensityData(pickedRLC.road));
+            sprintf(carsOnLine, "Cars on Line: %d", getCarsNumOnLine(pickedRLC.road, pickedRLC.line));
+
+            nk_layout_row_dynamic(context, 20, 1);
+            nk_label(context, trafficDensityInfo, NK_TEXT_LEFT);
+            nk_label(context, carsOnLine, NK_TEXT_LEFT);
+        } else {
+            nk_layout_row_dynamic(context, 50, 1);
+            nk_label(context, "Pick a line to get more info.", NK_TEXT_LEFT);
+        }
+    }
+
+    if (nk_window_is_hidden(context, "Info")) {
+        isShowInfo = false;
+        return;
+    }
+
+    if (nk_window_is_hovered(context) && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+        nk_window_set_position(context, "Info", nk_vec2(mousePosX - (float)width / 2, mousePosY));
+
+    nk_end(context); 
+
+    nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+}
+

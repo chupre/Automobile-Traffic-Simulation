@@ -2,6 +2,8 @@
 #define GUI_H
 
 #include <stdio.h>
+#include <rlc.h>
+
 #define MAX_BUFFER_SIZE 256
 #define MAX_SAVES 64
 

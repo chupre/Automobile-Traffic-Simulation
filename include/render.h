@@ -9,6 +9,8 @@
 #include <GLFW/glfw3.h>
 #include <cglm/cglm.h>
 
+#include <rlc.h>
+
 #define FPS 60.0f
 
 //#define DEBUG
@@ -32,6 +34,7 @@ extern bool paused;
 extern bool isInitMenuActive;
 extern bool isSaveMenuActive;
 extern bool isLoadMenuActive;
+extern bool isShowInfo;
 extern bool isInit;
 extern GLFWwindow* window;
 extern struct nk_glfw glfw;
@@ -44,6 +47,8 @@ extern GLdouble timer;
 extern float mousePosX;
 extern float mousePosY;
 extern unsigned int backgroundVBO, backgroundVAO, backgroundEBO;
+extern bool isLinePicked;
+extern RLC pickedRLC;
 
 GLdouble getPauseTime();
 GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
@@ -60,6 +65,7 @@ GLvoid initGL();
 GLvoid moveCarOnScreen(GLint carIndex);
 GLvoid processKeyboardInput();
 void showInitMenu();
+void showInfo();
 void initBackground();
 
 GLfloat getScreenVelocity(car* Car);
