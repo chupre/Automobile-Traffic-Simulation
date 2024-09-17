@@ -60,44 +60,21 @@ int main()
     }
 
     initGL();
-    genShader(&shaderProgram, "vertex_shader.glsl", "fragment_shader.glsl");
-    genShader(&carShader, "vCar.glsl", "fCar.glsl");
-
-    // openFile();
-
-#ifdef dot_debug
-    dot_coord _dot;
-    _dot.x = -0.8f;
-    _dot.y = -0.55f;
-    RLC _rlc_;
-    if (getRLCbyDot(&_rlc_, &_dot))
-    {
-        printRLC(_rlc_, "_rlc_");
-    }
-    else printf("none\n");
-    // RLC crRLC = {0, 1, 2};
-    // addCrushedCar(crRLC);
-
-#endif
-
     initFont();
 
     glfwSetTime(0.0f);
     lastTime = glfwGetTime();
     timer = lastTime;
 
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         if (paused || !isInit) 
             initGUI();
 
-        if (!paused)
-        {
-            if (isInit) {
+        if (!paused) {
+            if (isInit) 
                 glfwSetTime(glfwGetTime() - getPauseTime());
-            } else {
+            else 
                 glfwSetTime(0.0f);
-            }
 
             currTime = glfwGetTime();
             deltaTime += (currTime - lastTime) / limitFPS;
@@ -106,19 +83,16 @@ int main()
             endPauseTime = 0;
 
             if (isInit) {
-                    while (deltaTime >= 1.0)
-                {
-                    update();
-                    deltaTime--;
-                }
+                    while (deltaTime >= 1.0) {
+                        update();
+                        deltaTime--;
+                    }
 
                 render();
             }
         }
         else
-        {
             endPauseTime = glfwGetTime();
-        }
 
         nk_glfw3_new_frame(&glfw);
         glfwSwapBuffers(window);

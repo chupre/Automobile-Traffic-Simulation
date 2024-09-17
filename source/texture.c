@@ -7,11 +7,13 @@
 #include <string.h>
 #include <stdbool.h>
 
-Texture textures[NUMBER_OF_TEXTURES];
-int textures_loaded = 0;
+unsigned int textures[NUMBER_OF_TEXTURES];
+int textures_loaded;
 const char texture_path[128] = "../resources/textures/";
 
 void initTextures() {
+    textures_loaded = 0;
+
     struct dirent *dirEntry;
 
     DIR *dir = opendir(texture_path);
@@ -54,15 +56,13 @@ void loadTexture(char * image_name) {
 
     glGenTextures(1, &textures[textures_loaded]);
     glBindTexture(GL_TEXTURE_2D, textures[textures_loaded]);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
     glTexImage2D(GL_TEXTURE_2D, 0, format, texture_width, texture_height, 0, format, GL_UNSIGNED_BYTE, texture_pixels);
     glGenerateMipmap(GL_TEXTURE_2D);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     // Freeing allocated space for image
     stbi_image_free(texture_pixels);

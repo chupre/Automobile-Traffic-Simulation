@@ -12,6 +12,7 @@
 #include "traffic_density.h"
 #include <rlc.h>
 #include <texture.h>
+#include <shader.h>
 
 // External 
 #if defined(_WIN32) || defined(WIN32)
@@ -46,14 +47,12 @@ config initConfig = {
 
 void initGUI()
 {
-    if (isSaveMenuActive)
-    {
+    if (isSaveMenuActive) {
         showSaveMenu();
         return;
     }
 
-    if (isLoadMenuActive)
-    {
+    if (isLoadMenuActive) {
         showLoadMenu();
         return;
     }
@@ -130,7 +129,7 @@ void initGUI()
         nk_layout_row_dynamic(context, 30, 1);
         nk_label(context, "Theme", NK_TEXT_CENTERED);
 
-        static int op = THEME_RED;
+        static int op = THEME_DARK;
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
@@ -207,17 +206,17 @@ void initGUI()
 void initFont()
 {
     struct nk_font_atlas* atlas;
-    struct nk_font* droid;
-    struct nk_font_config droidCfg;
+    struct nk_font* jb;
+    struct nk_font_config jb_cfg;
 
-    droidCfg = nk_font_config(0);
+    jb_cfg = nk_font_config(0);
 
     nk_glfw3_font_stash_begin(&glfw, &atlas);
-    droid = nk_font_atlas_add_from_file(atlas, "../resources/fonts/DroidSans.ttf", 24, &droidCfg);
+    jb = nk_font_atlas_add_from_file(atlas, "../resources/fonts/JetBrainsMono-Bold.ttf", 24, &jb_cfg);
     nk_glfw3_font_stash_end(&glfw);
 
     nk_style_load_all_cursors(context, atlas->cursors);
-    nk_style_set_font(context, &droid->handle);
+    nk_style_set_font(context, &jb->handle);
 }
 
 
@@ -478,19 +477,24 @@ void init (FILE* saveFile) {
     dbgIsCellsInit = false;
     dbgVerticesInit = false;
 #endif
-
+    
     setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);
 
     densityDataInit = false;
     alghorithmsInit = false;
     cameraInit = false;
 
+    genShader(&shaderProgram, "vertex_shader.glsl", "fragment_shader.glsl");
+    genShader(&carShader, "vCar.glsl", "fCar.glsl");
+    genShader(&backgroundShader, "vBackground.glsl", "fBackground.glsl");
+
+    initTextures();
     setCarsToDefault();
+    initBackground();
     initRoads();
     initLines();
     initCars();
-    initTextures();
-
+    
     if (saveFile) {
         RLC * occupiedCells = malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
 

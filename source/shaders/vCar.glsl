@@ -11,7 +11,7 @@ uniform mat4 view;
 
 float random(float seed) 
 {
-    return fract(sin(seed) * 43758.5453);
+    return fract(sin(seed) * 238.5453);
 }
 
 void main()

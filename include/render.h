@@ -11,7 +11,7 @@
 
 #define FPS 60.0f
 
-#define DEBUG
+//#define DEBUG
 
 #define WINDOWS 0
 #define UNIX 1
@@ -43,6 +43,7 @@ extern GLdouble deltaTime, currTime, endPauseTime;
 extern GLdouble timer;
 extern float mousePosX;
 extern float mousePosY;
+extern unsigned int backgroundVBO, backgroundVAO, backgroundEBO;
 
 GLdouble getPauseTime();
 GLvoid scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
@@ -59,6 +60,7 @@ GLvoid initGL();
 GLvoid moveCarOnScreen(GLint carIndex);
 GLvoid processKeyboardInput();
 void showInitMenu();
+void initBackground();
 
 GLfloat getScreenVelocity(car* Car);
 GLfloat getScreenVelocityShift(car* Car);

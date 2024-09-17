@@ -6,7 +6,7 @@
 // Custom modules
 #include <shader.h>
 
-GLuint shaderProgram, carShader;
+int shaderProgram, carShader, backgroundShader;
 
 char* getShaderContent(const GLchar* fileName)
 {

@@ -29,8 +29,8 @@
 #include <nuklear/nuklear.h>
 #include <nuklear/nuklear_glfw_gl3.h>
 
-GLuint WINDOW_WIDTH = 1024;
-GLuint WINDOW_HEIGHT = 768;
+GLuint WINDOW_WIDTH = 1280;
+GLuint WINDOW_HEIGHT = 960;
 GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
 
 bool paused = true;
@@ -54,6 +54,8 @@ GLdouble limitFPS = 1.0 / FPS;
 GLdouble lastTime;
 GLdouble deltaTime = 0, currTime = 0, endPauseTime = 0;
 GLdouble timer;
+
+unsigned int backgroundVBO, backgroundVAO, backgroundEBO;
 
 #ifdef DEBUG
 
@@ -278,7 +280,14 @@ GLvoid initCars() {
 
 GLvoid render() {
   glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  glBindTexture(GL_TEXTURE_2D, BACKGROUND_TEXTURE);
+  glUseProgram(backgroundShader);
+  setProjection(backgroundShader);
+  setView(backgroundShader);
+  glBindVertexArray(backgroundVAO);
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
   glUseProgram(shaderProgram);
 
@@ -297,7 +306,7 @@ GLvoid render() {
 #endif
 
   glUseProgram(carShader);
-  glBindTexture(GL_TEXTURE_2D, textures[0]);
+  glBindTexture(GL_TEXTURE_2D, CAR_TEXTURE);
   setView(carShader);
   setProjection(carShader);
   glBindVertexArray(carVAO);
@@ -374,11 +383,6 @@ GLvoid initGL() {
   glfwSetScrollCallback(window, scrollCallback);
   glfwSetCursorPosCallback(window, cursorPositionCallback);
   glfwSetMouseButtonCallback(window, mouseButtonCallback);
-
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LEQUAL);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 GLfloat getScreenVelocity(car *Car) {
@@ -454,3 +458,37 @@ GLvoid dbgRenderCells() {
 }
 
 #endif
+
+void initBackground() {
+    float backgroundX = ((2.0f * 1818 / WINDOW_HEIGHT) - 1.0f) * 10.0f;
+    float backgroundY = (1.0f - (2.0f * 1080 / WINDOW_WIDTH)) * 10.0f;
+
+    float backgroundVertices[5 * 4] = {
+        backgroundX,  backgroundY, 0.0f,     5.0f, 5.0f,
+        backgroundX, -backgroundY, 0.0f,     5.0f, 0.0f,
+        -backgroundX, -backgroundY, 0.0f,     0.0f, 0.0f,
+        -backgroundX,  backgroundY, 0.0f,     0.0f, 5.0f
+    };
+    unsigned int backgroundIndices[3 * 2] = {  
+        0, 1, 3,   
+        1, 2, 3    
+    };  
+
+    glGenVertexArrays(1, &backgroundVAO);
+    glGenBuffers(1, &backgroundVBO);
+    glGenBuffers(1, &backgroundEBO);
+
+    glBindVertexArray(backgroundVAO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, backgroundVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(backgroundVertices), backgroundVertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, backgroundEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(backgroundIndices), backgroundIndices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+}
