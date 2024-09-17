@@ -115,7 +115,7 @@ GLvoid cursorPositionCallback(GLFWwindow *window, double xpos, double ypos) {
 }
 
 void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
-  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && !paused) {
+  if (action == GLFW_PRESS && !paused) {
     float normalizedX = (2.0f * mousePosX / WINDOW_WIDTH) - 1.0f;
     float normalizedY = 1.0f - (2.0f * mousePosY / WINDOW_HEIGHT);
 
@@ -142,12 +142,17 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
     mousePos.y = worldPos[1];
 
     RLC rlc;
+
     if (!getRLCbyDot(&rlc, &mousePos)) {
       glm_vec4_print(worldPos, stdout);
       return;
     }
-    printRLC(rlc, "");
-    appendRLCinCarAddingQueue(rlc);
+
+    if (button == GLFW_MOUSE_BUTTON_LEFT)
+        appendRLCinCarAddingQueue(rlc);
+    if (button == GLFW_MOUSE_BUTTON_RIGHT)
+        addCrushedCar(rlc);
+
   }
 }
 

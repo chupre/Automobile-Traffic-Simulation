@@ -6,7 +6,7 @@
 🟢 fix crosses.\
 🟢 Add restart button.\
 🟢 fix saves.\
-🔴 Add crushed cars on right click.\
+🟢 Add crushed cars on right click.\
 🔴 Add traffic lights.\
 🔴 Add help section in menu.\
 🔴 Add proper logging.\

@@ -187,7 +187,7 @@ GLvoid addCrushedCar(RLC rlc)
 
 	--freeCars;
 	setCrushedCarProperties(&cars[carIndex], carIndex, rlc);
-	setCarByRLC(&cars[carIndex], carIndex, rlc);
+	setBornCar(&cars[carIndex], carIndex, rlc);
 }
 
 GLfloat getCellWall(RLC rlc)
