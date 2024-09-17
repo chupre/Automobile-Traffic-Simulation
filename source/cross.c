@@ -461,6 +461,43 @@ GLvoid q_del_item(queue* q, car* Car){
 GLvoid thoughtsOfOneCarOnCross(car* Car)
 {
     if (isOnCurvingCell(Car)){
+        if (Car->moveDir == NORTH) {
+            if (Car->target == WEST) {
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+            }
+            if (Car->target == EAST) {
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH);
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(-90.0f));
+            }
+        }
+        if (Car->moveDir == SOUTH) {
+            if (Car->target == WEST) {
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH);
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(-90.0f));
+            }
+            if (Car->target == EAST) {
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+            }
+        }
+        if (Car->moveDir == WEST) {
+            if (Car->target == NORTH) {
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH);
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(-90.0f));
+            }
+            if (Car->target == SOUTH) {
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+            }
+        }
+        if (Car->moveDir == EAST) {
+            if (Car->target == NORTH) {
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+            }
+            if (Car->target == SOUTH) {
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH);
+                glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(-90.0f));
+            }
+        }
+
         Car->moveDir = Car->target;
         Car->roadDirMultiplier = getDirMultiplier(Car->target);
     }

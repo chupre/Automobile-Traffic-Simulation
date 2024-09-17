@@ -60,7 +60,6 @@ int main()
     }
 
     initGL();
-    initTextures();
     genShader(&shaderProgram, "vertex_shader.glsl", "fragment_shader.glsl");
     genShader(&carShader, "vCar.glsl", "fCar.glsl");
 
@@ -89,7 +88,8 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        initGUI();
+        if (paused || !isInit) 
+            initGUI();
 
         if (!paused)
         {

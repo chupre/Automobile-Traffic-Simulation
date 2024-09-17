@@ -126,8 +126,9 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 			y2 = 1.0f;//y1 - CAR_LENGTH - rlc.cell * CELL_LENGTH - 0 * margin;
 			Car->realPos = y1;
 
-			vec2 carTranslationVector = { x2, y1 };
+			vec2 carTranslationVector = { x2 + CAR_WIDTH, y1 + CAR_LENGTH};
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+            glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(180.0f));
 
 			break;
 		}
@@ -139,17 +140,13 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 			y1 = x1;
 			y2 = x2;
 			x1 = roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
-			x2 = roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
+            x2 = roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
+
 			Car->realPos = x1;
 
-			vec2 carTranslationVector = { y2, x2 };
-            mat3 rotation_matrix = {
-                0, 1, 0,
-                -1, 0, 0,
-                0, 0, 1
-            };
-            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
+			vec2 carTranslationVector = { x1, y2 + CAR_WIDTH };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+            glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(-90.0f));
 
 			break;
 		}
@@ -160,17 +157,12 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 	        x2 = x1 - margin * 2.0f;
 			y1 = x1;
 			y2 = x2;
-			x1 = roads[rlc.road].startLineCoord - rlc.cell * CELL_WIDTH;
-			x2 = roads[rlc.road].startLineCoord - rlc.cell * CELL_WIDTH - CAR_WIDTH;
-			Car->realPos = x1;
+			x1 = -roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
+            x2 = -roads[rlc.road].startLineCoord + rlc.cell * CELL_LENGTH;
+			Car->realPos = x2;
 
 			vec2 carTranslationVector = { y2, x2 };
-            mat3 rotation_matrix = {
-                0, 1, 0,
-                -1, 0, 0,
-                0, 0, 1
-            };
-            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
+            glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(90.0f));
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -261,6 +253,7 @@ GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc)
 			Car->realPos = y1;
 
 			vec2 carTranslationVector = { x2, y1 };
+            glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(180.0f));
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -277,14 +270,9 @@ GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc)
 			x2 = cellWall;
 			Car->realPos = x1;
 
-			vec2 carTranslationVector = { y2, x2 };
-            mat3 rotation_matrix = {
-                0, 1, 0,
-                -1, 0, 0,
-                0, 0, 1
-            };
-            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
+			vec2 carTranslationVector = { x1, y2 + CAR_WIDTH };
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+            glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(-90.0f));
 
 			break;
 		}
@@ -296,17 +284,12 @@ GLvoid setCarByRLC(car* Car, GLint carIndex, RLC rlc)
 
 			y1 = x1;
 			y2 = x2;
-			x1 = cellWall;
-			x2 = cellWall - CAR_WIDTH;
-			Car->realPos = x1;
+			x1 = -cellWall;
+			x2 = -cellWall;
+			Car->realPos = x2;
 
 			vec2 carTranslationVector = { y2, x2 };
-            mat3 rotation_matrix = {
-                0, 1, 0,
-                -1, 0, 0,
-                0, 0, 1
-            };
-            glm_mat3_mul(rotation_matrix, carTransformMatrixes[carIndex], carTransformMatrixes[carIndex]);
+            glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(90.0f));
 			glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
 
 			break;
@@ -357,12 +340,8 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 GLint getFreeCarIndex()
 {
 	for (int i = 0; i < MAX_CARS; i++)
-	{
 		if (!cars[i].isActive)
-		{
 			return i;
-		}
-	}
 
 	return NO_CAR_INDEX;
 }

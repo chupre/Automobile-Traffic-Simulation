@@ -144,7 +144,7 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
       glm_vec4_print(worldPos, stdout);
       return;
     }
-
+    printRLC(rlc, "");
     appendRLCinCarAddingQueue(rlc);
   }
 }
@@ -278,7 +278,7 @@ GLvoid initCars() {
 
 GLvoid render() {
   glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glUseProgram(shaderProgram);
 
@@ -345,7 +345,6 @@ GLvoid initGL() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_RESIZABLE, false);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_SAMPLES, 4);
 
   window =
       glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
@@ -365,7 +364,6 @@ GLvoid initGL() {
 
   gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-  glEnable(GL_MULTISAMPLE);
 
   context = nk_glfw3_init(&glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
 
@@ -376,14 +374,23 @@ GLvoid initGL() {
   glfwSetScrollCallback(window, scrollCallback);
   glfwSetCursorPosCallback(window, cursorPositionCallback);
   glfwSetMouseButtonCallback(window, mouseButtonCallback);
+
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LEQUAL);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 GLfloat getScreenVelocity(car *Car) {
-  return (GLfloat)(Car->velocity * Car->roadDirMultiplier * VELOCITY_MULTIPLIER) / FPS;
+  return (GLfloat)(Car->velocity * VELOCITY_MULTIPLIER) / FPS;
 }
 
-GLfloat getScreenVelocityShift(car *Car) {
-  return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) * VELOCITY_MULTIPLIER) / FPS;
+GLfloat getScreenVelocityShift(car *Car) { 
+  DIRECTION carRoadDir = roads[Car->currCell.road].dir;
+  if (carRoadDir == WEST || carRoadDir == EAST)
+      return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) * (-Car->roadDirMultiplier) * VELOCITY_MULTIPLIER) / FPS;
+  else
+      return (GLfloat)(_1_CELL_ * getDirMultiplier(Car->moveDir) * (Car->roadDirMultiplier) * VELOCITY_MULTIPLIER) / FPS;
 }
 
 GLvoid moveCarOnScreen(GLint carIndex) {

@@ -38,10 +38,10 @@ char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
 
 config initConfig = {
-    500,
-    6,
+    5,
+    1,
     100,
-    ONE_ROAD_N
+    CROSS 
 };
 
 void initGUI()
@@ -430,7 +430,7 @@ void showInitMenu() {
         char cars_label[MAX_BUFFER_SIZE];
         sprintf(cars_label, "Max amount of cars: %d", initConfig.max_cars);
         nk_label(context, cars_label, NK_TEXT_LEFT);
-        nk_slider_int(context, 0, &initConfig.max_cars, 1000, 1);
+        nk_slider_int(context, 1, &initConfig.max_cars, 1000, 1);
 
         nk_layout_row_dynamic(context, 25, 1);
         char lines_label[MAX_BUFFER_SIZE];
@@ -489,6 +489,7 @@ void init (FILE* saveFile) {
     initRoads();
     initLines();
     initCars();
+    initTextures();
 
     if (saveFile) {
         RLC * occupiedCells = malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
@@ -504,7 +505,7 @@ void init (FILE* saveFile) {
 
         for (int i = 0; i < MAX_CARS; i++) {
             if(cars[i].isActive) {
-                setCarByRLC(&cars[i], i, cars[i].currCell);
+                setBornCar(&cars[i], i, cars[i].currCell);
                 roads[cars[i].currCell.road].lines[cars[i].currCell.line].cells[cars[i].currCell.cell] = &cars[i];
             }
         }
