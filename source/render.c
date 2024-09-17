@@ -311,15 +311,12 @@ GLvoid render() {
   setProjection(carShader);
   glBindVertexArray(carVAO);
 
-  for (int i = 0; i < MAX_CARS; i++) {
-    if (cars[i].isActive && !cars[i].isCrushed) {
+  for (int i = 0; i < MAX_CARS; i++) 
+    if (cars[i].isActive && !cars[i].isCrushed) 
       moveCarOnScreen(i);
-    }
-  }
 
   glBindBuffer(GL_ARRAY_BUFFER, carInstanceVBO);
-  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(mat3) * MAX_CARS,
-                  carTransformMatrixes);
+  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(mat3) * MAX_CARS, carTransformMatrixes);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, carEBO);
   glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, MAX_CARS);
 }
@@ -355,21 +352,23 @@ GLvoid initGL() {
   glfwWindowHint(GLFW_RESIZABLE, false);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  window =
-      glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
+  window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, NULL, NULL);
   glfwMakeContextCurrent(window);
 
   int iconWidth, iconHeight;
   int channels;
-  unsigned char *pixels = stbi_load("../resources/icons/icon.png", &iconWidth,
-                                    &iconHeight, &channels, 4);
+  unsigned char *pixels = stbi_load("../resources/icons/icon.png", 
+                                    &iconWidth,
+                                    &iconHeight, 
+                                    &channels, 
+                                    4);
 
-  GLFWimage images[1];
-  images[0].width = iconWidth;
-  images[0].height = iconHeight;
-  images[0].pixels = pixels;
+  GLFWimage * icon;
+  icon->width = iconWidth;
+  icon->height = iconHeight;
+  icon->pixels = pixels;
 
-  glfwSetWindowIcon(window, 1, images);
+  glfwSetWindowIcon(window, 1, icon);
 
   gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -383,6 +382,8 @@ GLvoid initGL() {
   glfwSetScrollCallback(window, scrollCallback);
   glfwSetCursorPosCallback(window, cursorPositionCallback);
   glfwSetMouseButtonCallback(window, mouseButtonCallback);
+
+  stbi_image_free(icon->pixels);
 }
 
 GLfloat getScreenVelocity(car *Car) {

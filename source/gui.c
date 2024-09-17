@@ -215,7 +215,6 @@ void initFont()
     jb = nk_font_atlas_add_from_file(atlas, "../resources/fonts/JetBrainsMono-Bold.ttf", 24, &jb_cfg);
     nk_glfw3_font_stash_end(&glfw);
 
-    nk_style_load_all_cursors(context, atlas->cursors);
     nk_style_set_font(context, &jb->handle);
 }
 
