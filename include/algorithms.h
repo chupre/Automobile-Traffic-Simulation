@@ -16,8 +16,9 @@
 #include <road.h>
 #include <direction.h>
 
-#define MAX_VELOCITY (_7_VELOCITY)
-#define NUMBER_OF_VELOCITY_TYPES (7)
+#define MIN_SPAWN_VELOCITY _4_VELOCITY
+#define MAX_VELOCITY (_9_VELOCITY)
+#define NUMBER_OF_VELOCITY_TYPES (9)
 
 #define VELOCITY_MULTIPLIER (CELL_LENGTH)
 
@@ -114,5 +115,6 @@ GLvoid printCarProperties(RLC rlc);
 GLvoid printDir(DIRECTION dir);
 GLvoid printSkipCars();
 GLvoid printCheckedCars();
+GLvoid printCar(car* Car);
 
 #endif

@@ -38,7 +38,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_ROADS = 2;
         NUMBER_OF_CELLS = 40;
     } else if (map_type == CROSS) {
-        NUMBER_OF_CELLS = 10;
+        NUMBER_OF_CELLS = 12;
         NUMBER_OF_ROADS = 8;
     } else {
         NUMBER_OF_ROADS = 1;
@@ -94,9 +94,8 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 	{
 	case ONE_ROAD_N:
         DEFAULT_FOV = 45.0f;
-		addRoad(0, 0, -1.0f, NORTH);
+		addRoad(0, HALF_ROAD_WIDTH, -1.0f, NORTH);
 		break;
-
 	case ONE_ROAD_S:
         DEFAULT_FOV = 45.0f;
 		addRoad(0, 0, 1.0f, SOUTH);
@@ -114,14 +113,14 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 
 	case TWO_ROADS_NS:
         DEFAULT_FOV = 45.0f;
-		addRoad(0, HALF_ROAD_WIDTH, -1.0f, NORTH);
-		addRoad(1, -HALF_ROAD_WIDTH - 0.1f, 1.0f, SOUTH);
+		addRoad(0, HALF_ROAD_WIDTH + 0.005f, -1.0f, NORTH);
+		addRoad(1, -HALF_ROAD_WIDTH - 0.005f, 1.0f, SOUTH);
 		break;
 
 	case TWO_ROADS_WE:
         DEFAULT_FOV = 38.0f;
-		addRoad(1, 1.0f, CELL_WIDTH * (NUMBER_OF_LINES + 1) / 2, WEST);
-		addRoad(0, -1.0f, -CELL_WIDTH * (NUMBER_OF_LINES + 1) / 2 - 0.1f, EAST);
+		addRoad(1, 1.0f, HALF_ROAD_WIDTH, WEST);
+		addRoad(0, -1.0f, -HALF_ROAD_WIDTH, EAST);
 		break;
 
 	case CROSS:
@@ -132,7 +131,65 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 		GLint enterRoadIndexes[] = {0, 1, 2, 3};
 		GLint exitRoadIndexes[] = {4, 5, 6, 7};
 		addCross(0, crossCenterX, crossCenterY, enterRoadIndexes, exitRoadIndexes);
+    case SEVERAL_CROSSES:
+        DEFAULT_FOV = 29.0f;
+        GLfloat roadLength = NUMBER_OF_CELLS * CELL_LENGTH;
+        GLfloat roadLengthHalf = roadLength / 2;
+        GLfloat roadWidth = (NUMBER_OF_LINES + 1) * CELL_LENGTH;
+        GLfloat crossIndent = roadLengthHalf + roadWidth;
+        GLfloat innerRoadHalf = roadLengthHalf + roadWidth / 2;
+        GLfloat outerRoadHalf = roadLengthHalf + roadWidth / 2 + roadWidth;
+        GLfloat nearRoadStart = roadLengthHalf + roadWidth * 2;
+        GLfloat farRoadStart = roadLengthHalf + roadWidth * 2 + roadLength;
+
+        GLint enterRoadIndexes0[] = {4,  9,  18, 23};
+        GLint enterRoadIndexes1[] = {16, 21, 14, 19};
+        GLint enterRoadIndexes2[] = {12, 17, 2,   7};
+        GLint enterRoadIndexes3[] = {0,  5,  6,  11};
+        
+        GLint exitRoadIndexes0[] = { 8,  5, 22, 19};
+        GLint exitRoadIndexes1[] = {20, 17, 18, 15};
+        GLint exitRoadIndexes2[] = {16, 13,  6,  3};
+        GLint exitRoadIndexes3[] = { 4,  1, 10,  7};
+
+        
+        addRoad(0, outerRoadHalf, -farRoadStart, NORTH);
+        addRoad(1, innerRoadHalf, -nearRoadStart, SOUTH);
+        addRoad(2, -farRoadStart, -outerRoadHalf, EAST);
+        addRoad(3, -nearRoadStart, -innerRoadHalf, WEST);
+
+        addRoad(4, outerRoadHalf, -roadLengthHalf, NORTH);
+        addRoad(5, innerRoadHalf, roadLengthHalf, SOUTH);
+        addRoad(6, -roadLengthHalf, -innerRoadHalf, EAST);
+        addRoad(7, roadLengthHalf, -outerRoadHalf, WEST);
+
+        addRoad(8, outerRoadHalf, nearRoadStart, NORTH);
+        addRoad(9, innerRoadHalf, farRoadStart, SOUTH);
+        addRoad(10, nearRoadStart, -outerRoadHalf, EAST);
+        addRoad(11, farRoadStart, -innerRoadHalf, WEST);
+
+        addRoad(12, -innerRoadHalf, -farRoadStart, NORTH);
+        addRoad(13, -outerRoadHalf, -nearRoadStart, SOUTH);
+        addRoad(14, -farRoadStart, innerRoadHalf, EAST);
+        addRoad(15, -nearRoadStart, outerRoadHalf, WEST);
+
+        addRoad(16, -innerRoadHalf, -roadLengthHalf, NORTH);
+        addRoad(17, -outerRoadHalf, roadLengthHalf, SOUTH);
+        addRoad(18, -roadLengthHalf, innerRoadHalf, EAST);
+        addRoad(19, roadLengthHalf, outerRoadHalf, WEST);
+
+        addRoad(20, -innerRoadHalf, nearRoadStart, NORTH);
+        addRoad(21, -outerRoadHalf, farRoadStart, SOUTH);
+        addRoad(22, nearRoadStart, innerRoadHalf, EAST);
+        addRoad(23, farRoadStart, outerRoadHalf, WEST);
+
+
+        addCross(0, crossIndent, crossIndent, enterRoadIndexes0, exitRoadIndexes0);
+        addCross(1, -crossIndent, crossIndent, enterRoadIndexes1, exitRoadIndexes1);
+        addCross(2, -crossIndent, -crossIndent, enterRoadIndexes2, exitRoadIndexes2);
+        addCross(3, crossIndent, -crossIndent, enterRoadIndexes3, exitRoadIndexes3);
 	}
+    
 
 #ifdef DEBUG
     DEFAULT_FOV = 60.0f;
@@ -143,11 +200,11 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 		setLines(i);
 	}
 }
-
+//tempt foo. will be used only for the map with one cross.
 GLvoid setRoadsAroundCross(GLfloat start_x, GLfloat start_y)
 {   
     GLfloat roadLength = CELL_LENGTH * NUMBER_OF_CELLS;
-    GLfloat halfRoadIndent = ((float)(NUMBER_OF_LINES + 1) / 2) * CELL_LENGTH;
+    GLfloat halfRoadIndent = ((GLfloat)(NUMBER_OF_LINES + 1) / 2) * CELL_LENGTH;
     GLfloat crossIndent = (NUMBER_OF_LINES + 1) * CELL_LENGTH;
     addRoad(0, start_x + halfRoadIndent,           start_y - crossIndent - roadLength, NORTH);
     addRoad(1, start_x - halfRoadIndent,           start_y + crossIndent + roadLength, SOUTH);

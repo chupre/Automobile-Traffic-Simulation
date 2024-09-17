@@ -7,6 +7,8 @@
 #include <road.h>
 #include <cross.h>
 #include <render.h>
+#include <log.h>
+#include <dbg.h>
 #include <cglm/cglm.h>
 
 bool alghorithmsInit = false;
@@ -32,7 +34,7 @@ bool compareRLCs(RLC* rlc1, RLC* rlc2)
 }
 
 GLvoid printCrossCell(cross_cell c){
-	printf("crossCell:(%d,%d,%d)\n", c.crossNum, c.x, c.y);
+	printf("(%d,%d,%d) ", c.crossNum, c.x, c.y);
 }
 
 car* getCarPtr(RLC* rlc)
@@ -106,7 +108,8 @@ GLvoid update()
 		else{
 			stepRoad();
 		}
-		// printf("_____________________________________________\n");
+		// printGrid(0);
+		// printf("============================================================\n");
 	}
 }
 
@@ -131,22 +134,47 @@ GLvoid stepRoad()
 			continue;
 		}
 		thoughtsOfOneCar(Car);
+		// printCar(Car);
+		// printCarCharacter(Car);
 	}
 
 	clearUserCarsPtrs();
+	if (_LOG_KEY_ == PLAY){
+		// printf("^^\n");
+		log_data data;
+		while (readFile(&data)){
+			RLC freeSpotRLC;
+			freeSpotRLC.road = data.road;
+			freeSpotRLC.line = data.line;
+			freeSpotRLC.cell = data.cell;
+
+			GLint carIndex = getFreeCarIndex();
+			if (carIndex == NO_CAR_INDEX){
+				return;
+			}
+			addCar(&cars[carIndex], carIndex, freeSpotRLC);
+			cars[carIndex].velocity = data.velocity;
+			thoughtsOfOneCar(&cars[carIndex]);
+			// printCar(&cars[carIndex]);
+			--freeCars;
+			increaseDensityData(freeSpotRLC.road);
+		}
+		return;
+	}
 	if (rand() % 100 < SPAWN_FREQUENCY){
 		spawnCars();
+	}
+	if (_LOG_KEY_ == RECORD){
+		printFileStepEnd();
 	}
 }
 
 bool getCarByRoulette(car** Car)
 {
 	car* tmpCar;
-	while (rollRouletteRLC())
-	{
+	while (rollRouletteRLC()){
 		tmpCar = getCarPtr(&rouletteRLC);
-		if (tmpCar != NULL)
-		{
+		if (tmpCar != NULL){
 			*Car = tmpCar;
 			return true;
 		}
@@ -156,26 +184,17 @@ bool getCarByRoulette(car** Car)
 
 bool rollRouletteRLC()
 {
-	if (rouletteRLC.line < MAX_LINE_DIGIT)
-	{
+	if (rouletteRLC.line < MAX_LINE_DIGIT){
 		rouletteRLC.line += 1;
-	}
-	else
-	{
+	}else{
 		rouletteRLC.line = 0;
-		if (rouletteRLC.cell > 0)
-		{
+		if (rouletteRLC.cell > 0){
 			rouletteRLC.cell -= 1;
-		}
-		else
-		{
+		}else{
 			rouletteRLC.cell = MAX_CELL_DIGIT;
-			if (rouletteRLC.road > 0)
-			{
+			if (rouletteRLC.road > 0){
 				rouletteRLC.road -= 1;
-			}
-			else
-			{
+			}else{
 				rouletteRLC.road = MAX_ROAD_DIGIT;
 				rouletteRLC.line = -1;
 				return false;
@@ -201,9 +220,20 @@ GLvoid spawnCars()
 			}
 			RLC freeSpotRLC = { EMPTY, EMPTY, EMPTY };
 			getFreeSpotAddress(&freeSpotRLC);
+			// if (roads[freeSpotRLC.road].dir != NORTH){
+			// 	return;
+			// }
 			
 			if (freeSpotRLC.road != EMPTY && carIndex != NO_CAR_INDEX){
 				addCar(&cars[carIndex], carIndex, freeSpotRLC);
+				if (_LOG_KEY_ == RECORD){
+					log_data data = {
+						.road = freeSpotRLC.road, 
+						.line = freeSpotRLC.line,
+						.cell = freeSpotRLC.cell,
+						.velocity = cars[carIndex].velocity};
+					writeFile(&data);
+				}
 				thoughtsOfOneCar(&cars[carIndex]);
 
 				--freeCars;
@@ -413,12 +443,78 @@ GLvoid printCarProperties(RLC rlc)
 	}
 	else
 	{
+		printf("ID: %d\n", Car->ID);
 		printf(	"currCell (%d, %d, %d)\nnextCell (%d, %d, %d)\nvelocity %d\nisActive %d\nisCrushed %d\n",
 			Car->currCell.road, Car->currCell.line, Car->currCell.cell,
 			Car->nextCell.road, Car->nextCell.line, Car->nextCell.cell,
 			Car->velocity,
 			Car->isActive,
 			Car->isCrushed);
+		if (Car->moveDir == NORTH){
+            printf("moveDir: NORTH\n");
+        }
+        else if (Car->moveDir == SOUTH){
+            printf("moveDir: SOUTH\n");
+        }
+        else if (Car->moveDir == EAST){
+            printf("moveDir: EAST\n");
+        }
+        else if (Car->moveDir == WEST){
+            printf("moveDir: WEST\n");
+        }
+        if (Car->target == NORTH){
+            printf("target: NORTH\n");
+        }
+        else if (Car->target == SOUTH){
+            printf("target: SOUTH\n");
+        }
+        else if (Car->target == EAST){
+            printf("target: EAST\n");
+        }
+        else if (Car->target == WEST){
+            printf("target: WEST\n");
+        }
+	}
+}
+
+GLvoid printCar(car* Car){
+	if (Car == NULL)
+	{
+		printf("NULL\n\n\n\n\n\n");
+	}
+	else
+	{
+		printf("ID: %d\n", Car->ID);
+		printf(	"currCell (%d, %d, %d)\nnextCell (%d, %d, %d)\nvelocity %d\nisActive %d\nisCrushed %d\n",
+			Car->currCell.road, Car->currCell.line, Car->currCell.cell,
+			Car->nextCell.road, Car->nextCell.line, Car->nextCell.cell,
+			Car->velocity,
+			Car->isActive,
+			Car->isCrushed);
+		if (Car->moveDir == NORTH){
+            printf("moveDir: NORTH\n");
+        }
+        else if (Car->moveDir == SOUTH){
+            printf("moveDir: SOUTH\n");
+        }
+        else if (Car->moveDir == EAST){
+            printf("moveDir: EAST\n");
+        }
+        else if (Car->moveDir == WEST){
+            printf("moveDir: WEST\n");
+        }
+        if (Car->target == NORTH){
+            printf("target: NORTH\n");
+        }
+        else if (Car->target == SOUTH){
+            printf("target: SOUTH\n");
+        }
+        else if (Car->target == EAST){
+            printf("target: EAST\n");
+        }
+        else if (Car->target == WEST){
+            printf("target: WEST\n");
+        }
 	}
 }
 
@@ -450,13 +546,13 @@ GLvoid thoughtsOfOneCar(car* Car)
 			// printRLC(Car->currCell, "TO CROSS");
 			// printCrossCell(c);
 
-			if (getLightColorByCar(Car) == GREEN && getCarByCrossCell(&c) == NULL){
+			if (getLightColorByCar(Car) == GREEN && checkCrossCellSafety(&c, Car->moveDir)){
+				// printf("ID: %d, jump:", Car->ID); printCrossCell(c);printf("\n");
 				Car->crossNextCell = c;
 				Car->nextCell.road = NEXT_CELL_IS_ON_CROSS;
 				Car->velocity = CROSS_VELOCITY;
-
+				initCrossCell(&c, OCCUPYING_CAR);
 				getCurvingCell(&Car->curvingCell, Car, c);
-				// q_append(Car, &crosses[c.crossNum].carsArriving);
 			}
 			else{
 				Car->velocity = _0_CELL_;
@@ -526,8 +622,7 @@ bool isToExcludeFormRoad(car* Car)
 	// 	return true;
 	// }
 	// road* roadPtr = &roads[Car->nextCell.road];
-	if (/*isFurhterThanEndLine(Car, roadPtr) || */isFurtherThanEndCell(Car))
-	{
+	if (isFurtherThanEndCell(Car)){
 		return true;
 	}
 	return false;
@@ -725,7 +820,7 @@ bool isRLCsuitableForSettingCar(RLC rlc)
 
 GLvoid appendRLCinCarAddingQueue(RLC rlc)
 {
-	if (innerCarAddingQueueIndex == MAX_CARS){
+	if (innerCarAddingQueueIndex == 1){
 		return;
 	}
 	carAddingQueue[innerCarAddingQueueIndex] = rlc;

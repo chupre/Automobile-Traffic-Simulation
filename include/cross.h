@@ -16,9 +16,10 @@
 #define MAX_CROSS_DIGIT (NUMBER_OF_CROSSES - 1)
 #define MAX_CROSS_CELL_DIGIT (NUMBER_OF_CROSS_CELLS - 1)
 
-#define NEXT_CELL_IS_ON_ROAD -12312
+#define NEXT_CELL_IS_ON_ROAD -55555
 
 #define CROSS_VELOCITY (_1_VELOCITY)
+#define MAX_CROSS_VELOCITY (_3_VELOCITY)
 
 #define NOTHING -1
 
@@ -45,9 +46,9 @@ struct queue {
 };
 
 struct cross_cell {
+    GLint crossNum;
     GLint x;
     GLint y;
-    GLint crossNum;
 };
 struct cross_roulette {
     GLint cellNum;
@@ -105,9 +106,9 @@ GLvoid rebindCrossCars(car* Car);
 bool isAnybodyToDriveBeforeNose(queue* q, DIRECTION ourCarDir);
 
 GLvoid thoughtsOfOneCarOnCross(car* Car);
-bool isOnCurvingCell(car* Car);
+bool isItCurvingCell(cross_cell* crossCurrCell,  cross_cell* curvingCell);
 GLvoid getNextCrossCell(car* Car, cross_cell* c);
-bool isInCrossBoards(cross_cell c);
+bool isInCrossBoards(cross_cell* c);
 GLvoid transformCrossCellIntoRLC(RLC* rlc, car* Car);
 GLvoid transformRLCIntoCrossCell(cross_cell* c, car* Car);
 GLint getLineOfAppearingOnRoadFromCross(car* Car);
@@ -115,6 +116,9 @@ GLint getLineOfAppearingOnRoadFromCross(car* Car);
 GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enterRoadIndexes, GLint* exitRoadIndexes);
 GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exitRoadIndexes);
 
+bool checkCrossCellSafety(cross_cell* c, DIRECTION dir);
+GLvoid countCarVelocityAndNextCell(car* Car, cross_cell* c);
+bool isCrossCellsEqual(cross_cell* c, cross_cell* d);
 
 // debug tools
 GLvoid printCrossRoulette();

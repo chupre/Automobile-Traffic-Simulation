@@ -18,6 +18,8 @@ add_executable(Automobile-Traffic-Simulation
     source/traffic_density.c
     source/traffic_light.c
     source/texture.c
+    source/log.c
+    source/dbg.c
     )
 
 if (WIN32)

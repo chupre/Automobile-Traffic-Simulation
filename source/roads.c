@@ -96,52 +96,35 @@ GLvoid setRoadBoards(GLint roadIndex, GLfloat start_x, GLfloat start_y)
 
 GLvoid setEdgeState(GLint roadIndex, GLfloat start_x, GLfloat start_y, DIRECTION dir)
 {
-    switch (dir)
-    {
-        case NORTH:
-        {
-            if (start_y + 1.0f < ERROR_LIMIT)
-            {
+    switch (dir){
+        case NORTH:{
+            if (start_y + 1.0f < ERROR_LIMIT){
                 roads[roadIndex].isEdge = true;
-            }
-            else
-            {
+            }else{
                 roads[roadIndex].isEdge = false;
             }
             break;
         }
-        case SOUTH:
-        {
-            if (start_y - 1.0f < ERROR_LIMIT)
-            {
+        case SOUTH:{
+            if (start_y - 1.0f < ERROR_LIMIT){
                 roads[roadIndex].isEdge = true;
-            }
-            else
-            {
+            }else{
                 roads[roadIndex].isEdge = false;
             }
             break;
         }
-        case EAST:
-        {
-            if (start_x + 1.0f < ERROR_LIMIT)
-            {
+        case EAST:{
+            if (start_x + 1.0f < ERROR_LIMIT){
                 roads[roadIndex].isEdge = true;
-            }
-            else
-            {
+            }else{
                 roads[roadIndex].isEdge = false;
             }
             break;
         }
-        case WEST:
-        {
-            if (start_x - 1.0f < ERROR_LIMIT)
-            {
+        case WEST:{
+            if (start_x - 1.0f < ERROR_LIMIT){
                 roads[roadIndex].isEdge = true;
-            }
-            else
-            {
+            }else{
                 roads[roadIndex].isEdge = false;
             }
             break;
@@ -416,25 +399,18 @@ GLvoid setLines(GLint roadIndex)
 
 GLint isFurhterThanEndLine(car* Car, road* Road)
 {
-    if (Road->dir == NORTH || Road->dir == EAST)
-    {
-        if (Car->realPos >= Road->endLineCoord)
-        {
+    if (Road->dir == NORTH || Road->dir == EAST){
+        if (Car->realPos >= Road->endLineCoord){
             //printf("isFurther\n");
             return 1;
-        }
-        else
-        {
+        }else{
             // printf("realpos: %f, endLine: %f\n", Car->realPos, Road->endLineCoord);
             // printCarProperties(Car->currCell);
         }
-    }
-    else
-    {
+    }else{
         if (Car->realPos <= Road->endLineCoord)
             return 1;
     }
-
     return 0;
 }
 
