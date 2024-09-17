@@ -598,21 +598,54 @@ void showInfo() {
 }
 
 void showHelpMenu() {
-    if (nk_begin(context, "HelpMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
-    {
+    if (nk_begin(context, "HelpMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0)) {
         nk_layout_row_dynamic(context, 50, 1);
         nk_label(context, "Help", NK_TEXT_CENTERED);
 
-        nk_layout_row_dynamic(context, 20, 1);
-        nk_label(context, "Use WASD to move camera.", NK_TEXT_LEFT);
-        nk_label(context, "Use mouse whell to zoom in and out.", NK_TEXT_LEFT);
-        nk_label(context, "Left click on the road to set a car.", NK_TEXT_LEFT);
-        nk_label(context, "Right click on the road to set a crashed car.", NK_TEXT_LEFT);
-        nk_layout_row_dynamic(context, 20, 1);
-        nk_layout_row_dynamic(context, 20, 1);
-        nk_label(context, "Press '`' or '~' to open or close the info window.", NK_TEXT_LEFT);
-        nk_label(context, "When the info window is opened, left click on the line to pick it.", NK_TEXT_LEFT);
-        nk_label(context, "Use can move around the info window by clicking on it's top panel.", NK_TEXT_LEFT);
+        float parent_ratio[] = {0.15f, 0.7f, 0.15f};
+        float child_ratio[] = {0.01f, 0.98f, 0.01f};
+        nk_layout_row(context, NK_DYNAMIC, 330, 3, parent_ratio);
+        nk_spacer(context);
+        if (nk_group_begin(context, "HelpInfo", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
+            nk_layout_row_dynamic(context, 20, 1);
+            nk_layout_row(context, NK_DYNAMIC, 20, 3, child_ratio);
+            nk_spacer(context);
+            nk_label(context, "Use WASD to move camera.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "Use mouse wheel to zoom in and out.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "Left click on road to set a car.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "Right click on road to set a crashed car.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "Press ESC to open or close the pause menu.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_layout_row_dynamic(context, 20, 1);
+            nk_layout_row(context, NK_DYNAMIC, 20, 3, child_ratio);
+            nk_spacer(context);
+            nk_label(context, "Press '`' or '~' to open or close the info window.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "When the info window is opened, left click on the line to pick it.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "Use can move around the info window by clicking on it's top panel.", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_layout_row_dynamic(context, 20, 1);
+            nk_layout_row(context, NK_DYNAMIC, 20, 3, child_ratio);
+            nk_spacer(context);
+            nk_label(context, "Press ESC to exit this menu.", NK_TEXT_LEFT);
+            nk_spacer(context);
+
+            nk_group_end(context);
+        }
+        nk_spacer(context);
+
     }
 
     nk_end(context);
