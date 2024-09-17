@@ -80,9 +80,9 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         exit(1);
     }
 
-    if (map_type == CROSS) {
+    if (map_type == CROSS) 
         lineVertices = malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2));
-    } else 
+    else 
         lineVertices = malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
 
     if (lineVertices == NULL) {
@@ -131,6 +131,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 		GLint enterRoadIndexes[] = {0, 1, 2, 3};
 		GLint exitRoadIndexes[] = {4, 5, 6, 7};
 		addCross(0, crossCenterX, crossCenterY, enterRoadIndexes, exitRoadIndexes);
+
     case SEVERAL_CROSSES:
         DEFAULT_FOV = 29.0f;
         GLfloat roadLength = NUMBER_OF_CELLS * CELL_LENGTH;

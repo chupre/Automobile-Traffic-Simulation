@@ -34,6 +34,7 @@ extern bool paused;
 extern bool isInitMenuActive;
 extern bool isSaveMenuActive;
 extern bool isLoadMenuActive;
+extern bool isHelpMenuActive;
 extern bool isShowInfo;
 extern bool isInit;
 extern GLFWwindow* window;

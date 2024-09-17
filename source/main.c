@@ -62,24 +62,6 @@ int main()
     }
 
     initGL();
-    genShader();
-
-
-#ifdef dot_debug
-    dot_coord _dot;
-    _dot.x = -0.8f;
-    _dot.y = -0.55f;
-    RLC _rlc_;
-    if (getRLCbyDot(&_rlc_, &_dot))
-    {
-        printRLC(_rlc_, "_rlc_");
-    }
-    else printf("none\n");
-    // RLC crRLC = {0, 1, 2};
-    // addCrushedCar(crRLC);
-
-#endif
-
     initFont();
 
     glfwSetTime(0.0f);
@@ -88,9 +70,8 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        if (paused || !isInit){
+        if (paused || !isInit)
             initGUI();
-        }
 
         if (!paused) {
             if (isInit) 

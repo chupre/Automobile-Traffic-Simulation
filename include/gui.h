@@ -20,6 +20,7 @@ void initGUI();
 void initFont();
 void showSaveMenu();
 void showLoadMenu();
+void showHelpMenu();
 void save();
 void load(char* fileName);
 void init(FILE* saveFile);

@@ -63,6 +63,11 @@ void initGUI()
         return;
     }
 
+    if (isHelpMenuActive) {
+        showHelpMenu();
+        return;
+    }
+
     if (nk_begin(context, "PauseMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
     {
         nk_layout_row_dynamic(context, 50, 1);
@@ -108,6 +113,19 @@ void initGUI()
         {
             isLoadMenuActive = true;
         }
+
+        nk_layout_row_end(context);
+
+        nk_layout_row_dynamic(context, 10, 1);
+
+        nk_layout_row_begin(context, NK_STATIC, 30, 2);
+        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+        nk_spacer(context);
+        nk_layout_row_push(context, 150);
+
+        if (nk_button_label(context, "Help"))
+            isHelpMenuActive = true;
+       
 
         nk_layout_row_end(context);
 
@@ -579,3 +597,24 @@ void showInfo() {
     nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
 }
 
+void showHelpMenu() {
+    if (nk_begin(context, "HelpMenu", nk_rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT), 0))
+    {
+        nk_layout_row_dynamic(context, 50, 1);
+        nk_label(context, "Help", NK_TEXT_CENTERED);
+
+        nk_layout_row_dynamic(context, 20, 1);
+        nk_label(context, "Use WASD to move camera.", NK_TEXT_LEFT);
+        nk_label(context, "Use mouse whell to zoom in and out.", NK_TEXT_LEFT);
+        nk_label(context, "Left click on the road to set a car.", NK_TEXT_LEFT);
+        nk_label(context, "Right click on the road to set a crashed car.", NK_TEXT_LEFT);
+        nk_layout_row_dynamic(context, 20, 1);
+        nk_layout_row_dynamic(context, 20, 1);
+        nk_label(context, "Press '`' or '~' to open or close the info window.", NK_TEXT_LEFT);
+        nk_label(context, "When the info window is opened, left click on the line to pick it.", NK_TEXT_LEFT);
+        nk_label(context, "Use can move around the info window by clicking on it's top panel.", NK_TEXT_LEFT);
+    }
+
+    nk_end(context);
+    nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+}

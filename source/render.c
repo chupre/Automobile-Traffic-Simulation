@@ -38,6 +38,7 @@ bool isInit = false;
 bool isInitMenuActive = false;
 bool isSaveMenuActive = false;
 bool isLoadMenuActive = false;
+bool isHelpMenuActive = false;
 bool isShowInfo = false;
 bool isLinePicked = false;
 RLC pickedRLC;
@@ -101,6 +102,8 @@ GLvoid keyCallback(GLFWwindow *window, int key, int scancode, int action, int mo
       isLoadMenuActive = false;
     } else if (isInitMenuActive) {
       isInitMenuActive = false;
+    } else if (isHelpMenuActive) {
+      isHelpMenuActive = false;
     } else {
       paused = !paused;
     }
