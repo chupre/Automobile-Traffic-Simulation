@@ -607,7 +607,7 @@ void showHelpMenu() {
         nk_layout_row(context, NK_DYNAMIC, 330, 3, parent_ratio);
         nk_spacer(context);
         if (nk_group_begin(context, "HelpInfo", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
-            nk_layout_row_dynamic(context, 20, 1);
+            nk_layout_row_dynamic(context, 10, 1);
             nk_layout_row(context, NK_DYNAMIC, 20, 3, child_ratio);
             nk_spacer(context);
             nk_label(context, "Use WASD to move camera.", NK_TEXT_LEFT);
