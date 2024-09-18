@@ -617,15 +617,16 @@ GLvoid thoughtsOfOneCar(car* Car)
 
 bool isToExcludeFormRoad(car* Car)
 {
+	return (Car->nextCell.cell >= NUMBER_OF_CELLS);
 	// if (isOutOfScreenSpace(Car->realPos))
 	// {
 	// 	return true;
 	// }
 	// road* roadPtr = &roads[Car->nextCell.road];
-	if (isFurtherThanEndCell(Car)){
-		return true;
-	}
-	return false;
+	// if (isFurtherThanEndCell(Car)){
+	// 	return true;
+	// }
+	// return false;
 }
 
 bool isFurtherThanEndCell(car* Car)
