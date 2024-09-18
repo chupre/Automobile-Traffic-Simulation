@@ -96,11 +96,11 @@ GLvoid update()
 		// printf("Step: %lf\n", glfwGetTime());
 		timer += STEP_TIME;
 
-		if (MAP_TYPE == CROSS){
+		if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
 			// printLights();
 		}
 		renewCells();
-		if (MAP_TYPE == CROSS){
+		if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
 			stepCross();
 			stepRoad();
 			changeLightsColor();
@@ -539,7 +539,6 @@ GLvoid thoughtsOfOneCar(car* Car)
 		isAllowedToOvertake = false;
 
 		if (distance == 1) {
-			Car->velocity = _0_CELL_;
 			cross_cell c;
 			transformRLCIntoCrossCell(&c, Car);
 

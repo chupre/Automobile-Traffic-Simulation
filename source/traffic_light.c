@@ -9,7 +9,6 @@
 
 GLint timer_digit = 0;
 GLint traffic_light_adding_index = -1;
-traffic_light lights[NUMBER_OF_TRAFFIC_LIGHTS];
 bool yellowRedChange = false;
 
 GLvoid changeLightsColor(){

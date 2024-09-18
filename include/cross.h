@@ -2,6 +2,7 @@
 #define CROSS_H
 
 #include <macros.h>
+#include <map.h>
 
 // External
 #include <glad/glad.h>
@@ -13,8 +14,8 @@
 
 #define NUMBER_OF_CROSS_ROADS 4
 
-#define MAX_CROSS_DIGIT (NUMBER_OF_CROSSES - 1)
-#define MAX_CROSS_CELL_DIGIT (NUMBER_OF_CROSS_CELLS - 1)
+extern int MAX_CROSS_DIGIT;
+extern int MAX_CROSS_CELL_DIGIT;
 
 #define NEXT_CELL_IS_ON_ROAD -55555
 
@@ -71,7 +72,6 @@ extern float CROSS_WIDTH;
 extern int NUMBER_OF_CROSS_CELLS;
 extern int MAX_CELL_NUM;
 
-extern cross crosses[NUMBER_OF_CROSSES];
 extern cross_roulette rouletteCross;
 
 #define TWO 2

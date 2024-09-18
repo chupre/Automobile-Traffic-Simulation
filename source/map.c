@@ -7,12 +7,17 @@
 #include <stdlib.h>
 
 // Custom modules
+#include <macros.h>
 #include <map.h>
 #include <direction.h>
 #include <road.h>
 #include <cross.h>
 #include <cars.h>
+#include <traffic_light.h>
 
+int NUMBER_OF_TRAFFIC_LIGHTS;
+int NUMBER_OF_CROSSES;
+int NUMBER_OF_CROSS_CELLS;
 int NUMBER_OF_ROADS;
 int NUMBER_OF_CELLS;
 int NUMBER_OF_LINES;
@@ -23,6 +28,8 @@ float DEFAULT_FOV;
 float ROAD_WIDTH;
 float HALF_ROAD_WIDTH;
 
+traffic_light* lights;
+cross* crosses;
 road* roads;
 unsigned int roadVAO, roadVBO, roadEBO;
 float* roadVertices;
@@ -38,7 +45,15 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_ROADS = 2;
         NUMBER_OF_CELLS = 40;
     } else if (map_type == CROSS) {
+        NUMBER_OF_CROSSES = 1;
+        NUMBER_OF_TRAFFIC_LIGHTS = 4 * NUMBER_OF_CROSSES;
         NUMBER_OF_ROADS = 8;
+        NUMBER_OF_CELLS = 12;
+    }
+    else if (map_type == SEVERAL_CROSSES){
+        NUMBER_OF_CROSSES = 4;
+        NUMBER_OF_TRAFFIC_LIGHTS = 4 * NUMBER_OF_CROSSES;
+        NUMBER_OF_ROADS = 24;
         NUMBER_OF_CELLS = 12;
     } else {
         NUMBER_OF_ROADS = 1;
@@ -51,6 +66,20 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     SPAWN_FREQUENCY = spawn_frequency;
     ROAD_WIDTH = CELL_LENGTH * (NUMBER_OF_LINES + 1);
     HALF_ROAD_WIDTH = ROAD_WIDTH / 2;
+
+    if (map_type == CROSS || map_type == SEVERAL_CROSSES){
+        crosses = malloc(sizeof(cross) * NUMBER_OF_CROSSES);
+        if (crosses == NULL) {
+            printf("malloc failed on crosses");
+            exit(1);
+        }
+
+        lights = malloc(sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS);
+        if (lights == NULL) {
+            printf("malloc failed on lights");
+            exit(1);
+        }
+    }
 
     roads = malloc(sizeof(road) * NUMBER_OF_ROADS);
 

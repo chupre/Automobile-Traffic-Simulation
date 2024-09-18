@@ -4,8 +4,6 @@
 #define TURN_LEFT_FREQUENCY 70
 #define DROP_VELOCITY_FREQUENCY 0
 
-#define NUMBER_OF_CROSSES 1
-
 #define _1_VELOCITY (1)
 #define _2_VELOCITY (_1_VELOCITY * 2)
 #define _3_VELOCITY (_1_VELOCITY * 3)

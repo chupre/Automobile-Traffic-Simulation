@@ -2,6 +2,7 @@
 #define TRAFFIC_LIGHT_H
 
 #include <macros.h>
+#include <map.h>
 
 // External
 #include <glad/glad.h>
@@ -11,7 +12,6 @@
 #include <stdbool.h>
 
 #define TRAFFIC_LIGHTS_TIME_DIGIT (4)
-#define NUMBER_OF_TRAFFIC_LIGHTS (4 * NUMBER_OF_CROSSES)
 
 #define RED_TIME 3
 #define YELLOW_TIME 1
@@ -32,7 +32,6 @@ struct traffic_light {
 
 extern GLint timer_digit;
 extern GLint traffic_light_adding_index;
-extern traffic_light lights[NUMBER_OF_TRAFFIC_LIGHTS];
 extern bool yellowRedChange;
 
 GLvoid changeLightsColor();

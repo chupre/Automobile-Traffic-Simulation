@@ -3,7 +3,7 @@
 #include <map.h>
 
 #include <direction.h>
-
+#include <map.h>
 #include <road.h>
 #include <cars.h>
 #include <string.h>
@@ -17,9 +17,10 @@
 int CROSS_SIDE;
 int HALF_CROSS_SIDE;
 float CROSS_WIDTH;
-int NUMBER_OF_CROSS_CELLS;
 
-cross crosses[NUMBER_OF_CROSSES];
+int MAX_CROSS_DIGIT;
+int MAX_CROSS_CELL_DIGIT;
+
 cross_roulette rouletteCross = {.crossNum=0, .cellNum=-1};
 DIRECTION crossQuaters[8] = {
     NORTH, EAST,
@@ -820,11 +821,13 @@ GLvoid transformRLCIntoCrossCell(cross_cell* c, car* Car)
 
 //....................................................................................................................
 GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enterRoadIndexes, GLint* exitRoadIndexes)
-{    
+{
     CROSS_SIDE = (NUMBER_OF_LINES + 1) * 2;
-    HALF_CROSS_SIDE = CROSS_SIDE / 2;
-    CROSS_WIDTH = CELL_WIDTH * CROSS_SIDE;
     NUMBER_OF_CROSS_CELLS = CROSS_SIDE * CROSS_SIDE;
+    HALF_CROSS_SIDE = CROSS_SIDE / 2;
+    MAX_CROSS_DIGIT = (NUMBER_OF_CROSSES - 1);
+    MAX_CROSS_CELL_DIGIT = (NUMBER_OF_CROSS_CELLS - 1);
+
 
 #ifdef DEBUG
     DEFAULT_FOV = 60;
@@ -860,6 +863,7 @@ GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enter
 
     setCrossProperties(crossIndex, enterRoadIndexes, exitRoadIndexes);
     // setCross(); // for D.
+    printf("@@@\n");
 }
 
 GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exitRoadIndexes)

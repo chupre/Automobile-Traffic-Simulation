@@ -16,9 +16,13 @@
 #define CELL_LENGTH 0.05f
 #define CELL_WIDTH (CELL_LENGTH)
 
+typedef struct cross cross;
+typedef struct traffic_light traffic_light;
 typedef struct road road;
 typedef struct car car;
 
+extern int NUMBER_OF_TRAFFIC_LIGHTS;
+extern int NUMBER_OF_CROSSES;
 extern int NUMBER_OF_ROADS;
 extern int NUMBER_OF_LINES;
 extern int NUMBER_OF_CELLS;
@@ -29,6 +33,8 @@ extern float DEFAULT_FOV;
 extern float ROAD_WIDTH;
 extern float HALF_ROAD_WIDTH;
 
+extern traffic_light* lights;
+extern cross* crosses;
 extern road* roads;
 extern unsigned int roadVAO, roadVBO, roadEBO;
 extern float* roadVertices;

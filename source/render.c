@@ -31,7 +31,7 @@
 
 GLuint WINDOW_WIDTH = 1280;
 GLuint WINDOW_HEIGHT = 960;
-GLchar WINDOW_NAME[] = "Auto Traffic Simulator";
+GLchar WINDOW_NAME[] = "LOST HIGHWAY";
 
 bool paused = true;
 bool isInit = false;
