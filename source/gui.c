@@ -41,7 +41,7 @@ int activeFileIndex = 0;
 
 config initConfig = {
     4,
-    1,
+    4,
     100,
     CROSS
 };
@@ -470,6 +470,7 @@ void showInitMenu() {
         if (nk_option_label(context, "NS", initConfig.map_type == TWO_ROADS_NS)) initConfig.map_type = TWO_ROADS_NS;
         if (nk_option_label(context, "WE", initConfig.map_type == TWO_ROADS_WE)) initConfig.map_type = TWO_ROADS_WE;
         if (nk_option_label(context, "CROSS", initConfig.map_type == CROSS)) initConfig.map_type = CROSS;
+        if (nk_option_label(context, "SEVERAL_CROSSES", initConfig.map_type == SEVERAL_CROSSES)) initConfig.map_type = SEVERAL_CROSSES;
 
         nk_layout_row_dynamic(context, 40, 5);
         nk_spacer(context);
