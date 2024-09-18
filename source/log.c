@@ -33,6 +33,8 @@ GLvoid openFile(){
 }
 
 GLvoid closeFile(){
+    if (_LOG_KEY_ == NO)
+        return;
     fclose(f);
 }
 
