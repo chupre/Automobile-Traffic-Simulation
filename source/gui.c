@@ -633,7 +633,7 @@ void showHelpMenu() {
             nk_label(context, "When the info window is opened, left click on the line to pick it.", NK_TEXT_LEFT);
             nk_spacer(context);
             nk_spacer(context);
-            nk_label(context, "Use can move around the info window by clicking on it's top panel.", NK_TEXT_LEFT);
+            nk_label(context, "You can move around the info window by clicking on it's top panel.", NK_TEXT_LEFT);
             nk_spacer(context);
             nk_spacer(context);
             nk_layout_row_dynamic(context, 20, 1);

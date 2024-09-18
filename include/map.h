@@ -13,7 +13,7 @@
 #define CROSS 7
 #define SEVERAL_CROSSES 8
 
-#define CELL_LENGTH 0.002f
+#define CELL_LENGTH 0.05f
 #define CELL_WIDTH (CELL_LENGTH)
 
 typedef struct road road;
