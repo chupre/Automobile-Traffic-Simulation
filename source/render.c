@@ -298,7 +298,7 @@ GLvoid render() {
   glClearColor(0.28f, 0.55f, 0.24f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  glBindTexture(GL_TEXTURE_2D, BACKGROUND_TEXTURE);
+  glBindTexture(GL_TEXTURE_2D, backgroundTexture);
   glUseProgram(backgroundShader);
   setProjection(backgroundShader);
   setView(backgroundShader);
@@ -322,7 +322,7 @@ GLvoid render() {
 #endif
 
   glUseProgram(carShader);
-  glBindTexture(GL_TEXTURE_2D, CAR_TEXTURE);
+  glBindTexture(GL_TEXTURE_2D, carTexture);
   setView(carShader);
   setProjection(carShader);
   glBindVertexArray(carVAO);

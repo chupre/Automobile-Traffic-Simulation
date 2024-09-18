@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <texture.h>
 
 #include <glad/glad.h>
@@ -7,31 +6,15 @@
 #include <string.h>
 #include <stdbool.h>
 
-unsigned int textures[NUMBER_OF_TEXTURES];
-int textures_loaded;
 const char texture_path[128] = "../resources/textures/";
+unsigned int carTexture, backgroundTexture;
 
 void initTextures() {
-    textures_loaded = 0;
-
-    struct dirent *dirEntry;
-
-    DIR *dir = opendir(texture_path);
-
-    if (dir == NULL) {
-        return;
-    }
-
-    while ((dirEntry = readdir(dir)) != NULL)
-        if (strstr(dirEntry->d_name, ".png") != NULL) {
-            loadTexture(dirEntry->d_name);
-            textures_loaded++;
-        }
-
-    closedir(dir);
+    loadTexture("car.png", &carTexture);
+    loadTexture("back.png", &backgroundTexture);
 }
 
-void loadTexture(char * image_name) {
+void loadTexture(char * image_name, unsigned int * texture) {
     stbi_set_flip_vertically_on_load(true);
 
     unsigned char * texture_pixels;
@@ -54,8 +37,8 @@ void loadTexture(char * image_name) {
     else if (texture_channels == 4)
         format = GL_RGBA;
 
-    glGenTextures(1, &textures[textures_loaded]);
-    glBindTexture(GL_TEXTURE_2D, textures[textures_loaded]);
+    glGenTextures(1, texture);
+    glBindTexture(GL_TEXTURE_2D, *texture);
     glTexImage2D(GL_TEXTURE_2D, 0, format, texture_width, texture_height, 0, format, GL_UNSIGNED_BYTE, texture_pixels);
     glGenerateMipmap(GL_TEXTURE_2D);
 
