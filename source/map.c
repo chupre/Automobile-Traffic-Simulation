@@ -38,8 +38,8 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_ROADS = 2;
         NUMBER_OF_CELLS = 40;
     } else if (map_type == CROSS) {
-        NUMBER_OF_CELLS = 12;
         NUMBER_OF_ROADS = 8;
+        NUMBER_OF_CELLS = 12;
     } else {
         NUMBER_OF_ROADS = 1;
         NUMBER_OF_CELLS = 40;

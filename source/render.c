@@ -382,12 +382,12 @@ GLvoid initGL() {
                                     &channels, 
                                     4);
 
-  GLFWimage * icon;
-  icon->width = iconWidth;
-  icon->height = iconHeight;
-  icon->pixels = pixels;
+  GLFWimage icons[1];
+  icons[0].width = iconWidth;
+  icons[0].height = iconHeight;
+  icons[0].pixels = pixels;
 
-  glfwSetWindowIcon(window, 1, icon);
+  glfwSetWindowIcon(window, 1, icons);
 
   gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -402,7 +402,7 @@ GLvoid initGL() {
   glfwSetCursorPosCallback(window, cursorPositionCallback);
   glfwSetMouseButtonCallback(window, mouseButtonCallback);
 
-  stbi_image_free(icon->pixels);
+  stbi_image_free(icons[0].pixels);
 }
 
 GLfloat getScreenVelocity(car *Car) {

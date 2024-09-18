@@ -45,8 +45,8 @@ void genShader(int * shader, char * vertexShaderName, char * fragmentShaderName)
     strcat(vertexShaderFullName, vertexShaderName);
     strcat(fragmentShaderFullName, fragmentShaderName);
 
-    const GLchar* vertexShaderSource = getShaderContent(vertexShaderFullName);
-    const GLchar* fragmentShaderSource = getShaderContent(fragmentShaderFullName);
+    const char* vertexShaderSource = getShaderContent(vertexShaderFullName);
+    const char* fragmentShaderSource = getShaderContent(fragmentShaderFullName);
 
     GLuint vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
