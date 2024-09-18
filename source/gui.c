@@ -40,8 +40,8 @@ char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
 
 config initConfig = {
-    1000,
-    5,
+    4,
+    1,
     100,
     CROSS
 };
@@ -506,7 +506,6 @@ void init (FILE* saveFile) {
     genShader(&carShader, "vCar.glsl", "fCar.glsl");
     genShader(&backgroundShader, "vBackground.glsl", "fBackground.glsl");
 
-    initTextures();
     setCarsToDefault();
     initBackground();
     initRoads();

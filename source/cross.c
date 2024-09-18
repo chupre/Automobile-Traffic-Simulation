@@ -463,7 +463,7 @@ GLvoid thoughtsOfOneCarOnCross(car* Car)
 {
     if (isItCurvingCell(&Car->crossCurrCell, &Car->curvingCell)){
 
-                if (Car->moveDir == NORTH) {
+        if (Car->moveDir == NORTH) {
             if (Car->target == WEST) {
                 glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
             }

@@ -8,6 +8,7 @@
 🟢 fix saves.\
 🟢 Add crushed cars on right click.\
 🔴 Add traffic lights.\
+🔴 Remake roads.\
 🟢 Add help section in menu.\
 🟢 Add proper logging.\
 🔴 Fix saves for crosses.\

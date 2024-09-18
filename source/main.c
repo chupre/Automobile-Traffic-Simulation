@@ -42,6 +42,7 @@ int main()
     openFile();
 
     initGL();
+    initTextures();
     initFont();
 
     glfwSetTime(0.0f);
