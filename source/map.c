@@ -160,6 +160,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 		GLint enterRoadIndexes[] = {0, 1, 2, 3};
 		GLint exitRoadIndexes[] = {4, 5, 6, 7};
 		addCross(0, crossCenterX, crossCenterY, enterRoadIndexes, exitRoadIndexes);
+        break;
 
     case SEVERAL_CROSSES:
         DEFAULT_FOV = 29.0f;
@@ -218,6 +219,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         addCross(1, -crossIndent, crossIndent, enterRoadIndexes1, exitRoadIndexes1);
         addCross(2, -crossIndent, -crossIndent, enterRoadIndexes2, exitRoadIndexes2);
         addCross(3, crossIndent, -crossIndent, enterRoadIndexes3, exitRoadIndexes3);
+        break;
 	}
     
 

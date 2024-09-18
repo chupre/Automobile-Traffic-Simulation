@@ -863,7 +863,6 @@ GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enter
 
     setCrossProperties(crossIndex, enterRoadIndexes, exitRoadIndexes);
     // setCross(); // for D.
-    printf("@@@\n");
 }
 
 GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exitRoadIndexes)
