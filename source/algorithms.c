@@ -277,7 +277,7 @@ GLvoid initRoadCell(RLC *rlc, car* Car)
 GLvoid renewCells(){
 	car* Car;
 	// printCarCharacter(crosses[0].cells[0]);
-	if (MAP_TYPE == CROSS){
+	if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
 		while (getCarByRouletteCross(&Car))
 		{
 			// printCrossRoulette();
