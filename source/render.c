@@ -197,8 +197,31 @@ GLvoid initRoads() {
   if (MAP_TYPE == CROSS) {
     roadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
     roadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+
     roadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
     roadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+  }
+
+  if (MAP_TYPE == SEVERAL_CROSSES) {
+    roadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[1 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[1 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+
+    roadVertices[4 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[4 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+
+    roadVertices[12 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[12 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[13 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[13 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+
+    roadVertices[16 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[16 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[17 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    roadVertices[17 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
   }
   glBindBuffer(GL_ARRAY_BUFFER, roadVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUMBER_OF_ROADS * 4 * 5,

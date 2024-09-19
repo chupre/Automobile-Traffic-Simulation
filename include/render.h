@@ -13,7 +13,7 @@
 
 #define FPS 60.0f
 
-#define DEBUG
+//#define DEBUG
 
 #define WINDOWS 0
 #define UNIX 1
