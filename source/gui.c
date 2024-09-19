@@ -38,6 +38,7 @@
 
 char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
+int curr_step = 0;
 
 config initConfig = {
     50,
@@ -543,6 +544,8 @@ void init (FILE* saveFile) {
     initRoads();
     initLines();
     initCars();
+
+    step_count = 0;
     
     if (saveFile) {
         RLC * occupiedCells = (RLC *)malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
@@ -601,10 +604,11 @@ void showInfo() {
         nk_label(context, carsInfo, NK_TEXT_LEFT);
         nk_label(context, timeInfo, NK_TEXT_LEFT);
 
-
         if (isLinePicked) {
-            sprintf(trafficDensityInfo, "Traffic Density: %d", getDensityData(pickedRLC.road));
-            sprintf(carsOnLine, "Cars on Line: %d", getCarsNumOnLine(pickedRLC.road, pickedRLC.line));
+            if (step_count && step_count != curr_step) {
+                sprintf(trafficDensityInfo, "Traffic Density: %d", getDensityData(pickedRLC.road));
+                sprintf(carsOnLine, "Cars on Line: %d", getCarsNumOnLine(pickedRLC.road, pickedRLC.line));
+            }
 
             nk_layout_row_dynamic(context, 20, 1);
             nk_label(context, trafficDensityInfo, NK_TEXT_LEFT);

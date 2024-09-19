@@ -31,6 +31,8 @@ GLint innerSkipCarsFromCrossIndex = NO_INNER_INDEX;
 car** checkedCars;
 GLint innerCheckedCarsIndex = NO_INNER_INDEX;
 
+int step_count;
+
 bool compareRLCs(RLC* rlc1, RLC* rlc2)
 {
 	return (rlc1->road == rlc2->road && rlc1->line == rlc2->line && rlc1->cell == rlc2->cell);
@@ -105,6 +107,7 @@ GLvoid update()
 	{
 		// printf("Step: %lf\n", glfwGetTime());
 		timer += STEP_TIME;
+        step_count++;
 
 		if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
 			// printLights();

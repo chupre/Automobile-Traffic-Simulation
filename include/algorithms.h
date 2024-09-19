@@ -68,6 +68,8 @@ extern GLint innerSkipCarsFromCrossIndex;
 extern car** checkedCars;
 extern GLint innerCheckedCarsIndex;
 
+extern int step_count;
+
 GLvoid initRoadCell(RLC *rlc, car* Car);
 
 bool isToExcludeFormRoad(car* Car);
