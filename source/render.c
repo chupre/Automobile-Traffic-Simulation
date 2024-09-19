@@ -1,5 +1,5 @@
 // Standard
-#include "cglm/mat4.h"
+#include "cglm/cglm.h"
 #include <time.h>
 
 // External
@@ -254,6 +254,12 @@ GLvoid initLines() {
                  sizeof(float) *
                      (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2),
                  lineVertices, GL_STATIC_DRAW);
+  } else if (MAP_TYPE == SEVERAL_CROSSES) {
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) *
+                     (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 12 * 5 * 2),
+                 lineVertices, GL_STATIC_DRAW);
+
   } else {
     glBufferData(GL_ARRAY_BUFFER,
                  sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2,
@@ -341,7 +347,12 @@ GLvoid render() {
   glBindVertexArray(roadVAO);
   glDrawElements(GL_TRIANGLES, NUMBER_OF_ROADS * 6, GL_UNSIGNED_INT, 0);
   glBindVertexArray(lineVAO);
-  glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2 + 8);
+  if (MAP_TYPE == CROSS)
+      glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2 + 2 * 4);
+  else if (MAP_TYPE == SEVERAL_CROSSES)
+      glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2 + 2 * 12);
+  else
+      glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
 
 #ifdef DEBUG
   dbgRenderCells();
@@ -367,10 +378,38 @@ GLvoid render() {
 }
 
 GLvoid quit() {
-  glDeleteVertexArrays(1, &roadVAO);
-  glDeleteBuffers(1, &roadVBO);
-  glDeleteBuffers(1, &roadEBO);
-  glDeleteProgram(shaderProgram);
+    free(densityData);
+    for (int i = 0; i < NUMBER_OF_ROADS; i++) {
+        for(int j = 0; j < NUMBER_OF_LINES; j++) {
+            free(roads[i].lines[j].cells);
+        }
+        free(roads[i].lines);
+    }
+    free(lineVertices);
+    free(cars);
+    free(roadIndices);
+    free(roadVertices);
+    free(roads);
+    free(lights);
+    for (int i = 0; i < NUMBER_OF_CROSSES; i++)
+        free(crosses[i].cells);
+    free(crosses);
+    free(checkedCars);
+    free(skipCarsFromCross);
+    free(carAddingQueue);
+    free(userCarsPtrs);
+    glDeleteVertexArrays(1, &roadVAO);
+    glDeleteVertexArrays(1, &carVAO);
+    glDeleteVertexArrays(1, &lineVAO);
+    glDeleteVertexArrays(1, &backgroundVAO);
+    glDeleteBuffers(1, &roadVBO);
+    glDeleteBuffers(1, &carVBO);
+    glDeleteBuffers(1, &carInstanceVBO);
+    glDeleteBuffers(1, &lineVBO);
+    glDeleteBuffers(1, &backgroundVBO);
+    glDeleteBuffers(1, &roadEBO);
+    glDeleteBuffers(1, &carEBO);
+    glDeleteBuffers(1, &backgroundEBO);
 
   nk_glfw3_shutdown(&glfw);
   glfwTerminate();

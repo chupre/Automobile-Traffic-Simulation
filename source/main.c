@@ -70,7 +70,7 @@ int main()
 
             if (isInit) {
                     while (deltaTime >= 1.0) {
-                        update();
+                        //update();
                         deltaTime--;
                     }
 

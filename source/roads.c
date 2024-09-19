@@ -9,6 +9,7 @@
 #include <algorithms.h>
 #include <render.h>
 
+int midLinesCounter = 0;
 
 DIRECTION getRoadDir(car* Car)
 {
@@ -255,7 +256,26 @@ GLvoid setLines(GLint roadIndex)
                 x - stride * NUMBER_OF_LINES, y2, 0.0f, 0.0f, 0.0f
             };
 
-            memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + roadIndex * 5 * 2], vertices, sizeof(float) * 5 * 2);
+            memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + midLinesCounter * 5 * 2], vertices, sizeof(float) * 5 * 2);
+            midLinesCounter++;
+        }
+
+        if (MAP_TYPE == SEVERAL_CROSSES && (
+                    roadIndex == 1 ||
+                    roadIndex == 5 ||
+                    roadIndex == 9 ||
+                    roadIndex == 13 ||
+                    roadIndex == 17 ||
+                    roadIndex == 21
+                    )) {
+            float vertices[] =
+            {
+                x - stride * NUMBER_OF_LINES, y1, 0.0f, 0.0f, 0.0f,
+                x - stride * NUMBER_OF_LINES, y2, 0.0f, 0.0f, 0.0f
+            };
+
+            memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + midLinesCounter * 5 * 2], vertices, sizeof(float) * 5 * 2);
+            midLinesCounter++;
         }
 
         for (int cell = 0; cell < NUMBER_OF_CELLS; cell++) {
@@ -346,7 +366,35 @@ GLvoid setLines(GLint roadIndex)
                 x2, y - stride * NUMBER_OF_LINES, 0.0f, 0.0f, 0.0f
             };
 
-            memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + roadIndex * 5 * 2], vertices, sizeof(float) * 5 * 2);
+            memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + midLinesCounter * 5 * 2], vertices, sizeof(float) * 5 * 2);
+            midLinesCounter++;
+        }
+
+        if (MAP_TYPE == SEVERAL_CROSSES && (
+                    roadIndex == 2 ||
+                    roadIndex == 6 ||
+                    roadIndex == 10 ||
+                    roadIndex == 14 ||
+                    roadIndex == 18 ||
+                    roadIndex == 22
+                    )) {
+            if (roadIndex == 6) {
+                GLfloat vertices[] =
+                {
+                    x1, y + stride, 0.0f, 0.0f, 0.0f,
+                    x2, y + stride, 0.0f, 0.0f, 0.0f
+                };
+                memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + midLinesCounter* 5 * 2], vertices, sizeof(float) * 5 * 2);
+            } else {
+                GLfloat vertices[] =
+                {
+                    x1, y - stride * NUMBER_OF_LINES, 0.0f, 0.0f, 0.0f,
+                    x2, y - stride * NUMBER_OF_LINES, 0.0f, 0.0f, 0.0f
+                };
+                memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + midLinesCounter* 5 * 2], vertices, sizeof(float) * 5 * 2);
+            }
+
+            midLinesCounter++;
         }
 
         for (int cell = 0; cell < NUMBER_OF_CELLS; cell++) {

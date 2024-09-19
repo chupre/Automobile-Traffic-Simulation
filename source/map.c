@@ -69,7 +69,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     ROAD_WIDTH = CELL_LENGTH * (NUMBER_OF_LINES + 1.0f);
     HALF_ROAD_WIDTH = ROAD_WIDTH / 2.0f;
 
-    if (map_type == CROSS || map_type == SEVERAL_CROSSES){
+    if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
         crosses = (cross *)malloc(sizeof(cross) * NUMBER_OF_CROSSES);
         if (crosses == NULL) {
             printf("malloc failed on crosses");
@@ -118,8 +118,10 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         exit(1);
     } 
 
-    if (map_type == CROSS) 
+    if (MAP_TYPE == CROSS) 
         lineVertices = (float *)malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2));
+    else if (map_type == SEVERAL_CROSSES)
+        lineVertices = (float *)malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 12 * 5 * 2));
     else 
         lineVertices = (float *)malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
 
@@ -128,7 +130,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         exit(1);
     }
 
-	switch (map_type)
+	switch (MAP_TYPE)
 	{
 	case ONE_ROAD_N:
         DEFAULT_FOV = 45.0f;
