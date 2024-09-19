@@ -8,6 +8,7 @@
 #include <cars.h>
 #include <string.h>
 #include <traffic_light.h>
+#include <traffic_density.h>
 #include <algorithms.h>
 #include <render.h>
 
@@ -325,6 +326,7 @@ GLvoid rebindCrossCars(car* Car)
     if (Car->crossNextCell.crossNum != NEXT_CELL_IS_ON_ROAD){
         initCrossCell(&Car->crossNextCell, Car);
         Car->crossCurrCell = Car->crossNextCell;
+        increaseDensityData(Car->nextCell.road);
         // printf(">> INIT CROSS   << ID: %d\n", Car->ID);
     }
     else{

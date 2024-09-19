@@ -3,23 +3,22 @@
 #include <string.h>
 #include <traffic_density.h>
 
-int * densityData;
 bool densityDataInit = false;
 
 GLvoid increaseDensityData(GLint roadIndex)
 {
-    if (!densityDataInit) {
-        densityData = (int*)calloc(NUMBER_OF_ROADS, sizeof(int));
+    // if (!densityDataInit) {
+    //     densityData = (GLint*)calloc(NUMBER_OF_ROADS, sizeof(GLint));
 
-        if (densityData == NULL) {
-            printf("malloc failed with densityData");
-            exit(1);
-        } 
-
-        // printDensity();
+    //     if (densityData == NULL) {
+    //         printf("malloc failed with densityData");
+    //         exit(1);
+    //     } 
+    //     printf("yes\n");
+    //     // printDensity();
         
-        densityDataInit = true;
-    }
+    //     densityDataInit = true;
+    // }
 
     densityData[roadIndex] += 1;
     // printDensity();

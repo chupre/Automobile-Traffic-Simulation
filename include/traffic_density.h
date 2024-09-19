@@ -9,7 +9,6 @@
 #include <map.h>
 #include <stdbool.h>
 
-extern int * densityData;
 extern bool densityDataInit;
 
 GLvoid increaseDensityData(GLint roadIndex);
