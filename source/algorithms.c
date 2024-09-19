@@ -414,10 +414,7 @@ GLvoid rebindRoadCars(car* Car)
 		}
 		Car->currCell = Car->nextCell;
 	}else{
-		// printf("NEXT_CELL_IS_ON_CROSS\n");
-		// printRLC(Car->currCell, "rlc");
-		// printCrossCell(Car->crossNextCell);
-
+		decreaseDensityData(Car->currCell.road);
 		initCrossCell(&Car->crossNextCell, Car);
 		Car->crossCurrCell = Car->crossNextCell;
 		q_append(Car, &crosses[Car->crossNextCell.crossNum].carsArriving);

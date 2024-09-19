@@ -14,6 +14,7 @@
 #include <cross.h>
 #include <cars.h>
 #include <traffic_light.h>
+#include <traffic_density.h>
 
 int NUMBER_OF_TRAFFIC_LIGHTS;
 int NUMBER_OF_CROSSES;
@@ -37,6 +38,7 @@ int* roadIndices;
 unsigned int lineVAO, lineVBO;
 float* lineVertices;
 car * cars;
+GLint * densityData;
 
 //a road gets a direction, an edge state
 void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
@@ -108,6 +110,13 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         printf("malloc failed on cars");
         exit(1);
     }
+
+    densityData = (GLint*)calloc(NUMBER_OF_ROADS, sizeof(GLint));
+
+    if (densityData == NULL) {
+        printf("malloc failed with densityData");
+        exit(1);
+    } 
 
     if (map_type == CROSS) 
         lineVertices = (float *)malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2));

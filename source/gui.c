@@ -41,10 +41,10 @@ int activeFileIndex = 0;
 int curr_step = 0;
 
 config initConfig = {
-    40,
-    10,
-    0,
-    CROSS,
+    50,
+    6,
+    100,
+    ONE_ROAD_N,
 };
 
 void initGUI()

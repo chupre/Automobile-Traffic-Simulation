@@ -404,6 +404,7 @@ GLvoid initGL() {
   glfwSetScrollCallback(window, scrollCallback);
   glfwSetCursorPosCallback(window, cursorPositionCallback);
   glfwSetMouseButtonCallback(window, mouseButtonCallback);
+  glfwSetErrorCallback(errorCallback);
 
   stbi_image_free(icons[0].pixels);
 }
@@ -514,4 +515,8 @@ void initBackground() {
 
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+}
+
+void errorCallback(int e, const char *d) {
+        printf("Error %d: %s\n", e, d);
 }
