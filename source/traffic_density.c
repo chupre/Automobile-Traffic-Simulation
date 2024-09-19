@@ -9,13 +9,14 @@ bool densityDataInit = false;
 GLvoid increaseDensityData(GLint roadIndex)
 {
     if (!densityDataInit) {
-        densityData = (int*)calloc(NUMBER_OF_ROADS, sizeof(int));
+        densityData = malloc(sizeof(int) * NUMBER_OF_ROADS);
 
         if (densityData == NULL) {
             printf("malloc failed with densityData");
             exit(1);
         } 
 
+        memset(densityData, 0, sizeof(int) * NUMBER_OF_ROADS);
         // printDensity();
         
         densityDataInit = true;
@@ -32,6 +33,7 @@ GLvoid decreaseDensityData(GLint roadIndex)
 
 GLint getDensityData(GLint roadIndex)
 {
+    printf("density on %d road: %d\n", roadIndex, densityData[roadIndex]);
     // printDensity();
     return densityData[roadIndex];
 }
