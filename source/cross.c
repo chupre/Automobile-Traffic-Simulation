@@ -326,10 +326,10 @@ GLvoid rebindCrossCars(car* Car)
     if (Car->crossNextCell.crossNum != NEXT_CELL_IS_ON_ROAD){
         initCrossCell(&Car->crossNextCell, Car);
         Car->crossCurrCell = Car->crossNextCell;
-        increaseDensityData(Car->nextCell.road);
         // printf(">> INIT CROSS   << ID: %d\n", Car->ID);
     }
     else{
+        increaseDensityData(Car->nextCell.road);
         initRoadCell(&Car->nextCell, Car);
         Car->currCell = Car->nextCell;
         q_del_item(&crosses[Car->crossCurrCell.crossNum].carsEndingManeuver, Car);

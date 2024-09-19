@@ -43,7 +43,7 @@ int curr_step = 0;
 config initConfig = {
     50,
     6,
-    0,
+    100,
     ONE_ROAD_N,
 };
 
