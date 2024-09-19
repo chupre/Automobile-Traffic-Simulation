@@ -340,7 +340,7 @@ GLvoid rebindCrossCars(car* Car)
 GLvoid q_append(car* Car, queue* q)
 {
     // printf("APPEND ID: %d\n", Car->ID); //printCarCharacter(Car);
-    q_item* item = (q_item*) malloc(sizeof(q_item));
+    q_item* item = (q_item *)malloc(sizeof(q_item));
     if (item == NULL) exit(-1);
     item->value = Car;
     item->next = NULL;
@@ -466,6 +466,7 @@ GLvoid thoughtsOfOneCarOnCross(car* Car)
         if (Car->moveDir == NORTH) {
             if (Car->target == WEST) {
                 glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH * Car->velocity);
             }
             if (Car->target == EAST) {
                 glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH);
@@ -479,6 +480,7 @@ GLvoid thoughtsOfOneCarOnCross(car* Car)
             }
             if (Car->target == EAST) {
                 glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH * Car->velocity);
             }
         }
         if (Car->moveDir == WEST) {
@@ -488,11 +490,13 @@ GLvoid thoughtsOfOneCarOnCross(car* Car)
             }
             if (Car->target == SOUTH) {
                 glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH * Car->velocity);
             }
         }
         if (Car->moveDir == EAST) {
             if (Car->target == NORTH) {
                 glm_rotate2d(carTransformMatrixes[Car->ID], glm_rad(90.0f));
+                glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH * Car->velocity);
             }
             if (Car->target == SOUTH) {
                 glm_translate2d_y(carTransformMatrixes[Car->ID], CELL_LENGTH);
@@ -500,11 +504,10 @@ GLvoid thoughtsOfOneCarOnCross(car* Car)
             }
         }
 
-
-
         Car->moveDir = Car->target;
         Car->roadDirMultiplier = getDirMultiplier(Car->target);
     }
+
     cross_cell c;
     getNextCrossCell(Car, &c);
 
@@ -854,7 +857,7 @@ GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enter
     }
 #endif
 
-    crosses[crossIndex].cells = malloc(sizeof(car*) * NUMBER_OF_CROSS_CELLS);
+    crosses[crossIndex].cells = (car **)malloc(sizeof(car *) * NUMBER_OF_CROSS_CELLS);
 
     if (crosses[crossIndex].cells == NULL) {
         printf("malloc failed on crosses cells on index %d", crossIndex);
@@ -862,7 +865,6 @@ GLvoid addCross(GLint crossIndex, GLfloat start_x, GLfloat start_y, GLint* enter
     }
 
     setCrossProperties(crossIndex, enterRoadIndexes, exitRoadIndexes);
-    // setCross(); // for D.
 }
 
 GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exitRoadIndexes)

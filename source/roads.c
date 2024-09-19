@@ -197,7 +197,7 @@ GLvoid setRoad(GLint roadIndex, GLfloat start_x, GLfloat start_y, GLfloat length
 
 GLvoid setLines(GLint roadIndex)
 {
-    roads[roadIndex].lines = malloc(sizeof(line) * (NUMBER_OF_LINES + 1));
+    roads[roadIndex].lines = (line *)malloc(sizeof(line) * (NUMBER_OF_LINES + 1));
 
     if (roads[roadIndex].lines == NULL) {
         printf("malloc failed on lines on road %d", roadIndex);
@@ -205,7 +205,7 @@ GLvoid setLines(GLint roadIndex)
     }
 
     for (int i = 0; i < NUMBER_OF_LINES + 1; i++) {
-        roads[roadIndex].lines[i].cells = malloc(sizeof(car*) * NUMBER_OF_CELLS);
+        roads[roadIndex].lines[i].cells = (car **)malloc(sizeof(car *) * NUMBER_OF_CELLS);
         
         if (roads[roadIndex].lines[i].cells == NULL) {
             printf("malloc failed on cells on road %d line %d", roadIndex, i);

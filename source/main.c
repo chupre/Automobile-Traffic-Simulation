@@ -42,6 +42,9 @@ int main()
     openFile();
 
     initGL();
+    genShader(&shaderProgram, "vertex_shader.glsl", "fragment_shader.glsl");
+    genShader(&carShader, "vCar.glsl", "fCar.glsl");
+    genShader(&backgroundShader, "vBackground.glsl", "fBackground.glsl");
     initTextures();
     initFont();
 

@@ -25,7 +25,7 @@ typedef struct traffic_light traffic_light;
 
 struct line {
     car** cells;
-    GLfloat carSpawnCoord;
+    float carSpawnCoord;
 };
 
 struct road {

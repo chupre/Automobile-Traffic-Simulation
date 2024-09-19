@@ -59,7 +59,7 @@ GLvoid update()
         rouletteRLC.road = MAX_ROAD_DIGIT;
         rouletteRLC.line = -1;
         rouletteRLC.cell = MAX_CELL_DIGIT;
-        userCarsPtrs = malloc(sizeof(car*) * MAX_CARS);
+        userCarsPtrs = (car **)malloc(sizeof(car *) * MAX_CARS);
         innerUserCarsPtrsIndex = NO_INNER_INDEX;
         innerCarAddingQueueIndex = NO_INNER_INDEX;
 
@@ -68,20 +68,20 @@ GLvoid update()
             exit(1);
         }
 
-        carAddingQueue = malloc(sizeof(RLC) * MAX_CARS);
+        carAddingQueue = (RLC *)malloc(sizeof(RLC) * MAX_CARS);
 
         if (carAddingQueue == NULL) {
             printf("malloc failed on carAddingQueue");
             exit(1);
         }
 
-		skipCarsFromCross = malloc(sizeof(car*) * MAX_CARS);
+		skipCarsFromCross = (car **)malloc(sizeof(car *) * MAX_CARS);
 		if (skipCarsFromCross == NULL){
 			printf("malloc failed on skipCars");
             exit(1);
 		}
 
-		checkedCars = malloc(sizeof(car*) * MAX_CARS);
+		checkedCars = (car **)malloc(sizeof(car *) * MAX_CARS);
 		if (checkedCars == NULL){
 			printf("malloc failed on checkedCars");
             exit(1);

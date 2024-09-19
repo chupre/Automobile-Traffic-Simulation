@@ -387,7 +387,7 @@ void save()
 
     fwrite(&initConfig, sizeof(initConfig), 1, saveFile);
 
-    RLC* occupiedCells = malloc(sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS);
+    RLC* occupiedCells = (RLC *)malloc(sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS);
     int occupiedCellsCounter = 0;
 
     for (int i = 0; i < NUMBER_OF_ROADS; i++)
@@ -497,15 +497,46 @@ void init (FILE* saveFile) {
     dbgVerticesInit = false;
 #endif
     
+    if (isInit) {
+        free(densityData);
+        for (int i = 0; i < NUMBER_OF_ROADS; i++) {
+            for(int j = 0; j < NUMBER_OF_LINES; j++) {
+                free(roads[i].lines[j].cells);
+            }
+            free(roads[i].lines);
+        }
+        free(lineVertices);
+        free(cars);
+        free(roadIndices);
+        free(roadVertices);
+        free(roads);
+        free(lights);
+        for (int i = 0; i < NUMBER_OF_CROSSES; i++)
+            free(crosses[i].cells);
+        free(crosses);
+        free(checkedCars);
+        free(skipCarsFromCross);
+        free(carAddingQueue);
+        free(userCarsPtrs);
+        glDeleteVertexArrays(1, &roadVAO);
+        glDeleteVertexArrays(1, &carVAO);
+        glDeleteVertexArrays(1, &lineVAO);
+        glDeleteVertexArrays(1, &backgroundVAO);
+        glDeleteBuffers(1, &roadVBO);
+        glDeleteBuffers(1, &carVBO);
+        glDeleteBuffers(1, &carInstanceVBO);
+        glDeleteBuffers(1, &lineVBO);
+        glDeleteBuffers(1, &backgroundVBO);
+        glDeleteBuffers(1, &roadEBO);
+        glDeleteBuffers(1, &carEBO);
+        glDeleteBuffers(1, &backgroundEBO);
+    }
+
     setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);
 
     densityDataInit = false;
     alghorithmsInit = false;
     cameraInit = false;
-
-    genShader(&shaderProgram, "vertex_shader.glsl", "fragment_shader.glsl");
-    genShader(&carShader, "vCar.glsl", "fCar.glsl");
-    genShader(&backgroundShader, "vBackground.glsl", "fBackground.glsl");
 
     setCarsToDefault();
     initBackground();
@@ -514,7 +545,7 @@ void init (FILE* saveFile) {
     initCars();
     
     if (saveFile) {
-        RLC * occupiedCells = malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
+        RLC * occupiedCells = (RLC *)malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
 
         fread(cars, sizeof(car) * MAX_CARS, 1, saveFile);
         fread(occupiedCells, sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS, 1, saveFile);

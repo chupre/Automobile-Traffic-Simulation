@@ -68,41 +68,41 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     HALF_ROAD_WIDTH = ROAD_WIDTH / 2;
 
     if (map_type == CROSS || map_type == SEVERAL_CROSSES){
-        crosses = malloc(sizeof(cross) * NUMBER_OF_CROSSES);
+        crosses = (cross *)malloc(sizeof(cross) * NUMBER_OF_CROSSES);
         if (crosses == NULL) {
             printf("malloc failed on crosses");
             exit(1);
         }
 
-        lights = malloc(sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS);
+        lights = (traffic_light *)malloc(sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS);
         if (lights == NULL) {
             printf("malloc failed on lights");
             exit(1);
         }
     }
 
-    roads = malloc(sizeof(road) * NUMBER_OF_ROADS);
+    roads = (road *)malloc(sizeof(road) * NUMBER_OF_ROADS);
 
     if (roads == NULL) {
         printf("malloc failed on roads");
         exit(1);
     }
 
-    roadVertices = malloc(sizeof(float) * NUMBER_OF_ROADS * 4 * 5);
+    roadVertices = (float *)malloc(sizeof(float) * NUMBER_OF_ROADS * 4 * 5);
 
     if (roadVertices == NULL) {
         printf("malloc failed on roadVertices");
         exit(1);
     }
 
-    roadIndices = malloc(sizeof(int) * NUMBER_OF_ROADS * 6);
+    roadIndices = (int *)malloc(sizeof(int) * NUMBER_OF_ROADS * 6);
 
     if (roadIndices == NULL) {
         printf("malloc failed on roadIndices");
         exit(1);
     }
 
-    cars = malloc(sizeof(car) * MAX_CARS);
+    cars = (car *)malloc(sizeof(car) * MAX_CARS);
 
     if (cars == NULL) {
         printf("malloc failed on cars");
@@ -110,9 +110,9 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     }
 
     if (map_type == CROSS) 
-        lineVertices = malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2));
+        lineVertices = (float *)malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 4 * 5 * 2));
     else 
-        lineVertices = malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
+        lineVertices = (float *)malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
 
     if (lineVertices == NULL) {
         printf("malloc failed on lineVertices");
