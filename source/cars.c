@@ -5,6 +5,7 @@
 #include <string.h>
 
 // Custom modules
+#include <traffic_density.h>
 #include <algorithms.h>
 #include <direction.h>
 #include <map.h>
@@ -172,19 +173,18 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 
 GLvoid addCrushedCar(RLC rlc)
 {
-	if (roads[rlc.road].lines[rlc.line].cells[rlc.cell] != NULL)
-	{
+	if (roads[rlc.road].lines[rlc.line].cells[rlc.cell] != NULL){
 		printf("The crushed car is tried to be set on the occupied cell rlc(%d, %d, %d).\n", rlc.road, rlc.line, rlc.cell);
 		return;
 	}	
 
 	GLint carIndex = getFreeCarIndex();
-	if (carIndex == NO_CAR_INDEX)
-	{
+	if (carIndex == NO_CAR_INDEX){
 		printf("No free carIndex. It is unable to set a crushed car.\n");
 		return;
 	}
-
+	
+	increaseDensityData(rlc.road);
 	--freeCars;
 	setCrushedCarProperties(&cars[carIndex], carIndex, rlc);
 	setBornCar(&cars[carIndex], carIndex, rlc);

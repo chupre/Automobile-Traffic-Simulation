@@ -22,6 +22,9 @@ car ** userCarsPtrs;
 RLC * carAddingQueue;
 GLint innerCarAddingQueueIndex = NO_INNER_INDEX;
 
+RLC * carAddingQueue_CRUSH;
+GLint innerCarAddingQueueIndex_CRUSH = NO_INNER_INDEX;
+
 car** skipCarsFromCross;
 GLint innerSkipCarsFromCrossIndex = NO_INNER_INDEX;
 
@@ -75,6 +78,13 @@ GLvoid update()
             exit(1);
         }
 
+		carAddingQueue_CRUSH = malloc(sizeof(RLC) * MAX_CARS);
+
+        if (carAddingQueue_CRUSH == NULL) {
+            printf("malloc failed on carAddingQueue_CRUSH");
+            exit(1);
+        }
+
 		skipCarsFromCross = malloc(sizeof(car*) * MAX_CARS);
 		if (skipCarsFromCross == NULL){
 			printf("malloc failed on skipCars");
@@ -121,6 +131,7 @@ GLvoid printRLC(RLC rlc, char* string)
 GLvoid stepRoad()
 {
 	car* Car;
+	processCarAddingQueue_CRUSH();
 	processCarAddingQueue();
 
 	while (getCarByRoulette(&Car)){
@@ -235,7 +246,8 @@ GLvoid spawnCars()
 					writeFile(&data);
 				}
 				thoughtsOfOneCar(&cars[carIndex]);
-
+				// printf("www\n");
+				// printCar(&cars[carIndex]);
 				--freeCars;
 				++spawnedCars;
 				increaseDensityData(freeSpotRLC.road);
@@ -639,12 +651,13 @@ GLvoid excludeFromMap(car* Car)
 	if (Car->currCell.cell < NUMBER_OF_CELLS){
 		initRoadCell(&Car->currCell, NULL);
 	}
+	decreaseDensityData(Car->currCell.road);
 	if (!isEndedWithCross(&Car->currCell)){
 		clearCarProperties(Car);
 		++freeCars;
 	}
 	// as cars' amount on the road is decreasing
-	decreaseDensityData(Car->currCell.road);
+	
 }
 
 GLint getVelocityByRLC(RLC rlc)
@@ -832,6 +845,20 @@ GLvoid clearCarAddingQueue()
 	innerCarAddingQueueIndex = NO_INNER_INDEX;
 }
 
+GLvoid appendRLCinCarAddingQueue_CRUSH(RLC rlc)
+{
+	if (innerCarAddingQueueIndex_CRUSH == 1){
+		return;
+	}
+	carAddingQueue_CRUSH[innerCarAddingQueueIndex_CRUSH] = rlc;
+	++innerCarAddingQueueIndex_CRUSH;
+}
+
+GLvoid clearCarAddingQueue_CRUSH()
+{
+	innerCarAddingQueueIndex_CRUSH = NO_INNER_INDEX;
+}
+
 GLvoid processCarAddingQueue()
 {
 	for (int i = 0; i < innerCarAddingQueueIndex; i++){
@@ -852,6 +879,15 @@ GLvoid processCarAddingQueue()
 	}
 	clearCarAddingQueue();
 }
+
+GLvoid processCarAddingQueue_CRUSH()
+{
+	// printf("innerCarAddingQueueIndex_CRUSH: %d\n", innerCarAddingQueueIndex_CRUSH);
+	for (int i = 0; i < innerCarAddingQueueIndex_CRUSH; i++){
+		addCrushedCar(carAddingQueue_CRUSH[i]);
+	}
+	clearCarAddingQueue();
+} 
 
 bool isInCarAddingQueue(RLC rlc)
 {

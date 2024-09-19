@@ -59,6 +59,9 @@ extern GLint innerUserCarsPtrsIndex;
 extern RLC * carAddingQueue;
 extern GLint innerCarAddingQueueIndex;
 
+extern RLC * carAddingQueue_CRUSH;
+extern GLint innerCarAddingQueueIndex_CRUSH;
+
 extern car** skipCarsFromCross;
 extern GLint innerSkipCarsFromCrossIndex;
 
@@ -103,9 +106,16 @@ bool isFurtherThanEndCell(car* Car);
 bool compareRLCs(RLC* rlc1, RLC* rlc2);
 
 GLvoid processCarAddingQueue();
+GLvoid processCarAddingQueue_CRUSH();
+
+GLvoid appendRLCinCarAddingQueue_CRUSH(RLC rlc);
+// bool isInCarAddingQueue(RLC rlc);
+GLvoid clearCarAddingQueue_CRUSH();
+
 GLvoid appendRLCinCarAddingQueue(RLC rlc);
 bool isInCarAddingQueue(RLC rlc);
 GLvoid clearCarAddingQueue();
+
 bool isRLCsuitableForSettingCar(RLC rlc);
 
 GLvoid printRLC(RLC rlc, char* string);
