@@ -15,6 +15,7 @@
 #define NO_LINE_INDEX -1
 #define NO_CELL_INDEX -1
 
+extern int midLinesCounter;
 
 typedef enum DIRECTION DIRECTION;
 typedef struct cross cross;

@@ -11,6 +11,10 @@ GLint timer_digit = 0;
 GLint traffic_light_adding_index = -1;
 bool yellowRedChange = false;
 
+const int RED_TIME = 3;
+const int YELLOW_TIME = 1;
+const int GREEN_TIME = 2;
+
 GLvoid changeLightsColor(){
     // return;
     for (GLint i = 0; i <= traffic_light_adding_index; i++){

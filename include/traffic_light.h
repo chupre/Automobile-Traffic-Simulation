@@ -13,9 +13,9 @@
 
 #define TRAFFIC_LIGHTS_TIME_DIGIT (4)
 
-#define RED_TIME 3
-#define YELLOW_TIME 1
-#define GREEN_TIME 2
+extern const int RED_TIME;
+extern const int YELLOW_TIME;
+extern const int GREEN_TIME;
 
 typedef struct car car;
 

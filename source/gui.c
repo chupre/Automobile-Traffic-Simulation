@@ -533,11 +533,13 @@ void init (FILE* saveFile) {
         glDeleteBuffers(1, &backgroundEBO);
     }
 
-    setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);
-
+    traffic_light_adding_index = -1;
+    midLinesCounter = 0;
     densityDataInit = false;
     alghorithmsInit = false;
     cameraInit = false;
+
+    setMap(initConfig.map_type, initConfig.lines, initConfig.max_cars, initConfig.spawn_frequency);
 
     setCarsToDefault();
     initBackground();
