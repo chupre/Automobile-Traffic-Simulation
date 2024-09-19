@@ -40,8 +40,8 @@ char userSaveName[MAX_BUFFER_SIZE];
 int activeFileIndex = 0;
 
 config initConfig = {
-    5,
-    4,
+    50,
+    6,
     0,
     ONE_ROAD_N,
 };

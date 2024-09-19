@@ -180,6 +180,10 @@ GLvoid addCrushedCar(RLC rlc)
 
 	GLint carIndex = getFreeCarIndex();
 	if (carIndex == NO_CAR_INDEX){
+		// printf("MAX_CARS: %d", MAX_CARS);
+		// for (GLint i = 0; i < MAX_CARS; i++){
+		// 	printCar(&cars[i]);
+		// }
 		printf("No free carIndex. It is unable to set a crushed car.\n");
 		return;
 	}
@@ -339,9 +343,11 @@ GLvoid getFreeSpotAddress(RLC* rlc)
 
 GLint getFreeCarIndex()
 {
-	for (int i = 0; i < MAX_CARS; i++)
+	for (int i = 0; i < MAX_CARS; i++){
 		if (!cars[i].isActive)
 			return i;
+	}
+		
 
 	return NO_CAR_INDEX;
 }

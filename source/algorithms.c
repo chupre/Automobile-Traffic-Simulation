@@ -145,13 +145,10 @@ GLvoid stepRoad()
 			continue;
 		}
 		thoughtsOfOneCar(Car);
-		// printCar(Car);
-		// printCarCharacter(Car);
 	}
 
 	clearUserCarsPtrs();
 	if (_LOG_KEY_ == PLAY){
-		// printf("^^\n");
 		log_data data;
 		while (readFile(&data)){
 			RLC freeSpotRLC;
@@ -166,7 +163,6 @@ GLvoid stepRoad()
 			addCar(&cars[carIndex], carIndex, freeSpotRLC);
 			cars[carIndex].velocity = data.velocity;
 			thoughtsOfOneCar(&cars[carIndex]);
-			// printCar(&cars[carIndex]);
 			--freeCars;
 			increaseDensityData(freeSpotRLC.road);
 		}
@@ -833,11 +829,11 @@ bool isRLCsuitableForSettingCar(RLC rlc)
 
 GLvoid appendRLCinCarAddingQueue(RLC rlc)
 {
-	if (innerCarAddingQueueIndex == 1){
+	if (innerCarAddingQueueIndex >= 1){
 		return;
 	}
 	carAddingQueue[innerCarAddingQueueIndex] = rlc;
-	++innerCarAddingQueueIndex;
+	innerCarAddingQueueIndex += 1;
 }
 
 GLvoid clearCarAddingQueue()
@@ -861,7 +857,7 @@ GLvoid clearCarAddingQueue_CRUSH()
 
 GLvoid processCarAddingQueue()
 {
-	for (int i = 0; i < innerCarAddingQueueIndex; i++){
+	for (GLint i = 0; i < innerCarAddingQueueIndex; i++){
 		if (isRLCsuitableForSettingCar(carAddingQueue[i])){
 			GLint carIndex = getFreeCarIndex();
 			if (carIndex == NO_CAR_INDEX){
@@ -870,7 +866,6 @@ GLvoid processCarAddingQueue()
 			car* Car = &cars[carIndex];
 			addCar(Car, carIndex, carAddingQueue[i]);
 			thoughtsOfOneCar(Car);
-
 			--freeCars;
 			increaseDensityData(carAddingQueue[i].road);
 
@@ -882,11 +877,10 @@ GLvoid processCarAddingQueue()
 
 GLvoid processCarAddingQueue_CRUSH()
 {
-	// printf("innerCarAddingQueueIndex_CRUSH: %d\n", innerCarAddingQueueIndex_CRUSH);
 	for (int i = 0; i < innerCarAddingQueueIndex_CRUSH; i++){
 		addCrushedCar(carAddingQueue_CRUSH[i]);
 	}
-	clearCarAddingQueue();
+	clearCarAddingQueue_CRUSH();
 } 
 
 bool isInCarAddingQueue(RLC rlc)

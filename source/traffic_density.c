@@ -29,13 +29,11 @@ GLvoid increaseDensityData(GLint roadIndex)
 GLvoid decreaseDensityData(GLint roadIndex)
 {
     densityData[roadIndex] -= 1;
-    printf("--\n");
 }
 
 GLint getDensityData(GLint roadIndex)
 {
-    // printf("rroad:%d\n", roadIndex);
-    // printf(", d: %d\n", densityData[roadIndex]);
+    printf("density on %d road: %d\n", roadIndex, densityData[roadIndex]);
     // printDensity();
     return densityData[roadIndex];
 }
