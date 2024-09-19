@@ -41,10 +41,10 @@ int activeFileIndex = 0;
 int curr_step = 0;
 
 config initConfig = {
-    50,
-    6,
+    40,
+    10,
     0,
-    ONE_ROAD_N,
+    CROSS,
 };
 
 void initGUI()
@@ -75,7 +75,7 @@ void initGUI()
         nk_label(context, "Main Menu", NK_TEXT_CENTERED);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 85);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
 
@@ -90,7 +90,7 @@ void initGUI()
 
         if (isInit) {
             nk_layout_row_begin(context, NK_STATIC, 30, 2);
-            nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+            nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 85);
             nk_spacer(context);
             nk_layout_row_push(context, 150);
 
@@ -106,7 +106,7 @@ void initGUI()
         }
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 85);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
 
@@ -120,7 +120,7 @@ void initGUI()
         nk_layout_row_dynamic(context, 10, 1);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 85);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
 
@@ -133,7 +133,7 @@ void initGUI()
         nk_layout_row_dynamic(context, 10, 1);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 85);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 85);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
 
@@ -152,7 +152,7 @@ void initGUI()
         static int op = THEME_DARK;
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
 
@@ -165,7 +165,7 @@ void initGUI()
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
 
@@ -178,7 +178,7 @@ void initGUI()
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
         
@@ -191,7 +191,7 @@ void initGUI()
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
         
@@ -204,7 +204,7 @@ void initGUI()
         nk_layout_row_end(context);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
-        nk_layout_row_push(context, WINDOW_WIDTH / 2 - 53);
+        nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 53);
         nk_spacer(context);
         nk_layout_row_push(context, 150);
         
@@ -594,15 +594,18 @@ void showInfo() {
     {
         char carsInfo[MAX_BUFFER_SIZE];
         char timeInfo[MAX_BUFFER_SIZE];
+        char stepInfo[MAX_BUFFER_SIZE];
         char trafficDensityInfo[MAX_BUFFER_SIZE];
         char carsOnLine[MAX_BUFFER_SIZE];
 
         sprintf(carsInfo, "Total cars: %d", MAX_CARS - freeCars);
         sprintf(timeInfo, "Time: %.2f", glfwGetTime());
+        sprintf(stepInfo, "Updates: %d", step_count);
 
         nk_layout_row_dynamic(context, 20, 1);
         nk_label(context, carsInfo, NK_TEXT_LEFT);
         nk_label(context, timeInfo, NK_TEXT_LEFT);
+        nk_label(context, stepInfo, NK_TEXT_LEFT);
 
         if (isLinePicked) {
             if (step_count && step_count != curr_step) {

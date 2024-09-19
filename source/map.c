@@ -64,8 +64,8 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     NUMBER_OF_LINES = lines;
     MAX_CARS = max_cars;
     SPAWN_FREQUENCY = spawn_frequency;
-    ROAD_WIDTH = CELL_LENGTH * (NUMBER_OF_LINES + 1);
-    HALF_ROAD_WIDTH = ROAD_WIDTH / 2;
+    ROAD_WIDTH = CELL_LENGTH * (NUMBER_OF_LINES + 1.0f);
+    HALF_ROAD_WIDTH = ROAD_WIDTH / 2.0f;
 
     if (map_type == CROSS || map_type == SEVERAL_CROSSES){
         crosses = (cross *)malloc(sizeof(cross) * NUMBER_OF_CROSSES);

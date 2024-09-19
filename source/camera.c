@@ -25,7 +25,7 @@ GLvoid setProjection(int shader)
 
     GLuint projLoc = glGetUniformLocation(shader , "projection");
     glm_perspective(glm_rad(cameraFOV), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 1.0f, 100.0f, projection);
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, projection);
+    glUniformMatrix4fv(projLoc, 1, GL_FALSE, (float *)projection);
 }
 
 
@@ -35,7 +35,7 @@ GLvoid setView(int shader)
     glm_vec3_add(cameraPos, cameraFront, temp);
     glm_lookat(cameraPos, temp, cameraUp, view);
     GLuint viewLoc = glGetUniformLocation(shader, "view");
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view);
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, (float *)view);
 }
 
 

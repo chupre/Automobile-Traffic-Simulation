@@ -39,3 +39,11 @@ target_include_directories(
     ${CMAKE_SOURCE_DIR}/include 
     ${CMAKE_SOURCE_DIR}/source
 )
+
+if (MSVC)
+    # warning level 4
+    add_compile_options(/W4)
+else()
+    # additional warnings
+    add_compile_options(-Wall -Wextra -Wconversion -pedantic)
+endif()
