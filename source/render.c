@@ -154,11 +154,14 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
       return;
     }
 
-    if (button == GLFW_MOUSE_BUTTON_LEFT && !isShowInfo)
-        appendRLCinCarAddingQueue(rlc);
-
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && !isShowInfo)
-        addCrushedCar(rlc);
+    if (button == GLFW_MOUSE_BUTTON_LEFT && !isShowInfo){
+      appendRLCinCarAddingQueue(rlc);
+    }
+       
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && !isShowInfo){
+      appendRLCinCarAddingQueue_CRUSH(rlc);
+    }
+        
 
     if (button == GLFW_MOUSE_BUTTON_LEFT && isShowInfo) {
         pickedRLC = rlc;

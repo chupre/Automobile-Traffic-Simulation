@@ -15,5 +15,6 @@ extern bool densityDataInit;
 GLvoid increaseDensityData(GLint roadIndex);
 GLvoid decreaseDensityData(GLint roadIndex);
 GLint getDensityData(GLint roadIndex);
+GLvoid printDensity();
 
 #endif

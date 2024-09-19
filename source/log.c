@@ -72,5 +72,5 @@ GLvoid printFileEmptyStep(){
 
 GLvoid printFileStepEnd(){
     fprintf(f, "=\n");
-    printf("fileSize: %ld\n", ftell(f));
+    // printf("fileSize: %ld\n", ftell(f));
 }

@@ -17,11 +17,13 @@ GLvoid increaseDensityData(GLint roadIndex)
         } 
 
         memset(densityData, 0, sizeof(int) * NUMBER_OF_ROADS);
+        // printDensity();
         
         densityDataInit = true;
     }
 
     densityData[roadIndex] += 1;
+    // printDensity();
 }
 
 GLvoid decreaseDensityData(GLint roadIndex)
@@ -31,5 +33,16 @@ GLvoid decreaseDensityData(GLint roadIndex)
 
 GLint getDensityData(GLint roadIndex)
 {
+    printf("density on %d road: %d\n", roadIndex, densityData[roadIndex]);
+    // printDensity();
     return densityData[roadIndex];
+}
+// 
+
+
+GLvoid printDensity(){
+    for (GLint i = 0; i < NUMBER_OF_ROADS; i++){
+        printf("r%d: %d\n", i, getDensityData(i));
+    }
+    
 }

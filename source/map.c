@@ -153,7 +153,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 		break;
 
 	case CROSS:
-        DEFAULT_FOV = 20.0f + NUMBER_OF_LINES;
+        DEFAULT_FOV = 50.0f + NUMBER_OF_LINES;
         GLfloat crossCenterX = 0.0f;
         GLfloat crossCenterY = 0.0f;
         setRoadsAroundCross(crossCenterX, crossCenterX);
@@ -163,7 +163,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         break;
 
     case SEVERAL_CROSSES:
-        DEFAULT_FOV = 49.0f;
+        DEFAULT_FOV = 70.0f;
         GLfloat roadLength = NUMBER_OF_CELLS * CELL_LENGTH;
         GLfloat roadLengthHalf = roadLength / 2;
         GLfloat roadWidth = (NUMBER_OF_LINES + 1) * CELL_LENGTH;

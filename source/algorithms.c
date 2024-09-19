@@ -22,6 +22,9 @@ car ** userCarsPtrs;
 RLC * carAddingQueue;
 GLint innerCarAddingQueueIndex = NO_INNER_INDEX;
 
+RLC * carAddingQueue_CRUSH;
+GLint innerCarAddingQueueIndex_CRUSH = NO_INNER_INDEX;
+
 car** skipCarsFromCross;
 GLint innerSkipCarsFromCrossIndex = NO_INNER_INDEX;
 
@@ -75,7 +78,14 @@ GLvoid update()
             exit(1);
         }
 
-		skipCarsFromCross = (car **)malloc(sizeof(car *) * MAX_CARS);
+		carAddingQueue_CRUSH = (RLC *)malloc(sizeof(RLC) * MAX_CARS);
+
+        if (carAddingQueue_CRUSH == NULL) {
+            printf("malloc failed on carAddingQueue_CRUSH");
+            exit(1);
+        }
+
+		skipCarsFromCross = (car **)malloc(sizeof(car*) * MAX_CARS);
 		if (skipCarsFromCross == NULL){
 			printf("malloc failed on skipCars");
             exit(1);
@@ -121,6 +131,7 @@ GLvoid printRLC(RLC rlc, char* string)
 GLvoid stepRoad()
 {
 	car* Car;
+	processCarAddingQueue_CRUSH();
 	processCarAddingQueue();
 
 	while (getCarByRoulette(&Car)){
@@ -134,13 +145,10 @@ GLvoid stepRoad()
 			continue;
 		}
 		thoughtsOfOneCar(Car);
-		// printCar(Car);
-		// printCarCharacter(Car);
 	}
 
 	clearUserCarsPtrs();
 	if (_LOG_KEY_ == PLAY){
-		// printf("^^\n");
 		log_data data;
 		while (readFile(&data)){
 			RLC freeSpotRLC;
@@ -155,7 +163,6 @@ GLvoid stepRoad()
 			addCar(&cars[carIndex], carIndex, freeSpotRLC);
 			cars[carIndex].velocity = data.velocity;
 			thoughtsOfOneCar(&cars[carIndex]);
-			// printCar(&cars[carIndex]);
 			--freeCars;
 			increaseDensityData(freeSpotRLC.road);
 		}
@@ -235,7 +242,8 @@ GLvoid spawnCars()
 					writeFile(&data);
 				}
 				thoughtsOfOneCar(&cars[carIndex]);
-
+				// printf("www\n");
+				// printCar(&cars[carIndex]);
 				--freeCars;
 				++spawnedCars;
 				increaseDensityData(freeSpotRLC.road);
@@ -639,12 +647,13 @@ GLvoid excludeFromMap(car* Car)
 	if (Car->currCell.cell < NUMBER_OF_CELLS){
 		initRoadCell(&Car->currCell, NULL);
 	}
+	decreaseDensityData(Car->currCell.road);
 	if (!isEndedWithCross(&Car->currCell)){
 		clearCarProperties(Car);
 		++freeCars;
 	}
 	// as cars' amount on the road is decreasing
-	decreaseDensityData(Car->currCell.road);
+	
 }
 
 GLint getVelocityByRLC(RLC rlc)
@@ -820,11 +829,11 @@ bool isRLCsuitableForSettingCar(RLC rlc)
 
 GLvoid appendRLCinCarAddingQueue(RLC rlc)
 {
-	if (innerCarAddingQueueIndex == 1){
+	if (innerCarAddingQueueIndex >= 1){
 		return;
 	}
 	carAddingQueue[innerCarAddingQueueIndex] = rlc;
-	++innerCarAddingQueueIndex;
+	innerCarAddingQueueIndex += 1;
 }
 
 GLvoid clearCarAddingQueue()
@@ -832,9 +841,23 @@ GLvoid clearCarAddingQueue()
 	innerCarAddingQueueIndex = NO_INNER_INDEX;
 }
 
+GLvoid appendRLCinCarAddingQueue_CRUSH(RLC rlc)
+{
+	if (innerCarAddingQueueIndex_CRUSH == 1){
+		return;
+	}
+	carAddingQueue_CRUSH[innerCarAddingQueueIndex_CRUSH] = rlc;
+	++innerCarAddingQueueIndex_CRUSH;
+}
+
+GLvoid clearCarAddingQueue_CRUSH()
+{
+	innerCarAddingQueueIndex_CRUSH = NO_INNER_INDEX;
+}
+
 GLvoid processCarAddingQueue()
 {
-	for (int i = 0; i < innerCarAddingQueueIndex; i++){
+	for (GLint i = 0; i < innerCarAddingQueueIndex; i++){
 		if (isRLCsuitableForSettingCar(carAddingQueue[i])){
 			GLint carIndex = getFreeCarIndex();
 			if (carIndex == NO_CAR_INDEX){
@@ -843,7 +866,6 @@ GLvoid processCarAddingQueue()
 			car* Car = &cars[carIndex];
 			addCar(Car, carIndex, carAddingQueue[i]);
 			thoughtsOfOneCar(Car);
-
 			--freeCars;
 			increaseDensityData(carAddingQueue[i].road);
 
@@ -852,6 +874,14 @@ GLvoid processCarAddingQueue()
 	}
 	clearCarAddingQueue();
 }
+
+GLvoid processCarAddingQueue_CRUSH()
+{
+	for (int i = 0; i < innerCarAddingQueueIndex_CRUSH; i++){
+		addCrushedCar(carAddingQueue_CRUSH[i]);
+	}
+	clearCarAddingQueue_CRUSH();
+} 
 
 bool isInCarAddingQueue(RLC rlc)
 {
