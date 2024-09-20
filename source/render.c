@@ -1,6 +1,7 @@
 // Standard
 #include "cglm/cglm.h"
 #include <time.h>
+#include <string.h>
 
 // External
 #include <stb/stb_image.h>
@@ -194,38 +195,41 @@ GLvoid initRoads() {
   glGenBuffers(1, &roadEBO);
   glBindVertexArray(roadVAO);
 
-  if (MAP_TYPE == CROSS) {
-    roadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+  float * newRoadVertices = (float *)malloc(sizeof(float) * NUMBER_OF_ROADS * 4 * 5);
+  memcpy(newRoadVertices, roadVertices, sizeof(float) * NUMBER_OF_ROADS * 4 * 5);
 
-    roadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+  if (MAP_TYPE == CROSS) {
+    newRoadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+
+    newRoadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
   }
 
   if (MAP_TYPE == SEVERAL_CROSSES) {
-    roadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[1 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[1 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[0 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[0 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[1 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[1 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
 
-    roadVertices[4 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[4 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[4 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[4 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[5 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[5 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
 
-    roadVertices[12 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[12 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[13 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[13 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[12 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[12 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[13 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[13 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
 
-    roadVertices[16 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[16 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[17 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
-    roadVertices[17 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[16 * 4 * 5 + 11] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[16 * 4 * 5 + 16] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[17 * 4 * 5 + 1] += CROSS_SIDE * CELL_WIDTH;
+    newRoadVertices[17 * 4 * 5 + 6] += CROSS_SIDE * CELL_WIDTH;
   }
   glBindBuffer(GL_ARRAY_BUFFER, roadVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUMBER_OF_ROADS * 4 * 5,
-               roadVertices, GL_STATIC_DRAW);
+               newRoadVertices, GL_STATIC_DRAW);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, roadEBO);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint) * 6 * NUMBER_OF_ROADS,
@@ -240,6 +244,8 @@ GLvoid initRoads() {
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
+
+  free(newRoadVertices);
 }
 
 GLvoid initLines() {
@@ -337,6 +343,18 @@ GLvoid render() {
   glBindVertexArray(backgroundVAO);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+  for (int i = 0; i < NUMBER_OF_TRAFFIC_LIGHTS; i++) {
+      if (lights[i].color == RED)
+          glBindTexture(GL_TEXTURE_2D, redLight);
+      if (lights[i].color == GREEN)
+          glBindTexture(GL_TEXTURE_2D, greenLight);
+      if (lights[i].color == YELLOW)
+          glBindTexture(GL_TEXTURE_2D, yellowLight);
+
+      glBindVertexArray(lights[i].VAO);
+      glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  }
+
   glUseProgram(shaderProgram);
 
   processKeyboardInput();
@@ -410,10 +428,15 @@ GLvoid quit() {
     glDeleteBuffers(1, &roadEBO);
     glDeleteBuffers(1, &carEBO);
     glDeleteBuffers(1, &backgroundEBO);
+    glDeleteTextures(1, &carTexture);
+    glDeleteTextures(1, &backgroundTexture);
+    glDeleteTextures(1, &redLight);
+    glDeleteTextures(1, &greenLight);
+    glDeleteTextures(1, &yellowLight);
 
-  nk_glfw3_shutdown(&glfw);
-  glfwTerminate();
-  exit(0);
+    nk_glfw3_shutdown(&glfw);
+    glfwTerminate();
+    exit(0);
 }
 
 GLdouble getPauseTime() {

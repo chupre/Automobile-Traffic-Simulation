@@ -7,11 +7,20 @@
 #include <stdbool.h>
 
 const char texture_path[128] = "../resources/textures/";
-unsigned int carTexture, backgroundTexture;
+unsigned int carTexture, 
+             backgroundTexture,
+             redLight,
+             greenLight,
+             yellowLight;
 
 void initTextures() {
     loadTexture("car.png", &carTexture);
     loadTexture("back.png", &backgroundTexture);
+
+    // traffic light
+    loadTexture("red.png", &redLight);
+    loadTexture("green.png", &greenLight);
+    loadTexture("yellow.png", &yellowLight);
 }
 
 void loadTexture(char * image_name, unsigned int * texture) {

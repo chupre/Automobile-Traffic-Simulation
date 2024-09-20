@@ -28,6 +28,7 @@ typedef struct traffic_light traffic_light;
 struct traffic_light {
     COLOR color;
     GLint changeTimer;
+    unsigned int VAO, VBO, EBO;
 };
 
 extern GLint timer_digit;

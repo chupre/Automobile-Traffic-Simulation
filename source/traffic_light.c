@@ -55,6 +55,7 @@ GLvoid setDefaultTrafficLightProperties(){
         if (!roads[roadIndex].isEndCross){
             continue;
         }
+        
         if (roads[roadIndex].dir == NORTH || roads[roadIndex].dir == SOUTH){
             lights[roads[roadIndex].traffic_light_index].color = GREEN;
             lights[roads[roadIndex].traffic_light_index].changeTimer = GREEN_TIME;
@@ -63,6 +64,85 @@ GLvoid setDefaultTrafficLightProperties(){
             lights[roads[roadIndex].traffic_light_index].color = RED;
             lights[roads[roadIndex].traffic_light_index].changeTimer = RED_TIME ;
         }
+
+        // Render
+        glGenVertexArrays(1, &lights[roads[roadIndex].traffic_light_index].VAO);
+        glGenBuffers(1, &lights[roads[roadIndex].traffic_light_index].VBO);
+        glGenBuffers(1, &lights[roads[roadIndex].traffic_light_index].EBO);
+
+        glBindVertexArray(lights[roads[roadIndex].traffic_light_index].VAO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, lights[roads[roadIndex].traffic_light_index].VBO);
+
+        float size = CELL_LENGTH * 1.5;
+        float height = size * 2;
+        float width = size * 0.7;
+
+        float x = roads[roadIndex].stem + HALF_ROAD_WIDTH;
+        float y = roads[roadIndex].endLineCoord; 
+    
+        DIRECTION dir = roads[roadIndex].dir;
+        if (dir == NORTH) {
+            y -= height;
+            float vertices[] = {
+                // positions                    // texture coords
+                x + width,  y + height, 1.0f,   1.0f, 1.0f, 
+                x + width,  y,          1.0f,   1.0f, 0.0f, 
+                x,          y,          1.0f,   0.0f, 0.0f, 
+                x,          y + height, 1.0f,   0.0f, 1.0f  
+            };
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        }
+        if (dir == SOUTH) {
+            x -= HALF_ROAD_WIDTH * 2 + CELL_LENGTH;
+            float vertices[] = {
+                // positions                    // texture coords
+                x + width,  y,          1.0f,   1.0f, 1.0f, 
+                x + width,  y + height, 1.0f,   1.0f, 0.0f, 
+                x,          y + height, 1.0f,   0.0f, 0.0f, 
+                x,          y,          1.0f,   0.0f, 1.0f  
+            };
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        }
+        if (dir == EAST) {
+            x -= HALF_ROAD_WIDTH * 2 + CELL_LENGTH;
+            y -= height;
+            float vertices[] = {
+                // positions                    // texture coords
+                y + height, x + width, 1.0f,    1.0f, 1.0f, 
+                y + height, x,         1.0f,    0.0f, 1.0f, 
+                y,          x,         1.0f,    0.0f, 0.0f, 
+                y,          x + width, 1.0f,    1.0f, 0.0f  
+            };
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        }
+        if (dir == WEST) {
+            float vertices[] = {
+                // positions                    // texture coords
+                y,          x + width,  1.0f,   1.0f, 1.0f, 
+                y,          x,          1.0f,   0.0f, 1.0f, 
+                y + height, x,          1.0f,   0.0f, 0.0f, 
+                y + height, x + width,  1.0f,   1.0f, 0.0f  
+            };
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        }
+
+        unsigned int indices[3 * 2] = {  
+            0, 1, 3,   
+            1, 2, 3    
+        };  
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lights[roads[roadIndex].traffic_light_index].EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 }
 

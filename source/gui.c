@@ -549,8 +549,6 @@ void init (FILE* saveFile) {
 
     step_count = 0;
     
-    glfwSetTime(0.0f);
-
     if (saveFile) {
         RLC * occupiedCells = (RLC *)malloc(sizeof(RLC) * NUMBER_OF_CELLS * (NUMBER_OF_LINES + 1) * NUMBER_OF_ROADS);
 
@@ -576,6 +574,7 @@ void init (FILE* saveFile) {
         lastTime = glfwGetTime();
         timer = lastTime;
         deltaTime = 0.0f;
+
         endPauseTime = 0.0f;
     }
 
