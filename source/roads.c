@@ -502,3 +502,12 @@ int getCarsNumOnLine(int roadIndex, int lineIndex) {
 
     return counter;
 }
+
+
+
+GLvoid printRoadProperties(GLint i){
+
+    road* r = &roads[i];
+    printf("isBeginCross: %d\n isEndCross: %d\n nedCrossNum: %d\n\n",
+    r->isBeginCross, r->isEndCross, r->endCrossNum);
+}

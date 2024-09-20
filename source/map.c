@@ -56,7 +56,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_CROSSES = 4;
         NUMBER_OF_TRAFFIC_LIGHTS = 4 * NUMBER_OF_CROSSES;
         NUMBER_OF_ROADS = 24;
-        NUMBER_OF_CELLS = 12;
+        NUMBER_OF_CELLS = 30;
     }
 
     MAP_TYPE = map_type;
@@ -152,7 +152,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         break;
 
     case SEVERAL_CROSSES:
-        DEFAULT_FOV = 90.0f;
+        DEFAULT_FOV = 70.0f;
         GLfloat roadLength = NUMBER_OF_CELLS * CELL_LENGTH;
         GLfloat roadLengthHalf = roadLength / 2;
         GLfloat roadWidth = (NUMBER_OF_LINES + 1) * CELL_LENGTH;
@@ -180,8 +180,8 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 
         addRoad(4, outerRoadHalf, -roadLengthHalf, NORTH);
         addRoad(5, innerRoadHalf, roadLengthHalf, SOUTH);
-        addRoad(6, -roadLengthHalf, -innerRoadHalf, EAST);
-        addRoad(7, roadLengthHalf, -outerRoadHalf, WEST);
+        addRoad(6, -roadLengthHalf, -outerRoadHalf, EAST);
+        addRoad(7, roadLengthHalf, -innerRoadHalf, WEST);
 
         addRoad(8, outerRoadHalf, nearRoadStart, NORTH);
         addRoad(9, innerRoadHalf, farRoadStart, SOUTH);

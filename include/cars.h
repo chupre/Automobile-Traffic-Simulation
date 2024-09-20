@@ -75,5 +75,6 @@ GLvoid clearCarProperties(car* Car);
 GLvoid bindCellAndCar(RLC* rlc, car* Car);
 GLvoid setOccupyingCarProperties();
 DIRECTION getOppositeDir(DIRECTION dir);
+GLvoid setTarget(car* Car);
 
 #endif
