@@ -43,7 +43,7 @@ GLint * densityData;
 //a road gets a direction, an edge state
 void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 {
-    if (map_type == TWO_ROADS_NS || map_type == TWO_ROADS_WE) {
+    if (map_type == VERTICAL || map_type == HORIZONTAL) {
         NUMBER_OF_ROADS = 2;
         NUMBER_OF_CELLS = 40;
     } else if (map_type == CROSS) {
@@ -57,11 +57,8 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_TRAFFIC_LIGHTS = 4 * NUMBER_OF_CROSSES;
         NUMBER_OF_ROADS = 24;
         NUMBER_OF_CELLS = 12;
-    } else {
-        NUMBER_OF_ROADS = 1;
-        NUMBER_OF_CELLS = 40;
     }
-    
+
     MAP_TYPE = map_type;
     NUMBER_OF_LINES = lines;
     MAX_CARS = max_cars;
@@ -123,7 +120,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     else if (map_type == SEVERAL_CROSSES)
         lineVertices = (float *)malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 12 * 5 * 2));
     else 
-        lineVertices = (float *)malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2);
+        lineVertices = (float *)malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 5 * 2);
 
     if (lineVertices == NULL) {
         printf("malloc failed on lineVertices");
@@ -132,32 +129,13 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
 
 	switch (MAP_TYPE)
 	{
-	case ONE_ROAD_N:
+	case VERTICAL:
         DEFAULT_FOV = 45.0f;
 		addRoad(0, HALF_ROAD_WIDTH, -1.0f, NORTH);
-		break;
-	case ONE_ROAD_S:
-        DEFAULT_FOV = 45.0f;
-		addRoad(0, 0, 1.0f, SOUTH);
+		addRoad(1, -HALF_ROAD_WIDTH, 1.0f, SOUTH);
 		break;
 
-	case ONE_ROAD_W:
-        DEFAULT_FOV = 38.0f;
-		addRoad(0, 1.0f, 0.0f, WEST);
-		break;
-
-	case ONE_ROAD_E:
-        DEFAULT_FOV = 38.0f;
-		addRoad(0, -1.0f, 0.0f, EAST);
-		break;
-
-	case TWO_ROADS_NS:
-        DEFAULT_FOV = 45.0f;
-		addRoad(0, HALF_ROAD_WIDTH + 0.005f, -1.0f, NORTH);
-		addRoad(1, -HALF_ROAD_WIDTH - 0.005f, 1.0f, SOUTH);
-		break;
-
-	case TWO_ROADS_WE:
+	case HORIZONTAL:
         DEFAULT_FOV = 38.0f;
 		addRoad(1, 1.0f, HALF_ROAD_WIDTH, WEST);
 		addRoad(0, -1.0f, -HALF_ROAD_WIDTH, EAST);

@@ -3,15 +3,10 @@
 
 #include <glad/glad.h>
 
-
-#define ONE_ROAD_N 1
-#define ONE_ROAD_S 2
-#define ONE_ROAD_W 3
-#define ONE_ROAD_E 4
-#define TWO_ROADS_NS 5
-#define TWO_ROADS_WE 6
-#define CROSS 7
-#define SEVERAL_CROSSES 8
+#define VERTICAL 1
+#define HORIZONTAL 2
+#define CROSS 3
+#define SEVERAL_CROSSES 4
 
 #define CELL_LENGTH 0.05f
 #define CELL_WIDTH (CELL_LENGTH)

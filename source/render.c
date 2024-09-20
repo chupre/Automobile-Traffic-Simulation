@@ -268,7 +268,7 @@ GLvoid initLines() {
 
   } else {
     glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2,
+                 sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 5 * 2),
                  lineVertices, GL_STATIC_DRAW);
   }
 
@@ -343,7 +343,8 @@ GLvoid render() {
   glBindVertexArray(backgroundVAO);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-  for (int i = 0; i < NUMBER_OF_TRAFFIC_LIGHTS; i++) {
+  if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
+    for (int i = 0; i < NUMBER_OF_TRAFFIC_LIGHTS; i++) {
       if (lights[i].color == RED)
           glBindTexture(GL_TEXTURE_2D, redLight);
       if (lights[i].color == GREEN)
@@ -354,7 +355,7 @@ GLvoid render() {
       glBindVertexArray(lights[i].VAO);
       glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   }
-
+  }
   glUseProgram(shaderProgram);
 
   processKeyboardInput();
@@ -370,7 +371,7 @@ GLvoid render() {
   else if (MAP_TYPE == SEVERAL_CROSSES)
       glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2 + 2 * 12);
   else
-      glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2);
+      glDrawArrays(GL_LINES, 0, NUMBER_OF_LINES * NUMBER_OF_ROADS * 2 + 2);
 
 #ifdef DEBUG
   dbgRenderCells();

@@ -44,7 +44,7 @@ config initConfig = {
     50,
     6,
     100,
-    ONE_ROAD_N,
+    VERTICAL,
 };
 
 void initGUI()
@@ -464,14 +464,10 @@ void showInitMenu() {
 
         nk_layout_row_dynamic(context, 25, 1);
         nk_label(context, "Choose map type:", NK_TEXT_LEFT);
-        if (nk_option_label(context, "N", initConfig.map_type == ONE_ROAD_N)) initConfig.map_type = ONE_ROAD_N;
-        if (nk_option_label(context, "S", initConfig.map_type == ONE_ROAD_S)) initConfig.map_type = ONE_ROAD_S;
-        if (nk_option_label(context, "W", initConfig.map_type == ONE_ROAD_W)) initConfig.map_type = ONE_ROAD_W;
-        if (nk_option_label(context, "E", initConfig.map_type == ONE_ROAD_E)) initConfig.map_type = ONE_ROAD_E;
-        if (nk_option_label(context, "NS", initConfig.map_type == TWO_ROADS_NS)) initConfig.map_type = TWO_ROADS_NS;
-        if (nk_option_label(context, "WE", initConfig.map_type == TWO_ROADS_WE)) initConfig.map_type = TWO_ROADS_WE;
-        if (nk_option_label(context, "CROSS", initConfig.map_type == CROSS)) initConfig.map_type = CROSS;
-        if (nk_option_label(context, "SEVERAL_CROSSES", initConfig.map_type == SEVERAL_CROSSES)) initConfig.map_type = SEVERAL_CROSSES;
+        if (nk_option_label(context, "Vertical Road", initConfig.map_type == VERTICAL)) initConfig.map_type = VERTICAL;
+        if (nk_option_label(context, "Horizontal Road", initConfig.map_type == HORIZONTAL)) initConfig.map_type = HORIZONTAL;
+        if (nk_option_label(context, "Cross", initConfig.map_type == CROSS)) initConfig.map_type = CROSS;
+        if (nk_option_label(context, "Multiple Crosses", initConfig.map_type == SEVERAL_CROSSES)) initConfig.map_type = SEVERAL_CROSSES;
 
         nk_layout_row_dynamic(context, 40, 5);
         nk_spacer(context);

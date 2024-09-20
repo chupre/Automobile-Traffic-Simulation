@@ -249,6 +249,17 @@ GLvoid setLines(GLint roadIndex)
             roads[roadIndex].lines[i].carSpawnCoord = x;
         }
 
+        if (MAP_TYPE == VERTICAL && !midLinesCounter) {
+            float vertices[] =
+            {
+                x - stride * NUMBER_OF_LINES, y1, 0.0f, 0.0f, 0.0f,
+                x - stride * NUMBER_OF_LINES, y2, 0.0f, 0.0f, 0.0f
+            };
+
+            memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + midLinesCounter * 5 * 2], vertices, sizeof(float) * 5 * 2);
+            midLinesCounter++;
+        }
+
         if (MAP_TYPE == CROSS && roadIndex < 4) {
             float vertices[] =
             {
@@ -358,6 +369,16 @@ GLvoid setLines(GLint roadIndex)
             roads[roadIndex].lines[i].carSpawnCoord = y;
         }
 
+        if (MAP_TYPE == HORIZONTAL && midLinesCounter == 0) {
+            GLfloat vertices[] =
+            {
+                x1, y - stride * NUMBER_OF_LINES, 0.0f, 0.0f, 0.0f,
+                x2, y - stride * NUMBER_OF_LINES, 0.0f, 0.0f, 0.0f
+            };
+
+            memcpy(&lineVertices[NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + midLinesCounter * 5 * 2], vertices, sizeof(float) * 5 * 2);
+            midLinesCounter++;
+        }
 
         if (MAP_TYPE == CROSS && roadIndex < 4) {
             GLfloat vertices[] =
