@@ -14,6 +14,7 @@
 #include <rlc.h>
 #include <texture.h>
 #include <shader.h>
+#include <dbg.h>
 
 // External 
 #if defined(_WIN32) || defined(WIN32)
@@ -434,12 +435,19 @@ void save()
                 q_count--;
             }
 
-            int * cellsID = malloc(sizeof(int) * NUMBER_OF_CROSS_CELLS);
+            int * cellsID = (int *)malloc(sizeof(int) * NUMBER_OF_CROSS_CELLS);
             for (int cell = 0; cell < NUMBER_OF_CROSS_CELLS; cell++)
-                cellsID[cell] = crosses[i].cells[cell] ? crosses[i].cells[cell]->ID : -1;
+                if (crosses[i].cells[cell]) {
+                    cellsID[cell] = crosses[i].cells[cell]->ID;
+                }
+                else {
+                    cellsID[cell] = -2;
+                }
+                //cellsID[cell] = crosses[i].cells[cell] ? crosses[i].cells[cell]->ID : -1;
 
             fwrite(cellsID, sizeof(int) * NUMBER_OF_CROSS_CELLS, 1, saveFile);
             free(cellsID);
+            printGrid(0);
         }
 
         fwrite(lights, sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS, 1, saveFile);
@@ -598,7 +606,7 @@ void init (FILE* saveFile) {
         for (int i = 0; i < MAX_CARS; i++) {
             if(cars[i].isActive) {
                 setBornCar(&cars[i], i, cars[i].currCell);
-                if (!(cars[i].crossNextCell.crossNum != NEXT_CELL_IS_ON_ROAD))
+                if (cars[i].nextCell.road != NEXT_CELL_IS_ON_CROSS)
                     roads[cars[i].currCell.road].lines[cars[i].currCell.line].cells[cars[i].currCell.cell] = &cars[i];
             }
         }
@@ -629,13 +637,15 @@ void init (FILE* saveFile) {
                 int * cellsID = (int *)malloc(sizeof(int) * NUMBER_OF_CROSS_CELLS);
                 fread(cellsID, sizeof(int) * NUMBER_OF_CROSS_CELLS, 1, saveFile);
 
-                for (int cell = 0; cell < NUMBER_OF_CROSS_CELLS; cell++)
-                    if (cellsID[cell] != -1)
+                for (int cell = 0; cell < NUMBER_OF_CROSS_CELLS; cell++) {
+                    if (cellsID[cell] != -2)
                         crosses[i].cells[cell] = &cars[cellsID[cell]];
-
+                    else
+                        crosses[i].cells[cell] = NULL;
+                }
                 free(cellsID);
             }
-
+                printGrid(0);
             traffic_light * newLights = (traffic_light *)malloc(sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS);
             fread(newLights, sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS, 1, saveFile);
             for (int i = 0; i < NUMBER_OF_TRAFFIC_LIGHTS; i++) {
@@ -645,6 +655,8 @@ void init (FILE* saveFile) {
             free(newLights);
         }
 
+        free(densityData);
+        densityData = (int* )malloc(sizeof(int) * NUMBER_OF_ROADS);
         fread(&densityData, sizeof(int) * NUMBER_OF_ROADS, 1, saveFile);
 
         fclose(saveFile);

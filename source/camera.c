@@ -180,6 +180,9 @@ GLint isPossibleToMoveCam(camDir dir, GLfloat offset)
         }
     }
 
+    if (MAP_TYPE == SEVERAL_CROSSES)
+        return true;
+
     for (int i = 0; i < NUMBER_OF_ROADS; i++)
     {
         if (roads[i].isEdge)
