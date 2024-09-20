@@ -443,6 +443,10 @@ void save()
             int * cellsID = (int *)malloc(sizeof(int) * NUMBER_OF_CROSS_CELLS);
             for (int cell = 0; cell < NUMBER_OF_CROSS_CELLS; cell++)
                 if (crosses[i].cells[cell]) {
+                    if (crosses[i].cells[cell] == OCCUPYING_CAR) {
+                        cellsID[cell] = -3;
+                        continue;
+                    }
                     cellsID[cell] = crosses[i].cells[cell]->ID;
                 }
                 else {
@@ -643,14 +647,20 @@ void init (FILE* saveFile) {
                 fread(cellsID, sizeof(int) * NUMBER_OF_CROSS_CELLS, 1, saveFile);
 
                 for (int cell = 0; cell < NUMBER_OF_CROSS_CELLS; cell++) {
-                    if (cellsID[cell] != -2)
+                    if (cellsID[cell] != -2) {
+                        if (cellsID[cell] == -3) {
+                            crosses[i].cells[cell] = OCCUPYING_CAR;
+                            continue;
+                        }
                         crosses[i].cells[cell] = &cars[cellsID[cell]];
+                    }
                     else
                         crosses[i].cells[cell] = NULL;
                 }
                 free(cellsID);
             }
-                printGrid(0);
+            
+            printGrid(0);
             traffic_light * newLights = (traffic_light *)malloc(sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS);
             fread(newLights, sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS, 1, saveFile);
             for (int i = 0; i < NUMBER_OF_TRAFFIC_LIGHTS; i++) {
