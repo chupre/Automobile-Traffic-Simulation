@@ -177,6 +177,10 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 	}
 }
 
+void setCarOnCross(cross_cell cell) {
+    
+}
+
 GLvoid addCrushedCar(RLC rlc)
 {
 	if (roads[rlc.road].lines[rlc.line].cells[rlc.cell] != NULL){

@@ -456,13 +456,12 @@ void save()
 
             fwrite(cellsID, sizeof(int) * NUMBER_OF_CROSS_CELLS, 1, saveFile);
             free(cellsID);
-            printGrid(0);
         }
 
         fwrite(lights, sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS, 1, saveFile);
     }
 
-    fwrite(&densityData, sizeof(int) * NUMBER_OF_ROADS, 1, saveFile);
+    //fwrite(&densityData, sizeof(int) * NUMBER_OF_ROADS, 1, saveFile);
 
     free(occupiedCells);
     fclose(saveFile);
@@ -660,7 +659,6 @@ void init (FILE* saveFile) {
                 free(cellsID);
             }
             
-            printGrid(0);
             traffic_light * newLights = (traffic_light *)malloc(sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS);
             fread(newLights, sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS, 1, saveFile);
             for (int i = 0; i < NUMBER_OF_TRAFFIC_LIGHTS; i++) {
@@ -670,9 +668,9 @@ void init (FILE* saveFile) {
             free(newLights);
         }
 
-        free(densityData);
-        densityData = (int* )malloc(sizeof(int) * NUMBER_OF_ROADS);
-        fread(&densityData, sizeof(int) * NUMBER_OF_ROADS, 1, saveFile);
+        // free(densityData);
+        // densityData = (int* )malloc(sizeof(int) * NUMBER_OF_ROADS);
+        // fread(&densityData, sizeof(int) * NUMBER_OF_ROADS, 1, saveFile);
 
         fclose(saveFile);
 
