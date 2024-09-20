@@ -7,7 +7,7 @@
 🟢 Add restart button.\
 🟢 fix saves.\
 🟢 Add crushed cars on right click.\
-🔴 Add traffic lights.\
+🟢 Add traffic lights.\
 🔴 Remake roads.\
 🟢 Add help section in menu.\
 🟢 Add proper logging.\
