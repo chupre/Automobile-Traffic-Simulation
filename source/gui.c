@@ -16,9 +16,6 @@
 #include <shader.h>
 #include <dbg.h>
 
-#include <sys/stat.h>
-#include <sys/types.h>
-
 // External 
 #if defined(_WIN32) || defined(WIN32)
     #include <dirent/dirent.h>
@@ -378,8 +375,6 @@ void showLoadMenu()
 
 void save()
 {
-    mkdir("../saves/", 0777);
-
     char fullname[MAX_BUFFER_SIZE + 10] = "../saves/";
     strcat(fullname, userSaveName);
     strcat(fullname, ".bin");
@@ -613,9 +608,13 @@ void init (FILE* saveFile) {
 
         for (int i = 0; i < MAX_CARS; i++) {
             if(cars[i].isActive) {
-                setBornCar(&cars[i], i, cars[i].currCell);
-                if (cars[i].nextCell.road != NEXT_CELL_IS_ON_CROSS)
+                if (cars[i].nextCell.road != NEXT_CELL_IS_ON_CROSS) {
+                    //setBornCar(&cars[i], i, cars[i].currCell);
                     roads[cars[i].currCell.road].lines[cars[i].currCell.line].cells[cars[i].currCell.cell] = &cars[i];
+                } else {
+                    if (cars[i].crossCurrCell.crossNum != -1)
+                        setCarOnCross(cars[i].crossCurrCell, &cars[i], i);
+                }
             }
         }
 

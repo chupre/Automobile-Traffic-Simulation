@@ -177,8 +177,51 @@ GLvoid setBornCar(car* Car, GLint carIndex, RLC rlc)
 	}
 }
 
-void setCarOnCross(cross_cell cell) {
+void setCarOnCross(cross_cell cell, car * Car, int carIndex) {
+    int roadIndex;
+
+    for (int i = 0; i < 4; i++) {
+        roadIndex = crosses[cell.crossNum].enterRoadsIndexes[i];
+        if (roads[roadIndex].dir == WEST)
+            break;
+    }
+
+    float start_x = roadVertices[roadIndex * 4 * 5 + 10];
+    float start_y = roadVertices[roadIndex * 4 * 5 + 11];
+    float x = start_x - CELL_LENGTH * cell.x;
+    float y = start_y - CELL_LENGTH * cell.y - CELL_LENGTH;
+
+	glm_mat3_identity(carTransformMatrixes[carIndex]);
     
+    switch (Car->moveDir) {
+        case NORTH: {
+                        vec2 carTranslationVector = { y + CELL_LENGTH, x };
+                        glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(90.0f));
+                        glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+                        glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(270.0f));
+                        break;
+                    }
+        case SOUTH: {
+                        vec2 carTranslationVector = { y, x - CELL_LENGTH };
+                        glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(90.0f));
+                        glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+                        glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(90.0f));
+                        break;
+                    }
+        case EAST: {
+                       vec2 carTranslationVector = { y + CELL_LENGTH, x };
+                       glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(90.0f));
+                       glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+                       glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(180.0f));
+                       break;
+                   }
+        case WEST: {
+                       vec2 carTranslationVector = { y, x };
+                       glm_rotate2d(carTransformMatrixes[carIndex], glm_rad(90.0f));
+                       glm_translate2d(carTransformMatrixes[carIndex], carTranslationVector);
+                       break;
+                   }
+    }
 }
 
 GLvoid addCrushedCar(RLC rlc)

@@ -134,7 +134,7 @@ GLvoid stepRoad()
 	processCarAddingQueue();
 
 	while (getCarByRoulette(&Car)){
-		if (Car->isCrushed){
+		if (Car->isCrushed || !Car->isActive){
 			continue;
 		}
 		if (Car == OCCUPYING_CAR){
@@ -296,7 +296,7 @@ GLvoid renewCells(){
 		}
 		clearCheckedCars();
 		while (getCarByRoulette(&Car)){
-			if (Car->isCrushed || Car == OCCUPYING_CAR){
+			if (Car->isCrushed || Car == OCCUPYING_CAR || !Car->isActive){
 				continue;
 			}
 			if (isInSkipCarsFromCross(Car)){
@@ -312,7 +312,7 @@ GLvoid renewCells(){
 
 	}else{
 		while (getCarByRoulette(&Car)){
-			if (Car->isCrushed || Car == OCCUPYING_CAR){
+			if (Car->isCrushed || Car == OCCUPYING_CAR || !Car->isActive){
 				continue;
 			}
 			if (isToExcludeFormRoad(Car)){

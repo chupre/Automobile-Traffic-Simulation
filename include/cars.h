@@ -76,6 +76,6 @@ GLvoid bindCellAndCar(RLC* rlc, car* Car);
 GLvoid setOccupyingCarProperties();
 DIRECTION getOppositeDir(DIRECTION dir);
 GLvoid setTarget(car* Car);
-void setCarOnCross(cross_cell cell);
+void setCarOnCross(cross_cell cell, car * Car, int carIndex);
 
 #endif
