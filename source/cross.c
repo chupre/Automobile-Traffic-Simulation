@@ -187,36 +187,6 @@ GLvoid getCurvingCell(cross_cell* c, car* Car, cross_cell firstCellOnRoad)
 }
 
 //....................................................................................................................
-GLint getQuaterNum(cross_cell c)
-{
-    if (c.x < HALF_CROSS_SIDE) {
-        if (c.y < HALF_CROSS_SIDE) {
-            return 2;
-        }
-        else return 4;
-    }
-    else {
-        if (c.y < HALF_CROSS_SIDE){
-            return 3;
-        }
-        else return 1;
-    }
-}
-
-cross_flood getCodirectional(DIRECTION carDir, GLint quaterNum)
-{
-    if (carDir == crossQuaters[quaterNum * TWO /*+ ENTER*/])
-    {
-        return ENTER;
-    }
-    if (carDir == crossQuaters[quaterNum * TWO + EXIT])
-    {
-        return EXIT;
-    }
-    exit(-182);
-}
-
-//....................................................................................................................
 bool getCarByRouletteCross(car** Car)
 {
     car* tmpCar;
@@ -237,12 +207,13 @@ bool rollRouletteCross()
     if (rouletteCross.cellNum < MAX_CROSS_CELL_DIGIT){
         rouletteCross.cellNum += 1;
     }else{
-        rouletteCross.cellNum = -1;
+        rouletteCross.cellNum = 0;
         if (rouletteCross.crossNum < MAX_CROSS_DIGIT){
             rouletteCross.crossNum += 1;
         }
         else{
             rouletteCross.crossNum = 0;
+            rouletteCross.cellNum = -1;
             return false;
         }
     }
@@ -258,50 +229,34 @@ GLvoid stepCross()
         yellowRedChange = false;
         for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
         {
-            // printf("q_fill\n");
             q_fill(&crosses[crossIndex].carsEndingManeuver, &crosses[crossIndex].carsArriving);
-            // if (crosses[crossIndex].carsEndingManeuver.head != NULL) q_print(&crosses[crossIndex].carsEndingManeuver);
         }
     }
-    // printf("MANEUVER: %d\n", crosses[0].carsEndingManeuver.qauntity);// q_print(&crosses[0].carsEndingManeuver);
-    // printf("ARRIVE: %d\n", crosses[0].carsArriving.qauntity);// q_print(&crosses[0].carsArriving);
 
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
         q_item* item = crosses[crossIndex].carsEndingManeuver.head;
-        // printf(">> m <<\n");
         while (item != NULL)
         {
-            // printf("ID: %d\n", item->value->ID);
             thoughtsOfOneCarOnCross(item->value);
-            // printf("CROSS\n");
-            // printCarCharacter(item->value);
             item = item->next;
         }
-        // printf("<< m >>\n");
     }
 
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
         queue* q = &crosses[crossIndex].carsEndingManeuver;
         q_item* item = crosses[crossIndex].carsArriving.head;
-        // printf(">> a <<\n");
         while (item != NULL)
         {
             if (!isAnybodyToDriveBeforeNose(q, item->value->moveDir)) {
-                // printf("ID: %d\n", item->value->ID);
                 thoughtsOfOneCarOnCross(item->value);
-                // printf("CROSS\n");
-                // printCarCharacter(item->value);
             }else{
                 item->value->velocity = _0_CELL_;
             }
             item = item->next;
         }
-        // printf("<< a >>\n");
     }
-    // printf("MANEUVER\n"); q_print(&crosses[0].carsEndingManeuver);
-    // printf("ARRIVE\n"); q_print(&crosses[0].carsArriving);
 }
 
 bool isAnybodyToDriveBeforeNose(queue* q, DIRECTION ourCarDir)
@@ -526,11 +481,12 @@ GLvoid thoughtsOfOneCarOnCross(car* Car)
             Car->nextCell = rlc;
             Car->crossNextCell.crossNum = NEXT_CELL_IS_ON_ROAD;
             Car->velocity = _1_CELL_;
+            setTarget(Car);
             initRoadCell(&rlc, OCCUPYING_CAR);
         }else{
             Car->velocity = _0_CELL_;
         }
-    }    
+    }
 }
 
 bool isItCurvingCell(cross_cell* crossCurrCell,  cross_cell* curvingCell)
@@ -890,13 +846,13 @@ GLvoid setCrossProperties(GLint crossIndex, GLint* enterRoadIndexes, GLint* exit
     // filling roads with data about cross
     for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++){
         roads[enterRoadIndexes[i]].isEndCross = true;
-        roads[enterRoadIndexes[i]].isBeginCross = false;//this property is to be set outside the foo
+        // roads[enterRoadIndexes[i]].isBeginCross = false;//this property is to be set outside the foo
         roads[enterRoadIndexes[i]].endCrossNum = crossIndex;
         roads[enterRoadIndexes[i]].endCross = Cross;
 
         roads[exitRoadIndexes[i]].beginCross = Cross;
         roads[exitRoadIndexes[i]].isBeginCross = true;
-        roads[exitRoadIndexes[i]].isEndCross = false;
+        // roads[exitRoadIndexes[i]].isEndCross = false;
     }
     for (int i = 0; i < NUMBER_OF_CROSS_ROADS; i++){
         GLint index = getFreeTrafficLightIndex();

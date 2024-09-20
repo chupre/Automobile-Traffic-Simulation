@@ -60,4 +60,7 @@ GLint isFurhterThanEndLine(car* Car, road* Road);
 GLint isOutOfScreenSpace(GLfloat realPos);
 int getCarsNumOnLine(int roadIndex, int lineIndex);
 
+
+GLvoid printRoadProperties(GLint i);
+
 #endif

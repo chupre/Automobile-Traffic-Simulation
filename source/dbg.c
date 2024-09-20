@@ -4,7 +4,7 @@
 #include <cars.h>
 
 GLvoid printGrid(GLint crossIndex){
-    // return;
+    printf("\nCROSS %d\n", crossIndex);
     for (int y = 0; y < CROSS_SIDE; y++){
         for (int i = 0; i < CROSS_SIDE; i++) printf("____");
         printf("\n");
@@ -24,4 +24,6 @@ GLvoid printGrid(GLint crossIndex){
         }
         printf("|\n");
     }
+    for (int i = 0; i < CROSS_SIDE; i++) printf("____");
+    printf("\n");
 }

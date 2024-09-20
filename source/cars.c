@@ -57,8 +57,7 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	Car->move = FORWARD;
 	Car->moveDir = roads[rlc.road].dir;
 	Car->ID = carIndex;
-	Car->overtake = NONE;
-	Car->target = rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
+	Car->target = Car->moveDir;//getLeftMoveDir(Car->moveDir); //rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
 	if (Car->target == getOppositeDir(Car->moveDir)){
 		Car->target = Car->moveDir;
 	}
@@ -71,6 +70,13 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	memcpy(&Car->nextCell, &rlc, sizeof(RLC));
 	
 	bindCellAndCar(&rlc, Car);
+ }
+
+ GLvoid setTarget(car* Car){
+	Car->target = Car->moveDir;//getLeftMoveDir(Car->moveDir); //rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
+	if (Car->target == getOppositeDir(Car->moveDir)){
+		Car->target = Car->moveDir;
+	}
  }
 
  DIRECTION getOppositeDir(DIRECTION dir){
@@ -383,10 +389,7 @@ GLvoid clearCarProperties(car* Car)
 	Car->velocity = 0;
 	Car->isActive = false;
 	Car->isCrushed = false;
-	Car->overtake = NONE;
 	Car->move = FORWARD;
 	Car->moveDir = NONE;
-	Car->maneuverPtr = NULL;
-	Car->arrivingPtr = NULL;
 	Car->checked = false;// used only on the cross
 }

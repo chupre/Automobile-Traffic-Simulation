@@ -154,6 +154,7 @@ void mouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
     if (!getRLCbyDot(&rlc, &mousePos)) {
       return;
     }
+    else printRLC(rlc, "clicked");
 
     if (button == GLFW_MOUSE_BUTTON_LEFT && !isShowInfo){
       appendRLCinCarAddingQueue(rlc);

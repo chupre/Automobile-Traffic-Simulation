@@ -42,9 +42,9 @@ int curr_step = 0;
 
 config initConfig = {
     50,
-    6,
+    3,
     100,
-    VERTICAL,
+    SEVERAL_CROSSES,
 };
 
 void initGUI()

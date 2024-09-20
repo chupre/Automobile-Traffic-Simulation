@@ -109,9 +109,6 @@ GLvoid update()
 		timer += STEP_TIME;
         step_count++;
 
-		if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
-			// printLights();
-		}
 		renewCells();
 		if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
 			stepCross();
@@ -121,8 +118,7 @@ GLvoid update()
 		else{
 			stepRoad();
 		}
-		// printGrid(0);
-		// printf("============================================================\n");
+		// printf("=======================================\n");
 	}
 }
 
@@ -245,8 +241,6 @@ GLvoid spawnCars()
 					writeFile(&data);
 				}
 				thoughtsOfOneCar(&cars[carIndex]);
-				// printf("www\n");
-				// printCar(&cars[carIndex]);
 				--freeCars;
 				++spawnedCars;
 				increaseDensityData(freeSpotRLC.road);
@@ -287,32 +281,25 @@ GLvoid initRoadCell(RLC *rlc, car* Car)
 //................................................................................................
 GLvoid renewCells(){
 	car* Car;
-	// printCarCharacter(crosses[0].cells[0]);
 	if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
 		while (getCarByRouletteCross(&Car))
 		{
-			// printCrossRoulette();
 			if (Car == OCCUPYING_CAR){
-				// printf("is occupying car\n");
 				continue;
 			}
 			if (isInCheckedCars(Car)){
-				// printf("checked\n");
 				continue;
 			}
 			rebindCrossCars(Car);
 			appendInCheckedCars(Car);
 			appendInSkipCarsFromCross(Car);
 		}
-		// printCheckedCars();
 		clearCheckedCars();
-		// printSkipCars();
 		while (getCarByRoulette(&Car)){
 			if (Car->isCrushed || Car == OCCUPYING_CAR){
 				continue;
 			}
 			if (isInSkipCarsFromCross(Car)){
-				// printf("in skip cars\n");
 				continue;
 			}
 			if (isToExcludeFormRoad(Car)){
@@ -542,6 +529,7 @@ GLvoid thoughtsOfOneCar(car* Car)
 	car* forthCar = NULL;
 	GLint distance = distanceToForthCar(Car->currCell, &forthCar);//the foo takes in cognisance that road can have endCross
 
+	// printf("dist: %d, isEnd: %d\n", distance, isEndedWithCross(&Car->currCell));
 	if (distance == _NO_CAR_ && isEndedWithCross(&Car->currCell)){
 		distance = NUMBER_OF_CELLS - Car->currCell.cell;
 		isAllowedToOvertake = false;
@@ -625,15 +613,6 @@ GLvoid thoughtsOfOneCar(car* Car)
 bool isToExcludeFormRoad(car* Car)
 {
 	return (Car->nextCell.cell >= NUMBER_OF_CELLS);
-	// if (isOutOfScreenSpace(Car->realPos))
-	// {
-	// 	return true;
-	// }
-	// road* roadPtr = &roads[Car->nextCell.road];
-	// if (isFurtherThanEndCell(Car)){
-	// 	return true;
-	// }
-	// return false;
 }
 
 bool isFurtherThanEndCell(car* Car)
