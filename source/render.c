@@ -410,8 +410,11 @@ GLvoid quit() {
     free(roadVertices);
     free(roads);
     free(lights);
-    for (int i = 0; i < NUMBER_OF_CROSSES; i++)
+    for (int i = 0; i < NUMBER_OF_CROSSES; i++) {
         free(crosses[i].cells);
+        q_delete(&crosses[i].carsArriving);
+        q_delete(&crosses[i].carsEndingManeuver);
+    }
     free(crosses);
     free(checkedCars);
     free(skipCarsFromCross);

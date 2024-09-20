@@ -398,19 +398,54 @@ void save()
                     occupiedCells[occupiedCellsCounter].road = i;
                     occupiedCells[occupiedCellsCounter].line = j;
                     occupiedCells[occupiedCellsCounter].cell = k;
-                    occupiedCellsCounter++;
+                        occupiedCellsCounter++;
                 }
                 else {
                     occupiedCells[occupiedCellsCounter].road = -1;
                     occupiedCells[occupiedCellsCounter].line = -1;
                     occupiedCells[occupiedCellsCounter].cell = -1;
-                    occupiedCellsCounter++;
+                        occupiedCellsCounter++;
                 }
 
 
     fwrite(cars, sizeof(car) * MAX_CARS, 1, saveFile);
     fwrite(occupiedCells, sizeof(RLC) * NUMBER_OF_ROADS * (NUMBER_OF_LINES + 1) * NUMBER_OF_CELLS, 1, saveFile);
     fwrite(&freeCars, sizeof(int), 1, saveFile);
+
+    if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES) {
+        for (int i = 0; i < NUMBER_OF_CROSSES; i++) {
+            int q_count = crosses[i].carsEndingManeuver.qauntity;
+            fwrite(&q_count, sizeof(int), 1, saveFile);
+
+            q_item * item_ptr = crosses[i].carsEndingManeuver.head;
+            while (q_count > 0) {
+                fwrite(&item_ptr->value->ID, sizeof(int), 1, saveFile);
+                item_ptr = item_ptr->next;
+                q_count--;
+            }
+
+            q_count = crosses[i].carsArriving.qauntity;
+            fwrite(&q_count, sizeof(int), 1, saveFile);
+
+            item_ptr = crosses[i].carsArriving.head;
+            while (q_count > 0) {
+                fwrite(&item_ptr->value->ID, sizeof(int), 1, saveFile);
+                item_ptr = item_ptr->next;
+                q_count--;
+            }
+
+            int * cellsID = malloc(sizeof(int) * NUMBER_OF_CROSS_CELLS);
+            for (int cell = 0; cell < NUMBER_OF_CROSS_CELLS; cell++)
+                cellsID[cell] = crosses[i].cells[cell] ? crosses[i].cells[cell]->ID : -1;
+
+            fwrite(cellsID, sizeof(int) * NUMBER_OF_CROSS_CELLS, 1, saveFile);
+            free(cellsID);
+        }
+
+        fwrite(lights, sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS, 1, saveFile);
+    }
+
+    fwrite(&densityData, sizeof(int) * NUMBER_OF_ROADS, 1, saveFile);
 
     free(occupiedCells);
     fclose(saveFile);
@@ -508,8 +543,11 @@ void init (FILE* saveFile) {
         free(roadVertices);
         free(roads);
         free(lights);
-        for (int i = 0; i < NUMBER_OF_CROSSES; i++)
+        for (int i = 0; i < NUMBER_OF_CROSSES; i++) {
             free(crosses[i].cells);
+            q_delete(&crosses[i].carsArriving);
+            q_delete(&crosses[i].carsEndingManeuver);
+        }
         free(crosses);
         free(checkedCars);
         free(skipCarsFromCross);
@@ -560,12 +598,56 @@ void init (FILE* saveFile) {
         for (int i = 0; i < MAX_CARS; i++) {
             if(cars[i].isActive) {
                 setBornCar(&cars[i], i, cars[i].currCell);
-                roads[cars[i].currCell.road].lines[cars[i].currCell.line].cells[cars[i].currCell.cell] = &cars[i];
+                if (!(cars[i].crossNextCell.crossNum != NEXT_CELL_IS_ON_ROAD))
+                    roads[cars[i].currCell.road].lines[cars[i].currCell.line].cells[cars[i].currCell.cell] = &cars[i];
             }
         }
 
-        fclose(saveFile);
         free(occupiedCells);
+
+        if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES) {
+            for (int i = 0; i < NUMBER_OF_CROSSES; i++) {
+                int q_count;
+                fread(&q_count, sizeof(int), 1, saveFile);
+
+                while(q_count > 0) {
+                    int carID;
+                    fread(&carID, sizeof(int), 1, saveFile);
+                    q_append(&cars[carID], &crosses[i].carsEndingManeuver);
+                    q_count--;
+                }
+
+                fread(&q_count, sizeof(int), 1, saveFile);
+
+                while(q_count > 0) {
+                    int carID;
+                    fread(&carID, sizeof(int), 1, saveFile);
+                    q_append(&cars[carID], &crosses[i].carsArriving);
+                    q_count--;
+                }
+
+                int * cellsID = (int *)malloc(sizeof(int) * NUMBER_OF_CROSS_CELLS);
+                fread(cellsID, sizeof(int) * NUMBER_OF_CROSS_CELLS, 1, saveFile);
+
+                for (int cell = 0; cell < NUMBER_OF_CROSS_CELLS; cell++)
+                    if (cellsID[cell] != -1)
+                        crosses[i].cells[cell] = &cars[cellsID[cell]];
+
+                free(cellsID);
+            }
+
+            traffic_light * newLights = (traffic_light *)malloc(sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS);
+            fread(newLights, sizeof(traffic_light) * NUMBER_OF_TRAFFIC_LIGHTS, 1, saveFile);
+            for (int i = 0; i < NUMBER_OF_TRAFFIC_LIGHTS; i++) {
+                lights[i].changeTimer = newLights[i].changeTimer;
+                lights[i].color = newLights[i].color;
+            }
+            free(newLights);
+        }
+
+        fread(&densityData, sizeof(int) * NUMBER_OF_ROADS, 1, saveFile);
+
+        fclose(saveFile);
 
         lastTime = glfwGetTime();
         timer = lastTime;

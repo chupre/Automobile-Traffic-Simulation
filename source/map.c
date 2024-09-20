@@ -38,7 +38,7 @@ int* roadIndices;
 unsigned int lineVAO, lineVBO;
 float* lineVertices;
 car * cars;
-GLint * densityData;
+int * densityData;
 
 //a road gets a direction, an edge state
 void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
@@ -108,7 +108,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         exit(1);
     }
 
-    densityData = (GLint*)calloc(NUMBER_OF_ROADS, sizeof(GLint));
+    densityData = (int*)calloc(NUMBER_OF_ROADS, sizeof(int));
 
     if (densityData == NULL) {
         printf("malloc failed with densityData");

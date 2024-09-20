@@ -37,7 +37,7 @@ extern int* roadIndices;
 extern unsigned int lineVAO, lineVBO;
 extern float* lineVertices;
 extern car* cars;
-extern GLint * densityData;
+extern int * densityData;
 
 GLvoid setMap(int map_type, int lines, int max_cars, int spawn_frequency);
 GLvoid setRoadsAroundCross(GLfloat start_x, GLfloat start_y);
