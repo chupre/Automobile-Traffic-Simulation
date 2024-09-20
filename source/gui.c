@@ -16,6 +16,9 @@
 #include <shader.h>
 #include <dbg.h>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 // External 
 #if defined(_WIN32) || defined(WIN32)
     #include <dirent/dirent.h>
@@ -375,6 +378,8 @@ void showLoadMenu()
 
 void save()
 {
+    mkdir("../saves/", 0777);
+
     char fullname[MAX_BUFFER_SIZE + 10] = "../saves/";
     strcat(fullname, userSaveName);
     strcat(fullname, ".bin");
@@ -383,7 +388,7 @@ void save()
 
     if (saveFile == NULL)
     {
-        printf("Error: unable to save the model\n\n");
+        printf("Error: unable to save the model. Check if you have the save folder\n\n");
         return;
     }
 
