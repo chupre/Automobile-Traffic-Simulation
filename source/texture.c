@@ -2,7 +2,11 @@
 
 #include <glad/glad.h>
 #include <stb/stb_image.h>
-#include <dirent.h>
+#if defined(_WIN32) || defined(WIN32)
+    #include <dirent/dirent.h>
+#else
+    #include <dirent.h>
+#endif
 #include <string.h>
 #include <stdbool.h>
 
