@@ -43,14 +43,11 @@ struct car {
     GLint roadDirMultiplier;
     GLint ID;
     DIRECTION target;
-    DIRECTION overtake;
     MOVING_TYPE move;
     DIRECTION moveDir;
     GLfloat realPos;
     bool isActive;
     bool isCrushed;
-    car** maneuverPtr;
-    car** arrivingPtr;
     bool checked;
     cross_cell curvingCell;//the pole stays uninitializing after GLvoid clearCarProperties(car* Car)
 };

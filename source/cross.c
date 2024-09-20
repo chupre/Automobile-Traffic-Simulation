@@ -258,50 +258,34 @@ GLvoid stepCross()
         yellowRedChange = false;
         for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
         {
-            // printf("q_fill\n");
             q_fill(&crosses[crossIndex].carsEndingManeuver, &crosses[crossIndex].carsArriving);
-            // if (crosses[crossIndex].carsEndingManeuver.head != NULL) q_print(&crosses[crossIndex].carsEndingManeuver);
         }
     }
-    // printf("MANEUVER: %d\n", crosses[0].carsEndingManeuver.qauntity);// q_print(&crosses[0].carsEndingManeuver);
-    // printf("ARRIVE: %d\n", crosses[0].carsArriving.qauntity);// q_print(&crosses[0].carsArriving);
 
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
         q_item* item = crosses[crossIndex].carsEndingManeuver.head;
-        // printf(">> m <<\n");
         while (item != NULL)
         {
-            // printf("ID: %d\n", item->value->ID);
             thoughtsOfOneCarOnCross(item->value);
-            // printf("CROSS\n");
-            // printCarCharacter(item->value);
             item = item->next;
         }
-        // printf("<< m >>\n");
     }
 
     for (GLint crossIndex = 0; crossIndex < NUMBER_OF_CROSSES; crossIndex++)
     {
         queue* q = &crosses[crossIndex].carsEndingManeuver;
         q_item* item = crosses[crossIndex].carsArriving.head;
-        // printf(">> a <<\n");
         while (item != NULL)
         {
             if (!isAnybodyToDriveBeforeNose(q, item->value->moveDir)) {
-                // printf("ID: %d\n", item->value->ID);
                 thoughtsOfOneCarOnCross(item->value);
-                // printf("CROSS\n");
-                // printCarCharacter(item->value);
             }else{
                 item->value->velocity = _0_CELL_;
             }
             item = item->next;
         }
-        // printf("<< a >>\n");
     }
-    // printf("MANEUVER\n"); q_print(&crosses[0].carsEndingManeuver);
-    // printf("ARRIVE\n"); q_print(&crosses[0].carsArriving);
 }
 
 bool isAnybodyToDriveBeforeNose(queue* q, DIRECTION ourCarDir)

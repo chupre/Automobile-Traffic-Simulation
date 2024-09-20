@@ -109,9 +109,9 @@ GLvoid update()
 		timer += STEP_TIME;
         step_count++;
 
-		if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
-			// printLights();
-		}
+		// if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
+		// 	printLights();
+		// }
 		renewCells();
 		if (MAP_TYPE == CROSS || MAP_TYPE == SEVERAL_CROSSES){
 			stepCross();
@@ -625,15 +625,6 @@ GLvoid thoughtsOfOneCar(car* Car)
 bool isToExcludeFormRoad(car* Car)
 {
 	return (Car->nextCell.cell >= NUMBER_OF_CELLS);
-	// if (isOutOfScreenSpace(Car->realPos))
-	// {
-	// 	return true;
-	// }
-	// road* roadPtr = &roads[Car->nextCell.road];
-	// if (isFurtherThanEndCell(Car)){
-	// 	return true;
-	// }
-	// return false;
 }
 
 bool isFurtherThanEndCell(car* Car)

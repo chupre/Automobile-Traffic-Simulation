@@ -50,7 +50,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
         NUMBER_OF_CROSSES = 1;
         NUMBER_OF_TRAFFIC_LIGHTS = 4 * NUMBER_OF_CROSSES;
         NUMBER_OF_ROADS = 8;
-        NUMBER_OF_CELLS = 12;
+        NUMBER_OF_CELLS = 20;
     }
     else if (map_type == SEVERAL_CROSSES){
         NUMBER_OF_CROSSES = 4;
