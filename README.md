@@ -2,6 +2,7 @@
 CMake >= 3.6.0 is required.
 >Linux
 ```bash
+sudo apt install libglfw3-dev
 git clone https://github.com/chupre/Automobile-Traffic-Simulation.git
 cd Automobile-Traffic-Simulation
 cmake -S . -B build
