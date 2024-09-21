@@ -120,7 +120,7 @@ void setMap(int map_type, int lines, int max_cars, int spawn_frequency)
     else if (map_type == SEVERAL_CROSSES)
         lineVertices = (float *)malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 12 * 5 * 2));
     else 
-        lineVertices = (float *)malloc(sizeof(float) * NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 5 * 2);
+        lineVertices = (float *)malloc(sizeof(float) * (NUMBER_OF_LINES * NUMBER_OF_ROADS * 5 * 2 + 5 * 2));
 
     if (lineVertices == NULL) {
         printf("malloc failed on lineVertices");
