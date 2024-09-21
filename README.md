@@ -10,7 +10,7 @@ make
 ```
 
 >Windows
-```powershell
+```bash
 git clone https://github.com/chupre/Automobile-Traffic-Simulation.git
 cd Automobile-Traffic-Simulation
 cmake -S . -B build
