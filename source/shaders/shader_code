@@ -1,0 +1,87 @@
+#version 330 core
+
+out vec4 FragColor;
+
+in vec2 texCoord;
+
+uniform sampler2D ourTexture;
+
+void main()
+{
+    FragColor = texture(ourTexture, texCoord);
+} 
+#version 330 core
+
+out vec4 FragColor;
+
+in vec2 texCoord;
+in vec3 color;
+
+uniform sampler2D ourTexture;
+
+void main()
+{
+    vec4 texColor = texture(ourTexture, texCoord);
+    if (texColor.a < 0.1)
+        discard;
+    FragColor = texColor * vec4(color, 1.0f);
+} 
+#version 330 core
+out vec4 FragColor;
+
+in vec3 color;
+
+void main()
+{
+    FragColor = vec4(color, 1.0);
+} 
+#version 330 core
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec2 aTexCoord;
+
+out vec2 texCoord;
+
+uniform mat4 projection;
+uniform mat4 view;
+
+void main()
+{
+    gl_Position = projection * view * vec4(aPos, 1.0);
+    texCoord = aTexCoord;
+}
+#version 330 core
+layout (location = 0) in vec2 aPos;
+layout (location = 1) in vec2 aTexCoord;
+layout (location = 2) in mat3 aTransform;
+
+out vec2 texCoord;
+out vec3 color;
+
+uniform mat4 projection;
+uniform mat4 view;
+
+float random(float seed) 
+{
+    return fract(sin(seed) * 238.5453);
+}
+
+void main()
+{
+    gl_Position = projection * view * vec4(aTransform * vec3(aPos, 1.0), 1.0);
+    texCoord = aTexCoord;
+    color = vec3(random(gl_InstanceID), random(cos(gl_InstanceID)), random(gl_InstanceID * sin(gl_InstanceID)));
+}
+#version 330 core
+layout (location = 0) in vec2 aPos;
+layout (location = 1) in vec3 aColor;
+
+out vec3 color;
+
+uniform mat4 projection;
+uniform mat4 view;
+
+void main()
+{
+    color = aColor;
+    gl_Position = projection * view * vec4(aPos, 1.0, 1.0);
+}
