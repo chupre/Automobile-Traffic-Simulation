@@ -236,7 +236,7 @@ void initGUI()
             nk_label(context, "  Чуприцкий Денис Владмирович", NK_TEXT_LEFT);
             nk_spacer(context);
             nk_spacer(context);
-            nk_label(context, "  Гопта Владимир Отчество", NK_TEXT_LEFT);
+            nk_label(context, "  Гопта Владимир Дмитриевич", NK_TEXT_LEFT);
             nk_spacer(context);
             nk_spacer(context);
             nk_label(context, "  5151003/30002", NK_TEXT_LEFT);
