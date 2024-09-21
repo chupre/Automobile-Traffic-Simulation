@@ -87,7 +87,7 @@ void initGUI()
 
         nk_layout_row_end(context);
 
-        nk_layout_row_dynamic(context, 10, 1);
+        nk_layout_row_dynamic(context, 5, 1);
 
         if (isInit) {
             nk_layout_row_begin(context, NK_STATIC, 30, 2);
@@ -103,7 +103,7 @@ void initGUI()
 
             nk_layout_row_end(context);
 
-            nk_layout_row_dynamic(context, 10, 1);
+            nk_layout_row_dynamic(context, 5, 1);
         }
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
@@ -118,7 +118,7 @@ void initGUI()
 
         nk_layout_row_end(context);
 
-        nk_layout_row_dynamic(context, 10, 1);
+        nk_layout_row_dynamic(context, 5, 1);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 85);
@@ -131,7 +131,7 @@ void initGUI()
 
         nk_layout_row_end(context);
 
-        nk_layout_row_dynamic(context, 10, 1);
+        nk_layout_row_dynamic(context, 5, 1);
 
         nk_layout_row_begin(context, NK_STATIC, 30, 2);
         nk_layout_row_push(context, (float)WINDOW_WIDTH / 2 - 85);
@@ -145,7 +145,7 @@ void initGUI()
 
         nk_layout_row_end(context);
 
-        nk_layout_row_dynamic(context, 15, 1);
+        nk_layout_row_dynamic(context, 10, 1);
 
         nk_layout_row_dynamic(context, 30, 1);
         nk_label(context, "Theme", NK_TEXT_CENTERED);
@@ -217,6 +217,50 @@ void initGUI()
         
         nk_layout_row_end(context);
 
+        nk_layout_row_dynamic(context, 10, 1);
+
+        nk_layout_row_dynamic(context, 30, 1);
+        nk_label(context, "Credits", NK_TEXT_CENTERED);
+
+        float parent_ratio[] = {0.285f, 0.43f, 0.285f};
+        float child_ratio[] = {0.01f, 0.98f, 0.01f};
+        nk_layout_row(context, NK_DYNAMIC, 244, 3, parent_ratio);
+        nk_spacer(context);
+        if (nk_group_begin(context, "HelpInfo", NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR)) {
+            nk_layout_row_dynamic(context, 10, 1);
+            nk_layout_row(context, NK_DYNAMIC, 20, 3, child_ratio);
+            nk_spacer(context);
+            nk_label(context, "Подготовили:", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "  Чуприцкий Денис Владмирович", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "  Гопта Владимир Отчество", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "  5151003/30002", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "", NK_TEXT_LEFT);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "Институт компьютерных наук и кибербезопасности", NK_TEXT_CENTERED);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "Высшая школа кибербезопасности", NK_TEXT_CENTERED);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "СПбПУ им. Петра Великого", NK_TEXT_CENTERED);
+            nk_spacer(context);
+            nk_spacer(context);
+            nk_label(context, "2024", NK_TEXT_CENTERED);
+            nk_spacer(context);
+
+            nk_group_end(context);
+        }
+        nk_spacer(context);
+
     }
 
     nk_end(context);
@@ -230,7 +274,10 @@ void initFont()
     struct nk_font* jb;
     struct nk_font_config jb_cfg;
 
-    jb_cfg = nk_font_config(0);
+    jb_cfg = nk_font_config(24);
+    jb_cfg.oversample_h = 1;
+    jb_cfg.oversample_v = 1;
+    jb_cfg.range = nk_font_cyrillic_glyph_ranges();
 
     nk_glfw3_font_stash_begin(&glfw, &atlas);
     jb = nk_font_atlas_add_from_file(atlas, "../resources/fonts/JetBrainsMono-Bold.ttf", 24, &jb_cfg);
