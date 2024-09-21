@@ -57,12 +57,7 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
 	Car->move = FORWARD;
 	Car->moveDir = roads[rlc.road].dir;
 	Car->ID = carIndex;
-	Car->target = Car->moveDir;//getLeftMoveDir(Car->moveDir); //rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
-	if (Car->target == getOppositeDir(Car->moveDir)){
-		Car->target = Car->moveDir;
-	}
-	//Car->velocity = _3_CELL_ + _1_CELL_ + (rand() % (NUMBER_OF_VELOCITY_TYPES - 3));
-	// Car->velocity = _1_CELL_;
+	setTarget(Car);//NONE can't be as it out of range of number of directions
 	Car->velocity = MIN_SPAWN_VELOCITY + rand() % (NUMBER_OF_VELOCITY_TYPES - MIN_SPAWN_VELOCITY + 1);
 	Car->isActive = true;
 	Car->roadDirMultiplier = getDirMultiplier(Car->moveDir);
@@ -73,7 +68,7 @@ GLvoid setBornCarProperties(car* Car, GLint carIndex, RLC rlc)
  }
 
  GLvoid setTarget(car* Car){
-	Car->target = Car->moveDir;//getLeftMoveDir(Car->moveDir); //rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
+	Car->target = rand() % NUMBER_OF_DIRECTIONS;//NONE can't be as it out of range of number of directions
 	if (Car->target == getOppositeDir(Car->moveDir)){
 		Car->target = Car->moveDir;
 	}
