@@ -393,7 +393,7 @@ GLvoid setLines(GLint roadIndex)
 
         if (MAP_TYPE == SEVERAL_CROSSES && (
                     roadIndex == 2 ||
-                    roadIndex == 6 ||
+                    roadIndex == 7 ||
                     roadIndex == 10 ||
                     roadIndex == 14 ||
                     roadIndex == 18 ||
